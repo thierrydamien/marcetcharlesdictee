@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marc & Charles: Dictation Defenders — EMERALD WORLD EDITION</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ubuntu:wght@400;700&display=swap');
+
+        :root {
+            --bg-dark: #07090e;
+            --panel-bg: #131724;
+            --cyan: #00eeff;
+            --magenta: #ff008c;
+            --gold: #ffd200;
+            --green: #00ff88;
+            --red: #ff4268;
+            --white: #f5f6fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--white);
+            font-family: 'Ubuntu', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #game-container {
+            width: 1050px;
+            height: 720px;
+            background: radial-gradient(circle at center, #181d36 0%, #07090e 100%);
+            border: 4px solid #202740;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        #header-hud {
+            width: 100%;
+            background: var(--panel-bg);
+            border: 2px solid #252d47;
+            border-radius: 15px;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+        }
+
+        .hud-title {
+            font-size: 14px;
+            color: var(--cyan);
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .hud-wallets {
+            display: flex;
+            gap: 25px;
+            font-size: 13px;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .hud-m { color: var(--cyan); }
+        .hud-c { color: var(--magenta); }
+
+        .arcade-btn {
+            background-color: #1c2238;
+            color: var(--white);
+            border: 2px solid #353f66;
+            padding: 16px 36px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 8px;
+            min-width: 260px;
+            text-align: center;
+            box-shadow: 0 6px 0 #0f1321;
+        }
+
+        .arcade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #0f1321;
+        }
+
+        .arcade-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #0f1321;
+        }
+
+        #stage-arena {
+            flex-grow: 1;
+            width: 100%;
+            position: relative;
+            background: linear-gradient(to bottom, #0e111f 0%, #15192c 65%, #381b0e 65%, #211006 100%);
+            border-radius: 15px;
+            border: 2px solid #252d47;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+        }
+
+        #family-desk-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .character-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 240px;
+            transition: opacity 0.3s ease;
+        }
+
+        .character-node.hidden-player {
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .pixel-sprite {
+            width: 110px;
+            height: 140px;
+            image-rendering: pixelated;
+        }
+
+        .active-turn .pixel-sprite {
+            filter: drop-shadow(0 0 12px var(--cyan));
+        }
+
+        .name-badge {
+            background: var(--panel-bg);
+            border: 1px solid #353f66;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        .active-turn .name-badge {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        #wood-table-overlay {
+            width: 650px;
+            height: 30px;
+            background: linear-gradient(to bottom, #69330c 0%, #522709 100%);
+            border-top: 3px solid #9c4c13;
+            border-radius: 4px;
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .decor-shelf {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            gap: 5px;
+            z-index: 4;
+        }
+        #shelf-marc { left: 15px; }
+        #shelf-charles { right: 15px; }
+
+        .asset-icon {
+            font-size: 24px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        #interaction-deck {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        #word-input-box {
+            width: 480px;
+            height: 48px;
+            background-color: #0b0d17;
+            border: 3px solid #353f66;
+            border-radius: 12px;
+            padding: 5px 15px;
+            font-size: 22px;
+            color: var(--white);
+            text-align: center;
+            font-weight: bold;
+            outline: none;
+        }
+
+        #feedback-line {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 8px;
+            min-height: 26px;
+        }
+
+        #practice-reveal-card {
+            background-color: var(--panel-bg);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 12px 35px;
+            font-size: 34px;
+            font-family: 'Press Start 2P', monospace;
+            color: var(--white);
+            margin-bottom: 8px;
+            display: none;
+        }
+
+        .shop-viewport {
+            display: flex;
+            width: 100%;
+            gap: 15px;
+            justify-content: center;
+            overflow-y: auto;
+            max-height: 440px;
+            padding: 10px;
+        }
+
+        .shop-column {
+            background: var(--panel-bg);
+            border: 2px solid #252d47;
+            border-radius: 15px;
+            padding: 12px;
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shop-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background: #0b0d17;
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .shop-buy-small {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .shop-buy-small.owned { background: #52616b; cursor: default; }
+
+        .parent-config-box {
+            background: var(--panel-bg);
+            border: 2px solid #353f66;
+            border-radius: 15px;
+            padding: 20px;
+            width: 85%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-height: 520px;
+            overflow-y: auto;
+        }
+
+        .admin-txt-area {
+            width: 100%;
+            height: 90px;
+            background: #0b0d17;
+            border: 1px solid #353f66;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            resize: none;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .admin-txt-area:focus { border-color: var(--cyan); }
+
+        .homework-picker-container {
+            width: 100%;
+            background: #0b0d17;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #353f66;
+            margin-bottom: 15px;
+            max-height: 140px;
+            overflow-y: auto;
+        }
+
+        .hw-checkbox-row {
+            display: flex;
+            align-items: center;
+            margin: 4px 0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .hw-checkbox-row input { margin-right: 10px; transform: scale(1.2); cursor: pointer; }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1c2238;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        
+        <div id="header-hud">
+            <div class="hud-title" id="hud-mode-text">DICTATION DEFENDERS</div>
+            <div class="hud-wallets">
+                <span class="hud-m" id="hud-m-cash">MARC: £0.00</span>
+                <span class="hud-c" id="hud-c-cash">CHARLES: £0.00</span>
+            </div>
+        </div>
+
+        <!-- SCREEN 1: MAIN PORTAL -->
+        <div id="screen-lang" class="screen active">
+            <h1 style="font-family:'Press Start 2P'; font-size:22px; margin-bottom:25px; text-align:center;">MAIN TERMINAL</h1>
+            <button class="arcade-btn" style="border-color:var(--cyan);" onclick="selectLanguage('FR')">FRENCH DECK</button>
+            <button class="arcade-btn" style="border-color:var(--magenta);" onclick="selectLanguage('EN')">ENGLISH DECK</button>
+            <button class="arcade-btn" style="border-color:var(--gold);" onclick="openShop()">🛍️ CLOTHING & ASSET MART</button>
+            <button class="arcade-btn" style="border-color:var(--red); padding:10px 20px; min-width:180px; font-size:13px;" onclick="verifyParentAccess()">⚙️ PARENT ACCESS</button>
+        </div>
+
+        <!-- SCREEN 2: FORMAT SELECTION -->
+        <div id="screen-roster" class="screen">
+            <h1 style="font-family:'Press Start 2P'; font-size:18px; margin-bottom:25px;">SELECT TEAM FORMAT</h1>
+            <button class="arcade-btn" style="border-color:var(--cyan);" onclick="selectRoster('SOLO_MARC')">SOLO: PLAY AS MARC</button>
+            <button class="arcade-btn" style="border-color:var(--magenta);" onclick="selectRoster('SOLO_CHARLES')">SOLO: PLAY AS CHARLES</button>
+            <button class="arcade-btn" style="border-color:var(--green);" onclick="selectRoster('MULTIPLAYER')">MULTIPLAYER: TAG-TEAM</button>
+            <button class="arcade-btn" onclick="switchScreen('screen-lang')">◀ BACK</button>
+        </div>
+
+        <!-- SCREEN 3: ACTIVITY SELECTION -->
+        <div id="screen-phase" class="screen">
+            <h1 style="font-family:'Press Start 2P'; font-size:18px; margin-bottom:25px;">SELECT TARGET MODULE</h1>
+            
+            <div class="toggle-container" id="focus-toggle-info">
+                <input type="checkbox" id="use-focus-homework-mode" style="transform: scale(1.4); cursor:pointer;">
+                <label for="use-focus-homework-mode" style="font-weight:bold; font-size:14px; cursor:pointer; color:var(--gold);">🎯 ACTIVATE WEEKLY HOMEWORK FOCUS LIST</label>
+            </div>
+
+            <button class="arcade-btn" style="border-color:var(--green);" onclick="startPhase('PRACTICE')">1. PRACTICE ENGINE</button>
+            <button class="arcade-btn" style="border-color:var(--gold);" onclick="startPhase('QUIZ')">2. BLIND QUIZ TEST</button>
+            <button class="arcade-btn" onclick="switchScreen('screen-roster')">◀ BACK</button>
+        </div>
+
+        <!-- SCREEN 4: PARENT PANEL PORTAL -->
+        <div id="screen-parent" class="screen">
+            <h1 style="font-family:'Press Start 2P'; font-size:18px; margin-bottom:15px; color:var(--cyan);">PARENT CONTROL PANEL</h1>
+            <p style="font-size:13px; margin-bottom:20px; color:var(--white); text-align:center;">Type or paste words separated by commas (e.g. chat, pomme, maison)</p>
+            
+            <div class="parent-config-box">
+                <label style="align-self:flex-start; font-weight:bold; margin-bottom:6px; color:var(--cyan);">🇫🇷 FRENCH DICTIONARY DECK:</label>
+                <textarea id="admin-fr-input" class="admin-txt-area" placeholder="Enter French vocabulary..."></textarea>
+
+                <label style="align-self:flex-start; font-weight:bold; margin-bottom:6px; color:var(--magenta);">🇬🇧 ENGLISH DICTIONARY DECK:</label>
+                <textarea id="admin-en-input" class="admin-txt-area" placeholder="Enter English vocabulary..."></textarea>
+
+                <h3 style="color:var(--gold); margin-top:10px; margin-bottom:10px; align-self:flex-start; font-size:15px;">🎯 SELECT HOMEWORK FOCUS WORD TARGETS:</h3>
+                <div class="homework-picker-container" id="parent-hw-picker-grid"></div>
+            </div>
+
+            <div style="display:flex; gap:15px; margin-top:15px;">
+                <button class="arcade-btn" style="padding:12px 30px; font-size:14px; min-width:150px; background:#27ae60; border-color:#2ecc71;" onclick="saveParentConfiguration()">💾 SAVE WORD BANKS</button>
+                <button class="arcade-btn" style="padding:12px 30px; font-size:14px; min-width:150px;" onclick="switchScreen('screen-lang')">◀ CANCEL</button>
+            </div>
+        </div>
+
+        <!-- SCREEN 5: STORE FRONT -->
+        <div id="screen-shop" class="screen">
+            <h1 style="font-family:'Press Start 2P'; font-size:20px; margin-bottom:20px; color:var(--gold);">THE SUPER STORE</h1>
+            <div class="shop-viewport">
+                <div class="shop-column" id="shop-col-marc"><h3 id="shop-title-m">MARC'S ASSETS</h3></div>
+                <div class="shop-column" id="shop-col-charles"><h3 id="shop-title-c">CHARLES'S ASSETS</h3></div>
+            </div>
+            <button class="arcade-btn" onclick="switchScreen('screen-lang')" style="margin-top:15px;">◀ EXIT MART</button>
+        </div>
+
+        <!-- SCREEN 6: CORE GAMEPLAY SCENE -->
+        <div id="screen-game" class="screen">
+            <div id="stage-arena">
+                <div id="practice-reveal-card"></div>
+                <div id="family-desk-row">
+                    <!-- MARC COL -->
+                    <div class="character-node" id="node-marc">
+                        <div class="decor-shelf" id="shelf-marc"></div>
+                        <svg class="pixel-sprite" viewBox="0 0 100 120">
+                            <rect x="22" y="30" width="56" height="85" fill="#2c3e50" rx="4"/>
+                            <rect x="36" y="95" width="8" height="20" fill="#ffdbc5"/><rect x="56" y="95" width="8" height="20" fill="#ffdbc5"/>
+                            <rect x="34" y="60" width="32" height="40" fill="#ffdbc5" rx="3"/><rect x="26" y="60" width="8" height="35" fill="#ffdbc5" rx="2"/><rect x="66" y="60" width="8" height="35" fill="#ffdbc5" rx="2"/>
+                            <rect x="34" y="85" width="32" height="15" fill="#34495e"/>
+                            <g id="g-m-socks" style="display:none;"><rect x="36" y="105" width="8" height="10" fill="#fff"/><rect x="56" y="105" width="8" height="10" fill="#fff"/></g>
+                            <g id="g-m-pants" style="display:none;"><rect x="34" y="85" width="32" height="26" fill="#16a085"/><rect x="34" y="100" width="10" height="15" fill="#16a085"/><rect x="56" y="100" width="10" height="15" fill="#16a085"/></g>
+                            <g id="g-m-tshirt" style="display:none;"><rect x="34" y="60" width="32" height="28" fill="#d35400" rx="2"/><rect x="26" y="60" width="8" height="15" fill="#d35400"/><rect x="66" y="60" width="8" height="15" fill="#d35400"/></g>
+                            <g id="g-m-gloves" style="display:none;"><rect x="26" y="85" width="8" height="10" fill="#f39c12"/><rect x="66" y="85" width="8" height="10" fill="#f39c12"/></g>
+                            <circle cx="50" cy="40" r="22" fill="#ffdbc5"/><ellipse cx="50" cy="24" rx="24" ry="12" fill="#2c221e"/>
+                            <rect x="36" y="34" width="12" height="10" stroke="#2980b9" stroke-width="2" fill="none"/><rect x="52" y="34" width="12" height="10" stroke="#2980b9" stroke-width="2" fill="none"/>
+                            <line x1="48" y1="39" x2="52" y2="39" stroke="#2980b9" stroke-width="2"/><circle cx="42" cy="39" r="2" fill="#000"/><circle cx="58" cy="39" r="2" fill="#000"/>
+                            <path id="f-marc-sm" d="M 46 50 Q 50 54 54 50" stroke="#000" stroke-width="2" fill="none"/>
+                            <g id="g-m-cap" style="display:none;"><path d="M 26 24 Q 50 4 74 24 Z" fill="#16a085"/><rect x="46" y="20" width="34" height="6" fill="#117a65"/></g>
+                            <g id="g-m-fancyhat" style="display:none;"><rect x="24" y="16" width="52" height="6" fill="var(--gold)"/><rect x="32" y="-4" width="36" height="22" fill="#111"/></g>
+                        </svg>
+                        <div class="name-badge" id="badge-marc">MARC</div>
+                    </div>
+
+                    <!-- PAPA DAMIEN -->
+                    <div class="character-node" id="node-papa">
+                        <svg class="pixel-sprite" viewBox="0 0 100 120" style="width:125px; height:155px;">
+                            <rect x="20" y="20" width="60" height="90" fill="#1e2538" rx="6"/><rect x="22" y="55" width="56" height="60" fill="#182030" rx="6"/>
+                            <circle cx="50" cy="34" r="24" fill="#ffdbc5"/><ellipse cx="50" cy="16" rx="26" ry="12" fill="#362c28"/>
+                            <path d="M 38 36 Q 44 32 46 36" stroke="#000" stroke-width="2" fill="none"/><path d="M 54 36 Q 60 32 62 36" stroke="#000" stroke-width="2" fill="none"/>
+                            <path d="M 42 48 Q 50 54 58 48" stroke="#000" stroke-width="2" fill="none"/>
+                        </svg>
+                        <div class="name-badge" style="border-color:var(--gold); color:var(--gold);">PAPA</div>
+                    </div>
+
+                    <!-- CHARLES COL -->
+                    <div class="character-node" id="node-charles">
+                        <div class="decor-shelf" id="shelf-charles"></div>
+                        <svg class="pixel-sprite" viewBox="0 0 100 120">
+                            <rect x="22" y="30" width="56" height="85" fill="#2c3e50" rx="4"/>
+                            <rect x="36" y="95" width="8" height="20" fill="#ffdbc5"/><rect x="56" y="95" width="8" height="20" fill="#ffdbc5"/>
+                            <rect x="34" y="60" width="32" height="40" fill="#ffdbc5" rx="3"/><rect x="26" y="60" width="8" height="35" fill="#ffdbc5" rx="2"/><rect x="66" y="60" width="8" height="35" fill="#ffdbc5" rx="2"/>
+                            <rect x="34" y="85" width="32" height="15" fill="#c0392b"/>
+                            <g id="g-c-socks" style="display:none;"><rect x="36" y="105" width="8" height="10" fill="#fff"/><rect x="56" y="105" width="8" height="10" fill="#fff"/></g>
+                            <g id="g-c-pants" style="display:none;"><rect x="34" y="85" width="32" height="26" fill="#8e44ad"/><rect x="34" y="100" width="10" height="15" fill="#8e44ad"/><rect x="56" y="100" width="10" height="15" fill="#8e44ad"/></g>
+                            <g id="g-c-tshirt" style="display:none;"><rect x="34" y="60" width="32" height="28" fill="#2c3e50" rx="2"/><rect x="26" y="60" width="8" height="15" fill="#2c3e50"/><rect x="66" y="60" width="8" height="15" fill="#2c3e50"/></g>
+                            <g id="g-c-gloves" style="display:none;"><rect x="26" y="85" width="8" height="10" fill="#16a085"/><rect x="66" y="85" width="8" height="10" fill="#16a085"/></g>
+                            <circle cx="50" cy="40" r="22" fill="#ffdbc5"/><ellipse cx="50" cy="24" rx="24" ry="12" fill="#2c221e"/>
+                            <rect x="36" y="34" width="12" height="10" stroke="#c0392b" stroke-width="2" fill="none"/><rect x="52" y="34" width="12" height="10" stroke="#c0392b" stroke-width="2" fill="none"/>
+                            <line x1="48" y1="39" x2="52" y2="39" stroke="#c0392b" stroke-width="2"/><circle cx="42" cy="39" r="2" fill="#000"/><circle cx="58" cy="39" r="2" fill="#000"/>
+                            <path id="f-charles-sm" d="M 46 50 Q 50 54 54 50" stroke="#000" stroke-width="2" fill="none"/>
+                            <g id="g-c-cap" style="display:none;"><path d="M 26 24 Q 50 4 74 24 Z" fill="#8e44ad"/><rect x="46" y="20" width="34" height="6" fill="#6c3483"/></g>
+                            <g id="g-c-fancyhat" style="display:none;"><rect x="24" y="16" width="52" height="6" fill="var(--gold)"/><rect x="32" y="-4" width="36" height="22" fill="#111"/></g>
+                        </svg>
+                        <div class="name-badge" id="badge-charles">CHARLES</div>
+                    </div>
+                </div>
+
+                <div id="wood-table-overlay"></div>
+
+                <div id="interaction-deck">
+                    <div id="feedback-line">Press ENTER to begin!</div>
+                    <input type="text" id="word-input-box" placeholder="Type answer here..." autocomplete="off">
+                    <div class="game-control-row">
+                        <button class="arcade-btn" style="padding:6px 15px; font-size:13px; min-width:140px; margin:0;" onclick="replayAudio()">🔊 REPEAT (Tab)</button>
+                        <button class="arcade-btn" style="padding:6px 15px; font-size:13px; min-width:140px; margin:0; border-color:var(--red);" onclick="quitActiveGame()">🏠 EXIT ARENA</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let savedFrWords = JSON.parse(localStorage.getItem('admin_fr_words')) || ["chat", "pomme", "manger", "biscuit", "papillon", "ordinateur", "stylo", "maison"];
+        let savedEnWords = JSON.parse(localStorage.getItem('admin_en_words')) || ["house", "school", "children", "london", "banana", "keyboard", "window", "teacher"];
+        let focusHomeworkWords = JSON.parse(localStorage.getItem('admin_focus_words')) || [];
+
+        const globalStoreCatalog = [
+            { id: "socks", label: "🧦 White Socks", cost: 2, type: "wear", icon: "" },
+            { id: "gloves", label: "🧤 Warm Gloves", cost: 4, type: "wear", icon: "" },
+            { id: "cap", label: "🧢 Team Cap", cost: 5, type: "wear", icon: "" },
+            { id: "tshirt", label: "👕 Heavy T-Shirt", cost: 8, type: "wear", icon: "" },
+            { id: "pants", label: "🩳 Modern Pants", cost: 12, type: "wear", icon: "" },
+            { id: "plant", label: "🌱 Desk Plant", cost: 15, type: "decor", icon: "🌱" },
+            { id: "fancyhat", label: "🎩 Top Hat", cost: 20, type: "wear", icon: "" },
+            { id: "lamp", label: "💡 Desk Lamp", cost: 25, type: "decor", icon: "💡" },
+            { id: "laptop", label: "💻 Gaming Laptop", cost: 60, type: "decor", icon: "💻" },
+            { id: "dog", label: "🐶 Loyal Puppy", cost: 100, type: "decor", icon: "🐶" },
+            { id: "bike", label: "🚲 BMX Bike", cost: 150, type: "decor", icon: "🚲" },
+            { id: "dragon", label: "🐉 Pet Dragon", cost: 250, type: "decor", icon: "🐉" },
+            { id: "car", label: "🏎️ Neon Sports Car", cost: 800, type: "decor", icon: "🏎️" },
+            { id: "plane", label: "🛩️ Private Jet", cost: 2500, type: "decor", icon: "🛩️" },
+            { id: "house", label: "🏰 Modern Mansion", cost: 10000, type: "decor", icon: "🏰" }
+        ];
+
+        let bankAccounts = JSON.parse(localStorage.getItem('vault_wallets')) || { marc: 0.00, charles: 0.00 };
+        let visualWardrobes = JSON.parse(localStorage.getItem('vault_inventories')) || {
+            marc: { socks: false, gloves: false, cap: false, tshirt: false, pants: false, fancyhat: false, plant: false, lamp: false, laptop: false, dog: false, bike: false, dragon: false, car: false, plane: false, house: false },
+            charles: { socks: false, gloves: false, cap: false, tshirt: false, pants: false, fancyhat: false, plant: false, lamp: false, laptop: false, dog: false, bike: false, dragon: false, car: false, plane: false, house: false }
+        };
+
+        let wordPool = [];
+        let currentLanguage = "";
+        let currentRosterFormat = ""; 
+        let currentPhase = "";
+        let currentWord = "";
+        let currentTurn = "marc";
+        let practiceIndex = 0;
+        let activeTurnStarted = false;
+
+        const inputField = document.getElementById('word-input-box');
+        const feedbackLine = document.getElementById('feedback-line');
+        const practiceCard = document.getElementById('practice-reveal-card');
+
+        updateGlobalHUDs();
+
+        function selectLanguage(lang) {
+            currentLanguage = lang;
+            let fullBank = (lang === "FR") ? savedFrWords : savedEnWords;
+            
+            if (document.getElementById('use-focus-homework-mode').checked) {
+                wordPool = fullBank.filter(word => focusHomeworkWords.includes(word));
+                if (wordPool.length === 0) {
+                    alert("No focus targets match this selection! Using full list fallback.");
+                    wordPool = fullBank;
+                }
+            } else {
+                wordPool = fullBank;
+            }
+
+            switchScreen('screen-roster');
+        }
+
+        function selectRoster(format) {
+            currentRosterFormat = format;
+            if (format === "SOLO_MARC") currentTurn = "marc";
+            if (format === "SOLO_CHARLES") currentTurn = "charles";
+            switchScreen('screen-phase');
+        }
+
+        function startPhase(phase) {
+            currentPhase = phase;
+            practiceIndex = 0;
+            activeTurnStarted = false;
+            updateGlobalHUDs();
+            document.getElementById('hud-mode-text').innerText = `${currentLanguage} — ${phase}`;
+
+            if (phase === "PRACTICE") {
+                practiceCard.style.display = 'block';
+                feedbackLine.innerText = "Press ENTER to generate your target word!";
+            } else {
+                practiceCard.style.display = 'none';
+                feedbackLine.innerText = "Press ENTER to engage voice dictation!";
+            }
+
+            document.getElementById('node-marc').classList.remove('hidden-player');
+            document.getElementById('node-charles').classList.remove('hidden-player');
+            if (currentRosterFormat === "SOLO_MARC") document.getElementById('node-charles').classList.add('hidden-player');
+            if (currentRosterFormat === "SOLO_CHARLES") document.getElementById('node-marc').classList.add('hidden-player');
+
+            applySceneLayeringVisuals();
+            switchScreen('screen-game');
+            updateTurnVisuals();
+            inputField.value = "";
+            inputField.focus();
+        }
+
+        function triggerNextWord() {
+            inputField.value = "";
+            activeTurnStarted = true;
+
+            if (currentPhase === "PRACTICE") {
+                if (practiceIndex < wordPool.length) {
+                    currentWord = wordPool[practiceIndex];
+                    practiceCard.innerText = currentWord.toUpperCase();
+                    feedbackLine.innerText = "Duplicate the letters perfectly:";
+                    feedbackLine.style.color = '#fff';
+                    speakEngine(currentWord, currentLanguage);
+                } else {
+                    feedbackLine.innerText = "Practice complete! Exiting to menu panel...";
+                    setTimeout(quitActiveGame, 2500);
+                }
+            } else {
+                if (wordPool.length > 0) {
+                    currentWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+                    feedbackLine.innerText = "Listen and spell...";
+                    feedbackLine.style.color = '#fff';
+                    speakEngine(currentWord, currentLanguage);
+                }
+            }
+            document.getElementById(`f-marc-sm`).setAttribute('d', 'M 46 50 Q 50 54 54 50');
+            document.getElementById(`f-charles-sm`).setAttribute('d', 'M 46 50 Q 50 54 54 50');
+        }
+
+        inputField.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (!activeTurnStarted) { triggerNextWord(); return; }
+                evaluateSubmission();
+            }
+            if (e.key === 'Tab') { e.preventDefault(); replayAudio(); }
+        });
+
+        function evaluateSubmission() {
+            let attempt = inputField.value.trim().toLowerCase();
+            if (attempt === "") return;
+
+            if (attempt === currentWord) {
+                bankAccounts[currentTurn] += 1.00;
+                localStorage.setItem('vault_wallets', JSON.stringify(bankAccounts));
+                updateGlobalHUDs();
+
+                document.getElementById(`f-${currentTurn}-sm`).setAttribute('d', 'M 44 48 Q 50 56 56 48');
+                feedbackLine.innerText = `Correct! +£1.00 delivered to ${currentTurn.toUpperCase()}'s account!`;
+                feedbackLine.style.color = 'var(--green)';
+
+                if (currentRosterFormat === "MULTIPLAYER") {
+                    currentTurn = (currentTurn === "marc") ? "charles" : "marc";
+                }
+                if (currentPhase === "PRACTICE") practiceIndex++;
+
+                activeTurnStarted = false;
+                setTimeout(triggerNextWord, 1600);
+            } else {
+                document.getElementById(`f-${currentTurn}-sm`).setAttribute('d', 'M 44 54 Q 50 48 56 54');
+                if (currentPhase === "QUIZ") {
+                    feedbackLine.innerText = `Correction: ${currentWord.toUpperCase()}`;
+                    feedbackLine.style.color = 'var(--red)';
+                    activeTurnStarted = false;
+                    setTimeout(triggerNextWord, 3200);
+                } else {
+                    feedbackLine.innerText = "Not quite! Adjust your spelling and try again!";
+                    feedbackLine.style.color = 'var(--red)';
+                }
+            }
+        }
+
+        // --- PASSWORD VERIFICATION ROUTINE UPDATED TO 1337 ---
+        function verifyParentAccess() {
+            let pass = prompt("Enter parent administration password:");
+            if (pass === "1337") {
+                document.getElementById('admin-fr-input').value = savedFrWords.join(', ');
+                document.getElementById('admin-en-input').value = savedEnWords.join(', ');
+                buildHomeworkPickerCheckboxes();
+                switchScreen('screen-parent');
+            } else if (pass !== null) {
+                alert("Incorrect administration credentials password access locked!");
+            }
+        }
+
+        function buildHomeworkPickerCheckboxes() {
+            let container = document.getElementById('parent-hw-picker-grid');
+            container.innerHTML = "";
+            let uniqueMasterList = [...new Set([...savedFrWords, ...savedEnWords])];
+            
+            uniqueMasterList.forEach(word => {
+                let cleanWord = word.trim().toLowerCase();
+                if (!cleanWord) return;
+
+                let label = document.createElement('label');
+                label.classList.add('hw-checkbox-row');
+                
+                let isChecked = focusHomeworkWords.includes(cleanWord) ? 'checked' : '';
+                label.innerHTML = `<input type="checkbox" value="${cleanWord}" ${isChecked}> <span>${cleanWord.toUpperCase()}</span>`;
+                container.appendChild(label);
+            });
+        }
+
+        function saveParentConfiguration() {
+            let frRaw = document.getElementById('admin-fr-input').value;
+            let enRaw = document.getElementById('admin-en-input').value;
+
+            savedFrWords = frRaw.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0);
+            savedEnWords = enRaw.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0);
+
+            let pickedWords = [];
+            document.querySelectorAll('#parent-hw-picker-grid input[type="checkbox"]').forEach(box => {
+                if (box.checked) pickedWords.push(box.value);
+            });
+            focusHomeworkWords = pickedWords;
+
+            localStorage.setItem('admin_fr_words', JSON.stringify(savedFrWords));
+            localStorage.setItem('admin_en_words', JSON.stringify(savedEnWords));
+            localStorage.setItem('admin_focus_words', JSON.stringify(focusHomeworkWords));
+
+            alert("Master dictionaries configuration saved completely safely!");
+            switchScreen('screen-lang');
+        }
+
+        function applySceneLayeringVisuals() {
+            const users = ['marc', 'charles'];
+            const apparel = ['socks', 'gloves', 'cap', 'tshirt', 'pants', 'fancyhat'];
+            
+            users.forEach(u => {
+                apparel.forEach(i => {
+                    let layer = document.getElementById(`g-${u[0]}-${i}`);
+                    if (layer) layer.style.display = visualWardrobes[u][i] ? 'block' : 'none';
+                });
+                let shelf = document.getElementById(`shelf-${u}`);
+                if (shelf) {
+                    shelf.innerHTML = "";
+                    globalStoreCatalog.forEach(item => {
+                        if (item.type === 'decor' && visualWardrobes[u][item.id]) {
+                            let div = document.createElement('div');
+                            div.classList.add('asset-icon');
+                            div.innerText = item.icon;
+                            shelf.appendChild(div);
+                        }
+                    });
+                }
+            });
+        }
+
+        function openShop() {
+            updateGlobalHUDs();
+            renderShopColumn('marc');
+            renderShopColumn('charles');
+            switchScreen('screen-shop');
+        }
+
+        function renderShopColumn(user) {
+            let container = document.getElementById(`shop-col-${user}`);
+            container.innerHTML = `<h3 style="color:${user==='marc'?'var(--cyan)':'var(--magenta)'}; margin-bottom:8px; text-align:center;">${user.toUpperCase()}'S WARDROBE</h3>`;
+            
+            globalStoreCatalog.forEach(item => {
+                let row = document.createElement('div');
+                row.classList.add('shop-item-row');
+                let isOwned = visualWardrobes[user][item.id];
+                let labelText = `${item.label} (£${item.cost})`;
+                let actionBtn = `<button class="shop-buy-small" onclick="buyItem('${user}', '${item.id}', ${item.cost})">Buy</button>`;
+                if (isOwned) actionBtn = `<button class="shop-buy-small owned" disabled>OWNED</button>`;
+                row.innerHTML = `<span>${labelText}</span>${actionBtn}`;
+                container.appendChild(row);
+            });
+        }
+
+        function buyItem(user, id, cost) {
+            if (bankAccounts[user] >= cost && !visualWardrobes[user][id]) {
+                bankAccounts[user] -= cost;
+                visualWardrobes[user][id] = true;
+                localStorage.setItem('vault_wallets', JSON.stringify(bankAccounts));
+                localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes));
+                openShop();
+            }
+        }
+
+        function updateGlobalHUDs() {
+            document.getElementById('hud-m-cash').innerText = `MARC: £${parseFloat(bankAccounts.marc).toFixed(2)}`;
+            document.getElementById('hud-c-cash').innerText = `CHARLES: £${parseFloat(bankAccounts.charles).toFixed(2)}`;
+            let shopM = document.getElementById('shop-title-m');
+            let shopC = document.getElementById('shop-title-c');
+            if (shopM) shopM.innerText = `MARC: £${parseFloat(bankAccounts.marc).toFixed(2)}`;
+            if (shopC) shopC.innerText = `CHARLES: £${parseFloat(bankAccounts.charles).toFixed(2)}`;
+        }
+
+        function updateTurnVisuals() {
+            document.getElementById('node-marc').classList.remove('active-turn');
+            document.getElementById('node-charles').classList.remove('active-turn');
+            if (activeTurnStarted) {
+                document.getElementById(`node-${currentTurn}`).classList.add('active-turn');
+            }
+        }
+
+        function speakEngine(text, lang) {
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            let msg = new SpeechSynthesisUtterance(text);
+            msg.lang = (lang === "FR") ? "fr-FR" : "en-US";
+            window.speechSynthesis.speak(msg);
+        }
+
+        function replayAudio() {
+            if (currentWord) speakEngine(currentWord, currentLanguage);
+            inputField.focus();
+        }
+
+        function quitActiveGame() { backToMenu(); }
+        function switchScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+        function backToMenu() {
+            document.getElementById('hud-mode-text').innerText = "DICTATION DEFENDERS";
+            switchScreen('screen-lang');
+        }
+    </script>
+</body>
+</html>
