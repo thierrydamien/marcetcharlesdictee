@@ -38,6 +38,7 @@
         .kbd-key:active { background: var(--cyan); color: #04121a; }
         .kbd-accent { color: var(--gold); }
         .kbd-ctrl { max-width: 150px; flex: 1.4; font-size: 20px; }
+        .kbd-layout { max-width: 96px; flex: 1; font-size: 13px; color: var(--gold); border-color: var(--gold); letter-spacing: 0.5px; }
         .kbd-check { background: #1fae5d; border-color: #2ee07e; color: #04121a; }
 
         #game-container {
@@ -985,17 +986,31 @@
         window.addEventListener('orientationchange', fitGameToViewport);
         fitGameToViewport();
 
+        const KBD_LAYOUTS = ['alpha', 'qwerty', 'azerty'];
+        const KBD_LAYOUT_ROWS = {
+            alpha: ["abcdefghij", "klmnopqrst", "uvwxyz"],
+            qwerty: ["qwertyuiop", "asdfghjkl", "zxcvbnm"],
+            azerty: ["azertyuiop", "qsdfghjklm", "wxcvbn"]
+        };
+        const KBD_LAYOUT_LABELS = { alpha: 'ABC', qwerty: 'QWE', azerty: 'AZE' };
+        let kbdLayout = localStorage.getItem('kbd_layout') || 'alpha';
+        if (!KBD_LAYOUTS.includes(kbdLayout)) kbdLayout = 'alpha';
+        function cycleKbdLayout() {
+            let i = KBD_LAYOUTS.indexOf(kbdLayout);
+            kbdLayout = KBD_LAYOUTS[(i + 1) % KBD_LAYOUTS.length];
+            localStorage.setItem('kbd_layout', kbdLayout);
+            buildOnscreenKeyboard(); playSynthBeepTone(520, 0.05, 'sine');
+        }
         function buildOnscreenKeyboard() {
             const kbd = document.getElementById('onscreen-kbd'); if (!kbd) return;
-            const rows = ["abcdefghij", "klmnopqrst", "uvwxyzéèàç", "êâîôûù"];
             const accents = "éèàçêâîôûù";
+            const rows = KBD_LAYOUT_ROWS[kbdLayout] || KBD_LAYOUT_ROWS.alpha;
             let html = "";
             rows.forEach(r => {
-                html += `<div class="kbd-row">` + r.split('').map(c => `<button class="kbd-key ${accents.includes(c) ? 'kbd-accent' : ''}" onclick="kbdTap('${c}')">${c.toUpperCase()}</button>`).join('');
-                if (r === "êâîôûù") { html += `<button class="kbd-key" onclick="kbdTap(' ')">␣</button><button class="kbd-key" onclick="kbdBackspace()">⌫</button>`; }
-                html += `</div>`;
+                html += `<div class="kbd-row">` + r.split('').map(c => `<button class="kbd-key" onclick="kbdTap('${c}')">${c.toUpperCase()}</button>`).join('') + `</div>`;
             });
-            html += `<div class="kbd-row"><button class="kbd-key kbd-ctrl" onclick="replayAudio()">🔊</button><button class="kbd-key kbd-ctrl" onclick="useHint()">💡</button><button class="kbd-key kbd-ctrl kbd-check" onclick="handlePrimaryAction()">✓</button></div>`;
+            html += `<div class="kbd-row">` + accents.split('').map(c => `<button class="kbd-key kbd-accent" onclick="kbdTap('${c}')">${c.toUpperCase()}</button>`).join('') + `<button class="kbd-key" onclick="kbdTap(' ')">␣</button><button class="kbd-key" onclick="kbdBackspace()">⌫</button></div>`;
+            html += `<div class="kbd-row"><button class="kbd-key kbd-layout" onclick="cycleKbdLayout()">⌨ ${KBD_LAYOUT_LABELS[kbdLayout]}</button><button class="kbd-key kbd-ctrl" onclick="replayAudio()">🔊</button><button class="kbd-key kbd-ctrl" onclick="useHint()">💡</button><button class="kbd-key kbd-ctrl kbd-check" onclick="handlePrimaryAction()">✓</button></div>`;
             kbd.innerHTML = html;
         }
         function kbdTap(ch) { if (!inputField) return; inputField.value += ch; buildLetterBlanks(); playSynthBeepTone(650, 0.03, 'triangle', 0.04); }
