@@ -40,6 +40,21 @@
         .kbd-ctrl { max-width: 150px; flex: 1.4; font-size: 20px; }
         .kbd-layout { max-width: 96px; flex: 1; font-size: 13px; color: var(--gold); border-color: var(--gold); letter-spacing: 0.5px; }
         .kbd-check { background: #1fae5d; border-color: #2ee07e; color: #04121a; }
+        .shop-swatch-grid { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+        .swbuy { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .swdot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #2d3859; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; }
+        .swdot.owned { cursor: default; color: #04121a; font-weight: bold; border-color: #2ee07e; }
+        .swdot.lock { opacity: 0.4; cursor: not-allowed; }
+        .swprice { font-size: 9px; color: var(--cyan); }
+        .wardrobe-wrap { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+        .wd-row { display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.25); border: 1px solid #242f4c; border-radius: 8px; padding: 6px 8px; }
+        .wd-ico { font-size: 20px; min-width: 26px; text-align: center; }
+        .wd-swatches { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+        .wd-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #2d3859; cursor: pointer; padding: 0; }
+        .wd-swatch.on { border-color: #fff; box-shadow: 0 0 7px rgba(255,255,255,0.9); transform: scale(1.1); }
+        .wd-off, .wd-chip { background: #1b2236; color: #fff; border: 2px solid #2d3859; border-radius: 8px; padding: 4px 9px; font-size: 12px; cursor: pointer; }
+        .wd-chip { font-size: 18px; padding: 3px 8px; }
+        .wd-off.on, .wd-chip.on { border-color: var(--cyan); color: var(--cyan); }
 
         #game-container {
             width: 1050px; height: 720px;
@@ -469,6 +484,7 @@
         <!-- SCREEN 1.5: THE MYSTERY LOOT VAULT ROOM -->
         <div id="screen-loot-vault" class="screen">
             <h1 style="font-family:'Press Start 2P'; font-size:16px; color:var(--gold); margin-bottom:10px;" id="loot-vault-title">ARCADE PRIZE VAULT</h1>
+            <div id="loot-player-tabs" style="display:flex; gap:8px; justify-content:center; margin-bottom:10px; flex-wrap:wrap;"></div>
             <div style="font-family:'Press Start 2P'; font-size:11px; color:var(--cyan);" id="loot-key-count-line">KEYS: 0</div>
             
             <div class="chest-stage-anchor" onclick="attemptLootChestUnlockSequence()">
@@ -688,7 +704,7 @@
                             <g id="svg-glasses-container-m"><g id="svg-gls-rect-m"><rect x="36" y="34" width="12" height="10" id="svg-gls1-m" stroke="#2980b9" stroke-width="2" fill="none"/><rect x="52" y="34" width="12" height="10" id="svg-gls2-m" stroke="#2980b9" stroke-width="2" fill="none"/></g>
                                 <g id="svg-gls-round-m" style="display:none;"><circle cx="41" cy="39" r="7" id="svg-gls1-round-m" stroke="var(--gold)" stroke-width="2" fill="none"/><circle cx="59" cy="39" r="7" id="svg-gls2-round-m" stroke="var(--gold)" stroke-width="2" fill="none"/></g>
                                 <line x1="47" y1="39" x2="53" y2="39" id="svg-gls3-m" stroke="#2980b9" stroke-width="2"/>
-                            </g><circle cx="42" cy="39" r="2" fill="#000"/><circle cx="58" cy="39" r="2" fill="#000"/><path id="f-marc-sm" d="M 46 50 Q 50 54 54 50" stroke="#000" stroke-width="2" fill="none"/></g>
+                            </g><circle cx="42" cy="39" r="2" fill="#000"/><circle cx="58" cy="39" r="2" fill="#000"/><path id="f-marc-sm" d="M 46 50 Q 50 54 54 50" stroke="#000" stroke-width="2" fill="none"/><g id="g-m-tshirt" style="display:none;"><rect x="24" y="60" width="12" height="13" rx="2"/><rect x="64" y="60" width="12" height="13" rx="2"/><rect x="32" y="60" width="36" height="28" rx="3"/></g><g id="g-m-pants" style="display:none;"><rect x="34" y="88" width="32" height="12" rx="2"/><rect x="35" y="99" width="13" height="18" rx="2"/><rect x="52" y="99" width="13" height="18" rx="2"/></g><g id="g-m-socks" style="display:none;"><rect x="35" y="112" width="13" height="6" rx="1"/><rect x="52" y="112" width="13" height="6" rx="1"/></g><g id="g-m-gloves" style="display:none;"><rect x="25" y="91" width="11" height="9" rx="2"/><rect x="64" y="91" width="11" height="9" rx="2"/></g><g id="g-m-cap" style="display:none;"><path d="M 31 28 Q 50 7 69 28 Z"/><rect x="50" y="25" width="22" height="4" rx="2"/></g><g id="g-m-fancyhat" style="display:none;"><rect x="28" y="22" width="44" height="4" rx="2"/><rect x="38" y="4" width="24" height="20" rx="1"/></g><g id="g-m-pingpong" style="display:none;"><circle cx="80" cy="84" r="8"/><rect x="78" y="90" width="4" height="9" rx="1"/></g></g>
                         </svg>
                         <div class="name-badge" id="badge-marc">MARC</div>
                     </div>
@@ -742,7 +758,7 @@
                             <g id="svg-glasses-container-c"><g id="svg-gls-rect-c"><rect x="36" y="34" width="12" height="10" id="svg-gls1-c" stroke="#c0392b" stroke-width="2" fill="none"/><rect x="52" y="34" width="12" height="10" id="svg-gls2-c" stroke="#c0392b" stroke-width="2" fill="none"/></g>
                                 <g id="svg-gls-round-c" style="display:none;"><circle cx="41" cy="39" r="7" id="svg-gls1-round-c" stroke="var(--gold)" stroke-width="2" fill="none"/><circle cx="59" cy="39" r="7" id="svg-gls2-round-c" stroke="var(--gold)" stroke-width="2" fill="none"/></g>
                                 <line x1="47" y1="39" x2="53" y2="39" id="svg-gls3-c" stroke="#c0392b" stroke-width="2"/>
-                            </g><circle cx="42" cy="39" r="2" fill="#000"/><circle cx="58" cy="39" r="2" fill="#000"/><path id="f-charles-sm" d="M 46 50 Q 50 54 54 50" stroke="#000" stroke-width="2" fill="none"/></g>
+                            </g><circle cx="42" cy="39" r="2" fill="#000"/><circle cx="58" cy="39" r="2" fill="#000"/><path id="f-charles-sm" d="M 46 50 Q 50 54 54 50" stroke="#000" stroke-width="2" fill="none"/><g id="g-c-tshirt" style="display:none;"><rect x="24" y="60" width="12" height="13" rx="2"/><rect x="64" y="60" width="12" height="13" rx="2"/><rect x="32" y="60" width="36" height="28" rx="3"/></g><g id="g-c-pants" style="display:none;"><rect x="34" y="88" width="32" height="12" rx="2"/><rect x="35" y="99" width="13" height="18" rx="2"/><rect x="52" y="99" width="13" height="18" rx="2"/></g><g id="g-c-socks" style="display:none;"><rect x="35" y="112" width="13" height="6" rx="1"/><rect x="52" y="112" width="13" height="6" rx="1"/></g><g id="g-c-gloves" style="display:none;"><rect x="25" y="91" width="11" height="9" rx="2"/><rect x="64" y="91" width="11" height="9" rx="2"/></g><g id="g-c-cap" style="display:none;"><path d="M 31 28 Q 50 7 69 28 Z"/><rect x="50" y="25" width="22" height="4" rx="2"/></g><g id="g-c-fancyhat" style="display:none;"><rect x="28" y="22" width="44" height="4" rx="2"/><rect x="38" y="4" width="24" height="20" rx="1"/></g><g id="g-c-pingpong" style="display:none;"><circle cx="80" cy="84" r="8"/><rect x="78" y="90" width="4" height="9" rx="1"/></g></g>
                         </svg>
                         <div class="name-badge" id="badge-charles">CHARLES</div>
                     </div>
@@ -802,7 +818,7 @@
     <script>
         const localTranslationPack = {
             EN: {
-                title: "SUPER JEU DE LA DICTÉE / SUPER DICTATION GAME", play: "▶ PLAY", chest: "💎 Prize Vault", shop: "🛍️ Shop", creator: "👤 Character Creator", gallery: "📸 Trophy Room", parent: "⚙️ Parent Zone", howto: "❓ How to Play", backLang: "◀ Change Language",
+                title: "SUPER JEU DE LA DICTÉE / SUPER DICTATION GAME", play: "▶ PLAY", chest: "💎 Prize Vault", shop: "🛍️ Shop", creator: "👤 Character Creator", gallery: "📸 Trophy Room & Wardrobe", parent: "⚙️ Parent Zone", howto: "❓ How to Play", backLang: "◀ Change Language",
                 ccTitle: "CHARACTER CREATOR", ccSlot: "CHOOSE TARGET PROFILE SLOT:", ccStatus: "ACTIVE ROSTER STATUS:", ccName: "EDIT DISPLAY NAME:", ccGender: "GENDER MATRIX SELECTION:", ccHeight: "HEIGHT PROPORTIONS TIER:", ccWeight: "BODY MASS PROFILE:", ccSkin: "SKIN COMPLEXION TONE:", ccHaircut: "HAIRCUT STYLE DESIGN:", ccHaircolor: "HAIR COLOR SELECTION:", ccGlasses: "GLASSES DESIGN FRAME COLOR:", ccPreview: "LIVE PREVIEW", ccSave: "💾 SAVE PROFILE", ccSaved: "✓ PROFILE SAVED!", ccCancel: "◀ CANCEL",
                 statusActive: "🟢 Active (Show Character)", statusDisabled: "❌ Disabled (Hide Character)",
                 genderBoy: "👦 Boy / Male", genderGirl: "👧 Girl / Female",
@@ -827,10 +843,10 @@
                 howtoMulti: "👥 Players: Multiplayer takes turns. Solo mode plays with just one character.",
                 howtoParent: "⚙️ Parents: open Parent Zone to set your own French and English word lists and pick this week's homework words.",
                 gameCheck: "✓ CHECK", gameNextWord: "▶ NEXT", resultsTitle: "RESULTS", resultsMissed: "Practice these:", resultsPerfect: "Perfect! No mistakes 🎉", resultsContinue: "CONTINUE",
-                packLabel: "📦 Load a word pack:", packNone: "— Choose a pack —", packAnimals: "🐾 Animals", packNumbers: "🔢 Numbers", packColours: "🎨 Colours", packEveryday: "🏠 Everyday words", voiceLabel: "🔊 Reading voice:", voiceTest: "▶ Test", voiceAuto: "Automatic (recommended)", achvUnlocked: "Achievement Unlocked!", shopCollected: "Collected", shopWordsToGo: "more words", rarity_common: "Common", rarity_rare: "Rare", rarity_epic: "Epic", rarity_legendary: "Legendary", trophyTitle: "TROPHY ROOM", trophyLevel: "Level", trophyToNext: "to next level", trophyMedals: "Medals", trophyLocked: "Locked", trophyShowcase: "🌟 SHOW MY CHARACTERS", statWords: "Words", statStreak: "Best Streak", statEarned: "Earned", statItems: "Items", statMedals: "Medals", praise: ["Great job!", "Well done!", "Awesome!", "Brilliant!", "Superb!"], gameTryAgain: "Try again, you can do it!", hintBtn: "💡 HINT", hintNoMore: "No more hints, sound it out!", showcaseHeader: "🌟 CHARACTER SHOWCASE", showcaseNoMedals: "No medals yet, keep playing!"
+                packLabel: "📦 Load a word pack:", packNone: "— Choose a pack —", packAnimals: "🐾 Animals", packNumbers: "🔢 Numbers", packColours: "🎨 Colours", packEveryday: "🏠 Everyday words", voiceLabel: "🔊 Reading voice:", voiceTest: "▶ Test", voiceAuto: "Automatic (recommended)", achvUnlocked: "Achievement Unlocked!", shopCollected: "Collected", shopWordsToGo: "more words", rarity_common: "Common", rarity_rare: "Rare", rarity_epic: "Epic", rarity_legendary: "Legendary", trophyTitle: "TROPHY ROOM & WARDROBE", trophyLevel: "Level", trophyToNext: "to next level", trophyMedals: "Medals", trophyLocked: "Locked", trophyShowcase: "🌟 SHOW MY CHARACTERS", statWords: "Words", statStreak: "Best Streak", statEarned: "Earned", statItems: "Items", statMedals: "Medals", praise: ["Great job!", "Well done!", "Awesome!", "Brilliant!", "Superb!"], gameTryAgain: "Try again, you can do it!", hintBtn: "💡 HINT", hintNoMore: "No more hints, sound it out!", showcaseHeader: "🌟 CHARACTER SHOWCASE", showcaseNoMedals: "No medals yet, keep playing!"
             },
             FR: {
-                title: "SUPER JEU DE LA DICTÉE", play: "▶ JOUER", chest: "💎 Coffre à trésors", shop: "🛍️ Boutique", creator: "👤 Personnage", gallery: "📸 Salle des trophées", parent: "⚙️ Espace parents", howto: "❓ Comment jouer", backLang: "◀ Changer de langue",
+                title: "SUPER JEU DE LA DICTÉE", play: "▶ JOUER", chest: "💎 Coffre à trésors", shop: "🛍️ Boutique", creator: "👤 Personnage", gallery: "📸 Trophées & Garde-robe", parent: "⚙️ Espace parents", howto: "❓ Comment jouer", backLang: "◀ Changer de langue",
                 ccTitle: "CONFIGURATION DU PERSONNAGE", ccSlot: "CHOISIR LE PROFIL CIBLE :", ccStatus: "STATUT DU PERSONNAGE :", ccName: "MODIFIER LE NOM AFFICHÉ :", ccGender: "SÉLECTION DU GENRE :", ccHeight: "TAILLE DU PERSONNAGE :", ccWeight: "CORPULENCE DU PERSONNAGE :", ccSkin: "TEINTE DE LA PEAU :", ccHaircut: "COUPE DE CHEVEUX :", ccHaircolor: "COULEUR DES CHEVEUX :", ccGlasses: "STYLE DE LUNETTES :", ccPreview: "APERÇU EN DIRECT", ccSave: "💾 SAUVEGARDER LE PROFIL", ccSaved: "✓ PROFIL SAUVEGARDÉ !", ccCancel: "◀ ANNULER",
                 statusActive: "🟢 Actif (Afficher)", statusDisabled: "❌ Désactivé (Masquer)",
                 genderBoy: "👦 Garçon / Masculin", genderGirl: "👧 Fille / Féminin",
@@ -855,7 +871,7 @@
                 howtoMulti: "👥 Joueurs : Le multijoueur se joue à tour de rôle. Le mode solo se joue avec un seul personnage.",
                 howtoParent: "⚙️ Parents : ouvrez l'Espace parents pour définir vos listes de mots français et anglais et choisir les mots de devoirs de la semaine.",
                 gameCheck: "✓ VÉRIFIER", gameNextWord: "▶ SUIVANT", resultsTitle: "RÉSULTATS", resultsMissed: "À revoir :", resultsPerfect: "Parfait ! Aucune erreur 🎉", resultsContinue: "CONTINUER",
-                packLabel: "📦 Charger une liste :", packNone: "— Choisir une liste —", packAnimals: "🐾 Animaux", packNumbers: "🔢 Nombres", packColours: "🎨 Couleurs", packEveryday: "🏠 Mots du quotidien", voiceLabel: "🔊 Voix de lecture :", voiceTest: "▶ Tester", voiceAuto: "Automatique (recommandé)", achvUnlocked: "Succès débloqué !", shopCollected: "Collecté", shopWordsToGo: "mots de plus", rarity_common: "Commun", rarity_rare: "Rare", rarity_epic: "Épique", rarity_legendary: "Légendaire", trophyTitle: "SALLE DES TROPHÉES", trophyLevel: "Niveau", trophyToNext: "avant le prochain niveau", trophyMedals: "Médailles", trophyLocked: "Verrouillé", trophyShowcase: "🌟 VOIR MES PERSONNAGES", statWords: "Mots", statStreak: "Meilleure Série", statEarned: "Gagné", statItems: "Objets", statMedals: "Médailles", praise: ["Bravo !", "Super !", "Bien joué !", "Génial !", "Excellent !"], gameTryAgain: "Réessaie, tu peux y arriver !", hintBtn: "💡 INDICE", hintNoMore: "Plus d'indices, écoute bien !", showcaseHeader: "🌟 GALERIE DES PERSOS", showcaseNoMedals: "Pas encore de médailles, continue !"
+                packLabel: "📦 Charger une liste :", packNone: "— Choisir une liste —", packAnimals: "🐾 Animaux", packNumbers: "🔢 Nombres", packColours: "🎨 Couleurs", packEveryday: "🏠 Mots du quotidien", voiceLabel: "🔊 Voix de lecture :", voiceTest: "▶ Tester", voiceAuto: "Automatique (recommandé)", achvUnlocked: "Succès débloqué !", shopCollected: "Collecté", shopWordsToGo: "mots de plus", rarity_common: "Commun", rarity_rare: "Rare", rarity_epic: "Épique", rarity_legendary: "Légendaire", trophyTitle: "TROPHÉES & GARDE-ROBE", trophyLevel: "Niveau", trophyToNext: "avant le prochain niveau", trophyMedals: "Médailles", trophyLocked: "Verrouillé", trophyShowcase: "🌟 VOIR MES PERSONNAGES", statWords: "Mots", statStreak: "Meilleure Série", statEarned: "Gagné", statItems: "Objets", statMedals: "Médailles", praise: ["Bravo !", "Super !", "Bien joué !", "Génial !", "Excellent !"], gameTryAgain: "Réessaie, tu peux y arriver !", hintBtn: "💡 INDICE", hintNoMore: "Plus d'indices, écoute bien !", showcaseHeader: "🌟 GALERIE DES PERSOS", showcaseNoMedals: "Pas encore de médailles, continue !"
             }
         };
 
@@ -869,33 +885,70 @@
         };
 
         let spacedRepetitionFailureWeightLogs = JSON.parse(localStorage.getItem('ai_error_weights')) || {};
-        let lootKeysInventoryCount = JSON.parse(localStorage.getItem('vault_loot_keys')) || 0;
+        let lootKeys = (() => {
+            let raw = JSON.parse(localStorage.getItem('vault_loot_keys'));
+            if (raw && typeof raw === 'object') return { marc: raw.marc || 0, charles: raw.charles || 0 };
+            return { marc: (typeof raw === 'number' ? raw : 0), charles: 0 };
+        })();
+        function saveLootKeys() { localStorage.setItem('vault_loot_keys', JSON.stringify(lootKeys)); }
         let activeRoundScoreMatrix = { marc: { ok: 0, streak: 0 }, charles: { ok: 0, streak: 0 } };
         let roundStats = { marc: { ok: 0, attempts: 0, earned: 0, missed: [] }, charles: { ok: 0, attempts: 0, earned: 0, missed: [] } };
         let bankAccounts = JSON.parse(localStorage.getItem('vault_wallets')) || { marc: 0.00, charles: 0.00 };
-        let visualWardrobes = JSON.parse(localStorage.getItem('vault_inventories')) || {
-            marc: { socks: false, gloves: false, cap: false, tshirt: false, pants: false, fancyhat: false, pingpong: false, plant: false, lamp: false, laptop: false, dog: false, bike: false, dragon: false, car: false, plane: false, house: false },
-            charles: { socks: false, gloves: false, cap: false, tshirt: false, pants: false, fancyhat: false, pingpong: false, plant: false, lamp: false, laptop: false, dog: false, bike: false, dragon: false, car: false, plane: false, house: false }
+        let visualWardrobes = JSON.parse(localStorage.getItem('vault_inventories')) || { marc: {}, charles: {} };
+
+        const COLOR_DEFS = {
+            red:    { hex: '#e74c3c', en: 'Red',    fr: 'Rouge' },
+            blue:   { hex: '#3498db', en: 'Blue',   fr: 'Bleu' },
+            green:  { hex: '#2ecc71', en: 'Green',  fr: 'Vert' },
+            yellow: { hex: '#f1c40f', en: 'Yellow', fr: 'Jaune' },
+            white:  { hex: '#ecf0f1', en: 'White',  fr: 'Blanc' },
+            black:  { hex: '#2c3e50', en: 'Black',  fr: 'Noir' },
+            pink:   { hex: '#ff6fb5', en: 'Pink',   fr: 'Rose' },
+            silver: { hex: '#b8c2cc', en: 'Silver', fr: 'Argent' },
+            gold:   { hex: '#f6c945', en: 'Gold',   fr: 'Or' }
         };
 
         const globalStoreCatalog = [
-            { id: "socks",    cat: "wear",   cost: 2,   icon: "🧦", label_en: "Cozy Socks",         label_fr: "Chaussettes" },
-            { id: "gloves",   cat: "wear",   cost: 3,   icon: "🧤", label_en: "Winter Gloves",      label_fr: "Gants d'Hiver" },
-            { id: "cap",      cat: "wear",   cost: 4,   icon: "🧢", label_en: "Baseball Cap",       label_fr: "Casquette" },
-            { id: "tshirt",   cat: "wear",   cost: 5,   icon: "👕", label_en: "Cool T-Shirt",       label_fr: "T-Shirt Cool" },
-            { id: "pants",    cat: "wear",   cost: 6,   icon: "👖", label_en: "Denim Jeans",        label_fr: "Jean en Denim" },
-            { id: "pingpong", cat: "equip",  cost: 8,   icon: "🏓", label_en: "Ping Pong Paddle",   label_fr: "Raquette de Ping-Pong" },
-            { id: "fancyhat", cat: "equip",  cost: 10,  icon: "🎩", label_en: "Fancy Top Hat",      label_fr: "Chapeau Haut-de-Forme" },
-            { id: "bike",     cat: "equip",  cost: 15,  icon: "🚲", label_en: "Mountain Bike",      label_fr: "Vélo de Montagne",      render: "vehicle" },
-            { id: "lamp",     cat: "decor",  cost: 12,  icon: "💡", label_en: "Desk Lamp",          label_fr: "Lampe de Bureau",       render: "furniture" },
-            { id: "plant",    cat: "decor",  cost: 14,  icon: "🪴", label_en: "Potted Plant",       label_fr: "Plante en Pot",         render: "furniture" },
-            { id: "laptop",   cat: "decor",  cost: 25,  icon: "💻", label_en: "Gaming Laptop",      label_fr: "Ordinateur Portable",   render: "furniture" },
-            { id: "dog",      cat: "pets",   cost: 30,  icon: "🐶", label_en: "Loyal Puppy",        label_fr: "Petit Chien",           render: "pets" },
-            { id: "dragon",   cat: "pets",   cost: 75,  icon: "🐉", label_en: "Baby Dragon",        label_fr: "Bébé Dragon",           render: "pets" },
-            { id: "car",      cat: "luxury", cost: 100, icon: "🚗", label_en: "Sports Car",         label_fr: "Voiture de Sport",      render: "vehicle" },
-            { id: "plane",    cat: "luxury", cost: 250, icon: "✈️", label_en: "Private Jet",        label_fr: "Jet Privé",             render: "sky" },
-            { id: "house",    cat: "luxury", cost: 500, icon: "🏠", label_en: "Luxury Mansion",     label_fr: "Manoir de Luxe",        render: "building" }
+            { id: "socks",    cat: "wear",   cost: 2,   icon: "🧦", label_en: "Cozy Socks",       label_fr: "Chaussettes",           palette: [{k:'white',cost:2},{k:'black',cost:2},{k:'red',cost:2},{k:'pink',cost:2}] },
+            { id: "gloves",   cat: "wear",   cost: 3,   icon: "🧤", label_en: "Winter Gloves",    label_fr: "Gants d'Hiver",         palette: [{k:'black',cost:3},{k:'red',cost:3},{k:'blue',cost:3}] },
+            { id: "cap",      cat: "wear",   cost: 4,   icon: "🧢", label_en: "Baseball Cap",     label_fr: "Casquette",             palette: [{k:'red',cost:4},{k:'blue',cost:4},{k:'green',cost:4},{k:'black',cost:4},{k:'gold',cost:10}] },
+            { id: "tshirt",   cat: "wear",   cost: 5,   icon: "👕", label_en: "Cool T-Shirt",     label_fr: "T-Shirt Cool",          palette: [{k:'red',cost:5},{k:'blue',cost:5},{k:'green',cost:5},{k:'yellow',cost:5},{k:'white',cost:5},{k:'pink',cost:5},{k:'gold',cost:12}] },
+            { id: "pants",    cat: "wear",   cost: 6,   icon: "👖", label_en: "Denim Jeans",      label_fr: "Jean en Denim",         palette: [{k:'blue',cost:6},{k:'black',cost:6},{k:'green',cost:6},{k:'red',cost:6}] },
+            { id: "pingpong", cat: "equip",  cost: 8,   icon: "🏓", label_en: "Ping Pong Paddle", label_fr: "Raquette de Ping-Pong", palette: [{k:'red',cost:8},{k:'blue',cost:8},{k:'black',cost:8},{k:'gold',cost:16}] },
+            { id: "fancyhat", cat: "equip",  cost: 10,  icon: "🎩", label_en: "Fancy Top Hat",    label_fr: "Chapeau Haut-de-Forme", palette: [{k:'black',cost:10},{k:'silver',cost:18},{k:'gold',cost:30}] },
+            { id: "bike",     cat: "equip",  cost: 15,  icon: "🚲", label_en: "Mountain Bike",    label_fr: "Vélo de Montagne",      render: "vehicle" },
+            { id: "lamp",     cat: "decor",  cost: 12,  icon: "💡", label_en: "Desk Lamp",        label_fr: "Lampe de Bureau",       render: "furniture" },
+            { id: "plant",    cat: "decor",  cost: 14,  icon: "🪴", label_en: "Potted Plant",     label_fr: "Plante en Pot",         render: "furniture" },
+            { id: "laptop",   cat: "decor",  cost: 25,  icon: "💻", label_en: "Gaming Laptop",    label_fr: "Ordinateur Portable",   render: "furniture" },
+            { id: "dog",      cat: "pets",   cost: 30,  icon: "🐶", label_en: "Loyal Puppy",      label_fr: "Petit Chien",           render: "pets" },
+            { id: "dragon",   cat: "pets",   cost: 75,  icon: "🐉", label_en: "Baby Dragon",      label_fr: "Bébé Dragon",           render: "pets" },
+            { id: "car",      cat: "luxury", cost: 100, icon: "🚗", label_en: "Sports Car",       label_fr: "Voiture de Sport",      render: "vehicle" },
+            { id: "plane",    cat: "luxury", cost: 250, icon: "✈️", label_en: "Private Jet",      label_fr: "Jet Privé",             render: "sky" },
+            { id: "house",    cat: "luxury", cost: 500, icon: "🏠", label_en: "Luxury Mansion",   label_fr: "Manoir de Luxe",        render: "building" }
         ];
+        const CLOTHING_BASES = globalStoreCatalog.filter(i => Array.isArray(i.palette));
+        function isColorable(id) { let it = globalStoreCatalog.find(c => c.id === id); return !!(it && Array.isArray(it.palette)); }
+        function vId(base, k) { return base + ':' + k; }
+        function ownsKey(u, key) { let s = visualWardrobes[u][key]; return s === true || s === 'unequipped'; }
+        function ownsAnyColor(u, base) { let it = globalStoreCatalog.find(c => c.id === base); return it.palette.some(p => ownsKey(u, vId(base, p.k))); }
+        function wornColorKey(u, base) { let it = globalStoreCatalog.find(c => c.id === base); let f = it.palette.find(p => visualWardrobes[u][vId(base, p.k)] === true); return f ? f.k : null; }
+        function colorPrice(base, k) { let it = globalStoreCatalog.find(c => c.id === base); let p = it.palette.find(x => x.k === k); return p ? p.cost : it.cost; }
+
+        (function migrateWardrobe() {
+            let changed = false;
+            ['marc', 'charles'].forEach(u => {
+                if (!visualWardrobes[u]) visualWardrobes[u] = {};
+                CLOTHING_BASES.forEach(item => {
+                    let old = visualWardrobes[u][item.id];
+                    if (old === true || old === 'unequipped') {
+                        let vid = vId(item.id, item.palette[0].k);
+                        if (visualWardrobes[u][vid] === undefined) visualWardrobes[u][vid] = old;
+                        delete visualWardrobes[u][item.id]; changed = true;
+                    } else if (old === false) { delete visualWardrobes[u][item.id]; changed = true; }
+                });
+            });
+            if (changed) localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes));
+        })();
 
         let playerStats = JSON.parse(localStorage.getItem('player_stats')) || {
             marc: { wordsCorrect: 0, attempts: 0, bestStreak: 0, totalEarned: 0, keysOpened: 0, perfectRounds: 0 },
@@ -909,9 +962,9 @@
             { min: 30, en: "Word Wizard", fr: "Magicien des Mots" }, { min: 60, en: "Champion", fr: "Champion" }, { min: 100, en: "Legend", fr: "Légende" }
         ];
         function getRank(words) { let r = RANKS[0]; RANKS.forEach(x => { if (words >= x.min) r = x; }); return r; }
-        function ownedCount(u) { let c = 0; globalStoreCatalog.forEach(i => { let s = visualWardrobes[u][i.id]; if (s === true || s === 'unequipped') c++; }); return c; }
-        function ownsAllCategory(u, cat) { return globalStoreCatalog.filter(i => i.cat === cat).every(i => { let s = visualWardrobes[u][i.id]; return s === true || s === 'unequipped'; }); }
-        function ownsItem(u, id) { let s = visualWardrobes[u][id]; return s === true || s === 'unequipped'; }
+        function ownsItem(u, id) { if (isColorable(id)) return ownsAnyColor(u, id); let s = visualWardrobes[u][id]; return s === true || s === 'unequipped'; }
+        function ownedCount(u) { let c = 0; globalStoreCatalog.forEach(i => { if (ownsItem(u, i.id)) c++; }); return c; }
+        function ownsAllCategory(u, cat) { return globalStoreCatalog.filter(i => i.cat === cat).every(i => ownsItem(u, i.id)); }
 
         const ACHIEVEMENTS = [
             { id: "first_word", tier: "bronze", icon: "🌱", en: "First Word", fr: "Premier Mot", den: "Spell your first word", dfr: "Épelle ton premier mot", cond: (s, u) => s.wordsCorrect >= 1 },
@@ -933,7 +986,7 @@
         let achvQueue = []; let achvToastActive = false;
         function checkAchievements(u) {
             ACHIEVEMENTS.forEach(a => {
-                if (!unlockedAchievements[u].includes(a.id) && a.cond(playerStats[u], u)) { unlockedAchievements[u].push(a.id); achvQueue.push(a); }
+                if (!unlockedAchievements[u].includes(a.id) && a.cond(playerStats[u], u)) { unlockedAchievements[u].push(a.id); achvQueue.push({ a, u }); }
             });
             persistProgress();
             if (achvQueue.length && !achvToastActive) showNextAchvToast();
@@ -941,8 +994,8 @@
         function showNextAchvToast() {
             if (!achvQueue.length) { achvToastActive = false; return; }
             achvToastActive = true;
-            let a = achvQueue.shift(); let pack = localTranslationPack[currentLanguage];
-            lootKeysInventoryCount++; localStorage.setItem('vault_loot_keys', JSON.stringify(lootKeysInventoryCount));
+            let entry = achvQueue.shift(); let a = entry.a; let u = entry.u; let pack = localTranslationPack[currentLanguage];
+            lootKeys[u] = (lootKeys[u] || 0) + 1; saveLootKeys();
             let toast = document.getElementById('achv-toast');
             toast.querySelector('.achv-toast-icon').innerText = a.icon;
             toast.querySelector('.achv-toast-title').innerText = pack.achvUnlocked;
@@ -1239,47 +1292,71 @@
             setTimeout(() => { if (!activeTurnStarted && !showcaseGalleryModeActive) triggerNextWord(); }, 950);
         }
 
+        let vaultPlayer = 'marc';
+        function renderVaultKeyLine() {
+            let name = activeProfileBlueprints[vaultPlayer].name;
+            document.getElementById('loot-key-count-line').innerText = (currentLanguage === "FR") ? `CLÉS DE ${name} : ${lootKeys[vaultPlayer]}` : `${name}'S KEYS: ${lootKeys[vaultPlayer]}`;
+        }
+        function renderVault() {
+            if (activeProfileBlueprints[vaultPlayer].status === 'disabled') vaultPlayer = (activeProfileBlueprints.marc.status === 'disabled') ? 'charles' : 'marc';
+            let tabs = "";
+            ['marc', 'charles'].forEach(p => {
+                if (activeProfileBlueprints[p].status === 'disabled') return;
+                tabs += `<button class="cc-tile ${p === vaultPlayer ? 'active' : ''}" onclick="setVaultPlayer('${p}')">${activeProfileBlueprints[p].name} (${lootKeys[p]} 🔑)</button>`;
+            });
+            document.getElementById('loot-player-tabs').innerHTML = tabs;
+            renderVaultKeyLine();
+        }
+        function setVaultPlayer(u) { vaultPlayer = u; playSynthBeepTone(440, 0.08, 'sine'); renderVault(); }
         function openLootChestRoom() {
-            document.getElementById('loot-key-count-line').innerText = (currentLanguage === "FR") ? `CLÉS DISPONIBLES : ${lootKeysInventoryCount}` : `KEYS VAULT STOCK: ${lootKeysInventoryCount}`;
+            renderVault();
             document.getElementById('target-loot-chest-element').innerText = "🧰";
             playSynthBeepTone(440, 0.12, 'sine'); switchScreen('screen-loot-vault');
         }
 
         function attemptLootChestUnlockSequence() {
             let pack = localTranslationPack[currentLanguage];
-            if (lootKeysInventoryCount <= 0) {
+            if (lootKeys[vaultPlayer] <= 0) {
                 document.getElementById('loot-vault-prompt-line').innerText = (currentLanguage === "FR") ? "Aucune clé disponible ! Gagnez des séries !" : "No keys left! Complete 5-word streaks!";
                 playSynthBeepTone(150, 0.2, 'sawtooth'); return;
             }
-            lootKeysInventoryCount--; localStorage.setItem('vault_loot_keys', JSON.stringify(lootKeysInventoryCount));
-            document.getElementById('loot-key-count-line').innerText = (currentLanguage === "FR") ? `CLÉS DISPONIBLES : ${lootKeysInventoryCount}` : `KEYS VAULT STOCK: ${lootKeysInventoryCount}`;
-            
+            lootKeys[vaultPlayer]--; saveLootKeys(); renderVault();
+
             let c = document.getElementById('target-loot-chest-element'); c.classList.add('chest-shaking');
             playSynthBeepTone(220, 0.5, 'square', 0.15);
 
             setTimeout(() => {
                 c.classList.remove('chest-shaking');
-                let unowned = [];
-                globalStoreCatalog.forEach(i => {
-                    if(!visualWardrobes.marc[i.id] || !visualWardrobes.charles[i.id]) unowned.push(i);
+                let units = [];
+                globalStoreCatalog.forEach(it => {
+                    if (isColorable(it.id)) { it.palette.forEach(p => { if (!ownsKey(vaultPlayer, vId(it.id, p.k))) units.push({ base: it, k: p.k, cost: p.cost }); }); }
+                    else if (!ownsKey(vaultPlayer, it.id)) units.push({ base: it, k: null, cost: it.cost });
                 });
-                
-                let awardedItem = globalStoreCatalog[Math.floor(Math.random() * globalStoreCatalog.length)];
-                if(unowned.length > 0) awardedItem = unowned[Math.floor(Math.random() * unowned.length)];
+                if (!units.length) globalStoreCatalog.forEach(it => { if (isColorable(it.id)) it.palette.forEach(p => units.push({ base: it, k: p.k, cost: p.cost })); else units.push({ base: it, k: null, cost: it.cost }); });
 
-                visualWardrobes.marc[awardedItem.id] = true; visualWardrobes.charles[awardedItem.id] = true;
+                const RARITY_WEIGHT = { common: 50, rare: 30, epic: 14, legendary: 6 };
+                let weighted = units.map(u => ({ u, w: RARITY_WEIGHT[rarityOf(u.cost)] || 1 }));
+                let total = weighted.reduce((s, x) => s + x.w, 0);
+                let r = Math.random() * total; let pick = weighted[0].u;
+                for (let x of weighted) { if (r < x.w) { pick = x.u; break; } r -= x.w; }
+
+                let awardedItem = pick.base;
+                if (pick.k) { let vid = vId(awardedItem.id, pick.k); visualWardrobes[vaultPlayer][vid] = wornColorKey(vaultPlayer, awardedItem.id) ? 'unequipped' : true; }
+                else { visualWardrobes[vaultPlayer][awardedItem.id] = true; }
                 localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes));
-                playerStats.marc.keysOpened++; playerStats.charles.keysOpened++; persistProgress();
-                checkAchievements('marc'); checkAchievements('charles');
+                playerStats[vaultPlayer].keysOpened++; persistProgress();
+                checkAchievements(vaultPlayer);
 
+                let owner = activeProfileBlueprints[vaultPlayer].name;
+                let cName = pick.k ? (((currentLanguage === 'FR') ? COLOR_DEFS[pick.k].fr : COLOR_DEFS[pick.k].en) + ' ') : '';
                 document.getElementById('loot-popup-icon-display').innerText = awardedItem.icon || "👕";
-                document.getElementById('loot-popup-item-name').innerText = (currentLanguage === "FR") ? awardedItem.label_fr : awardedItem.label_en;
+                document.getElementById('loot-popup-item-name').innerText = `${owner}: ${cName}` + ((currentLanguage === "FR") ? awardedItem.label_fr : awardedItem.label_en);
                 document.getElementById('loot-popup-overlay').style.display = 'flex';
                 playSynthBeepTone(880, 0.4, 'sine', 0.2); spawnBlastParticles(525, 360, 'var(--gold)', 50);
             }, 800);
         }
 
-        function closeLootRevealOverlay() { document.getElementById('loot-popup-overlay').style.display = 'none'; openLootChestRoom(); }
+        function closeLootRevealOverlay() { document.getElementById('loot-popup-overlay').style.display = 'none'; renderVault(); }
 
         function openShowcaseMode() {
             let pack = localTranslationPack[currentLanguage]; showcaseGalleryModeActive = true; 
@@ -1324,6 +1401,29 @@
             let pct = Math.min(100, Math.round((s.wordsCorrect - prevAt) / (nextAt - prevAt) * 100));
             let earnedCount = unlockedAchievements[u].length;
 
+            let wlang = (currentLanguage === 'FR');
+            let wardrobe = `<div class="trophy-medals-header">👕 ${wlang ? 'Garde-robe' : 'Wardrobe'}</div><div class="wardrobe-wrap">`;
+            let anyOwned = false;
+            CLOTHING_BASES.forEach(item => {
+                if (!ownsAnyColor(u, item.id)) return;
+                anyOwned = true; let worn = wornColorKey(u, item.id);
+                let sws = item.palette.filter(p => ownsKey(u, vId(item.id, p.k))).map(p => {
+                    let def = COLOR_DEFS[p.k];
+                    return `<button class="wd-swatch ${worn === p.k ? 'on' : ''}" style="background:${def.hex};" title="${wlang ? def.fr : def.en}" onclick="wearColor('${u}','${item.id}','${p.k}')"></button>`;
+                }).join('');
+                let offBtn = `<button class="wd-off ${worn ? '' : 'on'}" onclick="unwearType('${u}','${item.id}')">${wlang ? 'Aucun' : 'Off'}</button>`;
+                wardrobe += `<div class="wd-row"><span class="wd-ico">${item.icon}</span><span class="wd-swatches">${sws}${offBtn}</span></div>`;
+            });
+            let bigOwned = globalStoreCatalog.filter(it => !isColorable(it.id) && ownsKey(u, it.id));
+            if (bigOwned.length) {
+                anyOwned = true;
+                wardrobe += `<div class="wd-row"><span class="wd-ico" style="opacity:.7; font-size:13px;">${wlang ? 'Objets' : 'Items'}</span><span class="wd-swatches">`;
+                bigOwned.forEach(it => { wardrobe += `<button class="wd-chip ${visualWardrobes[u][it.id] === true ? 'on' : ''}" onclick="toggleBig('${u}','${it.id}')">${it.icon}</button>`; });
+                wardrobe += `</span></div>`;
+            }
+            if (!anyOwned) wardrobe += `<div style="opacity:.7; font-size:12px; padding:8px; text-align:center;">${wlang ? 'Achète des objets dans la Boutique !' : 'Buy items in the Shop first!'}</div>`;
+            wardrobe += `</div>`;
+
             let html = `<div class="trophy-level-card">
                 <div class="trophy-rank">${rankName}</div>
                 <div class="trophy-level">${pack.trophyLevel} ${level}</div>
@@ -1337,6 +1437,7 @@
                 ${statCard("🎒", ownedCount(u) + "/" + globalStoreCatalog.length, pack.statItems)}
                 ${statCard("🏅", earnedCount + "/" + ACHIEVEMENTS.length, pack.statMedals)}
             </div>
+            ${wardrobe}
             <div class="trophy-medals-header">🏆 ${pack.trophyMedals} (${earnedCount}/${ACHIEVEMENTS.length})</div>
             <div class="trophy-medal-grid">`;
             ACHIEVEMENTS.forEach(a => {
@@ -1500,7 +1601,7 @@
                 persistProgress(); checkAchievements(currentTurn);
                 
                 if (activeRoundScoreMatrix[currentTurn].streak % 5 === 0) {
-                    lootKeysInventoryCount++; localStorage.setItem('vault_loot_keys', JSON.stringify(lootKeysInventoryCount));
+                    lootKeys[currentTurn]++; saveLootKeys();
                     playSynthBeepTone(987, 0.5, 'sine', 0.2);
                 }
 
@@ -1781,43 +1882,82 @@
                 <div class="shop-col-meter-label">${pack.shopCollected}: ${ownedInCat}/${catItems.length}</div>`;
             let cards = `<div class="shop-cards">`;
             catItems.forEach(item => {
-                let state = visualWardrobes[user][item.id]; let rarity = rarityOf(item.cost);
                 let label = (currentLanguage === "FR") ? item.label_fr : item.label_en;
-                let cardCls = `shop-card ${rarity}`; let btn = "", extra = "";
-                if (state === true) { btn = `<button class="shop-buy-small owned" onclick="toggleItemEquip('${user}','${item.id}',false)">✓ ${pack.shopEquipped}</button>`; cardCls += ' owned'; }
-                else if (state === 'unequipped') { btn = `<button class="shop-buy-small unequipped" onclick="toggleItemEquip('${user}','${item.id}',true)">${pack.shopHidden}</button>`; cardCls += ' owned'; }
-                else if (wallet >= item.cost) { btn = `<button class="shop-buy-small" onclick="buyItem('${user}','${item.id}',${item.cost})">${pack.shopBuy} £${item.cost}</button>`; cardCls += ' affordable'; }
-                else {
-                    let toGo = Math.ceil(item.cost - wallet); let p = Math.min(100, Math.round(wallet / item.cost * 100));
-                    btn = `<button class="shop-buy-small locked-btn" disabled>🔒 £${item.cost}</button>`;
-                    extra = `<div class="shop-togo"><div class="shop-togo-bar"><div class="shop-togo-fill" style="width:${p}%;"></div></div><span>${toGo} ${pack.shopWordsToGo}</span></div>`;
+                let ownedLbl = (currentLanguage === 'FR') ? 'Acquis' : 'Owned';
+                if (isColorable(item.id)) {
+                    let swatches = item.palette.map(p => {
+                        let def = COLOR_DEFS[p.k]; let nm = (currentLanguage === 'FR') ? def.fr : def.en;
+                        if (ownsKey(user, vId(item.id, p.k))) return `<div class="swbuy"><span class="swdot owned" style="background:${def.hex};" title="${nm}">✓</span><span class="swprice">${ownedLbl}</span></div>`;
+                        let afford = wallet >= p.cost;
+                        return `<div class="swbuy"><button class="swdot ${afford ? '' : 'lock'}" style="background:${def.hex};" title="${nm}" ${afford ? `onclick="buyVariant('${user}','${item.id}','${p.k}',${p.cost})"` : 'disabled'}>${afford ? '' : '🔒'}</button><span class="swprice">£${p.cost}</span></div>`;
+                    }).join('');
+                    cards += `<div class="shop-card ${ownsAnyColor(user, item.id) ? 'owned' : ''}"><div class="shop-card-icon">${item.icon}</div><div class="shop-card-name">${label}</div><div class="shop-swatch-grid">${swatches}</div></div>`;
+                } else {
+                    let rarity = rarityOf(item.cost); let cardCls = `shop-card ${rarity}`; let btn = "", extra = "";
+                    if (ownsKey(user, item.id)) { btn = `<button class="shop-buy-small owned" disabled>✓ ${ownedLbl}</button>`; cardCls += ' owned'; }
+                    else if (wallet >= item.cost) { btn = `<button class="shop-buy-small" onclick="buyBig('${user}','${item.id}',${item.cost})">${pack.shopBuy} £${item.cost}</button>`; cardCls += ' affordable'; }
+                    else {
+                        let toGo = Math.ceil(item.cost - wallet); let p = Math.min(100, Math.round(wallet / item.cost * 100));
+                        btn = `<button class="shop-buy-small locked-btn" disabled>🔒 £${item.cost}</button>`;
+                        extra = `<div class="shop-togo"><div class="shop-togo-bar"><div class="shop-togo-fill" style="width:${p}%;"></div></div><span>${toGo} ${pack.shopWordsToGo}</span></div>`;
+                    }
+                    cards += `<div class="${cardCls}"><div class="shop-rarity-tag">${pack['rarity_' + rarity]}</div><div class="shop-card-icon">${item.icon}</div><div class="shop-card-name">${label}</div>${btn}${extra}</div>`;
                 }
-                cards += `<div class="${cardCls}"><div class="shop-rarity-tag">${pack['rarity_' + rarity]}</div><div class="shop-card-icon">${item.icon}</div><div class="shop-card-name">${label}</div>${btn}${extra}</div>`;
             });
             cards += `</div>`;
             container.innerHTML = head + cards;
         }
 
-        function toggleItemEquip(user, id, shouldEquip) { visualWardrobes[user][id] = shouldEquip ? true : "unequipped"; localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes)); renderShopColumn(user); }
-        function buyItem(user, id, cost) {
+        function buyVariant(user, base, k, cost) {
             let wallet = unlimitedMoneyCheatActive ? 99999 : bankAccounts[user];
-            if (wallet >= cost && !visualWardrobes[user][id]) {
+            let vid = vId(base, k);
+            if (wallet >= cost && !ownsKey(user, vid)) {
+                if (!unlimitedMoneyCheatActive) bankAccounts[user] -= cost;
+                visualWardrobes[user][vid] = wornColorKey(user, base) ? 'unequipped' : true;
+                localStorage.setItem('vault_wallets', JSON.stringify(bankAccounts)); localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes));
+                playSynthBeepTone(660, 0.1, 'sine'); setTimeout(() => playSynthBeepTone(880, 0.14, 'sine'), 90); spawnBlastParticles(525, 360, 'var(--gold)', 30);
+                checkAchievements(user); renderShopColumn(user); updateGlobalHUDs();
+            }
+        }
+        function buyBig(user, id, cost) {
+            let wallet = unlimitedMoneyCheatActive ? 99999 : bankAccounts[user];
+            if (wallet >= cost && !ownsKey(user, id)) {
                 if (!unlimitedMoneyCheatActive) bankAccounts[user] -= cost;
                 visualWardrobes[user][id] = true; localStorage.setItem('vault_wallets', JSON.stringify(bankAccounts)); localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes));
                 playSynthBeepTone(660, 0.1, 'sine'); setTimeout(() => playSynthBeepTone(880, 0.14, 'sine'), 90); spawnBlastParticles(525, 360, 'var(--gold)', 30);
                 checkAchievements(user); renderShopColumn(user); updateGlobalHUDs();
             }
         }
+        function wearColor(user, base, k) {
+            let it = globalStoreCatalog.find(c => c.id === base);
+            it.palette.forEach(p => { let vid = vId(base, p.k); if (ownsKey(user, vid)) visualWardrobes[user][vid] = (p.k === k) ? true : 'unequipped'; });
+            localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes));
+            playSynthBeepTone(620, 0.06, 'sine'); renderTrophyRoom(); applySceneLayeringVisuals();
+        }
+        function unwearType(user, base) {
+            let it = globalStoreCatalog.find(c => c.id === base);
+            it.palette.forEach(p => { let vid = vId(base, p.k); if (ownsKey(user, vid)) visualWardrobes[user][vid] = 'unequipped'; });
+            localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes));
+            playSynthBeepTone(300, 0.06, 'sine'); renderTrophyRoom(); applySceneLayeringVisuals();
+        }
+        function toggleBig(user, id) {
+            if (!ownsKey(user, id)) return;
+            visualWardrobes[user][id] = (visualWardrobes[user][id] === true) ? 'unequipped' : true;
+            localStorage.setItem('vault_inventories', JSON.stringify(visualWardrobes));
+            playSynthBeepTone(500, 0.06, 'sine'); renderTrophyRoom(); applySceneLayeringVisuals();
+        }
 
         function applySceneLayeringVisuals() {
-            const users = ['marc', 'charles']; const apparel = ['socks', 'gloves', 'cap', 'tshirt', 'pants', 'fancyhat', 'pingpong'];
+            const users = ['marc', 'charles'];
             let anyMansionOwned = false; let pack = localTranslationPack[currentLanguage];
 
             users.forEach(u => {
                 let profileNetWorthValue = 0;
-                apparel.forEach(i => {
-                    let layer = document.getElementById(`g-${u[0]}-${i}`); if (layer) layer.style.display = (visualWardrobes[u][i] === true) ? 'block' : 'none';
-                    if (visualWardrobes[u][i] === true || visualWardrobes[u][i] === 'unequipped') { let matchObj = globalStoreCatalog.find(c => c.id === i); if(matchObj) profileNetWorthValue += matchObj.cost; }
+                CLOTHING_BASES.forEach(item => {
+                    let layer = document.getElementById(`g-${u[0]}-${item.id}`);
+                    let worn = wornColorKey(u, item.id);
+                    if (layer) { layer.style.display = worn ? 'block' : 'none'; if (worn) layer.setAttribute('fill', COLOR_DEFS[worn].hex); }
+                    item.palette.forEach(p => { if (ownsKey(u, vId(item.id, p.k))) profileNetWorthValue += p.cost; });
                 });
 
                 let furnitureShelf = document.getElementById(`shelf-furniture-${u}`);
