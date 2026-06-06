@@ -1109,7 +1109,7 @@
                 ["123", "456", "789"].forEach(r => {
                     html += `<div class="kbd-row">` + r.split('').map(c => `<button class="kbd-key" onclick="kbdTap('${c}')">${c}</button>`).join('') + `</div>`;
                 });
-                html += `<div class="kbd-row"><button class="kbd-key kbd-ctrl" onclick="replayAudio()">🔊</button><button class="kbd-key" onclick="kbdTap('0')">0</button><button class="kbd-key" onclick="kbdBackspace()">⌫</button><button class="kbd-key kbd-ctrl kbd-check" onclick="handlePrimaryAction()">✓</button></div>`;
+                html += `<div class="kbd-row"><button class="kbd-key kbd-ctrl" onclick="replayAudio()">🔊</button><button class="kbd-key kbd-ctrl" onclick="useHint()">💡</button><button class="kbd-key" onclick="kbdTap('0')">0</button><button class="kbd-key" onclick="kbdBackspace()">⌫</button><button class="kbd-key kbd-ctrl kbd-check" onclick="handlePrimaryAction()">✓</button></div>`;
                 kbd.innerHTML = html; return;
             }
             const accents = "éèàçêâîôûù";
@@ -1579,7 +1579,7 @@
 
         function refreshBlackboardChalkScores() {
             let p1Pack = activeProfileBlueprints.marc; let p2Pack = activeProfileBlueprints.charles;
-            document.getElementById('blackboard-chalk-title').innerText = (currentLanguage === "FR") ? "Dictée" : "Dictation";
+            document.getElementById('blackboard-chalk-title').innerText = (currentPhase === "MATH") ? ((currentLanguage === "FR") ? "Maths" : "Math") : ((currentLanguage === "FR") ? "Dictée" : "Dictation");
             
             if (p1Pack.status !== 'disabled' && (currentRosterFormat === 'MULTIPLAYER' || currentRosterFormat === 'SOLO_MARC')) {
                 document.getElementById('chalk-score-left').style.opacity = "1"; document.getElementById('chalk-name-p1').innerText = p1Pack.name;
@@ -1714,11 +1714,12 @@
                 currentWord = `${num1} ${op} ${num2}`;
                 mathQuestionCount++;
                 practiceCard.style.display = 'block';
-                practiceCard.innerHTML = `<div style="font-family:'Press Start 2P'; font-size:30px; color:var(--cyan); text-align:center; line-height:1.4;">${currentWord} = ?</div><div style="font-family:'Press Start 2P'; font-size:9px; color:var(--gold); text-align:center; margin-top:10px;">${mathQuestionCount}/${MATH_ROUND_LEN}</div>`;
+                practiceCard.innerHTML = `<div style="background:rgba(5,6,11,0.82); border:3px solid var(--cyan); border-radius:16px; padding:18px 26px; margin:10px auto; max-width:85%; text-align:center; box-shadow:0 0 25px rgba(0,238,255,0.35); position:relative; z-index:30;"><div style="font-family:'Press Start 2P'; font-size:34px; color:#fff; line-height:1.3;">${currentWord} = ?</div><div style="font-family:'Press Start 2P'; font-size:10px; color:var(--gold); margin-top:12px;">${mathQuestionCount}/${MATH_ROUND_LEN}</div></div>`;
                 feedbackLine.innerText = pack.mathPrompt; feedbackLine.style.color = '#fff';
                 let spoken = `${num1} ${op === '+' ? pack.mathSayPlus : op === '-' ? pack.mathSayMinus : op === '×' ? pack.mathSayTimes : pack.mathSayDiv} ${num2}`;
                 speakEngine(spoken, currentLanguage);
                 document.getElementById(`f-marc-sm`).setAttribute('d', 'M 46 50 Q 50 54 54 50'); document.getElementById(`f-charles-sm`).setAttribute('d', 'M 46 50 Q 50 54 54 50');
+                hintsUsedThisWord = 0;
                 updatePrimaryActionBtn(); buildLetterBlanks(); updateComboMeter();
                 return;
             }
@@ -1786,7 +1787,19 @@
         }
         function useHint() {
             let pack = localTranslationPack[currentLanguage];
-            if (currentPhase === "MATH") return;
+            if (currentPhase === "MATH") {
+                if (!activeTurnStarted || !currentMathAnswer) return;
+                let ans = currentMathAnswer;
+                let cap = Math.max(1, ans.length - 1);
+                if (hintsUsedThisWord >= cap) { feedbackLine.innerText = pack.hintNoMore; feedbackLine.style.color = 'var(--gold)'; return; }
+                hintsUsedThisWord++;
+                let v = inputField.value; let n = 0;
+                while (n < v.length && n < ans.length && v[n] === ans[n]) n++;
+                let revealTo = Math.min(n + 1, ans.length);
+                inputField.value = ans.slice(0, revealTo);
+                buildLetterBlanks(); playSynthBeepTone(700, 0.08, 'sine'); inputField.focus();
+                return;
+            }
             if (!activeTurnStarted || !currentWord) return;
             if (hintsUsedThisWord >= hintCapThisWord) { feedbackLine.innerText = pack.hintNoMore; feedbackLine.style.color = 'var(--gold)'; return; }
             hintsUsedThisWord++;
@@ -2373,7 +2386,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCodeBlob = new Blob([`
-                    const CACHE_NAME = 'homework-game-v6';
+                    const CACHE_NAME = 'homework-game-v8';
                     const urlsToCache = ['./', 'index.html'];
                     self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache))); });
                     self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });
