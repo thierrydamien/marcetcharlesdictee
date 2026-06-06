@@ -28,7 +28,17 @@
         .rotate-hint .icon { font-size: 64px; animation: rotateNudge 1.8s infinite ease-in-out; }
         .rotate-hint .msg { font-family: 'Press Start 2P', monospace; font-size: 13px; line-height: 1.9; color: var(--cyan); }
         @keyframes rotateNudge { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(90deg); } }
-        @media (orientation: portrait) and (max-width: 760px) and (pointer: coarse) { .rotate-hint { display: flex; } }
+        /* On-screen keyboard (touch devices) - portrait is supported, so no rotate hint */
+        body.touch-mode { align-items: flex-start; }
+        .touch-mode #word-input-box { display: none !important; }
+        #onscreen-kbd { position: fixed; bottom: 0; left: 0; width: 100%; z-index: 90; background: #0a0c14; border-top: 2px solid #1d253a; padding: 6px 4px calc(8px + env(safe-area-inset-bottom)); display: none; flex-direction: column; gap: 5px; box-shadow: 0 -8px 20px rgba(0,0,0,0.6); }
+        #onscreen-kbd.kbd-visible { display: flex; }
+        .kbd-row { display: flex; gap: 4px; justify-content: center; }
+        .kbd-key { flex: 1; max-width: 60px; background: #1b2236; color: #fff; border: 1px solid #2d3859; border-radius: 7px; padding: 12px 0; font-size: 17px; font-weight: bold; cursor: pointer; }
+        .kbd-key:active { background: var(--cyan); color: #04121a; }
+        .kbd-accent { color: var(--gold); }
+        .kbd-ctrl { max-width: 150px; flex: 1.4; font-size: 20px; }
+        .kbd-check { background: #1fae5d; border-color: #2ee07e; color: #04121a; }
 
         #game-container {
             width: 1050px; height: 720px;
@@ -786,6 +796,8 @@
 
     </div>
 
+    <div id="onscreen-kbd"></div>
+
     <script>
         const localTranslationPack = {
             EN: {
@@ -952,9 +964,19 @@
         function resizeParticleCanvas() { canvas.width = 1050; canvas.height = 720; }
         window.addEventListener('resize', resizeParticleCanvas); resizeParticleCanvas();
 
+        const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
         function fitGameToViewport() {
             const stage = document.getElementById('game-container');
             if (!stage) return;
+            if (IS_TOUCH) {
+                const kbd = document.getElementById('onscreen-kbd');
+                const kbdH = (kbd && kbd.classList.contains('kbd-visible')) ? kbd.offsetHeight : 0;
+                const availH = Math.max(220, window.innerHeight - kbdH);
+                const scale = Math.min(window.innerWidth / 1050, availH / 720);
+                stage.style.transform = `scale(${scale})`;
+                stage.style.transformOrigin = 'top center';
+                return;
+            }
             const scale = Math.min(window.innerWidth / 1050, window.innerHeight / 720, 1);
             stage.style.transform = `scale(${scale})`;
             stage.style.transformOrigin = 'center center';
@@ -962,6 +984,31 @@
         window.addEventListener('resize', fitGameToViewport);
         window.addEventListener('orientationchange', fitGameToViewport);
         fitGameToViewport();
+
+        function buildOnscreenKeyboard() {
+            const kbd = document.getElementById('onscreen-kbd'); if (!kbd) return;
+            const rows = ["abcdefghij", "klmnopqrst", "uvwxyzéèàç", "êâîôûù"];
+            const accents = "éèàçêâîôûù";
+            let html = "";
+            rows.forEach(r => {
+                html += `<div class="kbd-row">` + r.split('').map(c => `<button class="kbd-key ${accents.includes(c) ? 'kbd-accent' : ''}" onclick="kbdTap('${c}')">${c.toUpperCase()}</button>`).join('');
+                if (r === "êâîôûù") { html += `<button class="kbd-key" onclick="kbdTap(' ')">␣</button><button class="kbd-key" onclick="kbdBackspace()">⌫</button>`; }
+                html += `</div>`;
+            });
+            html += `<div class="kbd-row"><button class="kbd-key kbd-ctrl" onclick="replayAudio()">🔊</button><button class="kbd-key kbd-ctrl" onclick="useHint()">💡</button><button class="kbd-key kbd-ctrl kbd-check" onclick="handlePrimaryAction()">✓</button></div>`;
+            kbd.innerHTML = html;
+        }
+        function kbdTap(ch) { if (!inputField) return; inputField.value += ch; buildLetterBlanks(); playSynthBeepTone(650, 0.03, 'triangle', 0.04); }
+        function kbdBackspace() { if (!inputField) return; inputField.value = inputField.value.slice(0, -1); buildLetterBlanks(); }
+        function syncMobileKeyboard() {
+            if (!IS_TOUCH) return;
+            const kbd = document.getElementById('onscreen-kbd'); if (!kbd) return;
+            const active = document.querySelector('.screen.active');
+            const show = !!(active && active.id === 'screen-game' && !showcaseGalleryModeActive);
+            kbd.classList.toggle('kbd-visible', show);
+            fitGameToViewport();
+        }
+        if (IS_TOUCH) { document.body.classList.add('touch-mode'); buildOnscreenKeyboard(); }
 
         class BlockParticle {
             constructor(x, y, color) { this.x = x; this.y = y; this.size = Math.random() * 5 + 3; this.vx = (Math.random() - 0.5) * 6; this.vy = (Math.random() - 0.5) * 6; this.color = color; this.alpha = 1; }
@@ -1134,6 +1181,7 @@
 
         function startPhase(phase) {
             let pack = localTranslationPack[currentLanguage];
+            showcaseGalleryModeActive = false;
             currentPhase = phase; practiceIndex = 0; activeTurnStarted = false; updateGlobalHUDs();
             
             // FIXED: Force immediate dictionary calibration sync on stage generation hook
@@ -1891,6 +1939,7 @@
             document.getElementById(id).classList.add('active');
             if (ROOT_SCREENS.includes(id)) screenHistory = [];
             updateBackControl();
+            syncMobileKeyboard();
         }
         function goBack() {
             if (!screenHistory.length) return;
