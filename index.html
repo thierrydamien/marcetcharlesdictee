@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super jeu de la dictée / Super Dictation Game</title>
+    <title>Le jeu des devoirs / The Homework Game</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Super Dictée">
+    <meta name="apple-mobile-web-app-title" content="Devoirs">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght=700&family=Press+Start+2P&family=Ubuntu:wght@400;700&display=swap');
 
@@ -390,6 +390,10 @@
         .achv-toast-icon { font-size: 40px; filter: drop-shadow(0 0 8px rgba(255,210,0,0.6)); }
         .achv-toast-title { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--gold); margin-bottom: 6px; }
         .achv-toast-name { font-size: 15px; font-weight: bold; color: #fff; }
+        .scramble-tile { min-width: 42px; padding: 12px 12px; font-family: 'Press Start 2P', monospace; font-size: 20px; color: var(--white); background: linear-gradient(180deg, #2a2f55, #1a1e3a); border: 2px solid var(--cyan); border-radius: 10px; cursor: pointer; transition: opacity 0.15s, transform 0.1s; }
+        .scramble-tile:active { transform: scale(0.92); }
+        .scramble-tile.used { opacity: 0.25; pointer-events: none; }
+        .scramble-reset { padding: 8px 18px; font-family: 'Press Start 2P', monospace; font-size: 16px; background: #1a1e3a; color: var(--gold); border: 2px solid var(--gold); border-radius: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -405,7 +409,7 @@
         <!-- HUD HEADER DISPLAY -->
         <div id="header-hud">
             <button id="hud-back-btn" onclick="goBack()" style="display:none; background:#161c30; color:var(--white); border:2px solid var(--cyan); padding:7px 14px; border-radius:8px; font-size:10px; font-family:'Press Start 2P', monospace; cursor:pointer; margin-right:14px; white-space:nowrap;">◀ BACK</button>
-            <div class="hud-title" id="hud-mode-text">SUPER JEU DE LA DICTÉE / SUPER DICTATION GAME</div>
+            <div class="hud-title" id="hud-mode-text">LE JEU DES DEVOIRS / THE HOMEWORK GAME</div>
             <div class="hud-wallets">
                 <span style="color:var(--cyan);" id="hud-m-cash">MARC: £0.00</span>
                 <span style="color:var(--magenta);" id="hud-c-cash">CHARLES: £0.00</span>
@@ -416,8 +420,8 @@
         <div id="screen-lang-select" class="screen active">
             <div class="lang-hero">
                 <div class="lang-hero-emoji">✏️</div>
-                <div class="lang-title-fr">SUPER JEU<br>DE LA DICTÉE</div>
-                <div class="lang-title-en">SUPER DICTATION GAME</div>
+                <div class="lang-title-fr">LE JEU<br>DES DEVOIRS</div>
+                <div class="lang-title-en">THE HOMEWORK GAME</div>
                 <div class="lang-sub">Choisis ta langue&nbsp;·&nbsp;Choose your language</div>
             </div>
             <div class="lang-card-row">
@@ -437,7 +441,8 @@
         <!-- SCREEN 1: PORTAL MAIN MENU -->
         <div id="screen-lang" class="screen">
             <h1 style="font-family:'Press Start 2P'; font-size:16px; margin-bottom:18px; text-align:center;" id="menu-main-title">MENU</h1>
-            <button class="menu-primary" id="menu-btn-play" onclick="openRosterConfig()">▶ PLAY</button>
+            <button class="menu-primary" id="menu-btn-dict" style="background: linear-gradient(180deg, #00eeff, #0088ff); margin-bottom: 10px;" onclick="selectSubjectFromMenu('dictation')">📝 DICTATION</button>
+            <button class="menu-primary" id="menu-btn-math" style="background: linear-gradient(180deg, #ffb340, #f08512); margin-bottom: 15px;" onclick="selectSubjectFromMenu('math')">🔢 MATHEMATICS</button>
             <div class="menu-grid">
                 <button class="menu-card" id="menu-btn-chest" onclick="openLootChestRoom()">💎 Prize Vault</button>
                 <button class="menu-card" id="menu-btn-shop" onclick="openShop()">🛍️ Shop</button>
@@ -567,14 +572,50 @@
             
             <h3 style="font-family:'Press Start 2P'; font-size:10px; margin-bottom:12px; color:var(--cyan);" id="classroom-theme-header">SELECT ROOM STYLE:</h3>
             <div style="display:flex; gap:10px; margin-bottom:20px;">
-                <button class="shop-tab-btn active" id="theme-btn-classic" onclick="setVisualClassroomTheme('classic', this)">🪵 RETRO CLASS</button>
-                <button class="shop-tab-btn" id="theme-btn-space" onclick="setVisualClassroomTheme('space', this)">🚀 SPACE COCKPIT</button>
-                <button class="shop-tab-btn" id="theme-btn-magic" onclick="setVisualClassroomTheme('magic', this)">🔮 SORCERY HALL</button>
+                <button class="shop-tab-btn room-style-btn active" data-theme="classic" id="theme-btn-classic" onclick="setVisualClassroomTheme('classic', this)">🪵 RETRO CLASS</button>
+                <button class="shop-tab-btn room-style-btn" data-theme="space" id="theme-btn-space" onclick="setVisualClassroomTheme('space', this)">🚀 SPACE COCKPIT</button>
+                <button class="shop-tab-btn room-style-btn" data-theme="magic" id="theme-btn-magic" onclick="setVisualClassroomTheme('magic', this)">🔮 SORCERY HALL</button>
             </div>
 
-            <button class="arcade-btn" style="border-color:var(--green);" id="phase-btn-p1" onclick="startPhase('PRACTICE')">1. PRACTICE ENGINE</button>
+            <button class="arcade-btn" style="border-color:var(--green);" id="phase-btn-p1" onclick="openPracticeStyle()">1. PRACTICE ENGINE</button>
             <button class="arcade-btn" style="border-color:var(--gold);" id="phase-btn-p2" onclick="startPhase('QUIZ')">2. BLIND QUIZ TEST</button>
             <button class="arcade-btn" id="phase-btn-back" onclick="goBack()">◀ BACK</button>
+        </div>
+
+        <div id="screen-practice-style" class="screen">
+            <h1 style="font-family:'Press Start 2P'; font-size:15px; margin-bottom:22px; color:var(--gold);" id="practice-style-header">PRACTICE STYLE:</h1>
+            <div style="display:flex; gap:8px; margin-bottom:26px; flex-wrap:wrap; justify-content:center; max-width:90%;">
+                <button class="shop-tab-btn practice-style-btn active" data-style="copy" id="ps-btn-copy" onclick="setPracticeStyle('copy', this)" style="font-size:14px;">📄 COPY</button>
+                <button class="shop-tab-btn practice-style-btn" data-style="lcwc" id="ps-btn-lcwc" onclick="setPracticeStyle('lcwc', this)" style="font-size:14px;">🧠 REMEMBER</button>
+                <button class="shop-tab-btn practice-style-btn" data-style="missing" id="ps-btn-missing" onclick="setPracticeStyle('missing', this)" style="font-size:14px;">🧩 GAPS</button>
+                <button class="shop-tab-btn practice-style-btn" data-style="scramble" id="ps-btn-scramble" onclick="setPracticeStyle('scramble', this)" style="font-size:14px;">🔀 SCRAMBLE</button>
+                <button class="shop-tab-btn practice-style-btn" data-style="bee" id="ps-btn-bee" onclick="setPracticeStyle('bee', this)" style="font-size:14px;">👂 LISTEN</button>
+            </div>
+            <button class="arcade-btn" style="border-color:var(--green);" id="ps-btn-start" onclick="startPhase('PRACTICE')">▶ START PRACTICE</button>
+            <button class="arcade-btn" id="ps-btn-back" onclick="goBack()">◀ BACK</button>
+        </div>
+
+        <div id="screen-math-config" class="screen">
+            <h1 style="font-family:'Press Start 2P'; font-size:15px; margin-bottom:20px; color:#f08512;" id="math-title">OPERATION &amp; DIFFICULTY</h1>
+            <div style="display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; justify-content:center;">
+                <button class="shop-tab-btn active" id="math-op-add" onclick="setMathOp('+', this)" style="font-size:15px;">➕ ADD</button>
+                <button class="shop-tab-btn" id="math-op-sub" onclick="setMathOp('-', this)" style="font-size:15px;">➖ SUB</button>
+                <button class="shop-tab-btn" id="math-op-mul" onclick="setMathOp('×', this)" style="font-size:15px;">✖️ MUL</button>
+                <button class="shop-tab-btn" id="math-op-div" onclick="setMathOp('÷', this)" style="font-size:15px;">➗ DIV</button>
+            </div>
+            <div style="display:flex; gap:10px; margin-bottom:22px; justify-content:center;">
+                <button class="shop-tab-btn active" id="math-diff-easy" onclick="setMathDiff('easy', this)">🟢 EASY</button>
+                <button class="shop-tab-btn" id="math-diff-med" onclick="setMathDiff('med', this)">🟡 MED</button>
+                <button class="shop-tab-btn" id="math-diff-hard" onclick="setMathDiff('hard', this)">🔴 HARD</button>
+            </div>
+            <h3 style="font-family:'Press Start 2P'; font-size:10px; margin-bottom:12px; color:var(--cyan);" id="math-theme-header">SELECT ROOM STYLE:</h3>
+            <div style="display:flex; gap:10px; margin-bottom:22px; justify-content:center;">
+                <button class="shop-tab-btn room-style-btn active" data-theme="classic" id="math-theme-btn-classic" onclick="setVisualClassroomTheme('classic', this)">🪵 RETRO CLASS</button>
+                <button class="shop-tab-btn room-style-btn" data-theme="space" id="math-theme-btn-space" onclick="setVisualClassroomTheme('space', this)">🚀 SPACE COCKPIT</button>
+                <button class="shop-tab-btn room-style-btn" data-theme="magic" id="math-theme-btn-magic" onclick="setVisualClassroomTheme('magic', this)">🔮 SORCERY HALL</button>
+            </div>
+            <button class="arcade-btn" style="border-color:var(--green);" id="math-btn-start" onclick="startMathPhase()">▶ START MATHS</button>
+            <button class="arcade-btn" id="math-btn-back" onclick="goBack()">◀ BACK</button>
         </div>
 
         <!-- SCREEN 5: REWARDS COMPLEX -->
@@ -818,7 +859,7 @@
     <script>
         const localTranslationPack = {
             EN: {
-                title: "SUPER JEU DE LA DICTÉE / SUPER DICTATION GAME", play: "▶ PLAY", chest: "💎 Prize Vault", shop: "🛍️ Shop", creator: "👤 Character Creator", gallery: "📸 Trophy Room & Wardrobe", parent: "⚙️ Parent Zone", howto: "❓ How to Play", backLang: "◀ Change Language",
+                title: "LE JEU DES DEVOIRS / THE HOMEWORK GAME", play: "▶ PLAY", chest: "💎 Prize Vault", shop: "🛍️ Shop", creator: "👤 Character Creator", gallery: "📸 Trophy Room & Wardrobe", parent: "⚙️ Parent Zone", howto: "❓ How to Play", backLang: "◀ Change Language",
                 ccTitle: "CHARACTER CREATOR", ccSlot: "CHOOSE TARGET PROFILE SLOT:", ccStatus: "ACTIVE ROSTER STATUS:", ccName: "EDIT DISPLAY NAME:", ccGender: "GENDER MATRIX SELECTION:", ccHeight: "HEIGHT PROPORTIONS TIER:", ccWeight: "BODY MASS PROFILE:", ccSkin: "SKIN COMPLEXION TONE:", ccHaircut: "HAIRCUT STYLE DESIGN:", ccHaircolor: "HAIR COLOR SELECTION:", ccGlasses: "GLASSES DESIGN FRAME COLOR:", ccPreview: "LIVE PREVIEW", ccSave: "💾 SAVE PROFILE", ccSaved: "✓ PROFILE SAVED!", ccCancel: "◀ CANCEL",
                 statusActive: "🟢 Active (Show Character)", statusDisabled: "❌ Disabled (Hide Character)",
                 genderBoy: "👦 Boy / Male", genderGirl: "👧 Girl / Female",
@@ -833,6 +874,7 @@
                 gamePressEnter: "Press ENTER to begin!", gamePracticePrompt: "Press ENTER to display the first word!", gameQuizPrompt: "Press ENTER to begin voice dictation!", gameListenSpell: "Listen closely and spell...", gameRetype: "Re-type the word carefully:", gameCorrect: "Correct! +£1.00 added to account balance!", gameCheckLayout: "Check your spelling adjustments!", gameComplete: "List complete! Shifting back...", gameRepeat: "🔊 REPEAT (Tab)", gameExit: "🏠 EXIT ARENA", gameSlowOff: "🐢 SLOW-MO: OFF", gameSlowOn: "🐢 SLOW-MO: ON", gameShowcaseTitle: "🏛️ Trophy Hall: your medals and assets!", gameWelcome: "Welcome to the grand showcase gallery room. Look at your magnificent wealth progress!", gameNetWorth: "NET WORTH", gameSpelled: "No, that is spelled ", gameP1Column: "PLAYER 1", gameP2Column: "PLAYER 2", gamePapa: "PAPA",
                 lootTitle: "ARCADE PRIZE VAULT", lootPrompt: "Tap the chest to use a key!", lootBack: "◀ BACK TO MENU", lootPopupHeader: "ITEM UNLOCKED!", lootCollect: "COLLECT",
                 inputPlaceholder: "Type answer here...", themeHeader: "SELECT ROOM STYLE:", themeClassic: "🪵 RETRO CLASS", themeSpace: "🚀 SPACE COCKPIT", themeMagic: "🔮 SORCERY HALL",
+                psHeader: "PRACTICE STYLE:", psCopy: "📄 COPY", psLcwc: "🧠 REMEMBER", psMissing: "🧩 GAPS", psScramble: "🔀 SCRAMBLE", psBee: "👂 LISTEN", psLookPrompt: "Look and remember the word!", psCoverPrompt: "Now type it from memory!", psMissingPrompt: "Fill in the missing letters!", psScramblePrompt: "Tap the letters in order!", psBeePrompt: "Listen, then spell it!", psStart: "▶ START PRACTICE",
                 slot: "SLOT", player1: "Player 1", player2: "Player 2", skinPeach: "Peach", skinGold: "Gold", skinBronze: "Bronze", skinApricot: "Apricot", hairEspresso: "Midnight Espresso", hairGinger: "Fiery Ginger", hairBlonde: "Arcade Blonde", hairGrey: "Slate Grey",
                 parentGateTitle: "PARENTS ONLY", parentGatePrompt: "Enter the parent password:", parentGateWrong: "Wrong password. Try again.", parentGateCancel: "CANCEL",
                 howtoTitle: "HOW TO PLAY",
@@ -843,10 +885,11 @@
                 howtoMulti: "👥 Players: Multiplayer takes turns. Solo mode plays with just one character.",
                 howtoParent: "⚙️ Parents: open Parent Zone to set your own French and English word lists and pick this week's homework words.",
                 gameCheck: "✓ CHECK", gameNextWord: "▶ NEXT", resultsTitle: "RESULTS", resultsMissed: "Practice these:", resultsPerfect: "Perfect! No mistakes 🎉", resultsContinue: "CONTINUE",
-                packLabel: "📦 Load a word pack:", packNone: "— Choose a pack —", packAnimals: "🐾 Animals", packNumbers: "🔢 Numbers", packColours: "🎨 Colours", packEveryday: "🏠 Everyday words", voiceLabel: "🔊 Reading voice:", voiceTest: "▶ Test", voiceAuto: "Automatic (recommended)", achvUnlocked: "Achievement Unlocked!", shopCollected: "Collected", shopWordsToGo: "more words", rarity_common: "Common", rarity_rare: "Rare", rarity_epic: "Epic", rarity_legendary: "Legendary", trophyTitle: "TROPHY ROOM & WARDROBE", trophyLevel: "Level", trophyToNext: "to next level", trophyMedals: "Medals", trophyLocked: "Locked", trophyShowcase: "🌟 SHOW MY CHARACTERS", statWords: "Words", statStreak: "Best Streak", statEarned: "Earned", statItems: "Items", statMedals: "Medals", praise: ["Great job!", "Well done!", "Awesome!", "Brilliant!", "Superb!"], gameTryAgain: "Try again, you can do it!", hintBtn: "💡 HINT", hintNoMore: "No more hints, sound it out!", showcaseHeader: "🌟 CHARACTER SHOWCASE", showcaseNoMedals: "No medals yet, keep playing!"
+                packLabel: "📦 Load a word pack:", packNone: "— Choose a pack —", packAnimals: "🐾 Animals", packNumbers: "🔢 Numbers", packColours: "🎨 Colours", packEveryday: "🏠 Everyday words", voiceLabel: "🔊 Reading voice:", voiceTest: "▶ Test", voiceAuto: "Automatic (recommended)", achvUnlocked: "Achievement Unlocked!", shopCollected: "Collected", shopWordsToGo: "more words", rarity_common: "Common", rarity_rare: "Rare", rarity_epic: "Epic", rarity_legendary: "Legendary", trophyTitle: "TROPHY ROOM & WARDROBE", trophyLevel: "Level", trophyToNext: "to next level", trophyMedals: "Medals", trophyLocked: "Locked", trophyShowcase: "🌟 SHOW MY CHARACTERS", statWords: "Words", statStreak: "Best Streak", statEarned: "Earned", statItems: "Items", statMedals: "Medals", praise: ["Great job!", "Well done!", "Awesome!", "Brilliant!", "Superb!"], gameTryAgain: "Try again, you can do it!", hintBtn: "💡 HINT", hintNoMore: "No more hints, sound it out!", showcaseHeader: "🌟 CHARACTER SHOWCASE", showcaseNoMedals: "No medals yet, keep playing!",
+                subjDict: "📝 DICTATION", subjMath: "🔢 MATHEMATICS", mathOpTitle: "OPERATION & DIFFICULTY", mathAdd: "➕ ADD", mathSub: "➖ SUB", mathMul: "✖️ MUL", mathDiv: "➗ DIV", mathEasy: "🟢 EASY", mathMed: "🟡 MED", mathHard: "🔴 HARD", mathStart: "▶ START MATHS", mathBack: "◀ BACK", mathPrompt: "Solve the equation!", mathSayPlus: "plus", mathSayMinus: "minus", mathSayTimes: "times", mathSayDiv: "divided by", mathSayEquals: "equals"
             },
             FR: {
-                title: "SUPER JEU DE LA DICTÉE", play: "▶ JOUER", chest: "💎 Coffre à trésors", shop: "🛍️ Boutique", creator: "👤 Personnage", gallery: "📸 Trophées & Garde-robe", parent: "⚙️ Espace parents", howto: "❓ Comment jouer", backLang: "◀ Changer de langue",
+                title: "LE JEU DES DEVOIRS", play: "▶ JOUER", chest: "💎 Coffre à trésors", shop: "🛍️ Boutique", creator: "👤 Personnage", gallery: "📸 Trophées & Garde-robe", parent: "⚙️ Espace parents", howto: "❓ Comment jouer", backLang: "◀ Changer de langue",
                 ccTitle: "CONFIGURATION DU PERSONNAGE", ccSlot: "CHOISIR LE PROFIL CIBLE :", ccStatus: "STATUT DU PERSONNAGE :", ccName: "MODIFIER LE NOM AFFICHÉ :", ccGender: "SÉLECTION DU GENRE :", ccHeight: "TAILLE DU PERSONNAGE :", ccWeight: "CORPULENCE DU PERSONNAGE :", ccSkin: "TEINTE DE LA PEAU :", ccHaircut: "COUPE DE CHEVEUX :", ccHaircolor: "COULEUR DES CHEVEUX :", ccGlasses: "STYLE DE LUNETTES :", ccPreview: "APERÇU EN DIRECT", ccSave: "💾 SAUVEGARDER LE PROFIL", ccSaved: "✓ PROFIL SAUVEGARDÉ !", ccCancel: "◀ ANNULER",
                 statusActive: "🟢 Actif (Afficher)", statusDisabled: "❌ Désactivé (Masquer)",
                 genderBoy: "👦 Garçon / Masculin", genderGirl: "👧 Fille / Féminin",
@@ -861,6 +904,7 @@
                 gamePressEnter: "Appuyez sur ENTRÉE pour commencer !", gamePracticePrompt: "Appuyez sur ENTRÉE pour afficher le premier mot !", gameQuizPrompt: "Appuyez sur ENTRÉE pour lancer la dictée vocale !", gameListenSpell: "Écoutez attentivement et écrivez...", gameRetype: "Recopiez le mot avec précision :", gameCorrect: "Correct ! +£1.00 ajouté au compte !", gameCheckLayout: "Vérifiez l'orthographe des lettres !", gameComplete: "Série terminée ! Retour au menu...", gameRepeat: "🔊 RÉPÉTER (Tab)", gameExit: "🏠 QUITTER L'ARÈNE", gameSlowOff: "🐢 RALENTI : OFF", gameSlowOn: "🐢 RALENTI : ON", gameShowcaseTitle: "🏛️ Salle des Trophées : médailles et biens !", gameWelcome: "Bienvenue dans la grande galerie d'exposition. Admirez votre incroyable fortune !", gameNetWorth: "VALEUR TOTALE", gameSpelled: "Non, cela s'écrira ", gameP1Column: "JOUEUR 1", gameP2Column: "JOUEUR 2", gamePapa: "PAPA",
                 lootTitle: "COFFRE AUX TRÉSORS", lootPrompt: "Touchez le coffre pour utiliser une clé !", lootBack: "◀ RETOUR AU MENU", lootPopupHeader: "OBJET DÉBLOQUÉ !", lootCollect: "RÉCUPÉRER",
                 inputPlaceholder: "Écrivez la réponse ici...", themeHeader: "CHOISIR LE STYLE DE SALLE :", themeClassic: "🪵 CLASSE RÉTRO", themeSpace: "🚀 COCKPIT SPATIAL", themeMagic: "🔮 SALLE DE SORCELLERIE",
+                psHeader: "STYLE D'ENTRAÎNEMENT :", psCopy: "📄 COPIER", psLcwc: "🧠 MÉMOIRE", psMissing: "🧩 TROUS", psScramble: "🔀 MÉLANGE", psBee: "👂 ÉCOUTE", psLookPrompt: "Regarde et mémorise le mot !", psCoverPrompt: "Maintenant, écris-le de mémoire !", psMissingPrompt: "Complète les lettres manquantes !", psScramblePrompt: "Tape les lettres dans l'ordre !", psBeePrompt: "Écoute, puis écris-le !", psStart: "▶ COMMENCER",
                 slot: "EMPLACEMENT", player1: "Joueur 1", player2: "Joueur 2", skinPeach: "Pêche", skinGold: "Doré", skinBronze: "Bronze", skinApricot: "Abricot", hairEspresso: "Brun Foncé", hairGinger: "Roux Ardent", hairBlonde: "Blond Arcade", hairGrey: "Gris Ardoise",
                 parentGateTitle: "RÉSERVÉ AUX PARENTS", parentGatePrompt: "Entrez le mot de passe parent :", parentGateWrong: "Mauvais mot de passe. Réessaie.", parentGateCancel: "ANNULER",
                 howtoTitle: "COMMENT JOUER",
@@ -871,7 +915,8 @@
                 howtoMulti: "👥 Joueurs : Le multijoueur se joue à tour de rôle. Le mode solo se joue avec un seul personnage.",
                 howtoParent: "⚙️ Parents : ouvrez l'Espace parents pour définir vos listes de mots français et anglais et choisir les mots de devoirs de la semaine.",
                 gameCheck: "✓ VÉRIFIER", gameNextWord: "▶ SUIVANT", resultsTitle: "RÉSULTATS", resultsMissed: "À revoir :", resultsPerfect: "Parfait ! Aucune erreur 🎉", resultsContinue: "CONTINUER",
-                packLabel: "📦 Charger une liste :", packNone: "— Choisir une liste —", packAnimals: "🐾 Animaux", packNumbers: "🔢 Nombres", packColours: "🎨 Couleurs", packEveryday: "🏠 Mots du quotidien", voiceLabel: "🔊 Voix de lecture :", voiceTest: "▶ Tester", voiceAuto: "Automatique (recommandé)", achvUnlocked: "Succès débloqué !", shopCollected: "Collecté", shopWordsToGo: "mots de plus", rarity_common: "Commun", rarity_rare: "Rare", rarity_epic: "Épique", rarity_legendary: "Légendaire", trophyTitle: "TROPHÉES & GARDE-ROBE", trophyLevel: "Niveau", trophyToNext: "avant le prochain niveau", trophyMedals: "Médailles", trophyLocked: "Verrouillé", trophyShowcase: "🌟 VOIR MES PERSONNAGES", statWords: "Mots", statStreak: "Meilleure Série", statEarned: "Gagné", statItems: "Objets", statMedals: "Médailles", praise: ["Bravo !", "Super !", "Bien joué !", "Génial !", "Excellent !"], gameTryAgain: "Réessaie, tu peux y arriver !", hintBtn: "💡 INDICE", hintNoMore: "Plus d'indices, écoute bien !", showcaseHeader: "🌟 GALERIE DES PERSOS", showcaseNoMedals: "Pas encore de médailles, continue !"
+                packLabel: "📦 Charger une liste :", packNone: "— Choisir une liste —", packAnimals: "🐾 Animaux", packNumbers: "🔢 Nombres", packColours: "🎨 Couleurs", packEveryday: "🏠 Mots du quotidien", voiceLabel: "🔊 Voix de lecture :", voiceTest: "▶ Tester", voiceAuto: "Automatique (recommandé)", achvUnlocked: "Succès débloqué !", shopCollected: "Collecté", shopWordsToGo: "mots de plus", rarity_common: "Commun", rarity_rare: "Rare", rarity_epic: "Épique", rarity_legendary: "Légendaire", trophyTitle: "TROPHÉES & GARDE-ROBE", trophyLevel: "Niveau", trophyToNext: "avant le prochain niveau", trophyMedals: "Médailles", trophyLocked: "Verrouillé", trophyShowcase: "🌟 VOIR MES PERSONNAGES", statWords: "Mots", statStreak: "Meilleure Série", statEarned: "Gagné", statItems: "Objets", statMedals: "Médailles", praise: ["Bravo !", "Super !", "Bien joué !", "Génial !", "Excellent !"], gameTryAgain: "Réessaie, tu peux y arriver !", hintBtn: "💡 INDICE", hintNoMore: "Plus d'indices, écoute bien !", showcaseHeader: "🌟 GALERIE DES PERSOS", showcaseNoMedals: "Pas encore de médailles, continue !",
+                subjDict: "📝 DICTÉE", subjMath: "🔢 MATHS", mathOpTitle: "OPÉRATION ET DIFFICULTÉ", mathAdd: "➕ PLUS", mathSub: "➖ MOINS", mathMul: "✖️ FOIS", mathDiv: "➗ DIVISÉ", mathEasy: "🟢 FACILE", mathMed: "🟡 MOYEN", mathHard: "🔴 DIFFICILE", mathStart: "▶ JOUER", mathBack: "◀ RETOUR", mathPrompt: "Résous l'équation !", mathSayPlus: "plus", mathSayMinus: "moins", mathSayTimes: "fois", mathSayDiv: "divisé par", mathSayEquals: "égale"
             }
         };
 
@@ -1011,7 +1056,10 @@
         
         let wordPool = []; let currentLanguage = "EN"; let currentRosterFormat = ""; let currentPhase = ""; let currentWord = ""; let currentTurn = "marc"; let practiceIndex = 0; let activeTurnStarted = false;
         let hintsUsedThisWord = 0; let hintCapThisWord = 0;
+        let currentSubject = "dictation"; let mathConfig = { op: '+', diff: 'easy' }; let currentMathAnswer = ""; let mathQuestionCount = 0; const MATH_ROUND_LEN = 10;
+        function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
         const inputField = document.getElementById('word-input-box'); const feedbackLine = document.getElementById('feedback-line'); const practiceCard = document.getElementById('practice-reveal-card');
+        let practiceStyle = localStorage.getItem('practice_style') || 'copy'; let lcwcCoverTimer = null;
 
         const canvas = document.getElementById('particle-effect-canvas'); const ctx = canvas.getContext('2d');
         let particleArrayPool = [];
@@ -1056,6 +1104,14 @@
         }
         function buildOnscreenKeyboard() {
             const kbd = document.getElementById('onscreen-kbd'); if (!kbd) return;
+            if (currentPhase === "MATH") {
+                let html = "";
+                ["123", "456", "789"].forEach(r => {
+                    html += `<div class="kbd-row">` + r.split('').map(c => `<button class="kbd-key" onclick="kbdTap('${c}')">${c}</button>`).join('') + `</div>`;
+                });
+                html += `<div class="kbd-row"><button class="kbd-key kbd-ctrl" onclick="replayAudio()">🔊</button><button class="kbd-key" onclick="kbdTap('0')">0</button><button class="kbd-key" onclick="kbdBackspace()">⌫</button><button class="kbd-key kbd-ctrl kbd-check" onclick="handlePrimaryAction()">✓</button></div>`;
+                kbd.innerHTML = html; return;
+            }
             const accents = "éèàçêâîôûù";
             const rows = KBD_LAYOUT_ROWS[kbdLayout] || KBD_LAYOUT_ROWS.alpha;
             let html = "";
@@ -1109,8 +1165,19 @@
             currentLanguage = lang;
             let pack = localTranslationPack[lang];
             document.getElementById('hud-mode-text').innerText = pack.title;
-            document.getElementById('menu-main-title').innerHTML = `<div class="bilingual-title-fr">SUPER JEU DE LA DICTÉE</div><div class="bilingual-title-divider">/</div><div class="bilingual-title-en">SUPER DICTATION GAME</div>`;
-            document.getElementById('menu-btn-play').innerText = pack.play;
+            document.getElementById('menu-main-title').innerHTML = `<div class="bilingual-title-fr">LE JEU DES DEVOIRS</div><div class="bilingual-title-divider">/</div><div class="bilingual-title-en">THE HOMEWORK GAME</div>`;
+            document.getElementById('menu-btn-dict').innerText = pack.subjDict;
+            document.getElementById('menu-btn-math').innerText = pack.subjMath;
+            document.getElementById('math-title').innerText = pack.mathOpTitle;
+            document.getElementById('math-op-add').innerText = pack.mathAdd;
+            document.getElementById('math-op-sub').innerText = pack.mathSub;
+            document.getElementById('math-op-mul').innerText = pack.mathMul;
+            document.getElementById('math-op-div').innerText = pack.mathDiv;
+            document.getElementById('math-diff-easy').innerText = pack.mathEasy;
+            document.getElementById('math-diff-med').innerText = pack.mathMed;
+            document.getElementById('math-diff-hard').innerText = pack.mathHard;
+            document.getElementById('math-btn-start').innerText = pack.mathStart;
+            document.getElementById('math-btn-back').innerText = pack.mathBack;
             document.getElementById('menu-btn-chest').innerText = pack.chest;
             document.getElementById('menu-btn-shop').innerText = pack.shop;
             document.getElementById('menu-btn-creator').innerText = pack.creator;
@@ -1201,6 +1268,19 @@
             document.getElementById('theme-btn-classic').innerText = pack.themeClassic;
             document.getElementById('theme-btn-space').innerText = pack.themeSpace;
             document.getElementById('theme-btn-magic').innerText = pack.themeMagic;
+            document.getElementById('math-theme-header').innerText = pack.themeHeader;
+            document.getElementById('math-theme-btn-classic').innerText = pack.themeClassic;
+            document.getElementById('math-theme-btn-space').innerText = pack.themeSpace;
+            document.getElementById('math-theme-btn-magic').innerText = pack.themeMagic;
+            document.getElementById('practice-style-header').innerText = pack.psHeader;
+            document.getElementById('ps-btn-copy').innerText = pack.psCopy;
+            document.getElementById('ps-btn-lcwc').innerText = pack.psLcwc;
+            document.getElementById('ps-btn-missing').innerText = pack.psMissing;
+            document.getElementById('ps-btn-scramble').innerText = pack.psScramble;
+            document.getElementById('ps-btn-bee').innerText = pack.psBee;
+            document.getElementById('ps-btn-start').innerText = pack.psStart;
+            document.getElementById('ps-btn-back').innerText = pack.mathBack;
+            syncPracticeStyleButtons();
             document.getElementById('slowmo-engine-switch').innerText = isSlowMoAudioEngineActive ? pack.gameSlowOn : pack.gameSlowOff;
 
             let skinSel = document.getElementById('creator-skin-color'); let skinVal = skinSel.value;
@@ -1218,9 +1298,18 @@
 
         function setVisualClassroomTheme(theme, element) {
             activeClassroomThemeSelection = theme;
-            document.querySelectorAll('#screen-phase .shop-tab-btn').forEach(b => b.classList.remove('active'));
-            if(element) element.classList.add('active');
+            document.querySelectorAll('.room-style-btn').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
             playSynthBeepTone(587, 0.08, 'sine');
+        }
+        function syncPracticeStyleButtons() {
+            document.querySelectorAll('.practice-style-btn').forEach(b => b.classList.toggle('active', b.dataset.style === practiceStyle));
+        }
+        function setPracticeStyle(style, element) {
+            practiceStyle = style; localStorage.setItem('practice_style', style);
+            syncPracticeStyleButtons(); playSynthBeepTone(620, 0.08, 'sine');
+        }
+        function openPracticeStyle() {
+            syncPracticeStyleButtons(); playSynthBeepTone(392, 0.1, 'sine'); switchScreen('screen-practice-style');
         }
 
         // FIXED: Re-mapped the array population scanner to synchronize with dynamic language matrices
@@ -1241,23 +1330,44 @@
             playSynthBeepTone(330, 0.1, 'sine'); switchScreen('screen-roster');
         }
 
+        function selectSubjectFromMenu(subj) {
+            currentSubject = subj; playSynthBeepTone(440, 0.1, 'sine'); openRosterConfig();
+        }
+
         function selectRoster(format) {
             currentRosterFormat = format;
             currentTurn = (format === "SOLO_CHARLES") ? "charles" : "marc";
-            playSynthBeepTone(392, 0.1, 'sine'); switchScreen('screen-phase');
+            playSynthBeepTone(392, 0.1, 'sine');
+            if (currentSubject === 'math') { switchScreen('screen-math-config'); }
+            else { switchScreen('screen-phase'); }
         }
+
+        function setMathOp(op, element) {
+            mathConfig.op = op;
+            document.querySelectorAll('#screen-math-config .shop-tab-btn').forEach(b => { if (b.id.includes('op')) b.classList.remove('active'); });
+            element.classList.add('active'); playSynthBeepTone(500, 0.05, 'sine');
+        }
+        function setMathDiff(diff, element) {
+            mathConfig.diff = diff;
+            document.querySelectorAll('#screen-math-config .shop-tab-btn').forEach(b => { if (b.id.includes('diff')) b.classList.remove('active'); });
+            element.classList.add('active'); playSynthBeepTone(550, 0.05, 'sine');
+        }
+        function startMathPhase() { startPhase('MATH'); }
 
         function startPhase(phase) {
             let pack = localTranslationPack[currentLanguage];
             showcaseGalleryModeActive = false;
             currentPhase = phase; practiceIndex = 0; activeTurnStarted = false; updateGlobalHUDs();
+            let isMath = (phase === "MATH"); mathQuestionCount = 0;
             
             // FIXED: Force immediate dictionary calibration sync on stage generation hook
+            if (!isMath) {
             let fullBank = (currentLanguage === "FR") ? savedFrWords : savedEnWords;
             if (document.getElementById('use-focus-homework-mode').checked) {
                 wordPool = fullBank.filter(word => focusHomeworkWords.includes(word));
                 if (wordPool.length === 0) { wordPool = fullBank; }
             } else { wordPool = fullBank; }
+            }
 
             activeRoundScoreMatrix = { marc: { ok: 0, streak: 0 }, charles: { ok: 0, streak: 0 } };
             roundStats = { marc: { ok: 0, attempts: 0, earned: 0, missed: [] }, charles: { ok: 0, attempts: 0, earned: 0, missed: [] } };
@@ -1274,10 +1384,12 @@
             bb.style.display = 'flex'; bb.style.transform = 'translateY(-250px)';
             setTimeout(() => { bb.style.transform = 'translateY(0px)'; playSynthBeepTone(120, 0.3, 'triangle', 0.2); }, 100);
 
-            if (phase === "PRACTICE") { practiceCard.style.display = 'block'; feedbackLine.innerText = pack.gamePracticePrompt; }
+            if (isMath) { practiceCard.style.display = 'block'; feedbackLine.innerText = pack.mathPrompt; }
+            else if (phase === "PRACTICE") { practiceCard.style.display = 'block'; feedbackLine.innerText = pack.gamePracticePrompt; }
             else { practiceCard.style.display = 'none'; feedbackLine.innerText = pack.gameQuizPrompt; }
             
             configureRosterStageLayout();
+            if (isMath) document.getElementById('blackboard-chalk-title').innerText = (currentLanguage === "FR") ? "Maths" : "Math";
             document.getElementById('node-papa').style.display = 'flex';
             document.getElementById('interaction-deck').style.display = 'flex';
             document.getElementById('check-submit-btn').style.display = '';
@@ -1285,6 +1397,7 @@
             document.getElementById('repeat-voice-btn').style.display = 'block';
             document.getElementById('slowmo-engine-switch').style.display = 'flex';
             inputField.style.display = 'block'; 
+            if (IS_TOUCH) buildOnscreenKeyboard();
 
             applyCustomCharacterAppearances(); applySceneLayeringVisuals();
             switchScreen('screen-game'); updateTurnVisuals(); inputField.value = ""; inputField.focus();
@@ -1499,14 +1612,120 @@
             </div>`;
         }
 
+        function coveredPracticeCardHTML(emoji, text) {
+            return `<div style="background:rgba(5,6,11,0.82); border:3px dashed var(--cyan); border-radius:16px; padding:24px 26px; margin:10px auto; max-width:85%; text-align:center; box-shadow:0 0 25px rgba(0,238,255,0.25); position:relative; z-index:30;">
+                <div style="font-size:46px; line-height:1;">${emoji}</div>
+                <div style="font-family:'Press Start 2P'; font-size:11px; color:var(--cyan); margin-top:14px; line-height:1.5;">${text}</div>
+            </div>`;
+        }
+        function maskedPracticeCardHTML(word) {
+            let shown = word.split('').map((ch, i) => (ch === ' ') ? '&nbsp;&nbsp;' : ((i === 0 || i % 2 === 0) ? ch.toUpperCase() : '_')).join(' ');
+            let tiles = word.split('').map((ch, i) => {
+                let hide = (ch !== ' ') && !(i === 0 || i % 2 === 0);
+                let disp = ch === ' ' ? '&nbsp;' : (hide ? '?' : ch);
+                let col = hide ? 'var(--magenta)' : 'var(--gold)';
+                return `<span style="display:inline-block; min-width:30px; padding:6px 4px; margin:3px; background:rgba(0,0,0,0.35); border:2px solid rgba(255,255,255,0.25); border-radius:8px; font-family:'Press Start 2P', monospace; font-size:18px; color:${col}; text-transform:uppercase;">${disp}</span>`;
+            }).join('');
+            return `<div style="background:rgba(5,6,11,0.82); border:3px solid var(--cyan); border-radius:16px; padding:16px 26px; margin:10px auto; max-width:85%; text-align:center; box-shadow:0 0 25px rgba(0,238,255,0.35); position:relative; z-index:30;">
+                <div style="font-family:'Caveat', cursive; font-size:50px; color:var(--white); letter-spacing:4px; line-height:1;">${shown}</div>
+                <div style="margin-top:10px;">${tiles}</div>
+            </div>`;
+        }
+        function buildScrambleCardHTML(word) {
+            let pack = localTranslationPack[currentLanguage];
+            let letters = word.replace(/\s/g, '').split('');
+            let order = letters.map((c, i) => i);
+            if (letters.length > 1) {
+                let tries = 0;
+                do { for (let i = order.length - 1; i > 0; i--) { let j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; } tries++; }
+                while (tries < 8 && order.every((v, i) => letters[v] === letters[i]));
+            }
+            let tiles = order.map(idx => `<button class="scramble-tile" onclick="scrambleTap(this)">${letters[idx].toUpperCase()}</button>`).join('');
+            return `<div style="background:rgba(5,6,11,0.82); border:3px solid var(--cyan); border-radius:16px; padding:16px 20px; margin:10px auto; max-width:90%; text-align:center; box-shadow:0 0 25px rgba(0,238,255,0.35); position:relative; z-index:30;">
+                <div style="font-family:'Press Start 2P'; font-size:9px; color:var(--cyan); margin-bottom:12px;">${pack.psScramblePrompt}</div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">${tiles}</div>
+                <button class="scramble-reset" onclick="scrambleReset()" style="margin-top:14px;">↺</button>
+            </div>`;
+        }
+        function scrambleTap(btn) {
+            if (btn.classList.contains('used')) return;
+            btn.classList.add('used'); inputField.value += btn.textContent.toLowerCase(); buildLetterBlanks(); playSynthBeepTone(650, 0.03, 'triangle', 0.04);
+        }
+        function scrambleReset() {
+            inputField.value = ''; document.querySelectorAll('#practice-reveal-card .scramble-tile').forEach(t => t.classList.remove('used')); buildLetterBlanks(); playSynthBeepTone(420, 0.05, 'sine');
+        }
+        function renderPracticeCard() {
+            let pack = localTranslationPack[currentLanguage];
+            if (lcwcCoverTimer) { clearTimeout(lcwcCoverTimer); lcwcCoverTimer = null; }
+            practiceCard.style.display = 'block'; feedbackLine.style.color = '#fff';
+            if (practiceStyle === 'lcwc') {
+                practiceCard.innerHTML = generateVisualPhonicsCard(currentWord);
+                feedbackLine.innerText = pack.psLookPrompt; speakEngine(currentWord, currentLanguage);
+                let ms = Math.max(1800, currentWord.replace(/\s/g, '').length * 600);
+                lcwcCoverTimer = setTimeout(() => {
+                    if (currentPhase === 'PRACTICE' && practiceStyle === 'lcwc' && activeTurnStarted) {
+                        practiceCard.innerHTML = coveredPracticeCardHTML('✏️', pack.psCoverPrompt); feedbackLine.innerText = pack.psCoverPrompt;
+                    }
+                }, ms);
+            } else if (practiceStyle === 'missing') {
+                practiceCard.innerHTML = maskedPracticeCardHTML(currentWord);
+                feedbackLine.innerText = pack.psMissingPrompt; speakEngine(currentWord, currentLanguage);
+            } else if (practiceStyle === 'scramble') {
+                practiceCard.innerHTML = buildScrambleCardHTML(currentWord);
+                feedbackLine.innerText = pack.psScramblePrompt; speakEngine(currentWord, currentLanguage);
+            } else if (practiceStyle === 'bee') {
+                practiceCard.innerHTML = coveredPracticeCardHTML('👂', pack.psBeePrompt);
+                feedbackLine.innerText = pack.psBeePrompt; speakEngine(currentWord, currentLanguage);
+            } else {
+                practiceCard.innerHTML = generateVisualPhonicsCard(currentWord);
+                feedbackLine.innerText = pack.gameRetype; speakEngine(currentWord, currentLanguage);
+            }
+        }
+
         function triggerNextWord() {
             if (showcaseGalleryModeActive) return;
             let pack = localTranslationPack[currentLanguage]; inputField.value = ""; activeTurnStarted = true;
+            if (currentPhase === "MATH") {
+                if (mathQuestionCount >= MATH_ROUND_LEN) { activeTurnStarted = false; feedbackLine.innerText = pack.gameComplete; setTimeout(showResults, 1800); return; }
+                let num1, num2, op = mathConfig.op, diff = mathConfig.diff;
+                if (op === '+') {
+                    if (diff === 'easy') { num1 = randInt(1, 10); num2 = randInt(1, 10); }
+                    else if (diff === 'med') { num1 = randInt(10, 50); num2 = randInt(10, 50); }
+                    else { num1 = randInt(50, 100); num2 = randInt(50, 100); }
+                    currentMathAnswer = (num1 + num2).toString();
+                } else if (op === '-') {
+                    if (diff === 'easy') { num1 = randInt(5, 15); num2 = randInt(1, num1); }
+                    else if (diff === 'med') { num1 = randInt(20, 60); num2 = randInt(5, num1); }
+                    else { num1 = randInt(50, 100); num2 = randInt(10, num1); }
+                    currentMathAnswer = (num1 - num2).toString();
+                } else if (op === '×') {
+                    if (diff === 'easy') { num1 = randInt(2, 5); num2 = randInt(2, 5); }
+                    else if (diff === 'med') { num1 = randInt(3, 10); num2 = randInt(3, 10); }
+                    else { num1 = randInt(5, 12); num2 = randInt(5, 15); }
+                    currentMathAnswer = (num1 * num2).toString();
+                } else {
+                    // division: build from a divisor and quotient so it always divides evenly
+                    let divisor, quotient;
+                    if (diff === 'easy') { divisor = randInt(2, 5); quotient = randInt(2, 5); }
+                    else if (diff === 'med') { divisor = randInt(2, 9); quotient = randInt(3, 10); }
+                    else { divisor = randInt(3, 12); quotient = randInt(4, 12); }
+                    num1 = divisor * quotient; num2 = divisor; currentMathAnswer = quotient.toString();
+                }
+                currentWord = `${num1} ${op} ${num2}`;
+                mathQuestionCount++;
+                practiceCard.style.display = 'block';
+                practiceCard.innerHTML = `<div style="font-family:'Press Start 2P'; font-size:30px; color:var(--cyan); text-align:center; line-height:1.4;">${currentWord} = ?</div><div style="font-family:'Press Start 2P'; font-size:9px; color:var(--gold); text-align:center; margin-top:10px;">${mathQuestionCount}/${MATH_ROUND_LEN}</div>`;
+                feedbackLine.innerText = pack.mathPrompt; feedbackLine.style.color = '#fff';
+                let spoken = `${num1} ${op === '+' ? pack.mathSayPlus : op === '-' ? pack.mathSayMinus : op === '×' ? pack.mathSayTimes : pack.mathSayDiv} ${num2}`;
+                speakEngine(spoken, currentLanguage);
+                document.getElementById(`f-marc-sm`).setAttribute('d', 'M 46 50 Q 50 54 54 50'); document.getElementById(`f-charles-sm`).setAttribute('d', 'M 46 50 Q 50 54 54 50');
+                updatePrimaryActionBtn(); buildLetterBlanks(); updateComboMeter();
+                return;
+            }
             if (currentPhase === "PRACTICE") {
                 if (practiceIndex < wordPool.length) {
-                    currentWord = wordPool[practiceIndex]; 
-                    practiceCard.innerHTML = generateVisualPhonicsCard(currentWord); practiceCard.style.display = 'block';
-                    feedbackLine.innerText = pack.gameRetype; feedbackLine.style.color = '#fff'; speakEngine(currentWord, currentLanguage);
+                    currentWord = wordPool[practiceIndex];
+                    renderPracticeCard();
                 } else { feedbackLine.innerText = pack.gameComplete; setTimeout(showResults, 1800); }
             } else {
                 if (wordPool.length > 0) {
@@ -1545,6 +1764,12 @@
         }
         function buildLetterBlanks() {
             let wrap = document.getElementById('letter-blanks'); if (!wrap) return;
+            if (currentPhase === "MATH") {
+                if (!currentWord || !activeTurnStarted || showcaseGalleryModeActive) { wrap.innerHTML = ""; return; }
+                let t = inputField.value || "";
+                wrap.innerHTML = `<span class="lb-slot ${t ? 'filled' : ''}" style="min-width:64px; padding:0 14px; font-size:28px;">${t}</span>`;
+                return;
+            }
             if (!currentWord || !activeTurnStarted || showcaseGalleryModeActive) { wrap.innerHTML = ""; return; }
             let typed = inputField.value; let html = "";
             for (let i = 0; i < currentWord.length; i++) {
@@ -1561,6 +1786,7 @@
         }
         function useHint() {
             let pack = localTranslationPack[currentLanguage];
+            if (currentPhase === "MATH") return;
             if (!activeTurnStarted || !currentWord) return;
             if (hintsUsedThisWord >= hintCapThisWord) { feedbackLine.innerText = pack.hintNoMore; feedbackLine.style.color = 'var(--gold)'; return; }
             hintsUsedThisWord++;
@@ -1590,8 +1816,10 @@
 
         function evaluateSubmission() {
             let pack = localTranslationPack[currentLanguage];
+            if (lcwcCoverTimer) { clearTimeout(lcwcCoverTimer); lcwcCoverTimer = null; }
             let attempt = inputField.value.trim().toLowerCase(); if (attempt === "") return;
-            if (attempt === currentWord) {
+            let isCorrect = (currentPhase === "MATH") ? (attempt === currentMathAnswer) : (attempt === currentWord);
+            if (isCorrect) {
                 if (!unlimitedMoneyCheatActive) { bankAccounts[currentTurn] += 1.00; localStorage.setItem('vault_wallets', JSON.stringify(bankAccounts)); }
                 
                 activeRoundScoreMatrix[currentTurn].ok++; activeRoundScoreMatrix[currentTurn].streak++;
@@ -1619,6 +1847,19 @@
                 if (currentPhase === "PRACTICE") practiceIndex++;
                 activeTurnStarted = false; setTimeout(triggerNextWord, 1600);
             } else {
+                if (currentPhase === "MATH") {
+                    activeRoundScoreMatrix[currentTurn].streak = 0; refreshBlackboardChalkScores(); updateComboMeter();
+                    roundStats[currentTurn].attempts++; if (!roundStats[currentTurn].missed.includes(currentWord)) roundStats[currentTurn].missed.push(currentWord);
+                    playerStats[currentTurn].attempts++; persistProgress();
+                    playSynthBeepTone(160, 0.18, 'sine', 0.1);
+                    document.getElementById(`f-${currentTurn}-sm`).setAttribute('d', 'M 44 54 Q 50 48 56 54');
+                    feedbackLine.innerHTML = `<span style="color:var(--gold);">${pack.gameTryAgain}</span><br><span style="color:var(--red); font-family:'Press Start 2P'; font-size:20px;">${currentWord} = ${currentMathAnswer}</span>`;
+                    let spoken = currentWord.replace('+', pack.mathSayPlus).replace('-', pack.mathSayMinus).replace('×', pack.mathSayTimes).replace('÷', pack.mathSayDiv);
+                    speakEngine(`${spoken} ${pack.mathSayEquals} ${currentMathAnswer}`, currentLanguage);
+                    if (currentRosterFormat === "MULTIPLAYER" && activeProfileBlueprints.marc.status !== 'disabled' && activeProfileBlueprints.charles.status !== 'disabled') { currentTurn = (currentTurn === "marc") ? "charles" : "marc"; }
+                    activeTurnStarted = false; setTimeout(triggerNextWord, 2400);
+                    return;
+                }
                 spacedRepetitionFailureWeightLogs[currentWord] = (spacedRepetitionFailureWeightLogs[currentWord] || 1) + 1;
                 localStorage.setItem('ai_error_weights', JSON.stringify(spacedRepetitionFailureWeightLogs));
 
@@ -2068,7 +2309,14 @@
             if (currentWord) replayAudio();
         }
 
-        function replayAudio() { if (currentWord) speakEngine(currentWord, currentLanguage); inputField.focus(); }
+        function replayAudio() {
+            if (currentPhase === "MATH" && currentWord) {
+                let pack = localTranslationPack[currentLanguage];
+                let spoken = currentWord.replace('+', pack.mathSayPlus).replace('-', pack.mathSayMinus).replace('×', pack.mathSayTimes).replace('÷', pack.mathSayDiv);
+                speakEngine(spoken, currentLanguage); inputField.focus(); return;
+            }
+            if (currentWord) speakEngine(currentWord, currentLanguage); inputField.focus();
+        }
         function quitActiveGame() { showcaseGalleryModeActive = false; inputField.style.display = 'block'; backToMenu(); }
         function exitArena() {
             if (showcaseGalleryModeActive) { quitActiveGame(); return; }
@@ -2125,7 +2373,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCodeBlob = new Blob([`
-                    const CACHE_NAME = 'dictation-defenders-v2';
+                    const CACHE_NAME = 'homework-game-v6';
                     const urlsToCache = ['./', 'index.html'];
                     self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache))); });
                     self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });
