@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Le jeu des devoirs / The Homework Game</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -23,7 +25,8 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-        body { background-color: var(--bg-dark); color: var(--white); font-family: 'Ubuntu', sans-serif; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        body { background-color: var(--bg-dark); color: var(--white); font-family: 'Ubuntu', sans-serif; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; touch-action: manipulation; -webkit-text-size-adjust: 100%; }
+        button, .kbd-key, .scramble-tile, .shop-tab-btn, .arcade-btn { touch-action: manipulation; }
         .rotate-hint { display: none; position: fixed; inset: 0; z-index: 9999; background: var(--bg-dark); color: var(--white); flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; gap: 18px; }
         .rotate-hint .icon { font-size: 64px; animation: rotateNudge 1.8s infinite ease-in-out; }
         .rotate-hint .msg { font-family: 'Press Start 2P', monospace; font-size: 13px; line-height: 1.9; color: var(--cyan); }
@@ -400,6 +403,7 @@
         .scramble-tile { min-width: 42px; padding: 12px 12px; font-family: 'Press Start 2P', monospace; font-size: 20px; color: var(--white); background: linear-gradient(180deg, #2a2f55, #1a1e3a); border: 2px solid var(--cyan); border-radius: 10px; cursor: pointer; transition: opacity 0.15s, transform 0.1s; }
         .scramble-tile:active { transform: scale(0.92); }
         .scramble-tile.used { opacity: 0.25; pointer-events: none; }
+        .scramble-space { min-width: 64px; color: var(--cyan); border-style: dashed; }
         .scramble-reset { padding: 8px 18px; font-family: 'Press Start 2P', monospace; font-size: 16px; background: #1a1e3a; color: var(--gold); border: 2px solid var(--gold); border-radius: 10px; cursor: pointer; }
     </style>
 </head>
@@ -1107,6 +1111,7 @@
             stage.style.transformOrigin = 'center center';
         }
         window.addEventListener('resize', fitGameToViewport);
+        ['gesturestart', 'gesturechange', 'gestureend'].forEach(evt => document.addEventListener(evt, e => e.preventDefault(), { passive: false }));
         window.addEventListener('orientationchange', fitGameToViewport);
         fitGameToViewport();
 
@@ -1677,14 +1682,18 @@
         }
         function buildScrambleCardHTML(word) {
             let pack = localTranslationPack[currentLanguage];
-            let letters = word.replace(/\s/g, '').split('');
-            let order = letters.map((c, i) => i);
-            if (letters.length > 1) {
+            let chars = word.split('');
+            let order = chars.map((c, i) => i);
+            if (chars.length > 1) {
                 let tries = 0;
                 do { for (let i = order.length - 1; i > 0; i--) { let j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; } tries++; }
-                while (tries < 8 && order.every((v, i) => letters[v] === letters[i]));
+                while (tries < 8 && order.every((v, i) => chars[v] === chars[i]));
             }
-            let tiles = order.map(idx => `<button class="scramble-tile" onclick="scrambleTap(this)">${letters[idx].toUpperCase()}</button>`).join('');
+            let tiles = order.map(idx => {
+                let c = chars[idx];
+                if (c === ' ') return `<button class="scramble-tile scramble-space" data-ch=" " onclick="scrambleTap(this)">␣</button>`;
+                return `<button class="scramble-tile" data-ch="${c.toLowerCase()}" onclick="scrambleTap(this)">${c.toUpperCase()}</button>`;
+            }).join('');
             return `<div style="background:rgba(5,6,11,0.82); border:3px solid var(--cyan); border-radius:16px; padding:16px 20px; margin:10px auto; max-width:90%; text-align:center; box-shadow:0 0 25px rgba(0,238,255,0.35); position:relative; z-index:30;">
                 <div style="font-family:'Press Start 2P'; font-size:9px; color:var(--cyan); margin-bottom:12px;">${pack.psScramblePrompt}</div>
                 <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">${tiles}</div>
@@ -1693,7 +1702,7 @@
         }
         function scrambleTap(btn) {
             if (btn.classList.contains('used')) return;
-            btn.classList.add('used'); inputField.value += btn.textContent.toLowerCase(); buildLetterBlanks(); playSynthBeepTone(650, 0.03, 'triangle', 0.04);
+            btn.classList.add('used'); inputField.value += (btn.dataset.ch !== undefined ? btn.dataset.ch : btn.textContent.toLowerCase()); buildLetterBlanks(); playSynthBeepTone(650, 0.03, 'triangle', 0.04);
         }
         function scrambleReset() {
             inputField.value = ''; document.querySelectorAll('#practice-reveal-card .scramble-tile').forEach(t => t.classList.remove('used')); buildLetterBlanks(); playSynthBeepTone(420, 0.05, 'sine');
@@ -2441,7 +2450,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCodeBlob = new Blob([`
-                    const CACHE_NAME = 'homework-game-v13';
+                    const CACHE_NAME = 'homework-game-v14';
                     const urlsToCache = ['./', 'index.html'];
                     self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache))); });
                     self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });
