@@ -875,7 +875,9 @@ function viewBackup(){
       <div id="bk-msg" class="center" style="color:var(--accent-dk);font-weight:700;min-height:18px;margin-top:8px;"></div>
       <div style="height:14px"></div>
       <div class="field"><label>${t('restore')}</label><textarea id="bk-in" placeholder="${t('pasteHere')}"></textarea></div>
-      <button class="btn-ghost" onclick="doRestore()">${t('restoreBtn')}</button>
+      ${pendingRestore ? `
+      <div class="confirm-box"><div class="cb-msg">${t('restoreConfirm')}</div><div class="cb-row"><button class="btn-ghost" onclick="cancelRestore()">${t('cancel')}</button><button class="btn-danger" onclick="confirmRestore()">${t('restoreBtn')}</button></div></div>` : `
+      <button class="btn-ghost" onclick="doRestore()">${t('restoreBtn')}</button>`}
       <div id="bk-err" class="err"></div>
       <div class="spacer"></div>
     </div>`;
@@ -886,12 +888,17 @@ function copyCode(){
   else { try{ document.execCommand('copy'); }catch(e){} }
   const m=document.getElementById('bk-msg'); if(m) m.textContent=t('copied');
 }
+let pendingRestore=null;
 function doRestore(){
   const el=document.getElementById('bk-in'), err=document.getElementById('bk-err'); if(err) err.textContent='';
   const raw=((el&&el.value)||'').trim(); if(!raw) return;
   let data; try{ data=JSON.parse(decodeURIComponent(escape(atob(raw)))); }catch(e){ if(err) err.textContent=t('badCode'); return; }
   if(!data || !Array.isArray(data.profiles)){ if(err) err.textContent=t('badCode'); return; }
-  if(!confirm(t('restoreConfirm'))) return;
+  pendingRestore=data; render();
+}
+function cancelRestore(){ pendingRestore=null; render(); }
+function confirmRestore(){
+  const data=pendingRestore; if(!data){ return; }
   profiles=data.profiles; localStorage.setItem('hg_profiles', JSON.stringify(profiles));
   if(data.pin!=null) localStorage.setItem('hg_pin', data.pin);
   if(data.lang){ lang=data.lang; localStorage.setItem('hg_lang', lang); }
@@ -900,6 +907,7 @@ function doRestore(){
   activeId = profiles[0]?profiles[0].id:null;
   if(activeId) localStorage.setItem('hg_active', activeId); else localStorage.removeItem('hg_active');
   localStorage.setItem('hg_migrated','1');
+  pendingRestore=null;
   navigate(profiles.length?'home':'profiles');
 }
 
