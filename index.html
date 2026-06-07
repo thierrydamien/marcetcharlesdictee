@@ -168,6 +168,12 @@ input,textarea{font-family:inherit;}
 .key.ok{background:var(--accent);box-shadow:0 3px 0 var(--accent-dk);}
 .key.ok svg{width:22px;height:22px;}.key.ctrl svg{width:20px;height:20px;}
 .gw-skip{align-self:center;font-family:var(--fd);font-weight:700;color:var(--muted);padding:10px;margin-top:6px;}
+.mkpad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:auto;}
+.mkey{height:56px;border-radius:14px;background:var(--card);box-shadow:0 3px 0 rgba(0,0,0,.12);font-family:var(--fd);font-weight:700;font-size:25px;color:var(--ink);display:flex;align-items:center;justify-content:center;}
+.mkey:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.12);}
+.mkey.ok{background:var(--accent);box-shadow:0 3px 0 var(--accent-dk);}
+.mkey.ok svg{width:24px;height:24px;}
+.opt.big{min-width:52px;justify-content:center;font-size:22px;padding:9px 10px;}
 .gw-av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex:0 0 auto;}
 .result-av{width:130px;height:130px;border-radius:50%;overflow:hidden;margin:0 auto 6px;box-shadow:0 8px 20px rgba(0,0,0,.1);}
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
@@ -263,7 +269,8 @@ const T = {
     shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
     hatsCat:"Chapeaux", houseCat:"Maison", own:"Acquis", house:"Ma maison", medals:"Médailles",
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
-    houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer" },
+    houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
+    chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?" },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name", colour:"Colour",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -288,7 +295,8 @@ const T = {
     shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
     hatsCat:"Hats", houseCat:"House", own:"Owned", house:"My house", medals:"Medals",
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
-    houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked" }
+    houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
+    chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?" }
 };
 function t(k){ return T[lang][k]; }
 
@@ -445,6 +453,26 @@ function toggleLang(){ setLang(lang === 'FR' ? 'EN' : 'FR'); }
 function activeProfile(){ return profiles.find(p => p.id === activeId) || null; }
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
+/* ---------- one-time migration from the old game (same origin only) ---------- */
+function migrateOldGame(){
+  if(localStorage.getItem('hg_migrated')) return;
+  const KEYS=['admin_fr_words_marc','admin_fr_words','admin_en_words_marc','admin_en_words'];
+  const present = KEYS.some(k=>localStorage.getItem(k)!=null);
+  if(!present) return; // nothing to import on this device; do not flag, may appear later
+  const rd=(k,def)=>{ try{ const v=JSON.parse(localStorage.getItem(k)); return (Array.isArray(v)&&v.length)? v.map(String): def; }catch(e){ return def; } };
+  const MARC_FR=["expliquer","un texte","la boxe","un taxi","un prix","heureux","un examen","un exercice"];
+  const CHARLES_FR=["des zèbres","beaucoup","un hippopotame","la brousse","les prédateurs","un éléphant","un éléphanteau","un lion","un lionceau","protéger","là-bas","il y a","là","déjà","sans","celui-là","celle-là","oui","non","pas","c'est","lui","moi","toi","nous","vous","cela","ceci","avec","alors","rien","car","devant","derrière","dedans","dehors","durant"];
+  const EN_DEF=["house","school","children","london","banana","keyboard","window","teacher"];
+  const mk=(id,name,color,fr,en)=>({ id,name,color,character:defaultCharacter(),coins:0,fr,en,owned:[],equip:{hat:null},stats:{correct:0,perfect:0},medals:[] });
+  const marc=mk('p_marc','Marc','#5B8DEF', rd('admin_fr_words_marc',MARC_FR), rd('admin_en_words_marc',EN_DEF));
+  const charles=mk('p_charles','Charles','#FF6F61', rd('admin_fr_words',CHARLES_FR), rd('admin_en_words',EN_DEF));
+  const have=profiles.map(p=>(p.name||'').toLowerCase());
+  [marc,charles].forEach(np=>{ if(profiles.length<4 && !have.includes(np.name.toLowerCase())) profiles.push(np); });
+  localStorage.setItem('hg_migrated','1');
+  saveProfiles();
+}
+migrateOldGame();
+
 /* ---------- router ---------- */
 let route = profiles.length ? 'home' : 'profiles';
 if (route === 'home' && !activeProfile()) route = 'profiles';
@@ -465,8 +493,11 @@ function render(){
   else if (route === 'parent') v.innerHTML = viewParent();
   else if (route === 'shop') v.innerHTML = viewShop();
   else if (route === 'house') v.innerHTML = viewHouse();
+  else if (route === 'mathcfg') v.innerHTML = viewMathCfg();
+  else if (route === 'mathgame') v.innerHTML = viewMathGame();
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
+  if (route === 'mathgame') paintMath();
   bindLive();
 }
 
@@ -556,7 +587,7 @@ function viewHome(){
       </div>
       <div class="hello">${t('hi')} ${esc(p.name)} !</div>
       <button class="mode-btn mode-dict" onclick="openDict()"><div class="mic">${IC.book}</div><div><b>${t('dict')}</b><span>${t('dictSub')}</span></div></button>
-      <button class="mode-btn mode-math" onclick="navigate('soon')"><div class="mic">${IC.calc}</div><div><b>${t('maths')}</b><span>${t('mathsSub')}</span></div></button>
+      <button class="mode-btn mode-math" onclick="openMath()"><div class="mic">${IC.calc}</div><div><b>${t('maths')}</b><span>${t('mathsSub')}</span></div></button>
       <div class="row2">
         <button class="soft-btn" onclick="openShop()">${IC.bag}${t('shopTitle')}</button>
         <button class="soft-btn" onclick="openHouse()">${IC.trophy}${t('house')}</button>
@@ -785,6 +816,7 @@ function reactEl(kind,id){
 
 /* ---------- dictation gameplay ---------- */
 let dictStyle = 'copy';
+let lastMode = 'dict';
 let dictNote = '';
 let queue=[], qi=0, roundTotal=0, roundScore=0, roundCoins=0;
 let curWord='', curAns='', inputText='', turnActive=false, lcwcTimer=null, misses=0;
@@ -823,7 +855,7 @@ function startDict(){
   ensureEconomy(p);
   const list=(lang==='FR'?p.fr:p.en)||[];
   if(!list.length){ dictNote=t('noWords'); render(); return; }
-  queue=shuffle(list).slice(0,10); roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0;
+  queue=shuffle(list).slice(0,10); roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict';
   beginTurn();
 }
 
@@ -969,18 +1001,125 @@ function viewResults(){
         <div class="coins" style="font-size:18px;">${IC.star}+${roundCoins} ${t('coinsEarned')}</div>
         ${giftsAwarded.length?`<div class="gift-box">${IC.trophy}<div><b>${t('giftTitle')}</b> ${giftNames}<div class="gsub">${t('giftSub')}</div></div></div>`:''}
       </div>
-      <button class="btn-primary" onclick="startDict()">${t('again')}</button>
+      <button class="btn-primary" onclick="playAgain()">${t('again')}</button>
       <button class="btn-ghost" onclick="navigate('home')">${t('home')}</button>
     </div>`;
 }
 
 function gameKey(e){
-  if(route!=='game'||!turnActive) return;
-  if(e.key==='Enter'){ submit(); return; }
-  if(e.key==='Backspace'){ e.preventDefault(); if(dictStyle==='scramble') scrReset(); else kBack(); return; }
-  if(e.key.length===1 && dictStyle!=='scramble' && /[a-zàâäçéèêëîïôûùü' \-]/i.test(e.key)){ kTap(e.key.toLowerCase()); }
+  if(route==='game'){
+    if(!turnActive) return;
+    if(e.key==='Enter'){ submit(); return; }
+    if(e.key==='Backspace'){ e.preventDefault(); if(dictStyle==='scramble') scrReset(); else kBack(); return; }
+    if(e.key.length===1 && dictStyle!=='scramble' && /[a-zàâäçéèêëîïôûùü' \-]/i.test(e.key)){ kTap(e.key.toLowerCase()); }
+  } else if(route==='mathgame'){
+    if(!turnActive) return;
+    if(e.key==='Enter'){ mathSubmit(); return; }
+    if(e.key==='Backspace'){ e.preventDefault(); kBack(); return; }
+    if(/^[0-9]$/.test(e.key)) kTap(e.key);
+  }
 }
 document.addEventListener('keydown', gameKey);
+
+/* ---------- maths gameplay ---------- */
+let mathOp='+', mathDiff='easy', mathQs=[], curM=null;
+function sym(op){ return {'+':'+','-':'\u2212','x':'\u00d7','/':'\u00f7'}[op]; }
+function ri(lo,hi){ return Math.floor(Math.random()*(hi-lo+1))+lo; }
+function genMath(op,diff){
+  const R={ '+':{easy:[1,10],med:[1,20],hard:[10,99]}, '-':{easy:[1,10],med:[1,20],hard:[10,99]},
+    'x':{easy:[1,5],med:[1,10],hard:[2,12]}, '/':{easy:[1,5],med:[1,10],hard:[2,12]} };
+  const [lo,hi]=R[op][diff]; let a,b,ans;
+  if(op==='+'){ a=ri(lo,hi); b=ri(lo,hi); ans=a+b; }
+  else if(op==='-'){ a=ri(lo,hi); b=ri(lo,hi); if(b>a){ const z=a;a=b;b=z; } ans=a-b; }
+  else if(op==='x'){ a=ri(lo,hi); b=ri(lo,hi); ans=a*b; }
+  else { const q=ri(lo,hi), d=ri(lo,hi); a=q*d; b=d; ans=q; }
+  return {a,b,op,ans};
+}
+function openMath(){ const p=activeProfile(); if(!p){navigate('profiles');return;} navigate('mathcfg'); }
+function selMathOp(o){ mathOp=o; render(); }
+function selMathDiff(d){ mathDiff=d; render(); }
+function viewMathCfg(){
+  const ops=['+','-','x','/'].map(o=>`<button class="opt big ${mathOp===o?'on':''}" onclick="selMathOp('${o}')">${sym(o)}</button>`).join('');
+  const diffs=[['easy',t('diffEasy')],['med',t('diffMed')],['hard',t('diffHard')]].map(([d,lab])=>`<button class="opt ${mathDiff===d?'on':''}" onclick="selMathDiff('${d}')">${lab}</button>`).join('');
+  return `
+    <div class="screen active">
+      <div class="backbar"><button class="backbtn" onclick="navigate('home')">${IC.back}${t('back')}</button></div>
+      <div class="scr-title">${t('chooseMath')}</div>
+      <div class="cat"><label>${t('opLabel')}</label><div class="opt-row">${ops}</div></div>
+      <div class="cat"><label>${t('lvlLabel')}</label><div class="opt-row">${diffs}</div></div>
+      <div class="spacer"></div>
+      <button class="btn-primary" onclick="startMath()">${t('start')}</button>
+    </div>`;
+}
+function startMath(){
+  const p=activeProfile(); if(!p){ navigate('profiles'); return; } ensureEconomy(p);
+  mathQs=Array.from({length:10},()=>genMath(mathOp,mathDiff));
+  roundTotal=10; qi=0; roundScore=0; roundCoins=0; lastMode='math'; beginMath();
+}
+function beginMath(){
+  curM=mathQs[qi]; inputText=''; turnActive=true; misses=0;
+  if(route!=='mathgame') navigate('mathgame'); else paintMath();
+}
+function mathAdvance(){ qi++; if(qi>=roundTotal) finishRound(); else beginMath(); }
+function mathCardHTML(){
+  return `<div class="cprompt">${t('mathPrompt')}</div><div class="cword">${curM.a} ${sym(curM.op)} ${curM.b} = ?</div><button class="spk" onclick="speakMath()">${IC.spk}</button>`;
+}
+function mathKbdHTML(){
+  const k=(d)=>`<button class="mkey" onclick="kTap('${d}')">${d}</button>`;
+  return `<div class="mkpad">
+    ${k('7')}${k('8')}${k('9')}${k('4')}${k('5')}${k('6')}${k('1')}${k('2')}${k('3')}
+    <button class="mkey" onclick="kBack()">&#9003;</button>${k('0')}<button class="mkey ok" onclick="mathSubmit()">${IC.check}</button>
+  </div>`;
+}
+function viewMathGame(){
+  const p=activeProfile();
+  return `
+    <div class="screen active">
+      <div class="topbar">
+        <button class="backbtn" onclick="quitGame()">${IC.back}</button>
+        <div class="gw-av" id="gw-av">${p?avatarSVG(p):''}</div>
+        <span class="coins">${IC.star}<span id="gw-coins">${p?p.coins||0:0}</span></span>
+      </div>
+      <div class="gw-prog" id="gw-prog"></div>
+      <div class="gw-card" id="gw-card"></div>
+      <div class="gw-input" id="gw-input"></div>
+      <div class="gw-fb" id="gw-fb"></div>
+      <div class="gw-kbd" id="gw-kbd"></div>
+      <button class="gw-skip" onclick="mathSkip()">${t('skip')} &rarr;</button>
+    </div>`;
+}
+function paintMath(){
+  const prog=document.getElementById('gw-prog'); if(prog) prog.textContent=Math.min(qi+1,roundTotal)+' / '+roundTotal;
+  const card=document.getElementById('gw-card'); if(card) card.innerHTML=mathCardHTML();
+  const kbd=document.getElementById('gw-kbd'); if(kbd) kbd.innerHTML=mathKbdHTML();
+  updateInputBox();
+  const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent=''; fb.className='gw-fb'; }
+}
+function mathSubmit(){
+  if(!turnActive || inputText==='') return;
+  const fb=document.getElementById('gw-fb');
+  if(parseInt(inputText,10)===curM.ans){
+    turnActive=false; roundScore++; roundCoins++;
+    const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
+    const av=document.getElementById('gw-av'); if(av){ av.classList.remove('pop'); void av.offsetWidth; av.classList.add('pop'); }
+    if(fb){ fb.textContent=t('correctMsg'); fb.className='gw-fb ok'; }
+    setTimeout(mathAdvance,1000);
+  } else {
+    misses++;
+    if(misses>=2){ turnActive=false; if(fb){ fb.textContent=curM.a+' '+sym(curM.op)+' '+curM.b+' = '+curM.ans; fb.className='gw-fb no'; } setTimeout(mathAdvance,1700); return; }
+    if(fb){ fb.textContent=t('tryagain'); fb.className='gw-fb no'; }
+    inputText=''; updateInputBox();
+  }
+}
+function mathSkip(){ if(!turnActive) return; turnActive=false;
+  const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent=curM.a+' '+sym(curM.op)+' '+curM.b+' = '+curM.ans; fb.className='gw-fb no'; }
+  setTimeout(mathAdvance,1600); }
+function speakMath(){
+  const w={ '+':lang==='FR'?'plus':'plus', '-':lang==='FR'?'moins':'minus', 'x':lang==='FR'?'fois':'times', '/':lang==='FR'?'divisé par':'divided by' };
+  const eq=lang==='FR'?'égale':'equals';
+  speak(`${curM.a} ${w[curM.op]} ${curM.b} ${eq}`, lang);
+}
+function playAgain(){ if(lastMode==='math') startMath(); else startDict(); }
 
 function bindLive(){ /* reserved for listeners added post-render */ }
 
