@@ -195,6 +195,22 @@ input,textarea{font-family:inherit;}
 .house-scene{width:100%;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.08);}
 .house-info{display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fd);font-weight:700;font-size:15px;color:var(--muted);margin-top:14px;}
 .house-info svg{width:20px;height:20px;color:var(--accent2);}
+.house-panel{background:var(--card);border-radius:var(--r-md);padding:14px 16px;margin-top:12px;box-shadow:0 4px 12px rgba(0,0,0,.05);min-height:62px;}
+.hp-title{font-family:var(--fd);font-weight:700;font-size:17px;color:var(--ink);}
+.hp-body{font-weight:700;font-size:14px;color:var(--muted);margin-top:5px;line-height:1.5;}
+.hp-body b{color:var(--ink);}
+.locked-lbl{display:inline-block;background:var(--bg);color:var(--muted);border-radius:999px;padding:2px 9px;font-size:12px;margin-right:6px;}
+.pbar{display:inline-block;vertical-align:middle;width:84px;height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin:0 6px;}
+.pbar>span{display:block;height:100%;background:var(--accent);border-radius:999px;}
+.htap{cursor:pointer;}
+.house-scene g[id^="h-"]{transform-box:fill-box;transform-origin:center;}
+@keyframes rpop{0%{transform:scale(1)}40%{transform:scale(1.22)}100%{transform:scale(1)}}
+@keyframes rbounce{0%,100%{transform:translateY(0)}35%{transform:translateY(-9px)}}
+@keyframes rsway{0%,100%{transform:rotate(0)}25%{transform:rotate(-7deg)}75%{transform:rotate(7deg)}}
+@keyframes rwiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-12deg)}60%{transform:rotate(12deg)}}
+@keyframes rglow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.5)}}
+.r-pop{animation:rpop .5s ease}.r-bounce{animation:rbounce .55s ease}.r-sway{animation:rsway .6s ease}.r-wiggle{animation:rwiggle .55s ease}.r-glow{animation:rglow .6s ease}
+@media (prefers-reduced-motion: reduce){ .r-pop,.r-bounce,.r-sway,.r-wiggle,.r-glow{animation:none!important;} }
 .gift-box{display:flex;align-items:center;gap:10px;background:var(--chip);color:var(--chipink);border-radius:var(--r-md);padding:12px 16px;margin-top:8px;font-weight:700;font-size:14px;max-width:300px;}
 .gift-box svg{width:24px;height:24px;color:#E0A000;flex:0 0 auto;}
 .gift-box .gsub{font-weight:700;font-size:12px;opacity:.8;margin-top:2px;}
@@ -246,7 +262,8 @@ const T = {
     mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", glasses:"Lunettes", gNone:"Aucunes",
     shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
     hatsCat:"Chapeaux", houseCat:"Maison", own:"Acquis", house:"Ma maison", medals:"Médailles",
-    perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison" },
+    perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
+    houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer" },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name", colour:"Colour",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -270,7 +287,8 @@ const T = {
     mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", glasses:"Glasses", gNone:"None",
     shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
     hatsCat:"Hats", houseCat:"House", own:"Owned", house:"My house", medals:"Medals",
-    perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house" }
+    perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
+    houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked" }
 };
 function t(k){ return T[lang][k]; }
 
@@ -341,12 +359,12 @@ function itemDef(id){ return shopItem(id); }
 function isHat(id){ return SHOP_ITEMS.some(i=>i.id===id); }
 
 const HOUSE_ITEMS = [
-  {id:'rug',    price:15, fr:'Tapis',        en:'Rug'},
-  {id:'plant',  price:15, fr:'Plante',       en:'Plant'},
-  {id:'poster', price:20, fr:'Affiche',      en:'Poster'},
-  {id:'lamp',   price:20, fr:'Lampe',        en:'Lamp'},
-  {id:'books',  price:25, fr:'Bibliothèque', en:'Bookshelf'},
-  {id:'pet',    price:35, fr:'Animal',       en:'Pet'},
+  {id:'rug',    price:15, fr:'Tapis',        en:'Rug',       descFr:'Un tapis tout doux.',     descEn:'A cosy little rug.'},
+  {id:'plant',  price:15, fr:'Plante',       en:'Plant',     descFr:'Une jolie plante verte.', descEn:'A nice green plant.'},
+  {id:'poster', price:20, fr:'Affiche',      en:'Poster',    descFr:'Une affiche colorée.',    descEn:'A colourful poster.'},
+  {id:'lamp',   price:20, fr:'Lampe',        en:'Lamp',      descFr:'Une lampe qui brille.',   descEn:'A lamp that glows.'},
+  {id:'books',  price:25, fr:'Bibliothèque', en:'Bookshelf', descFr:'Pleine de bons livres.',  descEn:'Full of good books.'},
+  {id:'pet',    price:35, fr:'Animal',       en:'Pet',       descFr:'Ton petit compagnon.',    descEn:'Your little companion.'},
 ];
 function houseShape(id){
   switch(id){
@@ -365,19 +383,34 @@ const HOUSE_PLACE = {
 };
 
 const MEDALS = [
-  {id:'firstPerfect', tier:'#FF6F61', fr:'Premier sans-faute', en:'First perfect round'},
-  {id:'scholar25',    tier:'#cd7f32', fr:'25 bonnes réponses', en:'25 correct'},
-  {id:'scholar75',    tier:'#bfc4cc', fr:'75 bonnes réponses', en:'75 correct'},
-  {id:'scholar150',   tier:'#FFC93C', fr:'150 bonnes réponses',en:'150 correct'},
+  {id:'firstPerfect', tier:'#FF6F61', type:'perfect', need:1,
+    fr:'Sans-faute', en:'Perfectionist',
+    earnedFr:'Tu as fini une manche sans aucune faute.', earnedEn:'You finished a round with no mistakes.',
+    goalFr:'Finis une manche sans aucune faute.', goalEn:'Finish a round with no mistakes.'},
+  {id:'scholar25', tier:'#cd7f32', type:'correct', need:25,
+    fr:'Apprenti', en:'Apprentice',
+    earnedFr:'25 bonnes réponses au total.', earnedEn:'25 correct answers in total.',
+    goalFr:'Atteins 25 bonnes réponses.', goalEn:'Reach 25 correct answers.'},
+  {id:'scholar75', tier:'#bfc4cc', type:'correct', need:75,
+    fr:'Savant', en:'Scholar',
+    earnedFr:'75 bonnes réponses au total.', earnedEn:'75 correct answers in total.',
+    goalFr:'Atteins 75 bonnes réponses.', goalEn:'Reach 75 correct answers.'},
+  {id:'scholar150', tier:'#FFC93C', type:'correct', need:150,
+    fr:'Expert', en:'Expert',
+    earnedFr:'150 bonnes réponses au total.', earnedEn:'150 correct answers in total.',
+    goalFr:'Atteins 150 bonnes réponses.', goalEn:'Reach 150 correct answers.'},
 ];
 function medalDef(id){ return MEDALS.find(m=>m.id===id); }
-function medalSVG(id){
+function medalProgress(p,m){ const cur = m.type==='perfect' ? Math.min(p.stats.perfect||0,1) : Math.min(p.stats.correct||0,m.need); return {cur, need:m.need}; }
+function medalSVG(id, locked){
   const m=medalDef(id); if(!m) return '';
-  const star=`<path d="M0 -4.4 l1.3 2.7 3 .4 -2.2 2 .6 3 -2.7-1.5 -2.7 1.5 .6-3 -2.2-2 3-.4z" fill="#fff"/>`;
+  const fill = locked ? '#d7cfc1' : m.tier;
+  const ink = locked ? '#ffffff88' : '#fff';
+  const star=`<path d="M0 -4.4 l1.3 2.7 3 .4 -2.2 2 .6 3 -2.7-1.5 -2.7 1.5 .6-3 -2.2-2 3-.4z" fill="${ink}"/>`;
   const mark = id==='firstPerfect'
-    ? `<path d="M-3.4 0 L-1 2.6 L3.6 -2.6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
+    ? `<path d="M-3.4 0 L-1 2.6 L3.6 -2.6" stroke="${ink}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
     : star;
-  return `<circle r="9" fill="${m.tier}" stroke="#00000022" stroke-width="1"/>${mark}`;
+  return `<circle r="9" fill="${fill}" stroke="#00000022" stroke-width="1"/>${mark}`;
 }
 
 function hatSVG(id){
@@ -696,24 +729,21 @@ function viewHouse(){
   const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
   ensureEconomy(p);
   const W=320,H=210;
+  const place=(id,inner)=>{ const q=HOUSE_PLACE[id]; return `<g transform="translate(${q.x},${q.y}) scale(${q.s})"><g id="h-item-${id}" class="htap" onclick="houseTap('item','${id}')">${inner}</g></g>`; };
   let items='';
-  ['poster','rug','plant','lamp','books'].forEach(id=>{ if(p.owned.includes(id)){ const q=HOUSE_PLACE[id];
-    items+=`<g transform="translate(${q.x},${q.y}) scale(${q.s})">${houseShape(id)}</g>`; } });
-  const character=`<svg x="118" y="72" width="84" height="84" viewBox="0 0 100 100">${avatarInner(p)}</svg>`;
-  let pet=''; if(p.owned.includes('pet')){ const q=HOUSE_PLACE.pet; pet=`<g transform="translate(${q.x},${q.y}) scale(${q.s})">${houseShape('pet')}</g>`; }
-  // shelf + medals
+  ['poster','rug','plant','lamp','books'].forEach(id=>{ if(p.owned.includes(id)) items+=place(id,houseShape(id)); });
+  let pet=''; if(p.owned.includes('pet')) pet=place('pet',houseShape('pet'));
+  const character=`<g id="h-char-me" class="htap" onclick="houseTap('char','me')"><svg x="118" y="72" width="84" height="84" viewBox="0 0 100 100">${avatarInner(p)}</svg></g>`;
   const shelf=`<rect x="172" y="34" width="128" height="8" rx="3" fill="#caa06d"/><rect x="172" y="42" width="128" height="3" fill="#00000018"/>`;
-  let medals=''; p.medals.forEach((mid,i)=>{ medals+=`<g transform="translate(${188+i*26},27)">${medalSVG(mid)}</g>`; });
+  let medals=''; MEDALS.forEach((m,i)=>{ const earned=p.medals.includes(m.id);
+    medals+=`<g transform="translate(${188+i*26},27)"><g id="h-medal-${m.id}" class="htap" onclick="houseTap('medal','${m.id}')">${medalSVG(m.id,!earned)}</g></g>`; });
   const scene=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">
     <rect x="0" y="0" width="${W}" height="135" fill="#FBE7C9"/>
     <rect x="0" y="135" width="${W}" height="${H-135}" fill="#E9C79A"/>
     <rect x="0" y="132" width="${W}" height="5" fill="#0000000f"/>
-    ${shelf}${medals}
-    ${items}
-    ${character}
-    ${pet}
+    ${shelf}${medals}${items}${character}${pet}
   </svg>`;
-  const medalCount=p.medals.length, total=MEDALS.length;
+  const earnedCount=p.medals.length;
   return `
     <div class="screen active">
       <div class="topbar">
@@ -722,10 +752,35 @@ function viewHouse(){
       </div>
       <div class="scr-title">${t('house')}</div>
       <div class="house-scene">${scene}</div>
-      <div class="house-info">${IC.trophy}<span>${t('medals')}: ${medalCount}/${total}</span></div>
+      <div class="house-panel">
+        <div class="hp-title" id="hi-title">${t('houseTapHint')}</div>
+        <div class="hp-body" id="hi-body">${t('medals')}: ${earnedCount}/${MEDALS.length}</div>
+      </div>
       <div class="spacer"></div>
       <button class="link-btn" onclick="openShop()">${IC.bag}${t('shopTitle')}</button>
     </div>`;
+}
+function progressBar(cur,need){ const pct=Math.max(0,Math.min(100,Math.round(cur/need*100))); return `<span class="pbar"><span style="width:${pct}%"></span></span>`; }
+function houseTap(kind,id){
+  const p=activeProfile(); if(!p) return; ensureEconomy(p);
+  let title='', body='';
+  if(kind==='item'){ const it=itemDef(id); title=itemName(it); body=(lang==='FR'?it.descFr:it.descEn); }
+  else if(kind==='char'){ title=esc(p.name); body=t('thatsYou'); }
+  else if(kind==='medal'){ const m=medalDef(id); const earned=p.medals.includes(id); title=(lang==='FR'?m.fr:m.en);
+    if(earned){ body=(lang==='FR'?m.earnedFr:m.earnedEn); }
+    else { const goal=(lang==='FR'?m.goalFr:m.goalEn); const pr=medalProgress(p,m);
+      const bar = m.type==='correct' ? `${progressBar(pr.cur,pr.need)}<b>${pr.cur}/${pr.need}</b>` : '';
+      body=`<span class="locked-lbl">${t('locked')}</span>${esc(goal)} ${bar}`; }
+  }
+  const tEl=document.getElementById('hi-title'), bEl=document.getElementById('hi-body');
+  if(tEl) tEl.textContent=title; if(bEl) bEl.innerHTML=body;
+  reactEl(kind,id);
+}
+function reactEl(kind,id){
+  const el=document.getElementById('h-'+kind+'-'+id); if(!el) return;
+  const cls = kind==='char' ? 'r-bounce' : kind==='medal' ? 'r-pop' : ({plant:'r-sway',lamp:'r-glow',pet:'r-wiggle'}[id]||'r-pop');
+  ['r-pop','r-bounce','r-sway','r-wiggle','r-glow'].forEach(c=>el.classList.remove(c));
+  el.getBoundingClientRect(); el.classList.add(cls);
 }
 
 /* ---------- dictation gameplay ---------- */
