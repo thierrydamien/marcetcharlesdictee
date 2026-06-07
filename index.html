@@ -40,6 +40,13 @@
         .kbd-ctrl { max-width: 150px; flex: 1.4; font-size: 20px; }
         .kbd-layout { max-width: 96px; flex: 1; font-size: 13px; color: var(--gold); border-color: var(--gold); letter-spacing: 0.5px; }
         .kbd-check { background: #1fae5d; border-color: #2ee07e; color: #04121a; }
+        @media (orientation: landscape) {
+            #onscreen-kbd { gap: 3px; padding: 3px 6px calc(3px + env(safe-area-inset-bottom)); }
+            .kbd-row { gap: 3px; }
+            .kbd-key { padding: 6px 0; font-size: 15px; border-radius: 6px; max-width: 70px; }
+            .kbd-ctrl { font-size: 16px; max-width: 130px; }
+            .kbd-layout { font-size: 12px; }
+        }
         .shop-swatch-grid { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
         .swbuy { display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .swdot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #2d3859; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; }
@@ -1073,7 +1080,7 @@
             if (IS_TOUCH) {
                 const kbd = document.getElementById('onscreen-kbd');
                 const kbdH = (kbd && kbd.classList.contains('kbd-visible')) ? kbd.offsetHeight : 0;
-                const availH = Math.max(220, window.innerHeight - kbdH);
+                const availH = Math.max(140, window.innerHeight - kbdH);
                 const scale = Math.min(window.innerWidth / 1050, availH / 720);
                 stage.style.transform = `scale(${scale})`;
                 stage.style.transformOrigin = 'top center';
@@ -1124,14 +1131,26 @@
         }
         function kbdTap(ch) { if (!inputField) return; inputField.value += ch; buildLetterBlanks(); playSynthBeepTone(650, 0.03, 'triangle', 0.04); }
         function kbdBackspace() { if (!inputField) return; inputField.value = inputField.value.slice(0, -1); buildLetterBlanks(); }
+        function positionMobileKeyboard() {
+            const kbd = document.getElementById('onscreen-kbd'); if (!kbd || !IS_TOUCH) return;
+            let gap = 0;
+            if (window.visualViewport) { gap = Math.max(0, window.innerHeight - (window.visualViewport.height + window.visualViewport.offsetTop)); }
+            kbd.style.bottom = gap + 'px';
+        }
         function syncMobileKeyboard() {
             if (!IS_TOUCH) return;
             const kbd = document.getElementById('onscreen-kbd'); if (!kbd) return;
             const active = document.querySelector('.screen.active');
             const show = !!(active && active.id === 'screen-game' && !showcaseGalleryModeActive);
             kbd.classList.toggle('kbd-visible', show);
+            positionMobileKeyboard();
             fitGameToViewport();
         }
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', () => { positionMobileKeyboard(); fitGameToViewport(); });
+            window.visualViewport.addEventListener('scroll', positionMobileKeyboard);
+        }
+        window.addEventListener('orientationchange', () => { setTimeout(() => { syncMobileKeyboard(); }, 250); });
         if (IS_TOUCH) { document.body.classList.add('touch-mode'); buildOnscreenKeyboard(); }
 
         class BlockParticle {
@@ -2386,7 +2405,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCodeBlob = new Blob([`
-                    const CACHE_NAME = 'homework-game-v8';
+                    const CACHE_NAME = 'homework-game-v9';
                     const urlsToCache = ['./', 'index.html'];
                     self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache))); });
                     self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });
