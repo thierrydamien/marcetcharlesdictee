@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Devoirs">
 <meta name="theme-color" content="#FF6F61">
 <title>Le jeu des devoirs / The Homework Game</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap');
 :root{
@@ -220,6 +223,14 @@ input,textarea{font-family:inherit;}
 .gift-box{display:flex;align-items:center;gap:10px;background:var(--chip);color:var(--chipink);border-radius:var(--r-md);padding:12px 16px;margin-top:8px;font-weight:700;font-size:14px;max-width:300px;}
 .gift-box svg{width:24px;height:24px;color:#E0A000;flex:0 0 auto;}
 .gift-box .gsub{font-weight:700;font-size:12px;opacity:.8;margin-top:2px;}
+.practise{background:var(--bg);border-radius:var(--r-md);padding:10px 14px;margin-top:8px;font-weight:700;font-size:14px;color:var(--ink);max-width:320px;}
+.practise b{color:var(--primary);display:block;font-family:var(--fd);font-size:13px;margin-bottom:2px;}
+.about-fam{width:128px;height:128px;border-radius:32px;background:var(--primary);margin:4px auto 16px;display:flex;align-items:center;justify-content:center;}
+.about-fam svg{width:108px;height:108px;}
+.about-card{background:var(--card);border-radius:var(--r-md);padding:16px 18px;margin-bottom:14px;box-shadow:0 5px 14px rgba(0,0,0,.05);}
+.about-h{font-family:var(--fd);font-weight:700;font-size:17px;margin-bottom:8px;}
+.about-list{margin:0;padding-left:20px;}
+.about-list li{font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.4;}
 </style>
 </head>
 <body>
@@ -230,6 +241,7 @@ input,textarea{font-family:inherit;}
 const IC = {
   star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7L12 17.8 5.8 21l1.4-7L2 9.3l7-.8z"/></svg>',
   logo:'<svg viewBox="0 0 48 48" fill="none"><rect x="9" y="20" width="30" height="20" rx="5" fill="#fff"/><path d="M24 8l3.6 7.3 8 1.2-5.8 5.6 1.4 8L24 33.5 16.8 37.3l1.4-8L12.4 16.5l8-1.2z" fill="#FFC93C"/></svg>',
+  family:'<svg viewBox="0 0 512 512" width="100%" height="100%" style="display:block"><g transform="translate(55.5,69) scale(2.25)"><path d="M4 100 Q6 73 32 69 L68 69 Q94 73 96 100 Z" fill="#B9D2F0"/><rect x="42" y="57" width="16" height="17" fill="#F2CEA6"/><path d="M13 42 Q13 3 50 3 Q87 3 87 42 L87 99 Q79 103 72 99 L72 50 Q72 29 50 29 Q28 29 28 50 L28 99 Q21 103 13 99 Z" fill="#2A2320"/><circle cx="50" cy="44" r="30" fill="#F2CEA6"/><circle cx="40" cy="45" r="4" fill="#33304a"/><circle cx="60" cy="45" r="4" fill="#33304a"/><circle cx="41.2" cy="43.5" r="1.3" fill="#fff"/><circle cx="61.2" cy="43.5" r="1.3" fill="#fff"/><path d="M42 55 Q50 61 58 55" stroke="#33304a" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="translate(224,44.400000000000006) scale(2.4)"><path d="M4 100 Q6 73 32 69 L68 69 Q94 73 96 100 Z" fill="#C5D9F2"/><rect x="42" y="57" width="16" height="17" fill="#F6D6B6"/><circle cx="50" cy="44" r="30" fill="#F6D6B6"/><path d="M16 43 Q14 11 50 11 Q86 11 84 43 Q68 31 50 31 Q32 31 16 43 Z" fill="#3E2C1E"/><circle cx="40" cy="45" r="4" fill="#33304a"/><circle cx="60" cy="45" r="4" fill="#33304a"/><circle cx="41.2" cy="43.5" r="1.3" fill="#fff"/><circle cx="61.2" cy="43.5" r="1.3" fill="#fff"/><path d="M42 55 Q50 61 58 55" stroke="#33304a" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="translate(98.5,176.2) scale(1.95)"><path d="M4 100 Q6 73 32 69 L68 69 Q94 73 96 100 Z" fill="#3f6fd0"/><rect x="42" y="57" width="16" height="17" fill="#EFC9A0"/><circle cx="50" cy="44" r="30" fill="#EFC9A0"/><path d="M16 42 Q15 12 50 12 Q85 12 84 42 Q70 33 50 36 Q30 33 16 42 Z" fill="#2A211C"/><circle cx="40" cy="45" r="4" fill="#33304a"/><circle cx="60" cy="45" r="4" fill="#33304a"/><circle cx="41.2" cy="43.5" r="1.3" fill="#fff"/><circle cx="61.2" cy="43.5" r="1.3" fill="#fff"/><g stroke="#5B8DEF" stroke-width="2.7" fill="none" stroke-linecap="round"><circle cx="40" cy="45" r="8.4" fill="#5B8DEF" fill-opacity="0.16"/><circle cx="60" cy="45" r="8.4" fill="#5B8DEF" fill-opacity="0.16"/><path d="M48.6 45 H51.4"/><path d="M31.6 43 L25 41"/><path d="M68.4 43 L75 41"/></g><path d="M42 55 Q50 61 58 55" stroke="#33304a" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="translate(224.5,180.2) scale(1.95)"><path d="M4 100 Q6 73 32 69 L68 69 Q94 73 96 100 Z" fill="#f0a800"/><rect x="42" y="57" width="16" height="17" fill="#EFC9A0"/><circle cx="50" cy="44" r="30" fill="#EFC9A0"/><path d="M16 42 Q15 12 50 12 Q85 12 84 42 Q70 33 50 36 Q30 33 16 42 Z" fill="#2A211C"/><circle cx="40" cy="45" r="4" fill="#33304a"/><circle cx="60" cy="45" r="4" fill="#33304a"/><circle cx="41.2" cy="43.5" r="1.3" fill="#fff"/><circle cx="61.2" cy="43.5" r="1.3" fill="#fff"/><g stroke="#FFC93C" stroke-width="2.7" fill="none" stroke-linecap="round"><circle cx="40" cy="45" r="8.4" fill="#FFC93C" fill-opacity="0.16"/><circle cx="60" cy="45" r="8.4" fill="#FFC93C" fill-opacity="0.16"/><path d="M48.6 45 H51.4"/><path d="M31.6 43 L25 41"/><path d="M68.4 43 L75 41"/></g><path d="M42 55 Q50 61 58 55" stroke="#33304a" stroke-width="2.6" fill="none" stroke-linecap="round"/></g></svg>',
   pencil:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>',
   book:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h6v16H6a2 2 0 00-2 2z"/><path d="M20 5a2 2 0 00-2-2h-6v16h6a2 2 0 012 2z"/></svg>',
   calc:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg>',
@@ -272,8 +284,10 @@ const T = {
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?",
-    keyboard:"Clavier", kbAuto:"Auto", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
-    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", testCoins:"+1000 pièces (test)", coinsAdded:"Pièces ajoutées" },
+    keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
+    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard",
+    kbTipAuto:"Suit la langue (QWERTY en anglais, AZERTY en français)", kbTipAlpha:"Lettres dans l'ordre alphabétique", kbTipQwerty:"Disposition QWERTY", kbTipAzerty:"Disposition AZERTY", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
+    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", testCoins:"+1000 pièces (test)", coinsAdded:"Pièces ajoutées", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres)." },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name", colour:"Colour",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -300,10 +314,13 @@ const T = {
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?",
-    keyboard:"Keyboard", kbAuto:"Auto", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
-    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", testCoins:"+1000 coins (test)", coinsAdded:"Coins added" }
+    keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
+    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order",
+    kbTipAuto:"Follows the language (QWERTY in English, AZERTY in French)", kbTipAlpha:"Letters in alphabetical order", kbTipQwerty:"QWERTY layout", kbTipAzerty:"AZERTY layout", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
+    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", testCoins:"+1000 coins (test)", coinsAdded:"Coins added", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code)." }
 };
 function t(k){ return T[lang][k]; }
+const APP_VER = "1.0";
 
 /* ---------- state ---------- */
 const AV_COLORS = ["#FF6F61","#21BFA0","#FFC93C","#5B8DEF","#A06BFF","#FF7AB6","#5FBF5F","#FF9F40"];
@@ -493,7 +510,6 @@ function render(){
   else if (route === 'dictstyle') v.innerHTML = viewDictStyle();
   else if (route === 'game') v.innerHTML = viewGame();
   else if (route === 'results') v.innerHTML = viewResults();
-  else if (route === 'soon') v.innerHTML = viewSoon();
   else if (route === 'parentpin') v.innerHTML = viewParentPin();
   else if (route === 'parent') v.innerHTML = viewParent();
   else if (route === 'backup') v.innerHTML = viewBackup();
@@ -501,6 +517,7 @@ function render(){
   else if (route === 'house') v.innerHTML = viewHouse();
   else if (route === 'mathcfg') v.innerHTML = viewMathCfg();
   else if (route === 'mathgame') v.innerHTML = viewMathGame();
+  else if (route === 'about') v.innerHTML = viewAbout();
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
   if (route === 'mathgame') paintMath();
@@ -526,6 +543,7 @@ function viewProfiles(){
       <div class="spacer"></div>
       <div style="display:flex;justify-content:center;gap:10px;margin-top:18px;">
         <button class="langpill" onclick="toggleLang()">${lang==='FR'?'FR · Français':'EN · English'}</button>
+        <button class="langpill" onclick="navigate('about')">${t('about')}</button>
       </div>
     </div>`;
 }
@@ -603,15 +621,20 @@ function viewHome(){
     </div>`;
 }
 
-function viewSoon(){
+function viewAbout(){
   return `
     <div class="screen active">
-      <div class="backbar"><button class="backbtn" onclick="navigate('home')">${IC.back}${t('back')}</button></div>
-      <div class="soon-wrap">
-        <svg class="soon-emoji" viewBox="0 0 100 100"><circle cx="50" cy="52" r="34" fill="#FF6F61"/><circle cx="40" cy="46" r="9" fill="#fff"/><circle cx="60" cy="46" r="9" fill="#fff"/><circle cx="41" cy="47" r="4" fill="#33304a"/><circle cx="61" cy="47" r="4" fill="#33304a"/><path d="M43 63q7 6 14 0" stroke="#33304a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-        <div class="big">${t('soon')}</div>
-        <p>${t('soonSub')}</p>
+      <div class="backbar"><button class="backbtn" onclick="navigate('profiles')">${IC.back}${t('back')}</button></div>
+      <div class="scr-title">${t('aboutTitle')}</div>
+      <div class="about-fam">${IC.family}</div>
+      <p class="center" style="font-family:var(--fd);font-weight:600;font-size:16px;margin:0 8px 22px;">${t('madeBy')}</p>
+      <div class="about-card">
+        <div class="about-h">${t('howToTitle')}</div>
+        <ol class="about-list"><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>
       </div>
+      <div class="about-card"><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('privacyLine')}</p></div>
+      <div class="spacer"></div>
+      <p class="center" style="color:var(--muted);font-weight:700;">${t('version')} ${APP_VER}</p>
     </div>`;
 }
 
@@ -666,15 +689,9 @@ function viewParent(){
       <div class="spacer"></div>
       <button class="btn-primary" onclick="saveWords()">${t('save')}</button>
       <button class="link-btn" onclick="navigate('backup')">${IC.save}${t('backupBtn')}</button>
-      <button class="btn-ghost" onclick="addTestCoins()">${t('testCoins')}</button>
       <div id="pa-msg" class="center" style="color:var(--accent-dk);font-weight:700;min-height:18px;"></div>
       <button class="btn-ghost" onclick="openParent()">${t('changePin')}... </button>
     </div>`;
-}
-function addTestCoins(){
-  const p=activeProfile(); if(!p) return; ensureEconomy(p);
-  p.coins=(p.coins||0)+1000; saveProfiles();
-  const m=document.getElementById('pa-msg'); if(m) m.textContent=t('coinsAdded')+' ('+p.coins+')';
 }
 function saveWords(){
   const p = activeProfile(); if(!p) return;
@@ -685,7 +702,7 @@ function saveWords(){
 }
 
 function exportCode(){
-  try{ const data={v:1, profiles, pin:localStorage.getItem('hg_pin')||'', lang, kbd:localStorage.getItem('hg_kbd')||'auto'};
+  try{ const data={v:1, profiles, pin:localStorage.getItem('hg_pin')||'', lang, kbd:localStorage.getItem('hg_kbd')||'auto', practice:localStorage.getItem('hg_practice')||'smart'};
     return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }catch(e){ return ''; }
 }
 function viewBackup(){
@@ -720,6 +737,7 @@ function doRestore(){
   if(data.pin!=null) localStorage.setItem('hg_pin', data.pin);
   if(data.lang){ lang=data.lang; localStorage.setItem('hg_lang', lang); }
   if(data.kbd) localStorage.setItem('hg_kbd', data.kbd);
+  if(data.practice) localStorage.setItem('hg_practice', data.practice);
   activeId = profiles[0]?profiles[0].id:null;
   if(activeId) localStorage.setItem('hg_active', activeId); else localStorage.removeItem('hg_active');
   localStorage.setItem('hg_migrated','1');
@@ -752,7 +770,7 @@ function pickProfile(id){ activeId=id; localStorage.setItem('hg_active', id); na
 /* ---------- shop / wardrobe ---------- */
 let shopMsg='';
 function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null};
-  if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; }
+  if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; if(!p.wordStats) p.wordStats={}; }
 function openShop(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); shopMsg=''; shopTab='hat'; navigate('shop'); }
 function openHouse(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); navigate('house'); }
 let shopTab='hat';
@@ -873,6 +891,7 @@ function reactEl(kind,id){
 /* ---------- dictation gameplay ---------- */
 let dictStyle = 'copy';
 let lastMode = 'dict';
+let missedThisRound = [];
 let dictNote = '';
 let queue=[], qi=0, roundTotal=0, roundScore=0, roundCoins=0;
 let curWord='', curAns='', inputText='', turnActive=false, lcwcTimer=null, misses=0;
@@ -899,7 +918,10 @@ function viewDictStyle(){
       ${cards}
       ${dictNote?`<div class="note">${dictNote}</div>`:''}
       <div class="cat" style="margin-top:8px"><label>${t('keyboard')}</label><div class="opt-row">
-        ${[['auto',t('kbAuto')],['alpha','ABC'],['qwerty','QWERTY'],['azerty','AZERTY']].map(([v,lab])=>`<button class="opt ${(localStorage.getItem('hg_kbd')||'auto')===v?'on':''}" onclick="setKbd('${v}')">${lab}</button>`).join('')}
+        ${[['auto',t('kbAuto'),'kbTipAuto'],['alpha','ABC','kbTipAlpha'],['qwerty','QWERTY','kbTipQwerty'],['azerty','AZERTY','kbTipAzerty']].map(([v,lab,tip])=>`<button class="opt ${(localStorage.getItem('hg_kbd')||'auto')===v?'on':''}" title="${t(tip)}" onclick="setKbd('${v}')">${lab}</button>`).join('')}
+      </div></div>
+      <div class="cat"><label>${t('practiceMode')}</label><div class="opt-row">
+        ${[['smart',t('pmSmart'),'pmTipSmart'],['even',t('pmEven'),'pmTipRandom']].map(([v,lab,tip])=>`<button class="opt ${(localStorage.getItem('hg_practice')||'smart')===v?'on':''}" title="${t(tip)}" onclick="setPractice('${v}')">${lab}</button>`).join('')}
       </div></div>
       <div class="spacer"></div>
       <button class="btn-primary" onclick="startDict()">${t('start')}</button>
@@ -914,9 +936,24 @@ function startDict(){
   ensureEconomy(p);
   const list=(lang==='FR'?p.fr:p.en)||[];
   if(!list.length){ dictNote=t('noWords'); render(); return; }
-  queue=shuffle(list).slice(0,10); roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict';
+  const pref=localStorage.getItem('hg_practice')||'smart';
+  queue = (pref==='even') ? shuffle(list).slice(0,10) : pickWeightedWords(p, list, 10);
+  roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict'; missedThisRound=[];
   beginTurn();
 }
+function setPractice(v){ localStorage.setItem('hg_practice', v); render(); }
+function wordWeight(p, w){ const ws=p.wordStats?p.wordStats[norm(w)]:null; if(!ws) return 3; let wt=1+ws.w*3; if(ws.r>=3 && ws.w===0) wt=0.4; return Math.max(0.2, wt); }
+function pickWeightedWords(p, list, n){
+  const pool=list.map(w=>({w, wt:wordWeight(p,w)})); const out=[];
+  while(out.length<Math.min(n,list.length) && pool.length){
+    let total=pool.reduce((s,x)=>s+x.wt,0), r=Math.random()*total, i=0;
+    while(i<pool.length-1 && r>pool[i].wt){ r-=pool[i].wt; i++; }
+    out.push(pool[i].w); pool.splice(i,1);
+  }
+  return out;
+}
+function recordWord(word, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p);
+  const k=norm(word); const ws=p.wordStats[k]||{r:0,w:0}; if(ok) ws.r++; else ws.w++; p.wordStats[k]=ws; saveProfiles(); }
 
 function beginTurn(){
   if(lcwcTimer){ clearTimeout(lcwcTimer); lcwcTimer=null; }
@@ -1014,7 +1051,7 @@ function submit(){
   const a=norm(inputText); if(!a) return;
   const fb=document.getElementById('gw-fb');
   if(a===norm(curAns)){
-    turnActive=false; roundScore++; roundCoins++;
+    turnActive=false; roundScore++; roundCoins++; recordWord(curWord, true);
     const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
     const av=document.getElementById('gw-av'); if(av){ av.classList.remove('pop'); void av.offsetWidth; av.classList.add('pop'); }
     if(fb){ fb.textContent=t('correctMsg'); fb.className='gw-fb ok'; }
@@ -1022,7 +1059,7 @@ function submit(){
   } else {
     misses++;
     if(misses>=2){
-      turnActive=false;
+      turnActive=false; recordWord(curWord, false); missedThisRound.push(curWord);
       if(fb){ fb.textContent='\u2192 '+curAns; fb.className='gw-fb no'; }
       speak(curAns, lang); setTimeout(advance,1700); return;
     }
@@ -1032,7 +1069,7 @@ function submit(){
   }
 }
 function skip(){
-  if(!turnActive) return; turnActive=false;
+  if(!turnActive) return; turnActive=false; recordWord(curWord, false); missedThisRound.push(curWord);
   const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent='\u2192 '+curAns; fb.className='gw-fb no'; }
   speak(curAns, lang); setTimeout(advance,1600);
 }
@@ -1066,6 +1103,7 @@ function viewResults(){
         <div style="font-family:var(--fd);font-weight:700;font-size:22px;">${t('correctCount')} : ${roundScore} / ${roundTotal}</div>
         <div class="coins" style="font-size:18px;">${IC.star}+${roundCoins} ${t('coinsEarned')}</div>
         ${giftsAwarded.length?`<div class="gift-box">${IC.trophy}<div><b>${t('giftTitle')}</b> ${giftNames}<div class="gsub">${t('giftSub')}</div></div></div>`:''}
+        ${(lastMode==='dict' && missedThisRound.length)?`<div class="practise"><b>${t('practise')}</b> ${missedThisRound.map(esc).join(', ')}</div>`:''}
       </div>
       <button class="btn-primary" onclick="playAgain()">${t('again')}</button>
       <button class="btn-ghost" onclick="navigate('home')">${t('home')}</button>
@@ -1120,7 +1158,7 @@ function viewMathCfg(){
 function startMath(){
   const p=activeProfile(); if(!p){ navigate('profiles'); return; } ensureEconomy(p);
   mathQs=Array.from({length:10},()=>genMath(mathOp,mathDiff));
-  roundTotal=10; qi=0; roundScore=0; roundCoins=0; lastMode='math'; beginMath();
+  roundTotal=10; qi=0; roundScore=0; roundCoins=0; lastMode='math'; missedThisRound=[]; beginMath();
 }
 function beginMath(){
   curM=mathQs[qi]; inputText=''; turnActive=true; misses=0;
@@ -1193,6 +1231,9 @@ function bindLive(){ /* reserved for listeners added post-render */ }
 ['gesturestart','gesturechange','gestureend'].forEach(e=>document.addEventListener(e, ev=>ev.preventDefault(), {passive:false}));
 
 render();
+</script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 </script>
 </body>
 </html>
