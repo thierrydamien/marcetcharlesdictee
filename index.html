@@ -188,6 +188,16 @@ input,textarea{font-family:inherit;}
 .tag.price{background:var(--chip);color:var(--chipink);}
 .tag.price.locked{opacity:.5;}
 .tag.on{background:var(--primary);color:#fff;}
+.shop-card .sp.itm{display:flex;align-items:center;justify-content:center;background:var(--bg);}
+.tabs{display:flex;gap:8px;justify-content:center;margin-bottom:14px;}
+.tab{font-family:var(--fd);font-weight:700;font-size:15px;padding:8px 18px;border-radius:999px;background:var(--card);color:var(--muted);box-shadow:0 3px 8px rgba(0,0,0,.05);}
+.tab.on{background:var(--primary);color:#fff;}
+.house-scene{width:100%;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.08);}
+.house-info{display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fd);font-weight:700;font-size:15px;color:var(--muted);margin-top:14px;}
+.house-info svg{width:20px;height:20px;color:var(--accent2);}
+.gift-box{display:flex;align-items:center;gap:10px;background:var(--chip);color:var(--chipink);border-radius:var(--r-md);padding:12px 16px;margin-top:8px;font-weight:700;font-size:14px;max-width:300px;}
+.gift-box svg{width:24px;height:24px;color:#E0A000;flex:0 0 auto;}
+.gift-box .gsub{font-weight:700;font-size:12px;opacity:.8;margin-top:2px;}
 </style>
 </head>
 <body>
@@ -234,7 +244,9 @@ const T = {
     hairNone:"Aucun", hairShort:"Court", hairLong:"Long", hairCurly:"Bouclé", hairSpiky:"Piquant", hairBun:"Chignon",
     eRound:"Ronds", eHappy:"Joyeux", eDot:"Points", eWink:"Clin d'œil",
     mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", glasses:"Lunettes", gNone:"Aucunes",
-    shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces" },
+    shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
+    hatsCat:"Chapeaux", houseCat:"Maison", own:"Acquis", house:"Ma maison", medals:"Médailles",
+    perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison" },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name", colour:"Colour",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -256,7 +268,9 @@ const T = {
     hairNone:"None", hairShort:"Short", hairLong:"Long", hairCurly:"Curly", hairSpiky:"Spiky", hairBun:"Bun",
     eRound:"Round", eHappy:"Happy", eDot:"Dots", eWink:"Wink",
     mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", glasses:"Glasses", gNone:"None",
-    shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins" }
+    shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
+    hatsCat:"Hats", houseCat:"House", own:"Owned", house:"My house", medals:"Medals",
+    perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house" }
 };
 function t(k){ return T[lang][k]; }
 
@@ -322,7 +336,49 @@ const SHOP_ITEMS = [
   {id:'crown',      price:40, fr:'Couronne',           en:'Crown'},
 ];
 function itemName(it){ return lang==='FR'? it.fr : it.en; }
-function shopItem(id){ return SHOP_ITEMS.find(i=>i.id===id); }
+function shopItem(id){ return SHOP_ITEMS.find(i=>i.id===id) || HOUSE_ITEMS.find(i=>i.id===id); }
+function itemDef(id){ return shopItem(id); }
+function isHat(id){ return SHOP_ITEMS.some(i=>i.id===id); }
+
+const HOUSE_ITEMS = [
+  {id:'rug',    price:15, fr:'Tapis',        en:'Rug'},
+  {id:'plant',  price:15, fr:'Plante',       en:'Plant'},
+  {id:'poster', price:20, fr:'Affiche',      en:'Poster'},
+  {id:'lamp',   price:20, fr:'Lampe',        en:'Lamp'},
+  {id:'books',  price:25, fr:'Bibliothèque', en:'Bookshelf'},
+  {id:'pet',    price:35, fr:'Animal',       en:'Pet'},
+];
+function houseShape(id){
+  switch(id){
+    case 'rug': return `<ellipse cx="0" cy="6" rx="18" ry="6" fill="#FF6F61"/><ellipse cx="0" cy="6" rx="11" ry="3.4" fill="#ff9d93"/>`;
+    case 'plant': return `<rect x="-7" y="3" width="14" height="14" rx="2" fill="#c0703a"/><rect x="-7" y="3" width="14" height="4" fill="#a85e2e"/><path d="M0 5 C-15 -9 -12 -21 0 -12 C12 -21 15 -9 0 5Z" fill="#21BFA0"/><path d="M0 4 C-8 -6 -6 -15 0 -9 C6 -15 8 -6 0 4Z" fill="#178a73"/>`;
+    case 'poster': return `<rect x="-15" y="-18" width="30" height="36" rx="2" fill="#fff" stroke="#5B8DEF" stroke-width="3"/><circle cx="0" cy="-6" r="6" fill="#FFC93C"/><path d="M-10 12 L-2 0 L4 7 L11 -4" stroke="#21BFA0" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+    case 'lamp': return `<rect x="-1.6" y="-1" width="3.2" height="19" fill="#8d6e4f"/><path d="M-11 -1 L11 -1 L7 -15 L-7 -15Z" fill="#FFC93C"/><rect x="-8" y="16" width="16" height="4" rx="2" fill="#8d6e4f"/>`;
+    case 'books': return `<rect x="-16" y="-14" width="32" height="28" rx="2" fill="#a0673a"/><rect x="-12" y="-10" width="5" height="24" fill="#FF6F61"/><rect x="-6" y="-10" width="5" height="24" fill="#21BFA0"/><rect x="0" y="-10" width="5" height="24" fill="#FFC93C"/><rect x="6" y="-10" width="5" height="24" fill="#5B8DEF"/>`;
+    case 'pet': return `<ellipse cx="0" cy="8" rx="14" ry="9" fill="#a9743f"/><circle cx="0" cy="-3" r="9" fill="#a9743f"/><path d="M-7 -11 L-4 -4 M7 -11 L4 -4" stroke="#a9743f" stroke-width="4" stroke-linecap="round"/><circle cx="-3.4" cy="-4" r="1.5" fill="#33304a"/><circle cx="3.4" cy="-4" r="1.5" fill="#33304a"/><circle cx="0" cy="0" r="1.6" fill="#33304a"/>`;
+    default: return '';
+  }
+}
+const HOUSE_PLACE = {
+  poster:{x:50,y:58,s:1.4}, rug:{x:160,y:170,s:3.4}, plant:{x:38,y:150,s:1.7},
+  lamp:{x:288,y:120,s:1.7}, books:{x:252,y:150,s:1.5}, pet:{x:214,y:180,s:1.3}
+};
+
+const MEDALS = [
+  {id:'firstPerfect', tier:'#FF6F61', fr:'Premier sans-faute', en:'First perfect round'},
+  {id:'scholar25',    tier:'#cd7f32', fr:'25 bonnes réponses', en:'25 correct'},
+  {id:'scholar75',    tier:'#bfc4cc', fr:'75 bonnes réponses', en:'75 correct'},
+  {id:'scholar150',   tier:'#FFC93C', fr:'150 bonnes réponses',en:'150 correct'},
+];
+function medalDef(id){ return MEDALS.find(m=>m.id===id); }
+function medalSVG(id){
+  const m=medalDef(id); if(!m) return '';
+  const star=`<path d="M0 -4.4 l1.3 2.7 3 .4 -2.2 2 .6 3 -2.7-1.5 -2.7 1.5 .6-3 -2.2-2 3-.4z" fill="#fff"/>`;
+  const mark = id==='firstPerfect'
+    ? `<path d="M-3.4 0 L-1 2.6 L3.6 -2.6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
+    : star;
+  return `<circle r="9" fill="${m.tier}" stroke="#00000022" stroke-width="1"/>${mark}`;
+}
 
 function hatSVG(id){
   switch(id){
@@ -337,19 +393,14 @@ function hatSVG(id){
     default: return '';
   }
 }
-function avatarSVG(p, hatOverride){
+function avatarInner(p, hatOverride){
   const c=Object.assign(defaultCharacter(), p.character||{});
   const col=p.color||'#FF6F61';
   const hat = (hatOverride!==undefined) ? hatOverride : (p.equip ? p.equip.hat : null);
-  return `<svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block">
-    <circle cx="50" cy="50" r="48" fill="${col}"/>
-    ${hairBack(c)}
-    <circle cx="50" cy="56" r="28" fill="${c.skin}"/>
-    ${eyesSVG(c)}
-    ${glassesSVG(c)}
-    ${mouthSVG(c)}
-    ${hat ? '<g stroke="#2b2540" stroke-opacity="0.2" stroke-width="1.4" stroke-linejoin="round">'+hatSVG(hat)+'</g>' : ''}
-  </svg>`;
+  return `<circle cx="50" cy="50" r="48" fill="${col}"/>${hairBack(c)}<circle cx="50" cy="56" r="28" fill="${c.skin}"/>${eyesSVG(c)}${glassesSVG(c)}${mouthSVG(c)}${hat?'<g stroke="#2b2540" stroke-opacity="0.2" stroke-width="1.4" stroke-linejoin="round">'+hatSVG(hat)+'</g>':''}`;
+}
+function avatarSVG(p, hatOverride){
+  return `<svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block">${avatarInner(p,hatOverride)}</svg>`;
 }
 
 let profiles = JSON.parse(localStorage.getItem('hg_profiles') || '[]');
@@ -380,6 +431,7 @@ function render(){
   else if (route === 'parentpin') v.innerHTML = viewParentPin();
   else if (route === 'parent') v.innerHTML = viewParent();
   else if (route === 'shop') v.innerHTML = viewShop();
+  else if (route === 'house') v.innerHTML = viewHouse();
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
   bindLive();
@@ -474,7 +526,7 @@ function viewHome(){
       <button class="mode-btn mode-math" onclick="navigate('soon')"><div class="mic">${IC.calc}</div><div><b>${t('maths')}</b><span>${t('mathsSub')}</span></div></button>
       <div class="row2">
         <button class="soft-btn" onclick="openShop()">${IC.bag}${t('shopTitle')}</button>
-        <button class="soft-btn" onclick="navigate('soon')">${IC.trophy}${t('trophies')}</button>
+        <button class="soft-btn" onclick="openHouse()">${IC.trophy}${t('house')}</button>
       </div>
       <button class="link-btn" onclick="openParent()">${IC.lock}${t('parent')}</button>
       <div class="spacer"></div>
@@ -579,23 +631,41 @@ function pickProfile(id){ activeId=id; localStorage.setItem('hg_active', id); na
 
 /* ---------- shop / wardrobe ---------- */
 let shopMsg='';
-function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null}; }
-function openShop(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); shopMsg=''; navigate('shop'); }
+function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null};
+  if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; }
+function openShop(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); shopMsg=''; shopTab='hat'; navigate('shop'); }
+function openHouse(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); navigate('house'); }
+let shopTab='hat';
+function setShopTab(t){ shopTab=t; shopMsg=''; render(); }
 
 function viewShop(){
   const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
   ensureEconomy(p);
-  const noneCard = `<button class="shop-card ${!p.equip.hat?'equipped':''}" onclick="unequipHat()">
-    <div class="sp">${avatarSVG(p,null)}</div><div class="nm">${t('noHat')}</div>
-    <div class="tag ${!p.equip.hat?'on':''}">${!p.equip.hat?t('wearing'):t('wear')}</div></button>`;
-  const cards = SHOP_ITEMS.map(it=>{
-    const owned=p.owned.includes(it.id), worn=p.equip.hat===it.id;
-    const tag = !owned
-      ? `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>`
-      : `<div class="tag ${worn?'on':''}">${worn?t('wearing'):t('wear')}</div>`;
-    return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipHat('${it.id}')`:`buyItem('${it.id}')`}">
-      <div class="sp">${avatarSVG(p,it.id)}</div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`;
-  }).join('');
+  let body;
+  if(shopTab==='hat'){
+    const noneCard = `<button class="shop-card ${!p.equip.hat?'equipped':''}" onclick="unequipHat()">
+      <div class="sp">${avatarSVG(p,null)}</div><div class="nm">${t('noHat')}</div>
+      <div class="tag ${!p.equip.hat?'on':''}">${!p.equip.hat?t('wearing'):t('wear')}</div></button>`;
+    const cards = SHOP_ITEMS.map(it=>{
+      const owned=p.owned.includes(it.id), worn=p.equip.hat===it.id;
+      const tag = !owned
+        ? `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>`
+        : `<div class="tag ${worn?'on':''}">${worn?t('wearing'):t('wear')}</div>`;
+      return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipHat('${it.id}')`:`buyItem('${it.id}')`}">
+        <div class="sp">${avatarSVG(p,it.id)}</div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`;
+    }).join('');
+    body = `<div class="shop-grid">${noneCard}${cards}</div>`;
+  } else {
+    const cards = HOUSE_ITEMS.map(it=>{
+      const owned=p.owned.includes(it.id);
+      const tag = owned ? `<div class="tag on">${t('own')}</div>`
+        : `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>`;
+      return `<button class="shop-card" onclick="${owned?'openHouse()':`buyItem('${it.id}')`}">
+        <div class="sp itm"><svg viewBox="-20 -20 40 40" width="100%" height="100%">${houseShape(it.id)}</svg></div>
+        <div class="nm">${esc(itemName(it))}</div>${tag}</button>`;
+    }).join('');
+    body = `<div class="shop-grid">${cards}</div>`;
+  }
   return `
     <div class="screen active">
       <div class="topbar">
@@ -603,8 +673,12 @@ function viewShop(){
         <span class="coins">${IC.star}<span>${p.coins||0}</span></span>
       </div>
       <div class="scr-title">${t('shopTitle')}</div>
+      <div class="tabs">
+        <button class="tab ${shopTab==='hat'?'on':''}" onclick="setShopTab('hat')">${t('hatsCat')}</button>
+        <button class="tab ${shopTab==='house'?'on':''}" onclick="setShopTab('house')">${t('houseCat')}</button>
+      </div>
       ${shopMsg?`<div class="note">${shopMsg}</div>`:''}
-      <div class="shop-grid">${noneCard}${cards}</div>
+      ${body}
       <div class="spacer"></div>
     </div>`;
 }
@@ -612,11 +686,47 @@ function buyItem(id){
   const p=activeProfile(); ensureEconomy(p); const it=shopItem(id);
   if(!it||p.owned.includes(id)) return;
   if((p.coins||0)<it.price){ shopMsg=t('notEnough'); render(); return; }
-  p.coins-=it.price; p.owned.push(id); p.equip.hat=id; shopMsg=''; saveProfiles(); render();
+  p.coins-=it.price; p.owned.push(id); if(isHat(id)) p.equip.hat=id; shopMsg=''; saveProfiles(); render();
 }
 function equipHat(id){ const p=activeProfile(); ensureEconomy(p); if(!p.owned.includes(id)) return;
   p.equip.hat=(p.equip.hat===id?null:id); saveProfiles(); render(); }
 function unequipHat(){ const p=activeProfile(); ensureEconomy(p); p.equip.hat=null; saveProfiles(); render(); }
+
+function viewHouse(){
+  const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
+  ensureEconomy(p);
+  const W=320,H=210;
+  let items='';
+  ['poster','rug','plant','lamp','books'].forEach(id=>{ if(p.owned.includes(id)){ const q=HOUSE_PLACE[id];
+    items+=`<g transform="translate(${q.x},${q.y}) scale(${q.s})">${houseShape(id)}</g>`; } });
+  const character=`<svg x="118" y="72" width="84" height="84" viewBox="0 0 100 100">${avatarInner(p)}</svg>`;
+  let pet=''; if(p.owned.includes('pet')){ const q=HOUSE_PLACE.pet; pet=`<g transform="translate(${q.x},${q.y}) scale(${q.s})">${houseShape('pet')}</g>`; }
+  // shelf + medals
+  const shelf=`<rect x="172" y="34" width="128" height="8" rx="3" fill="#caa06d"/><rect x="172" y="42" width="128" height="3" fill="#00000018"/>`;
+  let medals=''; p.medals.forEach((mid,i)=>{ medals+=`<g transform="translate(${188+i*26},27)">${medalSVG(mid)}</g>`; });
+  const scene=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">
+    <rect x="0" y="0" width="${W}" height="135" fill="#FBE7C9"/>
+    <rect x="0" y="135" width="${W}" height="${H-135}" fill="#E9C79A"/>
+    <rect x="0" y="132" width="${W}" height="5" fill="#0000000f"/>
+    ${shelf}${medals}
+    ${items}
+    ${character}
+    ${pet}
+  </svg>`;
+  const medalCount=p.medals.length, total=MEDALS.length;
+  return `
+    <div class="screen active">
+      <div class="topbar">
+        <button class="backbtn" onclick="navigate('home')">${IC.back}${t('back')}</button>
+        <span class="coins">${IC.star}<span>${p.coins||0}</span></span>
+      </div>
+      <div class="scr-title">${t('house')}</div>
+      <div class="house-scene">${scene}</div>
+      <div class="house-info">${IC.trophy}<span>${t('medals')}: ${medalCount}/${total}</span></div>
+      <div class="spacer"></div>
+      <button class="link-btn" onclick="openShop()">${IC.bag}${t('shopTitle')}</button>
+    </div>`;
+}
 
 /* ---------- dictation gameplay ---------- */
 let dictStyle = 'copy';
@@ -655,6 +765,7 @@ function norm(s){ return (s||'').normalize('NFC').replace(/\s+/g,' ').trim().toL
 
 function startDict(){
   const p=activeProfile(); if(!p){ navigate('profiles'); return; }
+  ensureEconomy(p);
   const list=(lang==='FR'?p.fr:p.en)||[];
   if(!list.length){ dictNote=t('noWords'); render(); return; }
   queue=shuffle(list).slice(0,10); roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0;
@@ -751,7 +862,7 @@ function submit(){
   const fb=document.getElementById('gw-fb');
   if(a===norm(curAns)){
     turnActive=false; roundScore++; roundCoins++;
-    const p=activeProfile(); if(p){ p.coins=(p.coins||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
+    const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
     const av=document.getElementById('gw-av'); if(av){ av.classList.remove('pop'); void av.offsetWidth; av.classList.add('pop'); }
     if(fb){ fb.textContent=t('correctMsg'); fb.className='gw-fb ok'; }
     setTimeout(advance,1050);
@@ -773,16 +884,35 @@ function skip(){
   speak(curAns, lang); setTimeout(advance,1600);
 }
 function quitGame(){ if(lcwcTimer){clearTimeout(lcwcTimer);lcwcTimer=null;} turnActive=false; navigate('home'); }
-function finishRound(){ navigate('results'); }
+let perfectRound=false, giftsAwarded=[];
+function finishRound(){
+  const p=activeProfile(); if(p){ ensureEconomy(p);
+    perfectRound = (roundTotal>0 && roundScore===roundTotal);
+    if(perfectRound){ p.coins=(p.coins||0)+5; roundCoins+=5; p.stats.perfect=(p.stats.perfect||0)+1;
+      if(!p.medals.includes('firstPerfect')) p.medals.push('firstPerfect'); }
+    giftsAwarded = claimMilestones(p);
+    saveProfiles();
+  } else { perfectRound=false; giftsAwarded=[]; }
+  navigate('results');
+}
+function claimMilestones(p){
+  const map=[{n:25,item:'plant',medal:'scholar25'},{n:75,item:'lamp',medal:'scholar75'},{n:150,item:'pet',medal:'scholar150'}];
+  const gifts=[];
+  map.forEach(m=>{ if((p.stats.correct||0)>=m.n && !p.medals.includes(m.medal)){
+    p.medals.push(m.medal); if(!p.owned.includes(m.item)){ p.owned.push(m.item); gifts.push(m.item); } } });
+  return gifts;
+}
 
 function viewResults(){
+  const giftNames = giftsAwarded.map(id=>esc(itemName(itemDef(id)))).join(', ');
   return `
     <div class="screen active">
       <div class="soon-wrap">
         <div class="result-av bob">${activeProfile()?avatarSVG(activeProfile()):''}</div>
-        <div class="big">${t('roundDone')}</div>
+        <div class="big">${perfectRound?t('perfectMsg'):t('roundDone')}</div>
         <div style="font-family:var(--fd);font-weight:700;font-size:22px;">${t('correctCount')} : ${roundScore} / ${roundTotal}</div>
         <div class="coins" style="font-size:18px;">${IC.star}+${roundCoins} ${t('coinsEarned')}</div>
+        ${giftsAwarded.length?`<div class="gift-box">${IC.trophy}<div><b>${t('giftTitle')}</b> ${giftNames}<div class="gsub">${t('giftSub')}</div></div></div>`:''}
       </div>
       <button class="btn-primary" onclick="startDict()">${t('again')}</button>
       <button class="btn-ghost" onclick="navigate('home')">${t('home')}</button>
