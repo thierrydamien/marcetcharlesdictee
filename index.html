@@ -927,8 +927,14 @@
             }
         };
 
-        let savedFrWords = JSON.parse(localStorage.getItem('admin_fr_words')) || ["chat", "pomme", "manger", "biscuit", "papillon", "ordinateur", "stylo", "maison"];
+        let savedFrWords = JSON.parse(localStorage.getItem('admin_fr_words')) || ["des zèbres", "beaucoup", "un hippopotame", "la brousse", "les prédateurs", "un éléphant", "un éléphanteau", "un lion", "un lionceau", "protéger", "là-bas", "il y a", "là", "déjà", "sans", "celui-là", "celle-là", "oui", "non", "pas", "c'est", "lui", "moi", "toi", "nous", "vous", "cela", "ceci", "avec", "alors", "rien", "car", "devant", "derrière", "dedans", "dehors", "durant"];
         let savedEnWords = JSON.parse(localStorage.getItem('admin_en_words')) || ["house", "school", "children", "london", "banana", "keyboard", "window", "teacher"];
+        const FR_WORDSET_VERSION = 'zoo-2026-06';
+        if (localStorage.getItem('fr_wordset_version') !== FR_WORDSET_VERSION) {
+            savedFrWords = ["des zèbres", "beaucoup", "un hippopotame", "la brousse", "les prédateurs", "un éléphant", "un éléphanteau", "un lion", "un lionceau", "protéger", "là-bas", "il y a", "là", "déjà", "sans", "celui-là", "celle-là", "oui", "non", "pas", "c'est", "lui", "moi", "toi", "nous", "vous", "cela", "ceci", "avec", "alors", "rien", "car", "devant", "derrière", "dedans", "dehors", "durant"];
+            localStorage.setItem('admin_fr_words', JSON.stringify(savedFrWords));
+            localStorage.setItem('fr_wordset_version', FR_WORDSET_VERSION);
+        }
         let focusHomeworkWords = JSON.parse(localStorage.getItem('admin_focus_words')) || [];
 
         let activeProfileBlueprints = JSON.parse(localStorage.getItem('blueprint_chars')) || {
@@ -1125,7 +1131,7 @@
             rows.forEach(r => {
                 html += `<div class="kbd-row">` + r.split('').map(c => `<button class="kbd-key" onclick="kbdTap('${c}')">${c.toUpperCase()}</button>`).join('') + `</div>`;
             });
-            html += `<div class="kbd-row">` + accents.split('').map(c => `<button class="kbd-key kbd-accent" onclick="kbdTap('${c}')">${c.toUpperCase()}</button>`).join('') + `<button class="kbd-key" onclick="kbdTap(' ')">␣</button><button class="kbd-key" onclick="kbdBackspace()">⌫</button></div>`;
+            html += `<div class="kbd-row">` + accents.split('').map(c => `<button class="kbd-key kbd-accent" onclick="kbdTap('${c}')">${c.toUpperCase()}</button>`).join('') + `<button class="kbd-key kbd-accent" onclick="kbdTap('-')">-</button><button class="kbd-key kbd-accent" onclick="kbdTap(&quot;'&quot;)">'</button><button class="kbd-key" onclick="kbdTap(' ')">␣</button><button class="kbd-key" onclick="kbdBackspace()">⌫</button></div>`;
             html += `<div class="kbd-row"><button class="kbd-key kbd-layout" onclick="cycleKbdLayout()">⌨ ${KBD_LAYOUT_LABELS[kbdLayout]}</button><button class="kbd-key kbd-ctrl" onclick="replayAudio()">🔊</button><button class="kbd-key kbd-ctrl" onclick="useHint()">💡</button><button class="kbd-key kbd-ctrl kbd-check" onclick="handlePrimaryAction()">✓</button></div>`;
             kbd.innerHTML = html;
         }
@@ -2405,7 +2411,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCodeBlob = new Blob([`
-                    const CACHE_NAME = 'homework-game-v9';
+                    const CACHE_NAME = 'homework-game-v10';
                     const urlsToCache = ['./', 'index.html'];
                     self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache))); });
                     self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });
