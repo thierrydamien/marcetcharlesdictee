@@ -198,8 +198,9 @@ input,textarea{font-family:inherit;}
 .tag.price.locked{opacity:.5;}
 .tag.on{background:var(--primary);color:#fff;}
 .shop-card .sp.itm{display:flex;align-items:center;justify-content:center;background:var(--bg);}
-.tabs{display:flex;gap:8px;justify-content:center;margin-bottom:14px;}
-.tab{font-family:var(--fd);font-weight:700;font-size:15px;padding:8px 18px;border-radius:999px;background:var(--card);color:var(--muted);box-shadow:0 3px 8px rgba(0,0,0,.05);}
+.tabs{display:flex;gap:8px;justify-content:flex-start;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:0 0 auto;font-family:var(--fd);font-weight:700;font-size:14px;padding:8px 14px;border-radius:999px;background:var(--card);color:var(--muted);box-shadow:0 3px 8px rgba(0,0,0,.05);white-space:nowrap;}
 .tab.on{background:var(--primary);color:#fff;}
 .house-scene{width:100%;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.08);}
 .house-info{display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fd);font-weight:700;font-size:15px;color:var(--muted);margin-top:14px;}
@@ -266,6 +267,9 @@ input,textarea{font-family:inherit;}
 .field input[type=text]{width:100%;background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:12px 14px;font-family:var(--fd);font-weight:700;font-size:16px;color:var(--ink);}
 .btn-ghost.danger{color:#D85A30;}
 .chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chips-scroll{max-height:158px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px;}
+.chips-scroll::-webkit-scrollbar{width:6px;}
+.chips-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
 .chip{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:8px 14px;font-family:var(--fd);font-weight:700;font-size:14px;color:var(--ink);}
 .chip.on{background:var(--primary);color:#fff;border-color:var(--primary);}
 .confirm-box{background:#fff4f0;border:2px solid #ffd9cf;border-radius:var(--r-md);padding:14px;}
@@ -274,6 +278,42 @@ input,textarea{font-family:inherit;}
 .cb-row button{flex:1;}
 .btn-danger{background:#E0503F;color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:13px;border-radius:var(--r-lg);box-shadow:0 4px 0 #b83d2f;}
 .wlc-top{display:flex;justify-content:flex-end;margin-bottom:4px;}
+.buyline{display:inline-flex;align-items:center;gap:4px;font-family:var(--fd);font-weight:700;font-size:17px;margin-top:6px;}
+.buyline svg{width:18px;height:18px;}
+.btn-buy{background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:13px;border-radius:var(--r-lg);box-shadow:0 4px 0 var(--accent-dk);}
+.tb-right{display:flex;align-items:center;gap:12px;}
+.sfx-btn{width:30px;height:30px;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;}
+.sfx-btn svg{width:22px;height:22px;}
+.track{position:relative;height:48px;margin:2px 0 8px;}
+.track-rail{position:absolute;left:2%;right:7%;top:50%;height:8px;border-radius:6px;background:var(--line);transform:translateY(-50%);}
+.track-goal{position:absolute;right:0;top:50%;transform:translateY(-50%);width:30px;height:30px;color:var(--accent2);}
+.track-goal svg{width:30px;height:30px;}
+.track-pet{position:absolute;top:64%;left:4%;width:26px;height:26px;transition:left .5s cubic-bezier(.34,1.56,.64,1);z-index:2;}
+.track-pet svg{width:26px;height:26px;display:block;animation:pethop 1s ease-in-out infinite;transform-origin:center bottom;}
+@keyframes pethop{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.walker{position:absolute;top:50%;left:4%;transform:translate(-50%,-50%);width:42px;height:42px;transition:left .5s cubic-bezier(.34,1.56,.64,1);z-index:2;}
+.walker-inner{width:42px;height:42px;border-radius:50%;overflow:hidden;background:var(--card);box-shadow:0 2px 6px rgba(0,0,0,.12);}
+.walker-inner svg{width:42px;height:42px;display:block;}
+.combo{text-align:center;min-height:20px;font-family:var(--fd);font-weight:800;font-size:16px;color:var(--primary);}
+@keyframes cheer{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-12px) scale(1.12)}60%{transform:translateY(0) scale(1)}100%{transform:translateY(0)}}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.cheer{animation:cheer .55s ease;}
+.wobble{animation:wobble .45s ease;}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:50;}
+.confetti span{position:absolute;width:9px;height:9px;border-radius:2px;opacity:0;animation:conf .9s ease-out forwards;}
+@keyframes conf{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 120px)) rotate(var(--rot))}}
+.flycoin{position:fixed;z-index:51;width:24px;height:24px;color:var(--accent2);pointer-events:none;opacity:1;transition:transform .55s ease-in,opacity .55s ease-in;}
+.flycoin svg{width:24px;height:24px;}
+#gw-coins.bump{display:inline-block;animation:bump .3s ease;}
+@keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+@keyframes popcombo{0%{transform:scale(.6);opacity:0}50%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
+.combo.pop-combo{animation:popcombo .4s ease;}
+.mvis{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:8px 0 10px;}
+.mgrp{display:flex;flex-wrap:wrap;gap:5px;max-width:104px;justify-content:center;padding:7px;background:var(--bg);border-radius:12px;}
+.mdot{width:14px;height:14px;border-radius:50%;background:var(--accent);}
+.mdot.b{background:var(--primary);}
+.mdot.gone{background:var(--line);}
+.mop{font-family:var(--fd);font-weight:800;font-size:20px;color:var(--muted);}
 </style>
 </head>
 <body>
@@ -298,6 +338,8 @@ const IC = {
   bag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 12H5z"/><path d="M9 8a3 3 0 016 0"/></svg>',
   bubble:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-4 4z"/></svg>',
   bulb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-4 10c1 1 1 2 1 3h6c0-1 0-2 1-3a6 6 0 00-4-10z"/></svg>',
+  sound:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a3 3 0 010 6"/></svg>',
+  mute:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 10l4 4M21 10l-4 4"/></svg>',
   save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>'
 };
 
@@ -321,18 +363,18 @@ const T = {
     noWords:"Aucun mot. Ajoute des mots dans l'espace parent.",
     customize:"Personnaliser le personnage", myChar:"Mon personnage", background:"Fond", skin:"Peau",
     hairStyle:"Cheveux", hairColor:"Couleur des cheveux", eyes:"Yeux", mouth:"Bouche",
-    hairNone:"Aucun", hairShort:"Court", hairLong:"Long", hairCurly:"Bouclé", hairSpiky:"Piquant", hairBun:"Chignon",
+    hairNone:"Aucun", hairShort:"Court", hairLong:"Long", hairCurly:"Bouclé", hairWavy:"Ondulé", hairBun:"Chignon",
     eRound:"Ronds", eHappy:"Joyeux", eDot:"Points", eWink:"Clin d'œil",
     mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", glasses:"Lunettes", gNone:"Aucunes",
     shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
-    hatsCat:"Chapeaux", houseCat:"Maison", own:"Acquis", house:"Ma maison", medals:"Médailles",
+    hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", own:"Acquis", house:"Ma maison", medals:"Médailles",
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?",
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
     pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard",
     kbTipAuto:"Suit la langue (QWERTY en anglais, AZERTY en français)", kbTipAlpha:"Lettres dans l'ordre alphabétique", kbTipQwerty:"Disposition QWERTY", kbTipAzerty:"Disposition AZERTY", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
-    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", testCoins:"+1000 pièces (test)", coinsAdded:"Pièces ajoutées", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", chooseList:"Quelle liste ?", allWords:"Tous les mots", wordsShort:"mots", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", },
+    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", testCoins:"+1000 pièces (test)", coinsAdded:"Pièces ajoutées", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", chooseList:"Quelle liste ?", allWords:"Tous les mots", wordsShort:"mots", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name", colour:"Colour",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -351,18 +393,18 @@ const T = {
     noWords:"No words yet. Add some in the parent area.",
     customize:"Customise character", myChar:"My character", background:"Background", skin:"Skin",
     hairStyle:"Hair", hairColor:"Hair colour", eyes:"Eyes", mouth:"Mouth",
-    hairNone:"None", hairShort:"Short", hairLong:"Long", hairCurly:"Curly", hairSpiky:"Spiky", hairBun:"Bun",
+    hairNone:"None", hairShort:"Short", hairLong:"Long", hairCurly:"Curly", hairWavy:"Wavy", hairBun:"Bun",
     eRound:"Round", eHappy:"Happy", eDot:"Dots", eWink:"Wink",
     mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", glasses:"Glasses", gNone:"None",
     shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
-    hatsCat:"Hats", houseCat:"House", own:"Owned", house:"My house", medals:"Medals",
+    hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", own:"Owned", house:"My house", medals:"Medals",
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?",
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
     pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order",
     kbTipAuto:"Follows the language (QWERTY in English, AZERTY in French)", kbTipAlpha:"Letters in alphabetical order", kbTipQwerty:"QWERTY layout", kbTipAzerty:"AZERTY layout", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
-    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", testCoins:"+1000 coins (test)", coinsAdded:"Coins added", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", chooseList:"Which list?", allWords:"All words", wordsShort:"words", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", }
+    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", testCoins:"+1000 coins (test)", coinsAdded:"Coins added", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", chooseList:"Which list?", allWords:"All words", wordsShort:"words", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", }
 };
 function t(k){ return T[lang][k]; }
 const APP_VER = "1.0";
@@ -371,12 +413,23 @@ const APP_VER = "1.0";
 const AV_COLORS = ["#FF6F61","#21BFA0","#FFC93C","#5B8DEF","#A06BFF","#FF7AB6","#5FBF5F","#FF9F40"];
 const SKIN_TONES = ["#FFE0BD","#FCD9B6","#F1C27D","#E0AC69","#C68642","#8D5524"];
 const HAIR_COLORS = ["#2B2B2B","#6B4423","#C99A3B","#D35400","#A0522D","#7AC7FF"];
-const HAIR_STYLES = ["none","short","long","curly","spiky","bun"];
+const HAIR_STYLES = ["none","short","long","curly","wavy","bun"];
 const EYE_STYLES = ["round","happy","dot","wink"];
 const MOUTH_STYLES = ["smile","grin","neutral","wow"];
 const GLASS_COLORS = ["#FFC93C","#5B8DEF","#2B2B2B","#FF6F61","#21BFA0","#FF7AB6"];
 const DEFAULT_FR = ["chat","maison","école","manger","ami","jouer","livre","eau"];
 const DEFAULT_EN = ["cat","house","school","eat","friend","play","book","water"];
+function defaultLists(){
+  const L=(name,lng,words)=>({id:uid(), name, lang:lng, words:words.map(w=>({w, s:''}))});
+  return [
+    L('Les jours','FR',['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche']),
+    L('Les couleurs','FR',['rouge','bleu','vert','jaune','orange','violet','rose','noir']),
+    L('Les animaux','FR',['chat','chien','cheval','lapin','oiseau','poisson','souris','vache']),
+    L('Weekdays','EN',['monday','tuesday','wednesday','thursday','friday','saturday','sunday']),
+    L('Colours','EN',['red','blue','green','yellow','orange','purple','pink','black']),
+    L('Animals','EN',['cat','dog','horse','rabbit','bird','fish','mouse','cow'])
+  ];
+}
 
 function defaultCharacter(){ return {skin:"#FCD9B6",hair:"short",hairColor:"#6B4423",eyes:"round",mouth:"smile",glasses:"none"}; }
 
@@ -386,11 +439,18 @@ function hairBack(c){
     case 'short': return `<circle cx="50" cy="46" r="32" fill="${h}"/>`;
     case 'long': return `<path d="M18 56 Q18 22 50 22 Q82 22 82 56 L82 86 L68 86 L68 54 Q68 40 50 40 Q32 40 32 54 L32 86 L18 86 Z" fill="${h}"/>`;
     case 'curly': return `<circle cx="32" cy="34" r="13" fill="${h}"/><circle cx="50" cy="28" r="14" fill="${h}"/><circle cx="68" cy="34" r="13" fill="${h}"/><circle cx="24" cy="50" r="11" fill="${h}"/><circle cx="76" cy="50" r="11" fill="${h}"/>`;
-    case 'spiky': return `<path d="M20 52 L29 22 L40 46 L50 18 L60 46 L71 22 L80 52 Z" fill="${h}"/>`;
+    case 'spiky':
+    case 'wavy': return `<path d="M16 60 Q14 21 50 21 Q86 21 84 60 Q78 53 72 60 Q66 53 60 60 Q54 52 50 58 Q46 52 40 60 Q34 53 28 60 Q22 53 16 60 Z" fill="${h}"/>`;
     case 'bun': return `<circle cx="50" cy="46" r="31" fill="${h}"/><circle cx="50" cy="21" r="9" fill="${h}"/>`;
     default: return '';
   }
 }
+function hairUnderHat(c){
+  const h=c.hairColor;
+  if(!c.hair || c.hair==='none') return '';
+  return `<path d="M20 72 Q18 34 50 34 Q82 34 80 72 L80 80 Q50 88 20 80 Z" fill="${h}"/>`;
+}
+const COVERING_HATS = ['cap','beanie','wizard','chef','pirate','cowboy','party'];
 function eyesSVG(c){
   const ink='#33304a';
   switch(c.eyes){
@@ -431,9 +491,12 @@ const SHOP_ITEMS = [
   {id:'chef',       price:20, fr:'Toque de chef',     en:'Chef hat'},
   {id:'pirate',     price:25, fr:'Chapeau de pirate', en:'Pirate hat'},
   {id:'flowercrown',price:30, fr:'Couronne de fleurs',en:'Flower crown'},
+  {id:'bunny',      price:18, fr:'Oreilles de lapin', en:'Bunny ears'},
+  {id:'cowboy',     price:28, fr:'Chapeau de cowboy', en:'Cowboy hat'},
+  {id:'tiara',      price:35, fr:'Diadème',           en:'Tiara'},
 ];
 function itemName(it){ return lang==='FR'? it.fr : it.en; }
-function shopItem(id){ return SHOP_ITEMS.find(i=>i.id===id) || HOUSE_ITEMS.find(i=>i.id===id) || WALLPAPERS.find(i=>i.id===id); }
+function shopItem(id){ return SHOP_ITEMS.find(i=>i.id===id) || HOUSE_ITEMS.find(i=>i.id===id) || WALLPAPERS.find(i=>i.id===id) || FRAMES.find(i=>i.id===id) || PETS.find(i=>i.id===id) || FLOORS.find(i=>i.id===id); }
 function itemDef(id){ return shopItem(id); }
 function isHat(id){ return SHOP_ITEMS.some(i=>i.id===id); }
 const WALLPAPERS = [
@@ -441,10 +504,82 @@ const WALLPAPERS = [
   {id:'wall_mint', price:20, fr:'Menthe',     en:'Mint', wall:'#DFFBEF', floor:'#E9C79A'},
   {id:'wall_rose', price:20, fr:'Rose',       en:'Rose', wall:'#FFE3EC', floor:'#E9C79A'},
   {id:'wall_dusk', price:30, fr:'Crépuscule', en:'Dusk', wall:'#E7DBFF', floor:'#D9C3A6'},
+  {id:'wall_sun',  price:20, fr:'Soleil', en:'Sunny',  wall:'#FFE9B0', floor:'#E9C79A'},
+  {id:'wall_forest', price:25, fr:'Forêt', en:'Forest', wall:'#CFEFD6', floor:'#D9C3A6'},
 ];
 function isWall(id){ return WALLPAPERS.some(i=>i.id===id); }
 function equipWall(id){ const p=activeProfile(); ensureEconomy(p); if(!p.owned.includes(id)) return; p.equip.wall=(p.equip.wall===id?null:id); saveProfiles(); render(); }
 function unequipWall(){ const p=activeProfile(); ensureEconomy(p); p.equip.wall=null; saveProfiles(); render(); }
+
+/* ---- Avatar frames ---- */
+const FRAMES = [
+  {id:'frame_gold',    price:25, fr:'Cadre or',      en:'Gold ring'},
+  {id:'frame_silver',  price:20, fr:'Cadre argent',  en:'Silver ring'},
+  {id:'frame_rainbow', price:35, fr:'Arc-en-ciel',   en:'Rainbow'},
+  {id:'frame_hearts',  price:30, fr:'Coeurs',        en:'Hearts'},
+  {id:'frame_stars',   price:30, fr:'Etoiles',       en:'Stars'},
+];
+function isFrame(id){ return FRAMES.some(i=>i.id===id); }
+function equipFrame(id){ const p=activeProfile(); ensureEconomy(p); if(!p.owned.includes(id)) return; p.equip.frame=(p.equip.frame===id?null:id); saveProfiles(); render(); }
+function unequipFrame(){ const p=activeProfile(); ensureEconomy(p); p.equip.frame=null; saveProfiles(); render(); }
+function frameSVG(id){
+  const star='M0 -4 l1.1 2.6 2.9 .2 -2.2 1.9 .7 2.8 -2.5 -1.6 -2.5 1.6 .7 -2.8 -2.2 -1.9 2.9 -.2z';
+  switch(id){
+    case 'frame_gold':   return `<circle cx="50" cy="50" r="46" fill="none" stroke="#FFC93C" stroke-width="4.5"/><circle cx="50" cy="50" r="48.2" fill="none" stroke="#f0b400" stroke-width="1.2"/>`;
+    case 'frame_silver': return `<circle cx="50" cy="50" r="46" fill="none" stroke="#cfd6de" stroke-width="4.5"/><circle cx="50" cy="50" r="48.2" fill="none" stroke="#aeb6c0" stroke-width="1.2"/>`;
+    case 'frame_rainbow':{ const cols=['#FF6F61','#FFC93C','#21BFA0','#5B8DEF','#A06BFF','#FF7AB6']; let o=''; const n=cols.length,r=46; for(let i=0;i<n;i++){ const a0=(i/n)*2*Math.PI-Math.PI/2, a1=((i+1)/n)*2*Math.PI-Math.PI/2; const x0=(50+r*Math.cos(a0)).toFixed(2),y0=(50+r*Math.sin(a0)).toFixed(2),x1=(50+r*Math.cos(a1)).toFixed(2),y1=(50+r*Math.sin(a1)).toFixed(2); o+=`<path d="M${x0} ${y0} A${r} ${r} 0 0 1 ${x1} ${y1}" fill="none" stroke="${cols[i]}" stroke-width="4.6" stroke-linecap="round"/>`; } return o; }
+    case 'frame_hearts': { let o=`<circle cx="50" cy="50" r="46" fill="none" stroke="#FF7AB6" stroke-width="3"/>`; const n=8,r=46; for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI-Math.PI/2,x=(50+r*Math.cos(a)).toFixed(2),y=(50+r*Math.sin(a)).toFixed(2); o+=`<path transform="translate(${x},${y}) scale(0.42)" d="M0 4 C-7 -4 -3 -10 0 -5 C3 -10 7 -4 0 4 Z" fill="#FF6F61"/>`; } return o; }
+    case 'frame_stars':  { let o=`<circle cx="50" cy="50" r="46" fill="none" stroke="#5B8DEF" stroke-width="3"/>`; const n=8,r=46; for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI-Math.PI/2,x=(50+r*Math.cos(a)).toFixed(2),y=(50+r*Math.sin(a)).toFixed(2); o+=`<path transform="translate(${x},${y}) scale(0.62)" d="${star}" fill="#FFC93C"/>`; } return o; }
+    default: return '';
+  }
+}
+
+/* ---- Pets / companions ---- */
+const PETS = [
+  {id:'pet_cat',    price:30, fr:'Chat',    en:'Cat'},
+  {id:'pet_dog',    price:30, fr:'Chien',   en:'Dog'},
+  {id:'pet_bunny',  price:28, fr:'Lapin',   en:'Bunny'},
+  {id:'pet_bird',   price:25, fr:'Oiseau',  en:'Bird'},
+  {id:'pet_dragon', price:45, fr:'Dragon',  en:'Dragon'},
+  {id:'pet_fish',   price:22, fr:'Poisson', en:'Fish'},
+];
+function isPet(id){ return PETS.some(i=>i.id===id); }
+function equipPet(id){ const p=activeProfile(); ensureEconomy(p); if(!p.owned.includes(id)) return; p.equip.pet=(p.equip.pet===id?null:id); saveProfiles(); render(); }
+function unequipPet(){ const p=activeProfile(); ensureEconomy(p); p.equip.pet=null; saveProfiles(); render(); }
+function petShape(id){
+  switch(id){
+    case 'pet_cat': return `<ellipse cx="0" cy="7" rx="11" ry="8" fill="#9b8f86"/><circle cx="0" cy="-3" r="8" fill="#9b8f86"/><path d="M-7 -9 L-4 -3 -9 -3 Z" fill="#9b8f86"/><path d="M7 -9 L4 -3 9 -3 Z" fill="#9b8f86"/><circle cx="-3" cy="-4" r="1.4" fill="#33304a"/><circle cx="3" cy="-4" r="1.4" fill="#33304a"/><path d="M0 -1 l-1.4 1.6 h2.8 z" fill="#FF7AB6"/><path d="M11 9 q7 -2 6 -9" stroke="#9b8f86" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    case 'pet_dog': return `<ellipse cx="0" cy="7" rx="12" ry="8" fill="#c89a5b"/><circle cx="0" cy="-3" r="8" fill="#c89a5b"/><ellipse cx="-8" cy="-4" rx="3" ry="6" fill="#a87f43"/><ellipse cx="8" cy="-4" rx="3" ry="6" fill="#a87f43"/><circle cx="-3" cy="-4" r="1.4" fill="#33304a"/><circle cx="3" cy="-4" r="1.4" fill="#33304a"/><circle cx="0" cy="0" r="1.8" fill="#33304a"/>`;
+    case 'pet_bunny': return `<ellipse cx="0" cy="7" rx="10" ry="8" fill="#ffffff" stroke="#efe6df" stroke-width="0.6"/><circle cx="0" cy="-2" r="7" fill="#ffffff" stroke="#efe6df" stroke-width="0.6"/><path d="M-4 -7 Q-6 -20 -3 -20 Q-1 -16 -2 -7 Z" fill="#ffffff"/><path d="M4 -7 Q6 -20 3 -20 Q1 -16 2 -7 Z" fill="#ffffff"/><path d="M-3.4 -8 Q-5 -17 -3 -18 Z" fill="#FFB6C1"/><path d="M3.4 -8 Q5 -17 3 -18 Z" fill="#FFB6C1"/><circle cx="-2.6" cy="-3" r="1.2" fill="#33304a"/><circle cx="2.6" cy="-3" r="1.2" fill="#33304a"/><path d="M0 0 l-1 1.2 h2 z" fill="#FF7AB6"/>`;
+    case 'pet_bird': return `<ellipse cx="0" cy="3" rx="9" ry="10" fill="#5BC8EF"/><circle cx="0" cy="-7" r="6" fill="#5BC8EF"/><path d="M0 -5 l5 2 -5 2 z" fill="#FFC93C"/><circle cx="2" cy="-8" r="1.2" fill="#33304a"/><path d="M-9 4 q-6 1 -8 -3 q5 0 8 0z" fill="#3aa9d0"/><path d="M-2 13 l-2 4 M2 13 l2 4" stroke="#FFC93C" stroke-width="1.6" stroke-linecap="round"/>`;
+    case 'pet_dragon': return `<ellipse cx="0" cy="7" rx="12" ry="8" fill="#5fbf6f"/><circle cx="0" cy="-3" r="8" fill="#5fbf6f"/><path d="M-5 -10 L-3 -5 -7 -6 Z" fill="#3da35d"/><path d="M5 -10 L3 -5 7 -6 Z" fill="#3da35d"/><path d="M-2 -14 q2 3 4 0 q-1 4 -2 4 q-1 0 -2 -4z" fill="#FFC93C"/><circle cx="-3" cy="-4" r="1.5" fill="#33304a"/><circle cx="3" cy="-4" r="1.5" fill="#33304a"/><path d="M11 5 q8 -3 7 4 q-4 -3 -7 0z" fill="#3da35d"/>`;
+    case 'pet_fish': return `<ellipse cx="-1" cy="2" rx="11" ry="8" fill="#FF9F40"/><path d="M9 2 l8 -5 v10 z" fill="#FF7A1A"/><circle cx="-5" cy="0" r="1.6" fill="#33304a"/><path d="M-10 2 q3 2 0 4" stroke="#FF7A1A" stroke-width="1.4" fill="none"/><path d="M-1 -6 q4 -3 7 0" stroke="#FF7A1A" stroke-width="1.6" fill="none"/>`;
+    default: return '';
+  }
+}
+function petTrackSVG(p){ if(!p||!p.equip||!p.equip.pet) return ''; return `<svg viewBox="-20 -22 40 44" width="100%" height="100%">${petShape(p.equip.pet)}</svg>`; }
+
+/* ---- House floors ---- */
+const FLOORS = [
+  {id:'floor_wood',   price:20, fr:'Parquet',  en:'Wood',    base:'#D9A867'},
+  {id:'floor_tile',   price:20, fr:'Carrelage',en:'Tiles',   base:'#DCE6EE'},
+  {id:'floor_grass',  price:25, fr:'Herbe',    en:'Grass',   base:'#8BD06A'},
+  {id:'floor_checker',price:25, fr:'Damier',   en:'Checker', base:'#FFD9E6'},
+  {id:'floor_stars',  price:30, fr:'Etoiles',  en:'Stars',   base:'#C9B8FF'},
+];
+function isFloor(id){ return FLOORS.some(i=>i.id===id); }
+function floorDef(id){ return FLOORS.find(f=>f.id===id); }
+function equipFloor(id){ const p=activeProfile(); ensureEconomy(p); if(!p.owned.includes(id)) return; p.equip.floor=(p.equip.floor===id?null:id); saveProfiles(); render(); }
+function unequipFloor(){ const p=activeProfile(); ensureEconomy(p); p.equip.floor=null; saveProfiles(); render(); }
+function floorPattern(id, x, y, w, h){
+  const f=floorDef(id); if(!f) return '';
+  let o=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f.base}"/>`;
+  if(id==='floor_wood'){ const step=Math.max(9,h/4); for(let yy=y+step; yy<y+h-1; yy+=step) o+=`<line x1="${x}" y1="${yy.toFixed(1)}" x2="${x+w}" y2="${yy.toFixed(1)}" stroke="#00000018" stroke-width="1.2"/>`; for(let xx=x+w*0.3; xx<x+w; xx+=w*0.34) o+=`<line x1="${xx.toFixed(1)}" y1="${y}" x2="${xx.toFixed(1)}" y2="${y+h}" stroke="#00000010" stroke-width="1"/>`; }
+  else if(id==='floor_tile'||id==='floor_checker'){ const c=Math.max(8,w/8), fill=id==='floor_checker'?'#ffffffaa':'#ffffff55'; for(let xx=x; xx<x+w; xx+=c){ for(let yy=y; yy<y+h; yy+=c){ if((Math.round((xx-x)/c)+Math.round((yy-y)/c))%2===0) o+=`<rect x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" width="${c.toFixed(1)}" height="${c.toFixed(1)}" fill="${fill}"/>`; } } }
+  else if(id==='floor_grass'){ const n=Math.max(3,Math.round(w/10)); for(let i=0;i<n;i++){ const gx=x+(i+0.5)*(w/n), gy=y+4+((i*7)%Math.max(4,(h-8))); o+=`<path d="M${gx.toFixed(1)} ${gy.toFixed(1)} q-2 -6 0 -8 q2 2 0 8z" fill="#5fae3f"/>`; } }
+  else if(id==='floor_stars'){ const n=Math.max(2,Math.round(w/26)); for(let i=0;i<n;i++){ const sx=x+(i+0.5)*(w/n), sy=y+6+((i*9)%Math.max(4,(h-10))); o+=`<path transform="translate(${sx.toFixed(1)},${sy.toFixed(1)}) scale(0.7)" d="M0 -4 l1.1 2.6 2.9 .2 -2.2 1.9 .7 2.8 -2.5 -1.6 -2.5 1.6 .7 -2.8 -2.2 -1.9 2.9 -.2z" fill="#ffffffcc"/>`; } }
+  return o;
+}
 
 const HOUSE_ITEMS = [
   {id:'rug',    price:15, fr:'Tapis',        en:'Rug',       descFr:'Un tapis tout doux.',     descEn:'A cosy little rug.'},
@@ -452,10 +587,12 @@ const HOUSE_ITEMS = [
   {id:'poster', price:20, fr:'Affiche',      en:'Poster',    descFr:'Une affiche colorée.',    descEn:'A colourful poster.'},
   {id:'lamp',   price:20, fr:'Lampe',        en:'Lamp',      descFr:'Une lampe qui brille.',   descEn:'A lamp that glows.'},
   {id:'books',  price:25, fr:'Bibliothèque', en:'Bookshelf', descFr:'Pleine de bons livres.',  descEn:'Full of good books.'},
-  {id:'pet',    price:35, fr:'Animal',       en:'Pet',       descFr:'Ton petit compagnon.',    descEn:'Your little companion.'},
   {id:'fishbowl',price:25, fr:'Aquarium', en:'Fish bowl', descFr:'Un poisson qui nage.', descEn:'A little swimming fish.'},
   {id:'ball',    price:15, fr:'Ballon',   en:'Ball',      descFr:'Pour jouer un peu.',   descEn:'For a bit of play.'},
   {id:'beanbag', price:20, fr:'Pouf',     en:'Beanbag',   descFr:'Un siège tout mou.',   descEn:'A squishy comfy seat.'},
+  {id:'cactus',  price:15, fr:'Cactus',   en:'Cactus',    descFr:'Un cactus rigolo.',    descEn:'A funny little cactus.'},
+  {id:'clock',   price:18, fr:'Horloge',  en:'Clock',     descFr:'Pour donner l\'heure.',  descEn:'Tells the time.'},
+  {id:'balloon', price:12, fr:'Ballon gonflable', en:'Balloon', descFr:'Un ballon qui flotte.', descEn:'A floaty balloon.'},
 ];
 function houseShape(id){
   switch(id){
@@ -468,13 +605,17 @@ function houseShape(id){
     case 'fishbowl': return `<path d="M-12 -3 Q-12 14 0 14 Q12 14 12 -3 Z" fill="#bfe6ff" stroke="#9bd3f5" stroke-width="1.5"/><path d="M-12 -3 Q0 -8 12 -3" fill="none" stroke="#9bd3f5" stroke-width="1.5"/><ellipse cx="1" cy="6" rx="4.5" ry="3" fill="#FF9F40"/><path d="M5 6 l4 -2.4 v4.8 z" fill="#FF9F40"/><circle cx="-1.5" cy="5" r="0.9" fill="#33304a"/>`;
     case 'ball': return `<circle cx="0" cy="5" r="11" fill="#FF6F61"/><path d="M-11 5 H11 M0 -6 V16" stroke="#fff" stroke-width="1.8"/><path d="M-8 0 Q0 4 8 0 M-8 10 Q0 6 8 10" stroke="#fff" stroke-width="1.5" fill="none"/>`;
     case 'beanbag': return `<path d="M-14 15 Q-17 -3 0 -5 Q17 -3 14 15 Z" fill="#A06BFF"/><path d="M-14 15 Q0 10 14 15 Q0 19 -14 15 Z" fill="#8a55e0"/>`;
+    case 'cactus': return `<rect x="-6" y="6" width="12" height="9" rx="1.5" fill="#c8743a"/><rect x="-6" y="6" width="12" height="2.6" fill="#a85e2c"/><path d="M-2.4 6 Q-2.4 -9 0 -11 Q2.4 -9 2.4 6 Z" fill="#3da35d"/><path d="M-2 -1 Q-7.5 -2 -7.5 -6.5 L-5.3 -6.5 Q-5.3 -3.2 -2 -3.2 Z" fill="#3da35d"/><path d="M2 1.5 Q7.5 0.5 7.5 -4 L5.3 -4 Q5.3 -0.7 2 -0.7 Z" fill="#3da35d"/><circle cx="0" cy="-9" r="1" fill="#ffd24d"/>`;
+    case 'clock': return `<circle cx="0" cy="0" r="9.5" fill="#ffffff" stroke="#33304a" stroke-width="1.6"/><circle cx="0" cy="0" r="9.5" fill="none" stroke="#d9cdbf" stroke-width="0.7"/><line x1="0" y1="0" x2="0" y2="-5.2" stroke="#33304a" stroke-width="1.4" stroke-linecap="round"/><line x1="0" y1="0" x2="3.6" y2="1" stroke="#33304a" stroke-width="1.4" stroke-linecap="round"/><circle cx="0" cy="0" r="1.1" fill="#FF6F61"/>`;
+    case 'balloon': return `<ellipse cx="0" cy="-4" rx="6.2" ry="7.6" fill="#FF6F61"/><ellipse cx="-2" cy="-6" rx="1.6" ry="2.4" fill="#ffffff" opacity="0.5"/><path d="M0 3.4 l-1.6 2.2 h3.2 z" fill="#e0503f"/><path d="M0 5.4 Q2 9 0 12 Q-2 15 0 17" stroke="#9b8f86" stroke-width="0.8" fill="none"/>`;
     default: return '';
   }
 }
 const HOUSE_PLACE = {
   poster:{x:50,y:58,s:1.4}, rug:{x:160,y:170,s:3.4}, plant:{x:38,y:150,s:1.7},
   lamp:{x:288,y:120,s:1.7}, books:{x:252,y:150,s:1.5}, pet:{x:214,y:180,s:1.3},
-  fishbowl:{x:118,y:148,s:1.5}, ball:{x:150,y:190,s:1.2}, beanbag:{x:92,y:172,s:1.7}
+  fishbowl:{x:118,y:148,s:1.5}, ball:{x:150,y:190,s:1.2}, beanbag:{x:92,y:172,s:1.7},
+  cactus:{x:300,y:150,s:1.2}, clock:{x:232,y:54,s:1.2}, balloon:{x:284,y:60,s:1.3}
 };
 
 const MEDALS = [
@@ -542,17 +683,22 @@ function hatSVG(id){
     case 'chef': return `<rect x="32" y="27" width="36" height="11" rx="2" fill="#fff"/><circle cx="38" cy="20" r="9" fill="#fff"/><circle cx="50" cy="16" r="10" fill="#fff"/><circle cx="62" cy="20" r="9" fill="#fff"/>`;
     case 'pirate': return `<path d="M22 37 Q50 8 78 37 Q50 31 22 37 Z" fill="#2b2740"/><path d="M22 37 Q50 33 78 37 Q50 42 22 41 Z" fill="#3a3550"/><circle cx="50" cy="26" r="3" fill="#fff"/><rect x="47" y="29" width="6" height="2" rx="1" fill="#fff"/>`;
     case 'flowercrown': return `<path d="M26 30 Q50 19 74 28" stroke="#21BFA0" stroke-width="2.4" fill="none"/><g fill="#FF7AB6"><circle cx="30" cy="28" r="4.2"/><circle cx="42" cy="24" r="4.2"/><circle cx="54" cy="23" r="4.2"/><circle cx="66" cy="26" r="4.2"/></g><g fill="#FFC93C"><circle cx="30" cy="28" r="1.6"/><circle cx="42" cy="24" r="1.6"/><circle cx="54" cy="23" r="1.6"/><circle cx="66" cy="26" r="1.6"/></g>`;
+    case 'bunny': return `<path d="M41 30 Q36 6 43 6 Q48 9 46 30 Z" fill="#ffffff" stroke="#efe6df" stroke-width="0.6"/><path d="M59 30 Q64 6 57 6 Q52 9 54 30 Z" fill="#ffffff" stroke="#efe6df" stroke-width="0.6"/><path d="M42 26 Q39.5 13 43 12 Q45.5 14 44.5 26 Z" fill="#FFB6C1"/><path d="M58 26 Q60.5 13 57 12 Q54.5 14 55.5 26 Z" fill="#FFB6C1"/>`;
+    case 'cowboy': return `<ellipse cx="50" cy="34" rx="23" ry="5" fill="#8a5a2b"/><path d="M37 34 Q37 15 50 15 Q63 15 63 34 Z" fill="#a06a33"/><path d="M37 30 H63 v3 H37 Z" fill="#6b431f"/>`;
+    case 'tiara': return `<path d="M35 31 L40 21 L45 28 L50 17 L55 28 L60 21 L65 31 Z" fill="#FFD24D"/><rect x="34" y="29" width="32" height="2.6" rx="1.2" fill="#e6b800"/><circle cx="50" cy="21" r="2.1" fill="#FF6F61"/><circle cx="42" cy="25" r="1.4" fill="#7ad1ff"/><circle cx="58" cy="25" r="1.4" fill="#7ad1ff"/>`;
     default: return '';
   }
 }
-function avatarInner(p, hatOverride){
+function avatarInner(p, hatOverride, frameOverride){
   const c=Object.assign(defaultCharacter(), p.character||{});
   const col=p.color||'#FF6F61';
   const hat = (hatOverride!==undefined) ? hatOverride : (p.equip ? p.equip.hat : null);
-  return `<circle cx="50" cy="50" r="48" fill="${col}"/>${hairBack(c)}<circle cx="50" cy="56" r="28" fill="${c.skin}"/>${eyesSVG(c)}${glassesSVG(c)}${mouthSVG(c)}${hat?'<g stroke="#2b2540" stroke-opacity="0.2" stroke-width="1.4" stroke-linejoin="round">'+hatSVG(hat)+'</g>':''}`;
+  const hairUnder = hat && COVERING_HATS.indexOf(hat)>=0;
+  const frame = (frameOverride!==undefined) ? frameOverride : (p.equip ? p.equip.frame : null);
+  return `<circle cx="50" cy="50" r="48" fill="${col}"/>${hairUnder?hairUnderHat(c):hairBack(c)}<circle cx="50" cy="56" r="28" fill="${c.skin}"/>${eyesSVG(c)}${glassesSVG(c)}${mouthSVG(c)}${hat?'<g stroke="#2b2540" stroke-opacity="0.2" stroke-width="1.4" stroke-linejoin="round">'+hatSVG(hat)+'</g>':''}${frame?frameSVG(frame):''}`;
 }
-function avatarSVG(p, hatOverride){
-  return `<svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block">${avatarInner(p,hatOverride)}</svg>`;
+function avatarSVG(p, hatOverride, frameOverride){
+  return `<svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block">${avatarInner(p,hatOverride,frameOverride)}</svg>`;
 }
 
 let profiles = JSON.parse(localStorage.getItem('hg_profiles') || '[]');
@@ -677,7 +823,7 @@ function viewCreator(){
   const c = Object.assign(defaultCharacter(), draft.character||{});
   const swRow = (arr, field, cur) => arr.map(v=>`<button class="opt opt-sw ${v===cur?'on':''}" style="background:${v}" onclick="setChar('${field}','${v}')"></button>`).join('');
   const chipRow = (arr, field, cur, labels) => arr.map(v=>`<button class="opt ${v===cur?'on':''}" onclick="setChar('${field}','${v}')">${labels[v]}</button>`).join('');
-  const hairL={none:t('hairNone'),short:t('hairShort'),long:t('hairLong'),curly:t('hairCurly'),spiky:t('hairSpiky'),bun:t('hairBun')};
+  const hairL={none:t('hairNone'),short:t('hairShort'),long:t('hairLong'),curly:t('hairCurly'),wavy:t('hairWavy'),bun:t('hairBun')};
   const eyeL={round:t('eRound'),happy:t('eHappy'),dot:t('eDot'),wink:t('eWink')};
   const mouthL={smile:t('mSmile'),grin:t('mGrin'),neutral:t('mNeutral'),wow:t('mWow')};
   return `
@@ -803,7 +949,8 @@ function viewParent(){
     <div class="screen active">
       <div class="backbar"><button class="backbtn" onclick="navigate('home')">${IC.back}${t('back')}</button></div>
       <div class="scr-title">${t('parent')}</div>
-      <p class="center" style="color:var(--muted);font-weight:700;margin-bottom:10px;">${esc(p?p.name:'')}</p>
+      <p class="center" style="color:var(--muted);font-weight:700;margin-bottom:4px;">${esc(p?p.name:'')}</p>
+      <p class="hint" style="text-align:center;margin:0 0 14px;">${t('parentListsHelp')}</p>
       ${section('FR','Français')}
       ${section('EN','English')}
       <div class="spacer"></div>
@@ -928,7 +1075,7 @@ function saveEditor(){
   const name=(draft.name||'').trim();
   if(!name){ const e=document.getElementById('ed-err'); if(e) e.textContent=t('needName'); return; }
   if(draft.id){ const p=profiles.find(x=>x.id===draft.id); p.name=name; p.color=draft.color; p.character=draft.character; }
-  else { profiles.push({ id:'p'+Date.now(), name, color:draft.color, character:draft.character, coins:0, fr:DEFAULT_FR.slice(), en:DEFAULT_EN.slice() }); }
+  else { profiles.push({ id:'p'+Date.now(), name, color:draft.color, character:draft.character, coins:0, fr:[], en:[], lists:defaultLists() }); }
   saveProfiles(); navigate('profiles');
 }
 function deleteProfile(){
@@ -940,12 +1087,15 @@ function pickProfile(id){ activeId=id; localStorage.setItem('hg_active', id); na
 
 /* ---------- shop / wardrobe ---------- */
 let shopMsg='';
-function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null}; if(p.equip.wall===undefined) p.equip.wall=null;
+function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null}; if(p.equip.wall===undefined) p.equip.wall=null; if(p.equip.frame===undefined) p.equip.frame=null; if(p.equip.pet===undefined) p.equip.pet=null; if(p.equip.floor===undefined) p.equip.floor=null; if(!p.hidden) p.hidden=[];
   if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; if(!p.wordStats) p.wordStats={}; if(!p.sent) p.sent={fr:{},en:{}}; if(!p.sent.fr) p.sent.fr={}; if(!p.sent.en) p.sent.en={}; if(!p.lists){ p.lists=[]; const _mk=(arr,sm,lng,nm)=>{ if(arr&&arr.length) p.lists.push({id:uid(), name:nm, lang:lng, words:arr.map(w=>({w, s:(sm&&sm[w])||''}))}); }; _mk(p.fr, p.sent.fr, 'FR', 'Mes mots'); _mk(p.en, p.sent.en, 'EN', 'My words'); } }
-function openShop(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); shopMsg=''; shopTab='hat'; navigate('shop'); }
+function openShop(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); shopMsg=''; pendingBuy=null; shopTab='hat'; navigate('shop'); }
 function openHouse(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); navigate('house'); }
 let shopTab='hat';
-function setShopTab(t){ shopTab=t; shopMsg=''; render(); }
+let decorateOpen=false;
+function setShopTab(t){ shopTab=t; shopMsg=''; pendingBuy=null; render(); }
+function toggleDecorate(){ decorateOpen=!decorateOpen; render(); }
+function toggleHouseItem(id){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const i=p.hidden.indexOf(id); if(i>=0) p.hidden.splice(i,1); else p.hidden.push(id); saveProfiles(); render(); }
 
 function viewShop(){
   const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
@@ -960,26 +1110,45 @@ function viewShop(){
       const tag = !owned
         ? `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>`
         : `<div class="tag ${worn?'on':''}">${worn?t('wearing'):t('wear')}</div>`;
-      return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipHat('${it.id}')`:`buyItem('${it.id}')`}">
+      return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipHat('${it.id}')`:`askBuy('${it.id}')`}">
         <div class="sp">${avatarSVG(p,it.id)}</div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`;
     }).join('');
+    body = `<div class="shop-grid">${noneCard}${cards}</div>`;
+  } else if(shopTab==='frame'){
+    const noneCard = `<button class="shop-card ${!p.equip.frame?'equipped':''}" onclick="unequipFrame()"><div class="sp">${avatarSVG(p,undefined,null)}</div><div class="nm">${t('noFrame')}</div><div class="tag ${!p.equip.frame?'on':''}">${!p.equip.frame?t('wearing'):t('wear')}</div></button>`;
+    const cards = FRAMES.map(it=>{ const owned=p.owned.includes(it.id), worn=p.equip.frame===it.id;
+      const tag = !owned ? `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>` : `<div class="tag ${worn?'on':''}">${worn?t('wearing'):t('wear')}</div>`;
+      return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipFrame('${it.id}')`:`askBuy('${it.id}')`}"><div class="sp">${avatarSVG(p,undefined,it.id)}</div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`; }).join('');
+    body = `<div class="shop-grid">${noneCard}${cards}</div>`;
+  } else if(shopTab==='pet'){
+    const noneCard = `<button class="shop-card ${!p.equip.pet?'equipped':''}" onclick="unequipPet()"><div class="sp itm"><svg viewBox="-20 -20 40 40" width="100%" height="100%"><text x="0" y="6" font-size="14" text-anchor="middle" fill="#c9c2d0">--</text></svg></div><div class="nm">${t('noPet')}</div><div class="tag ${!p.equip.pet?'on':''}">${!p.equip.pet?t('wearing'):t('wear')}</div></button>`;
+    const cards = PETS.map(it=>{ const owned=p.owned.includes(it.id), worn=p.equip.pet===it.id;
+      const tag = !owned ? `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>` : `<div class="tag ${worn?'on':''}">${worn?t('wearing'):t('wear')}</div>`;
+      return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipPet('${it.id}')`:`askBuy('${it.id}')`}"><div class="sp itm"><svg viewBox="-20 -22 40 44" width="100%" height="100%">${petShape(it.id)}</svg></div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`; }).join('');
     body = `<div class="shop-grid">${noneCard}${cards}</div>`;
   } else if(shopTab==='house'){
     const cards = HOUSE_ITEMS.map(it=>{
       const owned=p.owned.includes(it.id);
       const tag = owned ? `<div class="tag on">${t('own')}</div>`
         : `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>`;
-      return `<button class="shop-card" onclick="${owned?'openHouse()':`buyItem('${it.id}')`}">
+      return `<button class="shop-card" onclick="${owned?'openHouse()':`askBuy('${it.id}')`}">
         <div class="sp itm"><svg viewBox="-20 -20 40 40" width="100%" height="100%">${houseShape(it.id)}</svg></div>
         <div class="nm">${esc(itemName(it))}</div>${tag}</button>`;
     }).join('');
     body = `<div class="shop-grid">${cards}</div>`;
-  } else {
+  } else if(shopTab==='wall'){
     const wpv = it => `<svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="26" fill="${it.wall}"/><rect y="26" width="40" height="14" fill="${it.floor}"/></svg>`;
     const noneCard = `<button class="shop-card ${!p.equip.wall?'equipped':''}" onclick="unequipWall()"><div class="sp"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="26" fill="#FBE7C9"/><rect y="26" width="40" height="14" fill="#E9C79A"/></svg></div><div class="nm">${t('wallNone')}</div><div class="tag ${!p.equip.wall?'on':''}">${!p.equip.wall?t('wearing'):t('wear')}</div></button>`;
     const cards = WALLPAPERS.map(it=>{ const owned=p.owned.includes(it.id), worn=p.equip.wall===it.id;
       const tag = !owned ? `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>` : `<div class="tag ${worn?'on':''}">${worn?t('wearing'):t('wear')}</div>`;
-      return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipWall('${it.id}')`:`buyItem('${it.id}')`}"><div class="sp">${wpv(it)}</div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`; }).join('');
+      return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipWall('${it.id}')`:`askBuy('${it.id}')`}"><div class="sp">${wpv(it)}</div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`; }).join('');
+    body = `<div class="shop-grid">${noneCard}${cards}</div>`;
+  } else if(shopTab==='floor'){
+    const fsv = id => `<svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="14" fill="#FBE7C9"/>${floorPattern(id,0,14,40,26)}</svg>`;
+    const noneCard = `<button class="shop-card ${!p.equip.floor?'equipped':''}" onclick="unequipFloor()"><div class="sp"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="14" fill="#FBE7C9"/><rect y="14" width="40" height="26" fill="#E9C79A"/></svg></div><div class="nm">${t('floorNone')}</div><div class="tag ${!p.equip.floor?'on':''}">${!p.equip.floor?t('wearing'):t('wear')}</div></button>`;
+    const cards = FLOORS.map(it=>{ const owned=p.owned.includes(it.id), worn=p.equip.floor===it.id;
+      const tag = !owned ? `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>` : `<div class="tag ${worn?'on':''}">${worn?t('wearing'):t('wear')}</div>`;
+      return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipFloor('${it.id}')`:`askBuy('${it.id}')`}"><div class="sp">${fsv(it.id)}</div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`; }).join('');
     body = `<div class="shop-grid">${noneCard}${cards}</div>`;
   }
   return `
@@ -991,10 +1160,14 @@ function viewShop(){
       <div class="scr-title">${t('shopTitle')}</div>
       <div class="tabs">
         <button class="tab ${shopTab==='hat'?'on':''}" onclick="setShopTab('hat')">${t('hatsCat')}</button>
+        <button class="tab ${shopTab==='frame'?'on':''}" onclick="setShopTab('frame')">${t('frameCat')}</button>
+        <button class="tab ${shopTab==='pet'?'on':''}" onclick="setShopTab('pet')">${t('petCat')}</button>
         <button class="tab ${shopTab==='house'?'on':''}" onclick="setShopTab('house')">${t('houseCat')}</button>
+        <button class="tab ${shopTab==='floor'?'on':''}" onclick="setShopTab('floor')">${t('floorCat')}</button>
         <button class="tab ${shopTab==='wall'?'on':''}" onclick="setShopTab('wall')">${t('wallCat')}</button>
       </div>
       ${shopMsg?`<div class="note">${shopMsg}</div>`:''}
+      ${pendingBuy ? (()=>{ const it=shopItem(pendingBuy); if(!it) return ''; return `<div class="confirm-box"><div class="cb-msg">${t('buyConfirm')}<br><span class="buyline">${esc(itemName(it))} &middot; ${IC.star}${it.price}</span></div><div class="cb-row"><button class="btn-ghost" onclick="cancelBuy()">${t('cancel')}</button><button class="btn-buy" onclick="confirmBuy()">${t('buyBtn')}</button></div></div>`; })() : ''}
       ${body}
       <div class="spacer"></div>
     </div>`;
@@ -1003,8 +1176,12 @@ function buyItem(id){
   const p=activeProfile(); ensureEconomy(p); const it=shopItem(id);
   if(!it||p.owned.includes(id)) return;
   if((p.coins||0)<it.price){ shopMsg=t('notEnough'); render(); return; }
-  p.coins-=it.price; p.owned.push(id); if(isHat(id)) p.equip.hat=id; else if(isWall(id)) p.equip.wall=id; shopMsg=''; saveProfiles(); render();
+  p.coins-=it.price; p.owned.push(id); if(isHat(id)) p.equip.hat=id; else if(isWall(id)) p.equip.wall=id; else if(isFrame(id)) p.equip.frame=id; else if(isPet(id)) p.equip.pet=id; else if(isFloor(id)) p.equip.floor=id; shopMsg=''; saveProfiles(); render();
 }
+let pendingBuy=null;
+function askBuy(id){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const it=shopItem(id); if(!it||p.owned.includes(id)) return; if((p.coins||0)<it.price){ shopMsg=t('notEnough'); pendingBuy=null; render(); return; } shopMsg=''; pendingBuy=id; render(); }
+function cancelBuy(){ pendingBuy=null; render(); }
+function confirmBuy(){ const id=pendingBuy; pendingBuy=null; if(id) buyItem(id); }
 function equipHat(id){ const p=activeProfile(); ensureEconomy(p); if(!p.owned.includes(id)) return;
   p.equip.hat=(p.equip.hat===id?null:id); saveProfiles(); render(); }
 function unequipHat(){ const p=activeProfile(); ensureEconomy(p); p.equip.hat=null; saveProfiles(); render(); }
@@ -1015,8 +1192,8 @@ function viewHouse(){
   const W=320,H=210;
   const place=(id,inner)=>{ const q=HOUSE_PLACE[id]; return `<g transform="translate(${q.x},${q.y}) scale(${q.s})"><g id="h-item-${id}" class="htap" onclick="houseTap('item','${id}')">${inner}</g></g>`; };
   let items='';
-  ['poster','rug','plant','lamp','books','fishbowl','ball','beanbag'].forEach(id=>{ if(p.owned.includes(id)) items+=place(id,houseShape(id)); });
-  let pet=''; if(p.owned.includes('pet')) pet=place('pet',houseShape('pet'));
+  ['poster','rug','plant','lamp','books','fishbowl','ball','beanbag','cactus','clock','balloon'].forEach(id=>{ if(p.owned.includes(id) && !p.hidden.includes(id)) items+=place(id,houseShape(id)); });
+  let companion=''; if(p.equip.pet) companion=`<g transform="translate(206,150) scale(1.35)"><g class="htap" id="h-petc-${p.equip.pet}" onclick="houseTap('petc','${p.equip.pet}')">${petShape(p.equip.pet)}</g></g>`;
   const character=`<g id="h-char-me" class="htap" onclick="houseTap('char','me')"><svg x="118" y="72" width="84" height="84" viewBox="0 0 100 100">${avatarInner(p)}</svg></g>`;
   const shelf=`<rect x="172" y="34" width="128" height="8" rx="3" fill="#caa06d"/><rect x="172" y="42" width="128" height="3" fill="#00000018"/>`;
   let medals=''; MEDALS.forEach((m,i)=>{ const earned=p.medals.includes(m.id);
@@ -1024,10 +1201,13 @@ function viewHouse(){
   const wp = WALLPAPERS.find(w=>w.id===p.equip.wall); const wallC = wp?wp.wall:'#FBE7C9'; const floorC = wp?wp.floor:'#E9C79A';
   const scene=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">
     <rect x="0" y="0" width="${W}" height="135" fill="${wallC}"/>
-    <rect x="0" y="135" width="${W}" height="${H-135}" fill="${floorC}"/>
+    ${(p.equip.floor&&isFloor(p.equip.floor))?floorPattern(p.equip.floor,0,135,W,H-135):`<rect x="0" y="135" width="${W}" height="${H-135}" fill="${floorC}"/>`}
     <rect x="0" y="132" width="${W}" height="5" fill="#0000000f"/>
-    ${shelf}${medals}${items}${character}${pet}
+    ${shelf}${medals}${items}${character}${companion}
   </svg>`;
+  const ownedHouse = HOUSE_ITEMS.filter(it=>p.owned.includes(it.id));
+  const decorateBtn = ownedHouse.length ? `<button class="link-btn" onclick="toggleDecorate()">${IC.pencil}${decorateOpen?t('done'):t('decorate')}</button>` : '';
+  const decoratePanel = (decorateOpen && ownedHouse.length) ? `<div class="cat" style="margin-top:4px;"><label>${t('decorateHint')}</label><div class="chips chips-scroll">${ownedHouse.map(it=>`<button class="chip ${!p.hidden.includes(it.id)?'on':''}" onclick="toggleHouseItem('${it.id}')">${esc(itemName(it))}</button>`).join('')}</div></div>` : '';
   const earnedCount=p.medals.length;
   return `
     <div class="screen active">
@@ -1041,7 +1221,9 @@ function viewHouse(){
         <div class="hp-title" id="hi-title">${t('houseTapHint')}</div>
         <div class="hp-body" id="hi-body">${t('medals')}: ${earnedCount}/${MEDALS.length}</div>
       </div>
+      ${decoratePanel}
       <div class="spacer"></div>
+      ${decorateBtn}
       <button class="link-btn" onclick="openShop()">${IC.bag}${t('shopTitle')}</button>
     </div>`;
 }
@@ -1051,6 +1233,7 @@ function houseTap(kind,id){
   let title='', body='';
   if(kind==='item'){ const it=itemDef(id); title=itemName(it); body=(lang==='FR'?it.descFr:it.descEn); }
   else if(kind==='char'){ title=esc(p.name); body=t('thatsYou'); }
+  else if(kind==='petc'){ const it=PETS.find(x=>x.id===id); title=it?itemName(it):''; body=(lang==='FR'?'Ton petit compagnon.':'Your little companion.'); }
   else if(kind==='medal'){ const m=medalDef(id); const earned=p.medals.includes(id); title=(lang==='FR'?m.fr:m.en);
     if(earned){ body=(lang==='FR'?m.earnedFr:m.earnedEn); }
     else { const goal=(lang==='FR'?m.goalFr:m.goalEn); const pr=medalProgress(p,m);
@@ -1063,7 +1246,7 @@ function houseTap(kind,id){
 }
 function reactEl(kind,id){
   const el=document.getElementById('h-'+kind+'-'+id); if(!el) return;
-  const cls = kind==='char' ? 'r-bounce' : kind==='medal' ? 'r-pop' : ({plant:'r-sway',lamp:'r-glow',pet:'r-wiggle'}[id]||'r-pop');
+  const cls = kind==='char' ? 'r-bounce' : kind==='petc' ? 'r-wiggle' : kind==='medal' ? 'r-pop' : ({plant:'r-sway',lamp:'r-glow',pet:'r-wiggle'}[id]||'r-pop');
   ['r-pop','r-bounce','r-sway','r-wiggle','r-glow'].forEach(c=>el.classList.remove(c));
   el.getBoundingClientRect(); el.classList.add(cls);
 }
@@ -1075,7 +1258,7 @@ let lastMode = 'dict';
 let missedThisRound = [];
 let dictNote = '';
 let queue=[], qi=0, roundTotal=0, roundScore=0, roundCoins=0;
-let curWord='', curAns='', inputText='', turnActive=false, lcwcTimer=null, misses=0;
+let curWord='', curAns='', inputText='', turnActive=false, lcwcTimer=null, misses=0, roundMistake=false, streak=0;
 let scrTiles=[], scrUsed=[];
 
 function styleMeta(s){ return ({
@@ -1123,7 +1306,7 @@ function startDict(){
   activeSent=sentMap;
   const pref=localStorage.getItem('hg_practice')||'smart';
   queue = (pref==='even') ? shuffle(words).slice(0,10) : pickWeightedWords(p, words, 10);
-  roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict'; missedThisRound=[];
+  roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict'; missedThisRound=[]; roundMistake=false; streak=0;
   beginTurn();
 }
 function setPractice(v){ localStorage.setItem('hg_practice', v); render(); }
@@ -1133,8 +1316,10 @@ function selectAllLists(){ const p=activeProfile(); if(!p) return; ensureEconomy
 function listPickerHTML(){ const p=activeProfile(); if(!p) return ''; ensureEconomy(p); const lists=listsFor(p,lang); if(!lists.length) return '';
   const sel=getSel(p,lang); const allOn = lists.length>0 && sel.length===lists.length;
   const chip=(on,lab,onclick)=>`<button class="chip ${on?'on':''}" onclick="${onclick}">${esc(lab)}</button>`;
-  const items=lists.map(l=>chip(sel.includes(l.id), l.name, `selectList('${l.id}')`)).join('');
-  return `<div class="cat"><label>${t('listsToPlay')}</label><div class="chips">${chip(allOn, t('allWords'), 'selectAllLists()')}${items}</div></div>`;
+  const items=lists.map(l=>chip(sel.includes(l.id), l.name+' \u00b7 '+l.words.length, `selectList('${l.id}')`)).join('');
+  const head = `<div class="chips" style="margin-bottom:8px;">${chip(allOn, t('allWords'), 'selectAllLists()')}</div>`;
+  const body = `<div class="chips chips-scroll">${items}</div>`;
+  return `<div class="cat"><label>${t('listsToPlay')}</label>${head}${body}</div>`;
 }
 function wordWeight(p, w){ const ws=p.wordStats?p.wordStats[norm(w)]:null; if(!ws) return 3; let wt=1+ws.w*3; if(ws.r>=3 && ws.w===0) wt=0.4; return Math.max(0.2, wt); }
 function pickWeightedWords(p, list, n){
@@ -1204,16 +1389,48 @@ function kbdHTML(){
   return h;
 }
 
+function playHeaderHTML(){ const p=activeProfile(); return `
+      <div class="topbar">
+        <button class="backbtn" onclick="quitGame()">${IC.back}</button>
+        <div class="tb-right"><button class="sfx-btn" id="sfx-btn" onclick="toggleSfx()">${sfxOn()?IC.sound:IC.mute}</button><span class="coins">${IC.star}<span id="gw-coins">${p?p.coins||0:0}</span></span></div>
+      </div>
+      <div class="track" id="gw-track">
+        <div class="track-rail"></div>
+        <div class="track-goal">${IC.trophy}</div>
+        <div class="walker" id="gw-av"><div class="walker-inner" id="gw-av-in">${p?avatarSVG(p):''}</div></div>
+        ${(p&&p.equip&&p.equip.pet)?`<div class="track-pet" id="gw-pet">${petTrackSVG(p)}</div>`:''}
+      </div>
+      <div class="combo" id="gw-combo"></div>`;
+}
+function positionWalker(){ const w=document.getElementById('gw-av'); if(!w) return; const pct=roundTotal>0?Math.min(qi/roundTotal,1):0; w.style.left=(4+pct*82)+'%'; const pet=document.getElementById('gw-pet'); if(pet) pet.style.left=Math.max(0,(4+pct*82-9))+'%'; }
+function react(cls){ const el=document.getElementById('gw-av-in'); if(!el) return; el.classList.remove('cheer','wobble'); void el.offsetWidth; el.classList.add(cls); }
+function burst(){ const card=document.getElementById('gw-card'); const r=card?card.getBoundingClientRect():null;
+  const cx=r?r.left+r.width/2:window.innerWidth/2, cy=r?r.top+r.height/2:window.innerHeight/3;
+  const cont=document.createElement('div'); cont.className='confetti';
+  const cols=['#FF6F61','#21BFA0','#FFC93C','#7AD1FF','#FF7AB6'];
+  for(let i=0;i<14;i++){ const s=document.createElement('span'); const a=Math.random()*Math.PI*2, d=40+Math.random()*70;
+    s.style.left=cx+'px'; s.style.top=cy+'px'; s.style.background=cols[i%cols.length];
+    s.style.setProperty('--dx',(Math.cos(a)*d)+'px'); s.style.setProperty('--dy',(Math.sin(a)*d-30)+'px'); s.style.setProperty('--rot',(Math.random()*360)+'deg');
+    s.style.animationDelay=(Math.random()*0.05)+'s'; cont.appendChild(s); }
+  document.body.appendChild(cont); setTimeout(()=>cont.remove(),1000); }
+function flyCoin(){ const card=document.getElementById('gw-card'), target=document.getElementById('gw-coins'); if(!card||!target) return;
+  const cr=card.getBoundingClientRect(), tr=target.getBoundingClientRect();
+  const el=document.createElement('div'); el.className='flycoin'; el.innerHTML=IC.star;
+  el.style.left=(cr.left+cr.width/2)+'px'; el.style.top=(cr.top+10)+'px'; document.body.appendChild(el);
+  const dx=(tr.left+tr.width/2)-(cr.left+cr.width/2), dy=(tr.top+tr.height/2)-(cr.top+10);
+  requestAnimationFrame(()=>{ el.style.transform='translate('+dx+'px,'+dy+'px) scale(0.5)'; el.style.opacity='0.2'; });
+  setTimeout(()=>{ el.remove(); const c=document.getElementById('gw-coins'); if(c){ c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); } },600); }
+function clearCombo(){ const el=document.getElementById('gw-combo'); if(el) el.textContent=''; }
+function showCombo(txt){ const el=document.getElementById('gw-combo'); if(!el) return; el.textContent=txt; el.classList.remove('pop-combo'); void el.offsetWidth; el.classList.add('pop-combo'); }
+function bumpStreak(){ if(misses===0) streak++; else streak=0;
+  if(streak>0 && streak%5===0){ const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+2; roundCoins+=2; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; } showCombo(t('streakBonus')); sfx('combo'); burst(); }
+  else if(streak>=3){ showCombo('x'+streak+' !'); sfx('combo'); }
+  else { clearCombo(); } }
 function viewGame(){
   const p=activeProfile();
   return `
     <div class="screen active">
-      <div class="topbar">
-        <button class="backbtn" onclick="quitGame()">${IC.back}</button>
-        <div class="gw-av" id="gw-av">${p?avatarSVG(p):''}</div>
-        <span class="coins">${IC.star}<span id="gw-coins">${p?p.coins||0:0}</span></span>
-      </div>
-      <div class="gw-prog" id="gw-prog"></div>
+      ${playHeaderHTML()}
       <div class="gw-card" id="gw-card"></div>
       <div class="gw-hint" id="gw-hint"></div>
       <div class="gw-input" id="gw-input"></div>
@@ -1224,7 +1441,7 @@ function viewGame(){
 }
 
 function paintGame(){
-  const prog=document.getElementById('gw-prog'); if(prog) prog.textContent=Math.min(qi+1,roundTotal)+' / '+roundTotal;
+  positionWalker();
   const card=document.getElementById('gw-card'); if(card) card.innerHTML=cardHTML();
   const kbd=document.getElementById('gw-kbd'); if(kbd) kbd.innerHTML=kbdHTML();
   updateInputBox();
@@ -1246,6 +1463,30 @@ function speak(txt,l){ if(!('speechSynthesis' in window)) return; try{ const u=n
 function langKey(){ return lang==='FR'?'fr':'en'; }
 function curSentence(){ return activeSent[curWord]||''; }
 function speakSentence(){ const se=curSentence(); if(se) speak(se, lang); }
+const PRAISE = {
+  FR:['Bravo !','Super !','Bien joué !','Génial !','Parfait !','Excellent !','Trop fort !','Magnifique !'],
+  EN:['Well done!','Great!','Nice job!','Awesome!','Perfect!','Brilliant!','You got it!','Amazing!']
+};
+const _lastPick={};
+function pickNoRepeat(arr, key){ if(!arr||!arr.length) return ''; if(arr.length<2) return arr[0]; let i; do{ i=Math.floor(Math.random()*arr.length); }while(i===_lastPick[key]); _lastPick[key]=i; return arr[i]; }
+function praise(){ return pickNoRepeat(PRAISE[lang]||PRAISE.EN, 'praise'); }
+const ENCOURAGE = {
+  FR:['Presque !','Réessaie !','Tu y es presque !','Encore un essai !','Continue !','Presque bon !','Encore une fois !','Tu vas y arriver !'],
+  EN:['Almost!','Try again!','So close!','Give it another go!','Keep going!','Nearly there!','Have another try!','You can do it!']
+};
+function encourage(){ return pickNoRepeat(ENCOURAGE[lang]||ENCOURAGE.EN, 'enc'); }
+let _actx=null, _sfxMute=(localStorage.getItem('hg_sfx')==='0');
+function sfxOn(){ return !_sfxMute; }
+function toggleSfx(){ _sfxMute=!_sfxMute; localStorage.setItem('hg_sfx', _sfxMute?'0':'1'); const b=document.getElementById('sfx-btn'); if(b) b.innerHTML=sfxOn()?IC.sound:IC.mute; }
+function actx(){ if(!_actx){ try{ _actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ _actx=null; } } if(_actx && _actx.state==='suspended'){ try{_actx.resume();}catch(e){} } return _actx; }
+function tone(freq,start,dur,type,vol){ const c=actx(); if(!c) return; const o=c.createOscillator(), g=c.createGain(); o.type=type||'sine'; o.frequency.value=freq; const t0=c.currentTime+start; o.connect(g); g.connect(c.destination); g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(vol||0.12,t0+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur); o.start(t0); o.stop(t0+dur+0.03); }
+function sfx(kind){ if(!sfxOn()) return; if(!actx()) return;
+  if(kind==='correct'){ tone(660,0,0.13,'triangle',0.11); tone(880,0.08,0.16,'triangle',0.11); }
+  else if(kind==='wrong'){ tone(392,0,0.12,'sine',0.10); tone(311,0.08,0.16,'sine',0.10); }
+  else if(kind==='coin'){ tone(1180,0,0.10,'square',0.05); }
+  else if(kind==='combo'){ tone(700,0,0.07,'square',0.07); tone(1050,0.06,0.12,'square',0.07); }
+  else if(kind==='finish'){ [523,659,784,1047].forEach((f,i)=>tone(f,i*0.12,0.22,'triangle',0.11)); }
+}
 function escapeRegExp(x){ return (x||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
 function maskInSentence(sentence, word){ if(!word) return sentence; try{ return sentence.replace(new RegExp(escapeRegExp(word),'gi'),'____'); }catch(e){ return sentence; } }
 function sentenceHTML(){ const se=curSentence(); if(!se) return ''; return `<div class="csent"><button onclick="speakSentence()">${IC.bubble}${t('sentenceBtn')}</button><span class="csent-txt">${esc(maskInSentence(se, curWord))}</span></div>`; }
@@ -1265,23 +1506,24 @@ function submit(){
   if(a===norm(curAns)){
     turnActive=false; roundScore++; roundCoins++; recordWord(curWord, true);
     const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
-    const av=document.getElementById('gw-av'); if(av){ av.classList.remove('pop'); void av.offsetWidth; av.classList.add('pop'); }
-    if(fb){ fb.textContent=t('correctMsg'); fb.className='gw-fb ok'; }
+    react('cheer'); burst(); flyCoin(); bumpStreak();
+    const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } speak(pr, lang); sfx('correct');
     setTimeout(advance,1050);
   } else {
-    misses++;
+    misses++; roundMistake=true; react('wobble'); streak=0; clearCombo();
     if(misses>=2){
       turnActive=false; recordWord(curWord, false); missedThisRound.push(curWord);
       if(fb){ fb.textContent='\u2192 '+curAns; fb.className='gw-fb no'; }
       speak(curAns, lang); setTimeout(advance,1700); return;
     }
     if(fb){ fb.innerHTML='<span class="fb-msg">'+t('tryagain')+'</span>'+letterFeedbackHTML(typed, curAns); fb.className='gw-fb no'; }
+    sfx('wrong'); speak(encourage(), lang);
     inputText=''; if(dictStyle==='scramble'){ scrUsed=scrTiles.map(()=>false); const c=document.getElementById('gw-card'); if(c) c.innerHTML=cardHTML(); }
     updateInputBox();
   }
 }
 function skip(){
-  if(!turnActive) return; turnActive=false; recordWord(curWord, false); missedThisRound.push(curWord);
+  if(!turnActive) return; turnActive=false; roundMistake=true; streak=0; clearCombo(); recordWord(curWord, false); missedThisRound.push(curWord);
   const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent='\u2192 '+curAns; fb.className='gw-fb no'; }
   speak(curAns, lang); setTimeout(advance,1600);
 }
@@ -1289,11 +1531,11 @@ function quitGame(){ if(lcwcTimer){clearTimeout(lcwcTimer);lcwcTimer=null;} turn
 let perfectRound=false, giftsAwarded=[];
 function finishRound(){
   const p=activeProfile(); if(p){ ensureEconomy(p);
-    perfectRound = (roundTotal>0 && roundScore===roundTotal);
+    perfectRound = (roundTotal>0 && roundScore===roundTotal && !roundMistake);
     if(perfectRound){ p.coins=(p.coins||0)+5; roundCoins+=5; p.stats.perfect=(p.stats.perfect||0)+1;
       if(!p.medals.includes('firstPerfect')) p.medals.push('firstPerfect'); }
     giftsAwarded = claimMilestones(p);
-    saveProfiles();
+    saveProfiles(); sfx('finish');
   } else { perfectRound=false; giftsAwarded=[]; }
   navigate('results');
 }
@@ -1371,15 +1613,24 @@ function viewMathCfg(){
 function startMath(){
   const p=activeProfile(); if(!p){ navigate('profiles'); return; } ensureEconomy(p);
   mathQs=Array.from({length:10},()=>genMath(mathOp,mathDiff));
-  roundTotal=10; qi=0; roundScore=0; roundCoins=0; lastMode='math'; missedThisRound=[]; beginMath();
+  roundTotal=10; qi=0; roundScore=0; roundCoins=0; lastMode='math'; missedThisRound=[]; roundMistake=false; streak=0; beginMath();
 }
 function beginMath(){
   curM=mathQs[qi]; inputText=''; turnActive=true; misses=0;
   if(route!=='mathgame') navigate('mathgame'); else paintMath();
 }
 function mathAdvance(){ qi++; if(qi>=roundTotal) finishRound(); else beginMath(); }
+function mdots(n, cls){ let h=''; for(let i=0;i<n;i++) h+=`<span class="mdot ${cls||''}"></span>`; return `<div class="mgrp">${h}</div>`; }
+function mathVisual(m){ if(!m) return ''; const op=m.op, a=m.a, b=m.b; let inner='';
+  if(op==='+' && a<=10 && b<=10){ inner = mdots(a) + `<span class="mop">+</span>` + mdots(b,'b'); }
+  else if(op==='-' && a<=12 && b<=a){ let h=''; for(let i=0;i<a;i++) h+=`<span class="mdot ${i>=a-b?'gone':''}"></span>`; inner=`<div class="mgrp">${h}</div>`; }
+  else if(op==='x' && a<=5 && b<=6){ let g=''; for(let i=0;i<a;i++){ g+=mdots(b); if(i<a-1) g+=`<span class="mop">+</span>`; } inner=g; }
+  else if(op==='/' && b>=1 && b<=6 && a%b===0 && (a/b)<=6 && a<=24){ let g=''; for(let i=0;i<b;i++){ g+=mdots(a/b); if(i<b-1) g+=`<span class="mop">|</span>`; } inner=g; }
+  else return '';
+  return `<div class="mvis">${inner}</div>`;
+}
 function mathCardHTML(){
-  return `<div class="cprompt">${t('mathPrompt')}</div><div class="cword">${curM.a} ${sym(curM.op)} ${curM.b} = ?</div><button class="spk" onclick="speakMath()">${IC.spk}</button>`;
+  return `<div class="cprompt">${t('mathPrompt')}</div>${mathVisual(curM)}<div class="cword">${curM.a} ${sym(curM.op)} ${curM.b} = ?</div><button class="spk" onclick="speakMath()">${IC.spk}</button>`;
 }
 function mathKbdHTML(){
   const k=(d)=>`<button class="mkey" onclick="kTap('${d}')">${d}</button>`;
@@ -1392,12 +1643,7 @@ function viewMathGame(){
   const p=activeProfile();
   return `
     <div class="screen active">
-      <div class="topbar">
-        <button class="backbtn" onclick="quitGame()">${IC.back}</button>
-        <div class="gw-av" id="gw-av">${p?avatarSVG(p):''}</div>
-        <span class="coins">${IC.star}<span id="gw-coins">${p?p.coins||0:0}</span></span>
-      </div>
-      <div class="gw-prog" id="gw-prog"></div>
+      ${playHeaderHTML()}
       <div class="gw-card" id="gw-card"></div>
       <div class="gw-input" id="gw-input"></div>
       <div class="gw-fb" id="gw-fb"></div>
@@ -1406,7 +1652,7 @@ function viewMathGame(){
     </div>`;
 }
 function paintMath(){
-  const prog=document.getElementById('gw-prog'); if(prog) prog.textContent=Math.min(qi+1,roundTotal)+' / '+roundTotal;
+  positionWalker();
   const card=document.getElementById('gw-card'); if(card) card.innerHTML=mathCardHTML();
   const kbd=document.getElementById('gw-kbd'); if(kbd) kbd.innerHTML=mathKbdHTML();
   updateInputBox();
@@ -1418,17 +1664,18 @@ function mathSubmit(){
   if(parseInt(inputText,10)===curM.ans){
     turnActive=false; roundScore++; roundCoins++;
     const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
-    const av=document.getElementById('gw-av'); if(av){ av.classList.remove('pop'); void av.offsetWidth; av.classList.add('pop'); }
-    if(fb){ fb.textContent=t('correctMsg'); fb.className='gw-fb ok'; }
+    react('cheer'); burst(); flyCoin(); bumpStreak();
+    const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } speak(pr, lang); sfx('correct');
     setTimeout(mathAdvance,1000);
   } else {
-    misses++;
+    misses++; roundMistake=true; react('wobble'); streak=0; clearCombo();
     if(misses>=2){ turnActive=false; if(fb){ fb.textContent=curM.a+' '+sym(curM.op)+' '+curM.b+' = '+curM.ans; fb.className='gw-fb no'; } setTimeout(mathAdvance,1700); return; }
     if(fb){ fb.textContent=t('tryagain'); fb.className='gw-fb no'; }
+    sfx('wrong'); speak(encourage(), lang);
     inputText=''; updateInputBox();
   }
 }
-function mathSkip(){ if(!turnActive) return; turnActive=false;
+function mathSkip(){ if(!turnActive) return; turnActive=false; roundMistake=true; streak=0; clearCombo();
   const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent=curM.a+' '+sym(curM.op)+' '+curM.b+' = '+curM.ans; fb.className='gw-fb no'; }
   setTimeout(mathAdvance,1600); }
 function speakMath(){
@@ -1437,7 +1684,7 @@ function speakMath(){
   speak(`${curM.a} ${w[curM.op]} ${curM.b} ${eq}`, lang);
 }
 function playAgain(){ if(lastMode==='math') startMath(); else startDict(); }
-function practiseMissed(){ const words=[...new Set(missedThisRound)]; if(!words.length) return; queue=words.slice(0,10); roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict'; missedThisRound=[]; beginTurn(); }
+function practiseMissed(){ const words=[...new Set(missedThisRound)]; if(!words.length) return; queue=words.slice(0,10); roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict'; missedThisRound=[]; roundMistake=false; streak=0; beginTurn(); }
 
 function bindLive(){ /* reserved for listeners added post-render */ }
 
