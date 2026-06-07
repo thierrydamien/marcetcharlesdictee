@@ -240,7 +240,8 @@ const IC = {
   plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   spk:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8a5 5 0 010 8" stroke="currentColor" stroke-width="2" fill="none"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>',
-  bag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 12H5z"/><path d="M9 8a3 3 0 016 0"/></svg>'
+  bag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l1 12H5z"/><path d="M9 8a3 3 0 016 0"/></svg>',
+  save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>'
 };
 
 /* ---------- i18n ---------- */
@@ -270,7 +271,9 @@ const T = {
     hatsCat:"Chapeaux", houseCat:"Maison", own:"Acquis", house:"Ma maison", medals:"Médailles",
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
-    chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?" },
+    chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?",
+    keyboard:"Clavier", kbAuto:"Auto", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
+    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?" },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name", colour:"Colour",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -296,7 +299,9 @@ const T = {
     hatsCat:"Hats", houseCat:"House", own:"Owned", house:"My house", medals:"Medals",
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
-    chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?" }
+    chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?",
+    keyboard:"Keyboard", kbAuto:"Auto", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
+    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?" }
 };
 function t(k){ return T[lang][k]; }
 
@@ -491,6 +496,7 @@ function render(){
   else if (route === 'soon') v.innerHTML = viewSoon();
   else if (route === 'parentpin') v.innerHTML = viewParentPin();
   else if (route === 'parent') v.innerHTML = viewParent();
+  else if (route === 'backup') v.innerHTML = viewBackup();
   else if (route === 'shop') v.innerHTML = viewShop();
   else if (route === 'house') v.innerHTML = viewHouse();
   else if (route === 'mathcfg') v.innerHTML = viewMathCfg();
@@ -659,6 +665,7 @@ function viewParent(){
       <p class="hint">${t('wordsHint')}</p>
       <div class="spacer"></div>
       <button class="btn-primary" onclick="saveWords()">${t('save')}</button>
+      <button class="link-btn" onclick="navigate('backup')">${IC.save}${t('backupBtn')}</button>
       <button class="btn-ghost" onclick="openParent()">${t('changePin')}... </button>
     </div>`;
 }
@@ -668,6 +675,48 @@ function saveWords(){
   p.fr = parse(document.getElementById('w-fr').value);
   p.en = parse(document.getElementById('w-en').value);
   saveProfiles(); navigate('home');
+}
+
+function exportCode(){
+  try{ const data={v:1, profiles, pin:localStorage.getItem('hg_pin')||'', lang, kbd:localStorage.getItem('hg_kbd')||'auto'};
+    return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }catch(e){ return ''; }
+}
+function viewBackup(){
+  return `
+    <div class="screen active">
+      <div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>
+      <div class="scr-title">${t('backup')}</div>
+      <p class="hint">${t('backupSub')}</p>
+      <div class="field"><label>${t('yourCode')}</label><textarea id="bk-code" readonly onclick="this.select()">${exportCode()}</textarea></div>
+      <button class="btn-primary" onclick="copyCode()">${t('copy')}</button>
+      <div id="bk-msg" class="center" style="color:var(--accent-dk);font-weight:700;min-height:18px;margin-top:8px;"></div>
+      <div style="height:14px"></div>
+      <div class="field"><label>${t('restore')}</label><textarea id="bk-in" placeholder="${t('pasteHere')}"></textarea></div>
+      <button class="btn-ghost" onclick="doRestore()">${t('restoreBtn')}</button>
+      <div id="bk-err" class="err"></div>
+      <div class="spacer"></div>
+    </div>`;
+}
+function copyCode(){
+  const el=document.getElementById('bk-code'); if(!el) return; el.select();
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(el.value).catch(()=>{}); }
+  else { try{ document.execCommand('copy'); }catch(e){} }
+  const m=document.getElementById('bk-msg'); if(m) m.textContent=t('copied');
+}
+function doRestore(){
+  const el=document.getElementById('bk-in'), err=document.getElementById('bk-err'); if(err) err.textContent='';
+  const raw=((el&&el.value)||'').trim(); if(!raw) return;
+  let data; try{ data=JSON.parse(decodeURIComponent(escape(atob(raw)))); }catch(e){ if(err) err.textContent=t('badCode'); return; }
+  if(!data || !Array.isArray(data.profiles)){ if(err) err.textContent=t('badCode'); return; }
+  if(!confirm(t('restoreConfirm'))) return;
+  profiles=data.profiles; localStorage.setItem('hg_profiles', JSON.stringify(profiles));
+  if(data.pin!=null) localStorage.setItem('hg_pin', data.pin);
+  if(data.lang){ lang=data.lang; localStorage.setItem('hg_lang', lang); }
+  if(data.kbd) localStorage.setItem('hg_kbd', data.kbd);
+  activeId = profiles[0]?profiles[0].id:null;
+  if(activeId) localStorage.setItem('hg_active', activeId); else localStorage.removeItem('hg_active');
+  localStorage.setItem('hg_migrated','1');
+  navigate(profiles.length?'home':'profiles');
 }
 
 /* ---------- profile actions ---------- */
@@ -842,6 +891,9 @@ function viewDictStyle(){
       <div class="scr-title">${t('chooseStyle')}</div>
       ${cards}
       ${dictNote?`<div class="note">${dictNote}</div>`:''}
+      <div class="cat" style="margin-top:8px"><label>${t('keyboard')}</label><div class="opt-row">
+        ${[['auto',t('kbAuto')],['alpha','ABC'],['qwerty','QWERTY'],['azerty','AZERTY']].map(([v,lab])=>`<button class="opt ${(localStorage.getItem('hg_kbd')||'auto')===v?'on':''}" onclick="setKbd('${v}')">${lab}</button>`).join('')}
+      </div></div>
       <div class="spacer"></div>
       <button class="btn-primary" onclick="startDict()">${t('start')}</button>
     </div>`;
@@ -884,6 +936,13 @@ function cardHTML(){
 }
 function coverCardHTML(){ return `<div class="cprompt">${t('coverPrompt')}</div><button class="spk" onclick="speakCur()">${IC.spk}</button>`; }
 
+const KBD_ROWS={
+  alpha:["abcdefghij","klmnopqrst","uvwxyz"],
+  qwerty:["qwertyuiop","asdfghjkl","zxcvbnm"],
+  azerty:["azertyuiop","qsdfghjklm","wxcvbn"]
+};
+function resolveKbd(){ const p=localStorage.getItem('hg_kbd')||'auto'; if(p==='auto') return lang==='FR'?'azerty':'qwerty'; return KBD_ROWS[p]?p:'alpha'; }
+function setKbd(v){ localStorage.setItem('hg_kbd', v); render(); }
 function kbdHTML(){
   if(dictStyle==='scramble'){
     return `<div class="krow">
@@ -891,7 +950,7 @@ function kbdHTML(){
       <button class="key ctrl wide" onclick="scrReset()">&#8634;</button>
       <button class="key ok wide" onclick="submit()">${IC.check}</button></div>`;
   }
-  const rows=["abcdefghij","klmnopqrst","uvwxyz"];
+  const rows=KBD_ROWS[resolveKbd()];
   let h=rows.map(r=>`<div class="krow">`+[...r].map(c=>`<button class="key" onclick="kTap('${c}')">${c}</button>`).join('')+`</div>`).join('');
   h+=`<div class="krow">`+[...'éèàçêâîôûù'].map(c=>`<button class="key accent" onclick="kTap('${c}')">${c}</button>`).join('')+`</div>`;
   h+=`<div class="krow">
