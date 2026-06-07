@@ -273,6 +273,7 @@ input,textarea{font-family:inherit;}
 .cb-row{display:flex;gap:10px;}
 .cb-row button{flex:1;}
 .btn-danger{background:#E0503F;color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:13px;border-radius:var(--r-lg);box-shadow:0 4px 0 #b83d2f;}
+.wlc-top{display:flex;justify-content:flex-end;margin-bottom:4px;}
 </style>
 </head>
 <body>
@@ -556,7 +557,7 @@ function avatarSVG(p, hatOverride){
 
 let profiles = JSON.parse(localStorage.getItem('hg_profiles') || '[]');
 let activeId = localStorage.getItem('hg_active') || null;
-let lang = localStorage.getItem('hg_lang') || 'FR';
+let lang = localStorage.getItem('hg_lang') || 'EN';
 function saveProfiles(){ localStorage.setItem('hg_profiles', JSON.stringify(profiles)); }
 function setLang(l){ lang = l; localStorage.setItem('hg_lang', l); render(); }
 function toggleLang(){ setLang(lang === 'FR' ? 'EN' : 'FR'); }
@@ -650,6 +651,7 @@ function viewWelcome(){
     : `<div class="wlc-ic">${IC.lock}</div><div class="big">${t('wlcTitle2')}</div><p class="wlc-p">${t('wlcBody2')}</p>`;
   return `
     <div class="screen active">
+      <div class="wlc-top"><button class="langpill" onclick="toggleLang()">${lang==='FR'?'FR · Français':'EN · English'}</button></div>
       <div class="wlc-wrap">${body}<div class="wdots">${dots}</div></div>
       <button class="btn-primary" onclick="${step===0?'welcomeNext()':'finishWelcome()'}">${step===0?t('wlcNext'):t('wlcStart')}</button>
     </div>`;
