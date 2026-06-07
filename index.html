@@ -680,11 +680,17 @@
                         <button class="arcade-btn" style="padding:6px 12px; font-size:11px; min-width:90px; margin:0;" id="parent-btn-voicetest" onclick="testPreferredVoice()">▶ Test</button>
                     </div>
                 </div>
-                <label style="align-self:flex-start; font-weight:bold; font-size:13px; margin-bottom:4px; color:var(--cyan);" id="parent-lbl-frdeck">🇫🇷 FRENCH VOCABULARY DECK:</label>
-                <textarea id="admin-fr-input" class="admin-txt-area"></textarea>
+                <label style="align-self:flex-start; font-weight:bold; font-size:13px; margin-bottom:4px; color:var(--cyan);" id="parent-lbl-frdeck-marc">🇫🇷 FRENCH — MARC:</label>
+                <textarea id="admin-fr-marc-input" class="admin-txt-area"></textarea>
 
-                <label style="align-self:flex-start; font-weight:bold; font-size:13px; margin-bottom:4px; color:var(--magenta);" id="parent-lbl-endeck">🇬🇧 ENGLISH VOCABULARY DECK:</label>
-                <textarea id="admin-en-input" class="admin-txt-area"></textarea>
+                <label style="align-self:flex-start; font-weight:bold; font-size:13px; margin-bottom:4px; color:var(--cyan);" id="parent-lbl-frdeck-charles">🇫🇷 FRENCH — CHARLES:</label>
+                <textarea id="admin-fr-charles-input" class="admin-txt-area"></textarea>
+
+                <label style="align-self:flex-start; font-weight:bold; font-size:13px; margin-bottom:4px; color:var(--magenta);" id="parent-lbl-endeck-marc">🇬🇧 ENGLISH — MARC:</label>
+                <textarea id="admin-en-marc-input" class="admin-txt-area"></textarea>
+
+                <label style="align-self:flex-start; font-weight:bold; font-size:13px; margin-bottom:4px; color:var(--magenta);" id="parent-lbl-endeck-charles">🇬🇧 ENGLISH — CHARLES:</label>
+                <textarea id="admin-en-charles-input" class="admin-txt-area"></textarea>
 
                 <h3 style="color:var(--gold); font-size:12px; align-self:flex-start; margin-bottom:5px;" id="parent-lbl-hwassign">🎯 CHOOSE ASSIGNED HOMEWORK WORDS:</h3>
                 <div class="homework-picker-container" id="parent-hw-picker-grid"></div>
@@ -929,8 +935,12 @@
 
         let savedFrWords = JSON.parse(localStorage.getItem('admin_fr_words')) || ["des zèbres", "beaucoup", "un hippopotame", "la brousse", "les prédateurs", "un éléphant", "un éléphanteau", "un lion", "un lionceau", "protéger", "là-bas", "il y a", "là", "déjà", "sans", "celui-là", "celle-là", "oui", "non", "pas", "c'est", "lui", "moi", "toi", "nous", "vous", "cela", "ceci", "avec", "alors", "rien", "car", "devant", "derrière", "dedans", "dehors", "durant"];
         let savedEnWords = JSON.parse(localStorage.getItem('admin_en_words')) || ["house", "school", "children", "london", "banana", "keyboard", "window", "teacher"];
-        const FR_WORDSET_VERSION = 'zoo-2026-06';
+        let savedEnWordsMarc = JSON.parse(localStorage.getItem('admin_en_words_marc')) || savedEnWords.slice();
+        let savedFrWordsMarc = JSON.parse(localStorage.getItem('admin_fr_words_marc')) || ["expliquer", "un texte", "la boxe", "un taxi", "un prix", "heureux", "un examen", "un exercice"];
+        const FR_WORDSET_VERSION = 'split-2026-06';
         if (localStorage.getItem('fr_wordset_version') !== FR_WORDSET_VERSION) {
+            savedFrWordsMarc = ["expliquer", "un texte", "la boxe", "un taxi", "un prix", "heureux", "un examen", "un exercice"];
+            localStorage.setItem('admin_fr_words_marc', JSON.stringify(savedFrWordsMarc));
             savedFrWords = ["des zèbres", "beaucoup", "un hippopotame", "la brousse", "les prédateurs", "un éléphant", "un éléphanteau", "un lion", "un lionceau", "protéger", "là-bas", "il y a", "là", "déjà", "sans", "celui-là", "celle-là", "oui", "non", "pas", "c'est", "lui", "moi", "toi", "nous", "vous", "cela", "ceci", "avec", "alors", "rien", "car", "devant", "derrière", "dedans", "dehors", "durant"];
             localStorage.setItem('admin_fr_words', JSON.stringify(savedFrWords));
             localStorage.setItem('fr_wordset_version', FR_WORDSET_VERSION);
@@ -1272,8 +1282,10 @@
             document.getElementById('parent-btn-export').innerText = pack.parentExport;
             document.getElementById('parent-btn-import').innerText = pack.parentImport;
             document.getElementById('parent-lbl-cheat').innerText = pack.parentCheat;
-            document.getElementById('parent-lbl-frdeck').innerText = pack.parentFrDeck;
-            document.getElementById('parent-lbl-endeck').innerText = pack.parentEnDeck;
+            document.getElementById('parent-lbl-frdeck-marc').innerText = pack.parentFrDeck + ' — ' + activeProfileBlueprints.marc.name;
+            document.getElementById('parent-lbl-frdeck-charles').innerText = pack.parentFrDeck + ' — ' + activeProfileBlueprints.charles.name;
+            document.getElementById('parent-lbl-endeck-marc').innerText = pack.parentEnDeck + ' — ' + activeProfileBlueprints.marc.name;
+            document.getElementById('parent-lbl-endeck-charles').innerText = pack.parentEnDeck + ' — ' + activeProfileBlueprints.charles.name;
             document.getElementById('parent-lbl-hwassign').innerText = pack.parentHwAssign;
             document.getElementById('parent-btn-commit').innerText = pack.parentCommit;
             document.getElementById('parent-btn-cancel').innerText = pack.parentCancel;
@@ -1339,11 +1351,7 @@
 
         // FIXED: Re-mapped the array population scanner to synchronize with dynamic language matrices
         function openRosterConfig() {
-            let fullBank = (currentLanguage === "FR") ? savedFrWords : savedEnWords;
-            if (document.getElementById('use-focus-homework-mode').checked) {
-                wordPool = fullBank.filter(word => focusHomeworkWords.includes(word));
-                if (wordPool.length === 0) { wordPool = fullBank; }
-            } else { wordPool = fullBank; }
+            wordPool = buildPoolFor(currentTurn);
             
             document.getElementById('roster-btn-p1').style.display = (activeProfileBlueprints.marc.status !== 'disabled') ? 'block' : 'none';
             document.getElementById('roster-btn-p2').style.display = (activeProfileBlueprints.charles.status !== 'disabled') ? 'block' : 'none';
@@ -1379,6 +1387,20 @@
         }
         function startMathPhase() { startPhase('MATH'); }
 
+        let practiceCursor = { marc: 0, charles: 0 };
+        function frBankFor(player) { return (player === 'marc') ? savedFrWordsMarc : savedFrWords; }
+        function enBankFor(player) { return (player === 'marc') ? savedEnWordsMarc : savedEnWords; }
+        function bankForPlayer(player) { return (currentLanguage === "FR") ? frBankFor(player) : enBankFor(player); }
+        function buildPoolFor(player) {
+            let fullBank = bankForPlayer(player);
+            if (document.getElementById('use-focus-homework-mode').checked) {
+                let f = fullBank.filter(w => focusHomeworkWords.includes(w));
+                return f.length ? f : fullBank;
+            }
+            return fullBank;
+        }
+        function normAnswer(s) { return (s || "").normalize('NFC').replace(/\s+/g, ' ').trim().toLowerCase(); }
+
         function startPhase(phase) {
             let pack = localTranslationPack[currentLanguage];
             showcaseGalleryModeActive = false;
@@ -1387,11 +1409,8 @@
             
             // FIXED: Force immediate dictionary calibration sync on stage generation hook
             if (!isMath) {
-            let fullBank = (currentLanguage === "FR") ? savedFrWords : savedEnWords;
-            if (document.getElementById('use-focus-homework-mode').checked) {
-                wordPool = fullBank.filter(word => focusHomeworkWords.includes(word));
-                if (wordPool.length === 0) { wordPool = fullBank; }
-            } else { wordPool = fullBank; }
+                wordPool = buildPoolFor(currentTurn);
+                practiceCursor = { marc: 0, charles: 0 };
             }
 
             activeRoundScoreMatrix = { marc: { ok: 0, streak: 0 }, charles: { ok: 0, streak: 0 } };
@@ -1749,11 +1768,20 @@
                 return;
             }
             if (currentPhase === "PRACTICE") {
-                if (practiceIndex < wordPool.length) {
-                    currentWord = wordPool[practiceIndex];
+                let bank = buildPoolFor(currentTurn);
+                if (practiceCursor[currentTurn] < bank.length) {
+                    currentWord = bank[practiceCursor[currentTurn]];
                     renderPracticeCard();
-                } else { feedbackLine.innerText = pack.gameComplete; setTimeout(showResults, 1800); }
+                } else {
+                    let other = (currentTurn === 'marc') ? 'charles' : 'marc';
+                    let otherHasMore = (currentRosterFormat === "MULTIPLAYER") && activeProfileBlueprints[other].status !== 'disabled' && (practiceCursor[other] < buildPoolFor(other).length);
+                    if (otherHasMore) {
+                        currentTurn = other; refreshBlackboardChalkScores();
+                        currentWord = buildPoolFor(other)[practiceCursor[other]]; renderPracticeCard();
+                    } else { feedbackLine.innerText = pack.gameComplete; setTimeout(showResults, 1800); }
+                }
             } else {
+                wordPool = buildPoolFor(currentTurn);
                 if (wordPool.length > 0) {
                     currentWord = getSmartWeightedSpacedRepetitionWord(); 
                     feedbackLine.innerText = pack.gameListenSpell; feedbackLine.style.color = '#fff'; speakEngine(currentWord, currentLanguage);
@@ -1855,8 +1883,8 @@
         function evaluateSubmission() {
             let pack = localTranslationPack[currentLanguage];
             if (lcwcCoverTimer) { clearTimeout(lcwcCoverTimer); lcwcCoverTimer = null; }
-            let attempt = inputField.value.trim().toLowerCase(); if (attempt === "") return;
-            let isCorrect = (currentPhase === "MATH") ? (attempt === currentMathAnswer) : (attempt === currentWord);
+            let attempt = normAnswer(inputField.value); if (attempt === "") return;
+            let isCorrect = (currentPhase === "MATH") ? (attempt === currentMathAnswer) : (attempt === normAnswer(currentWord));
             if (isCorrect) {
                 if (!unlimitedMoneyCheatActive) { bankAccounts[currentTurn] += 1.00; localStorage.setItem('vault_wallets', JSON.stringify(bankAccounts)); }
                 
@@ -1879,10 +1907,10 @@
                 spawnBlastParticles(525, 450, 'var(--green)', 30);
                 updateComboMeter(); celebrateCorrect();
 
+                if (currentPhase === "PRACTICE") { practiceIndex++; practiceCursor[currentTurn]++; }
                 if (currentRosterFormat === "MULTIPLAYER" && activeProfileBlueprints.marc.status !== 'disabled' && activeProfileBlueprints.charles.status !== 'disabled') {
                     currentTurn = (currentTurn === "marc") ? "charles" : "marc";
                 }
-                if (currentPhase === "PRACTICE") practiceIndex++;
                 activeTurnStarted = false; setTimeout(triggerNextWord, 1600);
             } else {
                 if (currentPhase === "MATH") {
@@ -2043,7 +2071,7 @@
             let pack = localTranslationPack[currentLanguage];
             if (document.getElementById('parent-gate-input').value.trim() === "1990") {
                 document.getElementById('parent-gate-overlay').style.display = 'none';
-                document.getElementById('admin-fr-input').value = savedFrWords.join(', '); document.getElementById('admin-en-input').value = savedEnWords.join(', ');
+                document.getElementById('admin-fr-marc-input').value = savedFrWordsMarc.join(', '); document.getElementById('admin-fr-charles-input').value = savedFrWords.join(', '); document.getElementById('admin-en-marc-input').value = savedEnWordsMarc.join(', '); document.getElementById('admin-en-charles-input').value = savedEnWords.join(', ');
                 document.getElementById('parent-unlimited-money-cheat').checked = unlimitedMoneyCheatActive; buildHomeworkPickerCheckboxes(); switchScreen('screen-parent'); populateVoiceList();
             } else {
                 document.getElementById('parent-gate-error').innerText = pack.parentGateWrong;
@@ -2135,11 +2163,13 @@
         }
 
         function saveParentConfiguration() {
-            savedFrWords = document.getElementById('admin-fr-input').value.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0);
-            savedEnWords = document.getElementById('admin-en-input').value.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0);
+            savedFrWordsMarc = document.getElementById('admin-fr-marc-input').value.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0);
+            savedFrWords = document.getElementById('admin-fr-charles-input').value.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0);
+            savedEnWordsMarc = document.getElementById('admin-en-marc-input').value.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0);
+            savedEnWords = document.getElementById('admin-en-charles-input').value.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0);
             let pickedWords = []; document.querySelectorAll('#parent-hw-picker-grid input[type="checkbox"]').forEach(box => { if (box.checked) pickedWords.push(box.value); });
             focusHomeworkWords = pickedWords;
-            localStorage.setItem('admin_fr_words', JSON.stringify(savedFrWords)); localStorage.setItem('admin_en_words', JSON.stringify(savedEnWords)); localStorage.setItem('admin_focus_words', JSON.stringify(focusHomeworkWords));
+            localStorage.setItem('admin_fr_words_marc', JSON.stringify(savedFrWordsMarc)); localStorage.setItem('admin_fr_words', JSON.stringify(savedFrWords)); localStorage.setItem('admin_en_words_marc', JSON.stringify(savedEnWordsMarc)); localStorage.setItem('admin_en_words', JSON.stringify(savedEnWords)); localStorage.setItem('admin_focus_words', JSON.stringify(focusHomeworkWords));
             switchScreen('screen-lang');
         }
 
@@ -2312,8 +2342,8 @@
         };
         function loadWordPack(key) {
             if (!key || !WORD_PACKS[key]) return;
-            document.getElementById('admin-fr-input').value = WORD_PACKS[key].fr.join(', ');
-            document.getElementById('admin-en-input').value = WORD_PACKS[key].en.join(', ');
+            document.getElementById('admin-fr-charles-input').value = WORD_PACKS[key].fr.join(', ');
+            document.getElementById('admin-en-charles-input').value = WORD_PACKS[key].en.join(', ');
         }
 
         if (window.speechSynthesis && window.speechSynthesis.onvoiceschanged !== undefined) { window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); populateVoiceList(); }; }
@@ -2411,7 +2441,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCodeBlob = new Blob([`
-                    const CACHE_NAME = 'homework-game-v10';
+                    const CACHE_NAME = 'homework-game-v13';
                     const urlsToCache = ['./', 'index.html'];
                     self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache))); });
                     self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });
