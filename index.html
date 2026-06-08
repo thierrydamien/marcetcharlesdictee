@@ -242,6 +242,7 @@ input,textarea{font-family:inherit;}
 .gw-hint{min-height:22px;text-align:center;font-family:var(--fd);font-weight:700;font-size:20px;letter-spacing:4px;color:var(--primary);margin:2px 0;}
 .hint-dot{color:var(--muted);}
 .hint-gap{display:inline-block;width:12px;}
+.hint-letter{font-weight:800;color:var(--primary);}
 .lf{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
 .lf b{min-width:20px;height:26px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;font-family:var(--fd);font-size:16px;padding:0 4px;font-weight:700;}
 .lf b.good{background:var(--accent);color:#fff;}
@@ -399,18 +400,16 @@ const IC = {
 /* ---------- i18n ---------- */
 const T = {
   FR:{ title:"Le jeu des devoirs", who:"Qui joue ?", add:"Ajouter", first:"Crée ton premier joueur",
-    newP:"Nouveau joueur", editP:"Modifier le joueur", name:"Prénom", colour:"Couleur",
+    newP:"Nouveau joueur", editP:"Modifier le joueur", name:"Prénom",
     save:"Enregistrer", cancel:"Annuler", del:"Supprimer ce joueur",
-    hi:"Salut", dict:"Dictée", dictSub:"Écoute et écris", maths:"Maths", mathsSub:"Additions et plus",
-    trophies:"Trophées", parent:"Espace parent", switchP:"Changer de joueur",
-    soon:"Bientôt disponible", soonSub:"Cette partie arrive à la prochaine étape.", back:"Retour",
+    hi:"Salut", dict:"Dictée", dictSub:"Écoute et écris", maths:"Maths", mathsSub:"Additions et plus", parent:"Espace parent", switchP:"Changer de joueur", back:"Retour",
     pinNew:"Crée un code parent", pinNewSub:"Choisis 4 chiffres", pinEnter:"Code parent", pinSub:"Entre ton code à 4 chiffres",
     pinWrong:"Code incorrect", words:"Listes de mots", wordsHint:"Un mot par ligne. Pour un exemple : chat = Le chat dort.",
     changePin:"Changer le code", full:"4 joueurs maximum", needName:"Donne un prénom",
     chooseStyle:"Choisis ton style", stCopy:"Copier", stCopySub:"Recopie le mot", stRemember:"Mémoire", stRememberSub:"Regarde puis écris",
     stGaps:"Lettres manquantes", stGapsSub:"Complète le mot", stScramble:"Mélange", stScrambleSub:"Remets dans l'ordre",
-    stListen:"Écoute", stListenSub:"Écris ce que tu entends", start:"Commencer", check:"Vérifier", skip:"Passer",
-    tryagain:"Essaie encore !", correctMsg:"Bravo !", listenPrompt:"Écris le mot", lookPrompt:"Regarde et mémorise",
+    stListen:"Écoute", stListenSub:"Écris ce que tu entends", start:"Commencer", skip:"Passer",
+    tryagain:"Essaie encore !", listenPrompt:"Écris le mot", lookPrompt:"Regarde et mémorise",
     coverPrompt:"Écris de mémoire", gapsPrompt:"Complète les trous", scramblePrompt:"Remets les lettres dans l'ordre",
     roundDone:"Bravo !", correctCount:"Bonnes réponses", coinsEarned:"Pièces gagnées", again:"Rejouer", home:"Maison",
     noWords:"Aucun mot. Ajoute des mots dans l'espace parent.",
@@ -425,22 +424,19 @@ const T = {
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?", mixOp:"Mixte",
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
-    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard",
-    kbTipAuto:"Suit la langue (QWERTY en anglais, AZERTY en français)", kbTipAlpha:"Lettres dans l'ordre alphabétique", kbTipQwerty:"Disposition QWERTY", kbTipAzerty:"Disposition AZERTY", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
-    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", testCoins:"+1000 pièces (test)", coinsAdded:"Pièces ajoutées", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", chooseList:"Quelle liste ?", allWords:"Tous les mots", wordsShort:"mots", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
+    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
+    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
-    newP:"New player", editP:"Edit player", name:"Name", colour:"Colour",
+    newP:"New player", editP:"Edit player", name:"Name",
     save:"Save", cancel:"Cancel", del:"Delete this player",
-    hi:"Hi", dict:"Spelling", dictSub:"Listen and write", maths:"Maths", mathsSub:"Sums and more",
-    trophies:"Trophy room", parent:"Parent area", switchP:"Switch player",
-    soon:"Coming soon", soonSub:"This part arrives in the next step.", back:"Back",
+    hi:"Hi", dict:"Spelling", dictSub:"Listen and write", maths:"Maths", mathsSub:"Sums and more", parent:"Parent area", switchP:"Switch player", back:"Back",
     pinNew:"Create a parent code", pinNewSub:"Choose 4 digits", pinEnter:"Parent code", pinSub:"Enter your 4-digit code",
     pinWrong:"Wrong code", words:"Word lists", wordsHint:"One word per line. For an example: cat = The cat sleeps.",
     changePin:"Change code", full:"4 players max", needName:"Please add a name",
     chooseStyle:"Choose your style", stCopy:"Copy", stCopySub:"Copy the word", stRemember:"Remember", stRememberSub:"Look then write",
     stGaps:"Missing letters", stGapsSub:"Fill in the word", stScramble:"Scramble", stScrambleSub:"Put it back in order",
-    stListen:"Listen", stListenSub:"Write what you hear", start:"Start", check:"Check", skip:"Skip",
-    tryagain:"Try again!", correctMsg:"Great!", listenPrompt:"Write the word", lookPrompt:"Look and remember",
+    stListen:"Listen", stListenSub:"Write what you hear", start:"Start", skip:"Skip",
+    tryagain:"Try again!", listenPrompt:"Write the word", lookPrompt:"Look and remember",
     coverPrompt:"Write from memory", gapsPrompt:"Fill the gaps", scramblePrompt:"Put the letters in order",
     roundDone:"Well done!", correctCount:"Correct", coinsEarned:"Coins earned", again:"Play again", home:"Home",
     noWords:"No words yet. Add some in the parent area.",
@@ -455,9 +451,8 @@ const T = {
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?", mixOp:"Mixed",
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
-    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order",
-    kbTipAuto:"Follows the language (QWERTY in English, AZERTY in French)", kbTipAlpha:"Letters in alphabetical order", kbTipQwerty:"QWERTY layout", kbTipAzerty:"AZERTY layout", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
-    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", testCoins:"+1000 coins (test)", coinsAdded:"Coins added", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", chooseList:"Which list?", allWords:"All words", wordsShort:"words", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
+    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
+    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
 };
 function t(k){ return T[lang][k]; }
 const APP_VER = "1.0";
@@ -1577,6 +1572,7 @@ function pickWeightedWords(p, list, n){
 }
 function recordWord(word, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p);
   const k=norm(word); const ws=p.wordStats[k]||{r:0,w:0}; if(ok) ws.r++; else ws.w++; ws.h=ws.h||[]; ws.h.push(ok?1:0); if(ws.h.length>5) ws.h=ws.h.slice(-5); p.wordStats[k]=ws; saveProfiles(); }
+function awardCorrect(){ const p=activeProfile(); if(!p) return; ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
 function recordMath(op, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p); if(!p.mathStats[op]) p.mathStats[op]=[]; const h=p.mathStats[op]; h.push(ok?1:0); if(h.length>12) h.shift(); saveProfiles(); }
 
 function beginTurn(){
@@ -1782,7 +1778,7 @@ function submit(){
   const fb=document.getElementById('gw-fb');
   if(a===norm(curAns)){
     turnActive=false; roundScore++; roundCoins++; recordWord(curWord, true);
-    const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
+    awardCorrect();
     react('cheer'); burst(); flyCoin(); bumpStreak();
     const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
     setTimeout(advance,1050);
@@ -1957,7 +1953,7 @@ function mathSubmit(){
   const fb=document.getElementById('gw-fb');
   if(parseInt(inputText,10)===curM.ans){
     turnActive=false; roundScore++; roundCoins++; recordMath(curM.op, true);
-    const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
+    awardCorrect();
     react('cheer'); burst(); flyCoin(); bumpStreak();
     const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
     setTimeout(mathAdvance,1000);
