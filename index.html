@@ -423,7 +423,7 @@ const T = {
     hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", progressTitle:"Progrès", statusKnown:"acquis", statusPractising:"à revoir", statusNew:"nouveau", progressNone:"Aucun mot pour le moment.", voicesTitle:"Voix", voicesBtn:"Voix", voicesIntro:"Choisis la voix qui lit les mots à voix haute. Les voix disponibles dépendent de l'appareil.", voiceAuto:"Automatique", voiceTest:"Tester", voicesNone:"Aucune voix disponible sur cet appareil.", voicesRefresh:"Rafraîchir", libraryTitle:"Listes prêtes", gradeLabel:"Classe", gradeHint:"On ajoutera des listes adaptées à ce niveau.", libraryBtn:"Listes prêtes", libraryIntro:"Ajoute des listes toutes prêtes. Tu pourras les modifier ensuite.", added:"Ajouté", addBtn:"Ajouter", voicesHelp:"Les mots sont lus par les voix intégrées de l'appareil : la qualité varie d'un téléphone ou ordinateur à l'autre. Si une voix semble robotique, essaie une autre option ci-dessus puis touche Tester. Sur un ordinateur, Chrome propose souvent de meilleures voix, ou tu peux installer une voix « améliorée » dans les réglages du système.", progressAboutTitle:"Suivi des progrès", progressAboutBody:"Dans l'espace parent, l'écran Progrès montre, pour chaque liste, les mots acquis et ceux à revoir. Un mot est « acquis » après 3 bonnes réponses d'affilée.", own:"Acquis", house:"Ma maison", medals:"Médailles",
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
-    chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?",
+    chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?", mixOp:"Mixte",
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
     pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard",
     kbTipAuto:"Suit la langue (QWERTY en anglais, AZERTY en français)", kbTipAlpha:"Lettres dans l'ordre alphabétique", kbTipQwerty:"Disposition QWERTY", kbTipAzerty:"Disposition AZERTY", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
@@ -453,7 +453,7 @@ const T = {
     hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", progressTitle:"Progress", statusKnown:"known", statusPractising:"to revise", statusNew:"new", progressNone:"No words yet.", voicesTitle:"Voice", voicesBtn:"Voice", voicesIntro:"Choose the voice that reads words aloud. Available voices depend on your device.", voiceAuto:"Automatic", voiceTest:"Test", voicesNone:"No voices available on this device.", voicesRefresh:"Refresh", libraryTitle:"Ready-made lists", gradeLabel:"Class / Year", gradeHint:"We'll add lists suited to this level.", libraryBtn:"Ready-made lists", libraryIntro:"Add ready-made lists. You can edit them afterwards.", added:"Added", addBtn:"Add", voicesHelp:"The words are read by your device's built-in voices, so the quality differs between phones and computers. If a voice sounds robotic, try another option above and tap Test. On a computer, Chrome usually has nicer voices, or you can install an Enhanced voice in your system settings.", progressAboutTitle:"Progress tracking", progressAboutBody:"In the parent area, the Progress screen shows, for each list, which words are known and which still need revising. A word counts as known after 3 correct answers in a row.", own:"Owned", house:"My house", medals:"Medals",
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
-    chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?",
+    chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?", mixOp:"Mixed",
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
     pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order",
     kbTipAuto:"Follows the language (QWERTY in English, AZERTY in French)", kbTipAlpha:"Letters in alphabetical order", kbTipQwerty:"QWERTY layout", kbTipAzerty:"AZERTY layout", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
@@ -1885,7 +1885,7 @@ function openMath(){ const p=activeProfile(); if(!p){navigate('profiles');return
 function selMathOp(o){ mathOp=o; render(); }
 function selMathDiff(d){ mathDiff=d; render(); }
 function viewMathCfg(){
-  const ops=['+','-','x','/'].map(o=>`<button class="opt big ${mathOp===o?'on':''}" onclick="selMathOp('${o}')">${sym(o)}</button>`).join('');
+  const ops=['+','-','x','/'].map(o=>`<button class="opt big ${mathOp===o?'on':''}" onclick="selMathOp('${o}')">${sym(o)}</button>`).join('') + `<button class="opt big ${mathOp==='mix'?'on':''}" onclick="selMathOp('mix')">${t('mixOp')}</button>`;
   const diffs=[['easy',t('diffEasy')],['med',t('diffMed')],['hard',t('diffHard')]].map(([d,lab])=>`<button class="opt ${mathDiff===d?'on':''}" onclick="selMathDiff('${d}')">${lab}</button>`).join('');
   return `
     <div class="screen active">
@@ -1899,8 +1899,14 @@ function viewMathCfg(){
 }
 function startMath(){
   const p=activeProfile(); if(!p){ navigate('profiles'); return; } ensureEconomy(p);
-  p.mathOps[mathOp]=1;
-  mathQs=Array.from({length:10},()=>genMath(mathOp,mathDiff));
+  if(mathOp==='mix'){
+    const _ops=['+','-','x','/'];
+    mathQs=Array.from({length:10},()=>genMath(_ops[Math.floor(Math.random()*_ops.length)], mathDiff));
+    mathQs.forEach(m=>{ p.mathOps[m.op]=1; });
+  } else {
+    p.mathOps[mathOp]=1;
+    mathQs=Array.from({length:10},()=>genMath(mathOp,mathDiff));
+  }
   roundTotal=10; qi=0; roundScore=0; roundCoins=0; lastMode='math'; missedThisRound=[]; roundMistake=false; streak=0; beginMath();
 }
 function beginMath(){
