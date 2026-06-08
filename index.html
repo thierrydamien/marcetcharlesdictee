@@ -266,7 +266,12 @@ input,textarea{font-family:inherit;}
 .ls-add{display:inline-flex;align-items:center;gap:4px;background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:13px;padding:7px 12px;border-radius:999px;}
 .ls-add svg{width:14px;height:14px;}
 .lib-cat{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--muted);margin:10px 2px 6px;}
-.lib-card{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:8px;box-shadow:0 3px 8px rgba(0,0,0,.05);}
+.lib-card{display:flex;flex-direction:column;background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:8px;box-shadow:0 3px 8px rgba(0,0,0,.05);}
+.lc-row{display:flex;align-items:center;gap:10px;}
+.lc-tap{cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.lib-chev{font-size:11px;color:var(--muted);margin-left:3px;}
+.lib-words{display:flex;flex-wrap:wrap;gap:4px;padding:7px 2px 2px;border-top:1px solid var(--line);margin-top:6px;}
+.lib-word{font-size:12px;background:var(--bg);padding:3px 8px;border-radius:999px;font-weight:600;color:var(--ink);}
 .lib-card .lc-main{flex:1;min-width:0;}
 .lib-add{display:inline-flex;align-items:center;gap:4px;border:none;background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:14px;padding:7px 13px;border-radius:999px;box-shadow:0 2px 6px rgba(33,191,160,.3);cursor:pointer;}
 .lib-add svg{width:16px;height:16px;}
@@ -591,8 +596,8 @@ function frameSVG(id){
     case 'frame_gold':   return `<circle cx="50" cy="50" r="46" fill="none" stroke="#FFC93C" stroke-width="4.5"/><circle cx="50" cy="50" r="48.2" fill="none" stroke="#f0b400" stroke-width="1.2"/>`;
     case 'frame_silver': return `<circle cx="50" cy="50" r="46" fill="none" stroke="#cfd6de" stroke-width="4.5"/><circle cx="50" cy="50" r="48.2" fill="none" stroke="#aeb6c0" stroke-width="1.2"/>`;
     case 'frame_rainbow':{ const cols=['#FF6F61','#FFC93C','#21BFA0','#5B8DEF','#A06BFF','#FF7AB6']; let o=''; const n=cols.length,r=46; for(let i=0;i<n;i++){ const a0=(i/n)*2*Math.PI-Math.PI/2, a1=((i+1)/n)*2*Math.PI-Math.PI/2; const x0=(50+r*Math.cos(a0)).toFixed(2),y0=(50+r*Math.sin(a0)).toFixed(2),x1=(50+r*Math.cos(a1)).toFixed(2),y1=(50+r*Math.sin(a1)).toFixed(2); o+=`<path d="M${x0} ${y0} A${r} ${r} 0 0 1 ${x1} ${y1}" fill="none" stroke="${cols[i]}" stroke-width="4.6" stroke-linecap="round"/>`; } return o; }
-    case 'frame_hearts': { let o=`<circle cx="50" cy="50" r="46" fill="none" stroke="#FF7AB6" stroke-width="3"/>`; const n=8,r=46; for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI-Math.PI/2,x=(50+r*Math.cos(a)).toFixed(2),y=(50+r*Math.sin(a)).toFixed(2); o+=`<path transform="translate(${x},${y}) scale(0.42)" d="M0 4 C-7 -4 -3 -10 0 -5 C3 -10 7 -4 0 4 Z" fill="#FF6F61"/>`; } return o; }
-    case 'frame_stars':  { let o=`<circle cx="50" cy="50" r="46" fill="none" stroke="#5B8DEF" stroke-width="3"/>`; const n=8,r=46; for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI-Math.PI/2,x=(50+r*Math.cos(a)).toFixed(2),y=(50+r*Math.sin(a)).toFixed(2); o+=`<path transform="translate(${x},${y}) scale(0.62)" d="${star}" fill="#FFC93C"/>`; } return o; }
+    case 'frame_hearts': { let o=`<circle cx="50" cy="50" r="46" fill="none" stroke="#FF7AB6" stroke-width="4"/>`; const n=8,r=46; for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI-Math.PI/2,x=(50+r*Math.cos(a)).toFixed(2),y=(50+r*Math.sin(a)).toFixed(2); o+=`<path transform="translate(${x},${y}) scale(0.85)" d="M0 4 C-7 -4 -3 -10 0 -5 C3 -10 7 -4 0 4 Z" fill="#ffffff" stroke="#FF7AB6" stroke-width="1.5" stroke-linejoin="round"/>`; } return o; }
+    case 'frame_stars':  { let o=`<circle cx="50" cy="50" r="46" fill="none" stroke="#5B8DEF" stroke-width="4"/>`; const n=8,r=46; for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI-Math.PI/2,x=(50+r*Math.cos(a)).toFixed(2),y=(50+r*Math.sin(a)).toFixed(2); o+=`<path transform="translate(${x},${y}) scale(1.1)" d="${star}" fill="#ffffff" stroke="#FFC93C" stroke-width="1.5" stroke-linejoin="round"/>`; } return o; }
     default: return '';
   }
 }
@@ -1176,7 +1181,8 @@ function viewLibrary(){
       html+=group.map(({c,i})=>{
         const added=p && p.lists.some(l=>l.lang===lng && l.name===c.name);
         const btn = added ? `<span class="lib-added">${IC.check}${t('added')}</span>` : `<button class="lib-add" onclick="addCurated('${lng}',${i})">${IC.plus}${t('addBtn')}</button>`;
-        return `<div class="lib-card"><div class="lc-main"><b>${esc(c.name)}</b><span>${c.words.length} ${t('wordsShort')}</span></div>${btn}</div>`;
+        const _k=lng+i, _exp=libExpanded.has(_k);
+        return `<div class="lib-card"><div class="lc-row"><div class="lc-main lc-tap" onclick="toggleLib('${lng}',${i})"><b>${esc(c.name)}</b><span>${c.words.length} ${t('wordsShort')}<span class="lib-chev">${_exp?'\u25be':'\u25b8'}</span></span></div>${btn}</div>${_exp?`<div class="lib-words">${c.words.map(w=>`<span class="lib-word">${esc(w)}</span>`).join('')}</div>`:''}</div>`;
       }).join('');
     });
     return `<div class="ls-sec"><div class="ls-head"><span class="ls-lang">${label}</span></div>${html}</div>`;
@@ -1222,6 +1228,8 @@ function saveListEdit(){ const p=activeProfile(); if(!p){ navigate('profiles'); 
   navigate('parent'); }
 let confirmDel=false;
 let confirmReset=false;
+let libExpanded=new Set();
+function toggleLib(lng,i){ const k=lng+i; libExpanded.has(k)?libExpanded.delete(k):libExpanded.add(k); render(); }
 function askReset(){ confirmReset=true; render(); }
 function cancelReset(){ confirmReset=false; render(); }
 function doResetProgress(){ const p=activeProfile(); if(p){ ensureEconomy(p); p.wordStats={}; saveProfiles(); } confirmReset=false; render(); }
