@@ -270,6 +270,18 @@ input,textarea{font-family:inherit;}
 .chips-scroll{max-height:158px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px;}
 .chips-scroll::-webkit-scrollbar{width:6px;}
 .chips-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+.prog-card{background:var(--card);border-radius:16px;padding:12px 14px;margin-bottom:10px;box-shadow:0 3px 10px rgba(0,0,0,.05);}
+.pc-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.pc-sum{font-size:12px;color:var(--muted);font-weight:700;}
+.ws-bar{display:flex;height:8px;border-radius:999px;overflow:hidden;background:#EEE4D6;margin-bottom:10px;}
+.ws-seg{display:block;height:100%;}.ws-seg.ws-known{background:#21BFA0;}.ws-seg.ws-practising{background:#FFC93C;}
+.ws-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+.ws-chip{font-family:var(--fd);font-weight:700;font-size:13px;padding:5px 10px;border-radius:999px;background:#F0E4D4;color:#9A5B00;}
+.ws-chip small{font-weight:700;opacity:.7;font-size:11px;}
+.ws-chip.ws-known{background:#D7F5EC;color:#0F8C73;}.ws-chip.ws-practising{background:#FFEFC2;color:#9A6A00;}.ws-chip.ws-new{background:#EFEAF2;color:#8C86A0;}
+.ws-legend{display:flex;gap:14px;justify-content:center;align-items:center;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:14px;flex-wrap:wrap;}
+.ws-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle;}
+.ws-dot.ws-known{background:#21BFA0;}.ws-dot.ws-practising{background:#FFC93C;}.ws-dot.ws-new{background:#c9c2d0;}
 .chip{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:8px 14px;font-family:var(--fd);font-weight:700;font-size:14px;color:var(--ink);}
 .chip.on{background:var(--primary);color:#fff;border-color:var(--primary);}
 .confirm-box{background:#fff4f0;border:2px solid #ffd9cf;border-radius:var(--r-md);padding:14px;}
@@ -304,6 +316,15 @@ input,textarea{font-family:inherit;}
 @keyframes conf{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 120px)) rotate(var(--rot))}}
 .flycoin{position:fixed;z-index:51;width:24px;height:24px;color:var(--accent2);pointer-events:none;opacity:1;transition:transform .55s ease-in,opacity .55s ease-in;}
 .flycoin svg{width:24px;height:24px;}
+.fw{position:fixed;width:7px;height:7px;border-radius:50%;pointer-events:none;z-index:60;}
+@keyframes fwfly{0%{transform:translate(0,0) scale(1.1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+.confrain span{position:absolute;top:-14px;width:9px;height:13px;border-radius:2px;animation-name:conffall;animation-timing-function:linear;animation-fill-mode:forwards;}
+@keyframes conffall{0%{transform:translateY(-14px) rotate(0);opacity:1}100%{transform:translateY(112vh) rotate(720deg);opacity:.9}}
+.res-stars{display:flex;justify-content:center;gap:10px;margin:6px 0 2px;}
+.res-star{display:inline-block;width:46px;height:46px;color:#E7DBC8;transform:scale(1);}
+.res-star svg{width:46px;height:46px;display:block;}
+.res-star.on{color:#FFC93C;animation:starpop .55s cubic-bezier(.3,1.6,.5,1) both;}
+@keyframes starpop{0%{transform:scale(0) rotate(-25deg)}60%{transform:scale(1.3) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
 #gw-coins.bump{display:inline-block;animation:bump .3s ease;}
 @keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
 @keyframes popcombo{0%{transform:scale(.6);opacity:0}50%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
@@ -367,7 +388,7 @@ const T = {
     eRound:"Ronds", eHappy:"Joyeux", eDot:"Points", eWink:"Clin d'œil",
     mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", glasses:"Lunettes", gNone:"Aucunes",
     shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
-    hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", own:"Acquis", house:"Ma maison", medals:"Médailles",
+    hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", progressTitle:"Progrès", statusKnown:"acquis", statusPractising:"à revoir", statusNew:"nouveau", progressNone:"Aucun mot pour le moment.", progressAboutTitle:"Suivi des progrès", progressAboutBody:"Dans l'espace parent, l'écran Progrès montre, pour chaque liste, les mots acquis et ceux à revoir. Un mot est « acquis » après 3 bonnes réponses d'affilée.", own:"Acquis", house:"Ma maison", medals:"Médailles",
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?",
@@ -397,7 +418,7 @@ const T = {
     eRound:"Round", eHappy:"Happy", eDot:"Dots", eWink:"Wink",
     mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", glasses:"Glasses", gNone:"None",
     shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
-    hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", own:"Owned", house:"My house", medals:"Medals",
+    hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", progressTitle:"Progress", statusKnown:"known", statusPractising:"to revise", statusNew:"new", progressNone:"No words yet.", progressAboutTitle:"Progress tracking", progressAboutBody:"In the parent area, the Progress screen shows, for each list, which words are known and which still need revising. A word counts as known after 3 correct answers in a row.", own:"Owned", house:"My house", medals:"Medals",
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?",
@@ -755,6 +776,7 @@ function render(){
   else if (route === 'mathcfg') v.innerHTML = viewMathCfg();
   else if (route === 'mathgame') v.innerHTML = viewMathGame();
   else if (route === 'about') v.innerHTML = viewAbout();
+  else if (route === 'progress') v.innerHTML = viewProgress();
   else if (route === 'welcome') v.innerHTML = viewWelcome();
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
@@ -888,6 +910,10 @@ function viewAbout(){
         <div class="about-h">${t('howToTitle')}</div>
         <ol class="about-list"><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>
       </div>
+      <div class="about-card">
+        <div class="about-h">${t('progressAboutTitle')}</div>
+        <p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('progressAboutBody')}</p>
+      </div>
       <button class="link-btn" onclick="replayIntro()">${IC.bulb}${t('replayIntro')}</button>
       <div class="about-card"><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('privacyLine')}</p></div>
       <div class="about-card"><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('feedbackLine')} <a href="mailto:thierrydamien@gmail.com" style="color:var(--primary);font-weight:800;text-decoration:none;">thierrydamien@gmail.com</a></p></div>
@@ -941,7 +967,7 @@ function viewParent(){
     const lists=listsFor(p,lng);
     const cards = lists.length ? lists.map(l=>`
       <button class="list-card" onclick="editList('${l.id}')">
-        <div class="lc-main"><b>${esc(l.name)}</b><span>${l.words.length} ${t('wordsShort')}</span></div>
+        <div class="lc-main"><b>${esc(l.name)}</b><span>${l.words.length} ${t('wordsShort')} &middot; ${listProgress(p,l).known} ${t('statusKnown')}</span></div>
         <span class="lc-go">&rsaquo;</span></button>`).join('') : `<div class="lc-empty">${t('emptyLists')}</div>`;
     return `<div class="ls-sec"><div class="ls-head"><span class="ls-lang">${label}</span><button class="ls-add" onclick="createList('${lng}')">${IC.plus}${t('addList')}</button></div>${cards}</div>`;
   };
@@ -954,8 +980,46 @@ function viewParent(){
       ${section('FR','Français')}
       ${section('EN','English')}
       <div class="spacer"></div>
+      <button class="link-btn" onclick="navigate('progress')">${IC.book}${t('progressTitle')}</button>
       <button class="link-btn" onclick="navigate('backup')">${IC.save}${t('backupBtn')}</button>
       <button class="btn-ghost" onclick="openParent()">${t('changePin')}... </button>
+    </div>`;
+}
+function wordStatus(p, w){
+  const ws = p.wordStats ? p.wordStats[norm(w)] : null;
+  if(!ws) return 'new';
+  const att=(ws.r||0)+(ws.w||0); if(att===0) return 'new';
+  const h=(ws.h&&ws.h.length)?ws.h:null;
+  if(h){ const last3=h.slice(-3); return (last3.length>=3 && last3.every(x=>x===1)) ? 'known' : 'practising'; }
+  if((ws.r||0)>=3 && ((ws.r||0)-(ws.w||0))>=3) return 'known';
+  return 'practising';
+}
+function listProgress(p, list){ let k=0,pr=0,nw=0; list.words.forEach(o=>{ const st=wordStatus(p,o.w); if(st==='known')k++; else if(st==='practising')pr++; else nw++; }); return {known:k, practising:pr, neww:nw, total:list.words.length}; }
+function viewProgress(){
+  const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
+  ensureEconomy(p);
+  const dot=st=>`<span class="ws-dot ws-${st}"></span>`;
+  const sectionFor=(lng,label)=>{
+    const lists=listsFor(p,lng); if(!lists.length) return '';
+    const cards=lists.map(l=>{
+      const pg=listProgress(p,l);
+      const chips=l.words.map(o=>{ const st=wordStatus(p,o.w); const ws=p.wordStats[norm(o.w)]||{}; const tally=(st==='new')?'':` <small>${(ws.r||0)}\u2713${ws.w?(' '+ws.w+'\u2717'):''}</small>`; return `<span class="ws-chip ws-${st}">${esc(o.w)}${tally}</span>`; }).join('');
+      const seg=(c)=>`<span class="ws-seg ws-${c}" style="width:${pg.total?(pg[c==='known'?'known':'practising']/pg.total*100):0}%"></span>`;
+      const bar=`<span class="ws-bar">${seg('known')}${seg('practising')}</span>`;
+      return `<div class="prog-card"><div class="pc-head"><b>${esc(l.name)}</b><span class="pc-sum">${pg.known} ${t('statusKnown')} &middot; ${pg.practising} ${t('statusPractising')} &middot; ${pg.neww} ${t('statusNew')}</span></div>${bar}<div class="ws-wrap">${chips}</div></div>`;
+    }).join('');
+    return `<div class="ls-sec"><div class="ls-head"><span class="ls-lang">${label}</span></div>${cards}</div>`;
+  };
+  const fr=sectionFor('FR','Fran\u00e7ais'), en=sectionFor('EN','English');
+  const body=(fr||en)?(fr+en):`<div class="lc-empty">${t('progressNone')}</div>`;
+  return `
+    <div class="screen active">
+      <div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>
+      <div class="scr-title">${t('progressTitle')}</div>
+      <p class="center" style="color:var(--muted);font-weight:700;margin-bottom:8px;">${esc(p.name)}</p>
+      <div class="ws-legend">${dot('known')}${t('statusKnown')} ${dot('practising')}${t('statusPractising')} ${dot('new')}${t('statusNew')}</div>
+      ${body}
+      <div class="spacer"></div>
     </div>`;
 }
 function createList(lng){ confirmDel=false; const p=activeProfile(); if(!p) return; ensureEconomy(p); const l={id:uid(), name:t('newListName'), lang:lng, words:[]}; p.lists.push(l); saveProfiles(); editingListId=l.id; navigate('listedit'); }
@@ -1332,14 +1396,14 @@ function pickWeightedWords(p, list, n){
   return out;
 }
 function recordWord(word, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p);
-  const k=norm(word); const ws=p.wordStats[k]||{r:0,w:0}; if(ok) ws.r++; else ws.w++; p.wordStats[k]=ws; saveProfiles(); }
+  const k=norm(word); const ws=p.wordStats[k]||{r:0,w:0}; if(ok) ws.r++; else ws.w++; ws.h=ws.h||[]; ws.h.push(ok?1:0); if(ws.h.length>5) ws.h=ws.h.slice(-5); p.wordStats[k]=ws; saveProfiles(); }
 
 function beginTurn(){
   if(lcwcTimer){ clearTimeout(lcwcTimer); lcwcTimer=null; }
   curWord=queue[qi]; curAns=curWord; inputText=''; turnActive=true; misses=0;
   if(dictStyle==='scramble'){ scrTiles=shuffle([...curWord]); scrUsed=scrTiles.map(()=>false); }
   if(route!=='game') navigate('game'); else paintGame();
-  speakCur();
+  if(sfxOn()) speakCur();
   if(dictStyle==='remember'){
     const ms=Math.max(1600, curWord.replace(/\s/g,'').length*550);
     lcwcTimer=setTimeout(()=>{ if(turnActive){ const c=document.getElementById('gw-card'); if(c) c.innerHTML=coverCardHTML(); } }, ms);
@@ -1404,6 +1468,9 @@ function playHeaderHTML(){ const p=activeProfile(); return `
 }
 function positionWalker(){ const w=document.getElementById('gw-av'); if(!w) return; const pct=roundTotal>0?Math.min(qi/roundTotal,1):0; w.style.left=(4+pct*82)+'%'; const pet=document.getElementById('gw-pet'); if(pet) pet.style.left=Math.max(0,(4+pct*82-9))+'%'; }
 function react(cls){ const el=document.getElementById('gw-av-in'); if(!el) return; el.classList.remove('cheer','wobble'); void el.offsetWidth; el.classList.add(cls); }
+function firework(cx,cy){ if(!document.body) return; const cols=['#FF6F61','#FFC93C','#21BFA0','#5B8DEF','#A06BFF','#FF7AB6','#ffffff']; const n=18; for(let i=0;i<n;i++){ const a=(i/n)*2*Math.PI+Math.random()*0.25, dist=55+Math.random()*55; const el=document.createElement('div'); el.className='fw'; el.style.left=cx+'px'; el.style.top=cy+'px'; el.style.background=cols[i%cols.length]; el.style.setProperty('--dx',(Math.cos(a)*dist).toFixed(1)+'px'); el.style.setProperty('--dy',(Math.sin(a)*dist).toFixed(1)+'px'); el.style.animation='fwfly '+(700+Math.random()*350)+'ms ease-out forwards'; document.body.appendChild(el); setTimeout(()=>el.remove(),1250); } sfx('pop'); }
+function confettiRain(count){ if(!document.body) return; const cont=document.createElement('div'); cont.className='confetti confrain'; const cols=['#FF6F61','#21BFA0','#FFC93C','#7AD1FF','#FF7AB6','#A06BFF']; for(let i=0;i<count;i++){ const sp=document.createElement('span'); sp.style.left=(Math.random()*100)+'%'; sp.style.background=cols[i%cols.length]; sp.style.animationDuration=(1400+Math.random()*1500)+'ms'; sp.style.animationDelay=(Math.random()*550)+'ms'; cont.appendChild(sp); } document.body.appendChild(cont); setTimeout(()=>cont.remove(),2800); }
+function celebrate(level){ if(!document.body) return; const W=(window.innerWidth||390), H=(window.innerHeight||700); confettiRain(level==='big'?44:26); const bursts=level==='big'?8:5; let i=0; const go=()=>{ firework(W*(0.18+Math.random()*0.64), H*(0.13+Math.random()*0.34)); if(++i<bursts) setTimeout(go,250+Math.random()*200); }; go(); if(level==='big') setTimeout(()=>sfx('fanfare'),120); }
 function burst(){ const card=document.getElementById('gw-card'); const r=card?card.getBoundingClientRect():null;
   const cx=r?r.left+r.width/2:window.innerWidth/2, cy=r?r.top+r.height/2:window.innerHeight/3;
   const cont=document.createElement('div'); cont.className='confetti';
@@ -1458,6 +1525,7 @@ function scrReset(){ if(!turnActive) return; inputText=''; scrUsed=scrTiles.map(
   const c=document.getElementById('gw-card'); if(c) c.innerHTML=cardHTML(); updateInputBox(); }
 
 function speakCur(){ speak(curWord, lang); }
+function vox(txt,l){ if(!sfxOn()) return; speak(txt,l); }
 function speak(txt,l){ if(!('speechSynthesis' in window)) return; try{ const u=new SpeechSynthesisUtterance(txt);
   u.lang=(l==='FR')?'fr-FR':'en-GB'; u.rate=0.9; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
 function langKey(){ return lang==='FR'?'fr':'en'; }
@@ -1486,6 +1554,8 @@ function sfx(kind){ if(!sfxOn()) return; if(!actx()) return;
   else if(kind==='coin'){ tone(1180,0,0.10,'square',0.05); }
   else if(kind==='combo'){ tone(700,0,0.07,'square',0.07); tone(1050,0.06,0.12,'square',0.07); }
   else if(kind==='finish'){ [523,659,784,1047].forEach((f,i)=>tone(f,i*0.12,0.22,'triangle',0.11)); }
+  else if(kind==='pop'){ tone(1200,0,0.05,'square',0.05); tone(1650,0.03,0.07,'square',0.035); }
+  else if(kind==='fanfare'){ [523,659,784,1047,1319].forEach((f,i)=>tone(f,i*0.1,0.22,'triangle',0.11)); tone(1568,0.52,0.55,'triangle',0.12); tone(1047,0.52,0.55,'triangle',0.08); }
 }
 function escapeRegExp(x){ return (x||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
 function maskInSentence(sentence, word){ if(!word) return sentence; try{ return sentence.replace(new RegExp(escapeRegExp(word),'gi'),'____'); }catch(e){ return sentence; } }
@@ -1507,17 +1577,17 @@ function submit(){
     turnActive=false; roundScore++; roundCoins++; recordWord(curWord, true);
     const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
     react('cheer'); burst(); flyCoin(); bumpStreak();
-    const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } speak(pr, lang); sfx('correct');
+    const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
     setTimeout(advance,1050);
   } else {
     misses++; roundMistake=true; react('wobble'); streak=0; clearCombo();
     if(misses>=2){
       turnActive=false; recordWord(curWord, false); missedThisRound.push(curWord);
       if(fb){ fb.textContent='\u2192 '+curAns; fb.className='gw-fb no'; }
-      speak(curAns, lang); setTimeout(advance,1700); return;
+      vox(curAns, lang); setTimeout(advance,1700); return;
     }
     if(fb){ fb.innerHTML='<span class="fb-msg">'+t('tryagain')+'</span>'+letterFeedbackHTML(typed, curAns); fb.className='gw-fb no'; }
-    sfx('wrong'); speak(encourage(), lang);
+    sfx('wrong'); vox(encourage(), lang);
     inputText=''; if(dictStyle==='scramble'){ scrUsed=scrTiles.map(()=>false); const c=document.getElementById('gw-card'); if(c) c.innerHTML=cardHTML(); }
     updateInputBox();
   }
@@ -1525,7 +1595,7 @@ function submit(){
 function skip(){
   if(!turnActive) return; turnActive=false; roundMistake=true; streak=0; clearCombo(); recordWord(curWord, false); missedThisRound.push(curWord);
   const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent='\u2192 '+curAns; fb.className='gw-fb no'; }
-  speak(curAns, lang); setTimeout(advance,1600);
+  vox(curAns, lang); setTimeout(advance,1600);
 }
 function quitGame(){ if(lcwcTimer){clearTimeout(lcwcTimer);lcwcTimer=null;} turnActive=false; navigate('home'); }
 let perfectRound=false, giftsAwarded=[];
@@ -1538,6 +1608,8 @@ function finishRound(){
     saveProfiles(); sfx('finish');
   } else { perfectRound=false; giftsAwarded=[]; }
   navigate('results');
+  const _lvl = perfectRound ? 'big' : 'win';
+  if(typeof requestAnimationFrame!=='undefined') requestAnimationFrame(()=>celebrate(_lvl)); else celebrate(_lvl);
 }
 function claimMilestones(p){
   const map=[{n:25,item:'plant',medal:'scholar25'},{n:75,item:'lamp',medal:'scholar75'},{n:150,item:'pet',medal:'scholar150'}];
@@ -1549,10 +1621,12 @@ function claimMilestones(p){
 
 function viewResults(){
   const giftNames = giftsAwarded.map(id=>esc(itemName(itemDef(id)))).join(', ');
+  const _ratio = (roundTotal>0?roundScore/roundTotal:0); const stars = perfectRound?3:(_ratio>=0.9?3:(_ratio>=0.6?2:1));
   return `
     <div class="screen active">
       <div class="soon-wrap">
         <div class="result-av bob">${activeProfile()?avatarSVG(activeProfile()):''}</div>
+        <div class="res-stars">${[1,2,3].map(i=>`<span class="res-star ${i<=stars?'on':''}" style="animation-delay:${(i*0.18).toFixed(2)}s">${IC.star}</span>`).join('')}</div>
         <div class="big">${perfectRound?t('perfectMsg'):t('roundDone')}</div>
         <div style="font-family:var(--fd);font-weight:700;font-size:22px;">${t('correctCount')} : ${roundScore} / ${roundTotal}</div>
         <div class="coins" style="font-size:18px;">${IC.star}+${roundCoins} ${t('coinsEarned')}</div>
@@ -1665,13 +1739,13 @@ function mathSubmit(){
     turnActive=false; roundScore++; roundCoins++;
     const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
     react('cheer'); burst(); flyCoin(); bumpStreak();
-    const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } speak(pr, lang); sfx('correct');
+    const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
     setTimeout(mathAdvance,1000);
   } else {
     misses++; roundMistake=true; react('wobble'); streak=0; clearCombo();
     if(misses>=2){ turnActive=false; if(fb){ fb.textContent=curM.a+' '+sym(curM.op)+' '+curM.b+' = '+curM.ans; fb.className='gw-fb no'; } setTimeout(mathAdvance,1700); return; }
     if(fb){ fb.textContent=t('tryagain'); fb.className='gw-fb no'; }
-    sfx('wrong'); speak(encourage(), lang);
+    sfx('wrong'); vox(encourage(), lang);
     inputText=''; updateInputBox();
   }
 }
