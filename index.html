@@ -278,8 +278,23 @@ input,textarea{font-family:inherit;}
 .chips-scroll::-webkit-scrollbar{width:6px;}
 .chips-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
 .prog-card{background:var(--card);border-radius:16px;padding:12px 14px;margin-bottom:10px;box-shadow:0 3px 10px rgba(0,0,0,.05);}
+.prog-banner{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:none;cursor:pointer;background:linear-gradient(135deg,#E7FBF4,#D7F1FF);border-radius:18px;padding:14px 16px;margin-bottom:8px;box-shadow:0 6px 16px rgba(33,191,160,.18);}
+.pb-av{width:50px;height:50px;flex:0 0 50px;border-radius:50%;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.10);}
+.pb-av svg{width:50px;height:50px;display:block;}
+.pb-eyebrow{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-dk);}
+.pb-mid{flex:1;min-width:0;}
+.pb-title{font-family:var(--fd);font-weight:700;font-size:17px;color:var(--ink);}
+.pb-bar{display:flex;height:8px;border-radius:999px;overflow:hidden;background:#ffffffaa;margin:6px 0 5px;}
+.pb-sub{font-size:12px;color:#4a6b63;font-weight:700;}
+.prog-banner .lc-go{color:var(--accent-dk);font-size:26px;}
 .pc-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
 .pc-sum{font-size:12px;color:var(--muted);font-weight:700;}
+.prog-child{margin-bottom:20px;}
+.pc-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;background:var(--card);border-radius:16px;padding:10px 12px;box-shadow:0 4px 12px rgba(0,0,0,.06);}
+.pc-av{width:54px;height:54px;flex:0 0 54px;}
+.pc-av svg{width:54px;height:54px;display:block;}
+.pc-cmid{flex:1;min-width:0;}
+.pc-cname{font-family:var(--fd);font-weight:700;font-size:18px;color:var(--ink);margin-bottom:6px;}
 .ws-bar{display:flex;height:8px;border-radius:999px;overflow:hidden;background:#EEE4D6;margin-bottom:10px;}
 .ws-seg{display:block;height:100%;}.ws-seg.ws-known{background:#21BFA0;}.ws-seg.ws-practising{background:#FFC93C;}
 .ws-wrap{display:flex;flex-wrap:wrap;gap:6px;}
@@ -1004,16 +1019,24 @@ function viewParent(){
         <span class="lc-go">&rsaquo;</span></button>`).join('') : `<div class="lc-empty">${t('emptyLists')}</div>`;
     return `<div class="ls-sec"><div class="ls-head"><span class="ls-lang">${label}</span><button class="ls-add" onclick="createList('${lng}')">${IC.plus}${t('addList')}</button></div>${cards}</div>`;
   };
+  let agg={known:0,practising:0,neww:0,total:0};
+  if(p){ ['FR','EN'].forEach(lng=>listsFor(p,lng).forEach(l=>{ const g=listProgress(p,l); agg.known+=g.known; agg.practising+=g.practising; agg.neww+=g.neww; agg.total+=g.total; })); }
+  const aw=agg.total?Math.round(agg.known/agg.total*100):0, ap=agg.total?Math.round(agg.practising/agg.total*100):0;
+  const progBanner = p ? `<button class="prog-banner" onclick="navigate('progress')">
+      <div class="pb-av">${avatarSVG(p)}</div>
+      <div class="pb-mid"><div class="pb-eyebrow">${t('progressTitle')}</div><div class="pb-title">${esc(p.name)}</div>
+        <div class="pb-bar"><span class="ws-seg ws-known" style="width:${aw}%"></span><span class="ws-seg ws-practising" style="width:${ap}%"></span></div>
+        <div class="pb-sub">${agg.known} ${t('statusKnown')} &middot; ${agg.practising} ${t('statusPractising')} &middot; ${agg.neww} ${t('statusNew')}</div></div>
+      <span class="lc-go">&rsaquo;</span></button>` : '';
   return `
     <div class="screen active">
       <div class="backbar"><button class="backbtn" onclick="navigate('home')">${IC.back}${t('back')}</button></div>
       <div class="scr-title">${t('parent')}</div>
-      <p class="center" style="color:var(--muted);font-weight:700;margin-bottom:4px;">${esc(p?p.name:'')}</p>
-      <p class="hint" style="text-align:center;margin:0 0 14px;">${t('parentListsHelp')}</p>
+      ${progBanner}
+      <p class="hint" style="text-align:center;margin:10px 0 14px;">${t('parentListsHelp')}</p>
       ${section('FR','Français')}
       ${section('EN','English')}
       <div class="spacer"></div>
-      <button class="link-btn" onclick="navigate('progress')">${IC.book}${t('progressTitle')}</button>
       <button class="link-btn" onclick="navigate('voices')">${IC.sound}${t('voicesBtn')}</button>
       <button class="link-btn" onclick="navigate('backup')">${IC.save}${t('backupBtn')}</button>
       <button class="btn-ghost" onclick="openParent()">${t('changePin')}... </button>
@@ -1030,27 +1053,33 @@ function wordStatus(p, w){
 }
 function listProgress(p, list){ let k=0,pr=0,nw=0; list.words.forEach(o=>{ const st=wordStatus(p,o.w); if(st==='known')k++; else if(st==='practising')pr++; else nw++; }); return {known:k, practising:pr, neww:nw, total:list.words.length}; }
 function viewProgress(){
-  const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
-  ensureEconomy(p);
+  if(!profiles.length){ route='profiles'; return viewProfiles(); }
   const dot=st=>`<span class="ws-dot ws-${st}"></span>`;
-  const sectionFor=(lng,label)=>{
+  const listsBlock=(p)=>['FR','EN'].map(lng=>{
     const lists=listsFor(p,lng); if(!lists.length) return '';
-    const cards=lists.map(l=>{
+    return lists.map(l=>{
       const pg=listProgress(p,l);
       const chips=l.words.map(o=>{ const st=wordStatus(p,o.w); const ws=p.wordStats[norm(o.w)]||{}; const tally=(st==='new')?'':` <small>${(ws.r||0)}\u2713${ws.w?(' '+ws.w+'\u2717'):''}</small>`; return `<span class="ws-chip ws-${st}">${esc(o.w)}${tally}</span>`; }).join('');
       const seg=(c)=>`<span class="ws-seg ws-${c}" style="width:${pg.total?(pg[c==='known'?'known':'practising']/pg.total*100):0}%"></span>`;
-      const bar=`<span class="ws-bar">${seg('known')}${seg('practising')}</span>`;
-      return `<div class="prog-card"><div class="pc-head"><b>${esc(l.name)}</b><span class="pc-sum">${pg.known} ${t('statusKnown')} &middot; ${pg.practising} ${t('statusPractising')} &middot; ${pg.neww} ${t('statusNew')}</span></div>${bar}<div class="ws-wrap">${chips}</div></div>`;
+      return `<div class="prog-card"><div class="pc-head"><b>${esc(l.name)}</b><span class="pc-sum">${pg.known} ${t('statusKnown')} &middot; ${pg.practising} ${t('statusPractising')} &middot; ${pg.neww} ${t('statusNew')}</span></div><span class="ws-bar">${seg('known')}${seg('practising')}</span><div class="ws-wrap">${chips}</div></div>`;
     }).join('');
-    return `<div class="ls-sec"><div class="ls-head"><span class="ls-lang">${label}</span></div>${cards}</div>`;
+  }).join('');
+  const childBlock=(p)=>{
+    ensureEconomy(p);
+    let agg={known:0,practising:0,neww:0,total:0};
+    ['FR','EN'].forEach(lng=>listsFor(p,lng).forEach(l=>{ const g=listProgress(p,l); agg.known+=g.known; agg.practising+=g.practising; agg.neww+=g.neww; agg.total+=g.total; }));
+    const aw=agg.total?agg.known/agg.total*100:0, ap=agg.total?agg.practising/agg.total*100:0;
+    const lb=listsBlock(p);
+    return `<div class="prog-child">
+        <div class="pc-top"><div class="pc-av">${avatarSVG(p)}</div><div class="pc-cmid"><div class="pc-cname">${esc(p.name)}</div><div class="ws-bar"><span class="ws-seg ws-known" style="width:${aw}%"></span><span class="ws-seg ws-practising" style="width:${ap}%"></span></div><div class="pc-sum">${agg.known} ${t('statusKnown')} &middot; ${agg.practising} ${t('statusPractising')} &middot; ${agg.neww} ${t('statusNew')}</div></div></div>
+        ${lb||`<div class="lc-empty">${t('progressNone')}</div>`}
+      </div>`;
   };
-  const fr=sectionFor('FR','Fran\u00e7ais'), en=sectionFor('EN','English');
-  const body=(fr||en)?(fr+en):`<div class="lc-empty">${t('progressNone')}</div>`;
+  const body=profiles.map(childBlock).join('');
   return `
     <div class="screen active">
       <div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>
       <div class="scr-title">${t('progressTitle')}</div>
-      <p class="center" style="color:var(--muted);font-weight:700;margin-bottom:8px;">${esc(p.name)}</p>
       <div class="ws-legend">${dot('known')}${t('statusKnown')} ${dot('practising')}${t('statusPractising')} ${dot('new')}${t('statusNew')}</div>
       ${body}
       <div class="spacer"></div>
