@@ -200,6 +200,13 @@ input,textarea{font-family:inherit;}
 .shop-card .sp.itm{display:flex;align-items:center;justify-content:center;background:var(--bg);}
 .tabs{display:flex;gap:8px;justify-content:flex-start;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
+.vbox{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 3px 10px rgba(0,0,0,.05);}
+.vlang{font-family:var(--fd);font-weight:700;color:var(--ink);margin-bottom:8px;}
+.vsel{width:100%;font-family:var(--fn);font-weight:700;font-size:15px;color:var(--ink);background:#FFF;border:2px solid var(--line);border-radius:12px;padding:10px 12px;-webkit-appearance:none;appearance:none;}
+.vtest{margin-top:10px;display:inline-flex;align-items:center;gap:6px;}
+.vtest svg{width:20px;height:20px;}
+.opt-hint{font-size:12px;color:var(--muted);font-weight:700;margin-top:8px;line-height:1.4;}
+.vnote{font-size:12.5px;color:var(--muted);font-weight:700;line-height:1.5;background:var(--card);border-radius:14px;padding:12px 14px;margin-bottom:12px;box-shadow:0 3px 10px rgba(0,0,0,.05);}
 .tab{flex:0 0 auto;font-family:var(--fd);font-weight:700;font-size:14px;padding:8px 14px;border-radius:999px;background:var(--card);color:var(--muted);box-shadow:0 3px 8px rgba(0,0,0,.05);white-space:nowrap;}
 .tab.on{background:var(--primary);color:#fff;}
 .house-scene{width:100%;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.08);}
@@ -388,7 +395,7 @@ const T = {
     eRound:"Ronds", eHappy:"Joyeux", eDot:"Points", eWink:"Clin d'œil",
     mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", glasses:"Lunettes", gNone:"Aucunes",
     shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
-    hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", progressTitle:"Progrès", statusKnown:"acquis", statusPractising:"à revoir", statusNew:"nouveau", progressNone:"Aucun mot pour le moment.", progressAboutTitle:"Suivi des progrès", progressAboutBody:"Dans l'espace parent, l'écran Progrès montre, pour chaque liste, les mots acquis et ceux à revoir. Un mot est « acquis » après 3 bonnes réponses d'affilée.", own:"Acquis", house:"Ma maison", medals:"Médailles",
+    hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", progressTitle:"Progrès", statusKnown:"acquis", statusPractising:"à revoir", statusNew:"nouveau", progressNone:"Aucun mot pour le moment.", voicesTitle:"Voix", voicesBtn:"Voix", voicesIntro:"Choisis la voix qui lit les mots à voix haute. Les voix disponibles dépendent de l'appareil.", voiceAuto:"Automatique", voiceTest:"Tester", voicesNone:"Aucune voix disponible sur cet appareil.", voicesRefresh:"Rafraîchir", voicesHelp:"Les mots sont lus par les voix intégrées de l'appareil : la qualité varie d'un téléphone ou ordinateur à l'autre. Si une voix semble robotique, essaie une autre option ci-dessus puis touche Tester. Sur un ordinateur, Chrome propose souvent de meilleures voix, ou tu peux installer une voix « améliorée » dans les réglages du système.", progressAboutTitle:"Suivi des progrès", progressAboutBody:"Dans l'espace parent, l'écran Progrès montre, pour chaque liste, les mots acquis et ceux à revoir. Un mot est « acquis » après 3 bonnes réponses d'affilée.", own:"Acquis", house:"Ma maison", medals:"Médailles",
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?",
@@ -418,7 +425,7 @@ const T = {
     eRound:"Round", eHappy:"Happy", eDot:"Dots", eWink:"Wink",
     mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", glasses:"Glasses", gNone:"None",
     shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
-    hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", progressTitle:"Progress", statusKnown:"known", statusPractising:"to revise", statusNew:"new", progressNone:"No words yet.", progressAboutTitle:"Progress tracking", progressAboutBody:"In the parent area, the Progress screen shows, for each list, which words are known and which still need revising. A word counts as known after 3 correct answers in a row.", own:"Owned", house:"My house", medals:"Medals",
+    hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", progressTitle:"Progress", statusKnown:"known", statusPractising:"to revise", statusNew:"new", progressNone:"No words yet.", voicesTitle:"Voice", voicesBtn:"Voice", voicesIntro:"Choose the voice that reads words aloud. Available voices depend on your device.", voiceAuto:"Automatic", voiceTest:"Test", voicesNone:"No voices available on this device.", voicesRefresh:"Refresh", voicesHelp:"The words are read by your device's built-in voices, so the quality differs between phones and computers. If a voice sounds robotic, try another option above and tap Test. On a computer, Chrome usually has nicer voices, or you can install an Enhanced voice in your system settings.", progressAboutTitle:"Progress tracking", progressAboutBody:"In the parent area, the Progress screen shows, for each list, which words are known and which still need revising. A word counts as known after 3 correct answers in a row.", own:"Owned", house:"My house", medals:"Medals",
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?",
@@ -777,6 +784,7 @@ function render(){
   else if (route === 'mathgame') v.innerHTML = viewMathGame();
   else if (route === 'about') v.innerHTML = viewAbout();
   else if (route === 'progress') v.innerHTML = viewProgress();
+  else if (route === 'voices') v.innerHTML = viewVoices();
   else if (route === 'welcome') v.innerHTML = viewWelcome();
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
@@ -899,6 +907,31 @@ function viewHome(){
     </div>`;
 }
 
+function viewVoices(){
+  const p=activeProfile();
+  const block=(lng,label)=>{
+    const list=voiceList(lng);
+    const cur=localStorage.getItem('hg_voice_'+lng)||'';
+    const opts=[`<option value="" ${cur===''?'selected':''}>${t('voiceAuto')}</option>`]
+      .concat(list.map(v=>{ const id=v.voiceURI||v.name; return `<option value="${esc(id)}" ${cur===id?'selected':''}>${esc(v.name)} (${esc(v.lang)})</option>`; })).join('');
+    const inner = list.length
+      ? `<select class="vsel" onchange="setVoice('${lng}', this.value)">${opts}</select>
+         <button class="btn-ghost vtest" onclick="testVoice('${lng}')">${IC.sound}${t('voiceTest')}</button>`
+      : `<div class="hint">${t('voicesNone')}</div>`;
+    return `<div class="vbox"><div class="vlang">${label}</div>${inner}</div>`;
+  };
+  return `
+    <div class="screen active">
+      <div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>
+      <div class="scr-title">${t('voicesTitle')}</div>
+      <p class="hint" style="text-align:center;margin:0 8px 16px;">${t('voicesIntro')}</p>
+      ${block('FR','Fran\u00e7ais')}
+      ${block('EN','English')}
+      <div class="vnote">${t('voicesHelp')}</div>
+      <button class="link-btn" onclick="loadVoices(); render();">${IC.spk}${t('voicesRefresh')}</button>
+      <div class="spacer"></div>
+    </div>`;
+}
 function viewAbout(){
   return `
     <div class="screen active">
@@ -981,6 +1014,7 @@ function viewParent(){
       ${section('EN','English')}
       <div class="spacer"></div>
       <button class="link-btn" onclick="navigate('progress')">${IC.book}${t('progressTitle')}</button>
+      <button class="link-btn" onclick="navigate('voices')">${IC.sound}${t('voicesBtn')}</button>
       <button class="link-btn" onclick="navigate('backup')">${IC.save}${t('backupBtn')}</button>
       <button class="btn-ghost" onclick="openParent()">${t('changePin')}... </button>
     </div>`;
@@ -1351,7 +1385,7 @@ function viewDictStyle(){
       </div></div>
       <div class="cat"><label>${t('practiceMode')}</label><div class="opt-row">
         ${[['smart',t('pmSmart'),'pmTipSmart'],['even',t('pmEven'),'pmTipRandom']].map(([v,lab,tip])=>`<button class="opt ${(localStorage.getItem('hg_practice')||'smart')===v?'on':''}" title="${t(tip)}" onclick="setPractice('${v}')">${lab}</button>`).join('')}
-      </div></div>
+      </div><div class="opt-hint">${t('pmSmart')} : ${t('pmTipSmart')}. ${t('pmEven')} : ${t('pmTipRandom')}.</div></div>
       <div class="spacer"></div>
       <button class="btn-primary" onclick="startDict()">${t('start')}</button>
     </div>`;
@@ -1526,8 +1560,34 @@ function scrReset(){ if(!turnActive) return; inputText=''; scrUsed=scrTiles.map(
 
 function speakCur(){ speak(curWord, lang); }
 function vox(txt,l){ if(!sfxOn()) return; speak(txt,l); }
+let _voices=[]; const _voicePick={};
+function loadVoices(){ try{ _voices=(window.speechSynthesis&&speechSynthesis.getVoices())||[]; _voicePick.FR=null; _voicePick.EN=null; }catch(e){ _voices=[]; } if(typeof route!=='undefined' && route==='voices'){ try{ render(); }catch(e){} } }
+function pickVoice(langCode){
+  if(!_voices.length) loadVoices();
+  if(!_voices.length) return null;
+  const base=langCode.slice(0,2).toLowerCase();
+  const good=/google|siri|natural|premium|enhanced|am[eé]lie|thomas|audrey|aaron|daniel|serena|samantha|karen|moira|tessa|fiona|nicky/i;
+  const bad=/fred|albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|hysterical|jester|organ|pipe|trinoids|whisper|wobble|zarvox|junior|ralph|kathy|novelty|eloquence|compact|grandma|grandpa|rocko|shelley|sandy|flo|reed|eddy/i;
+  let best=null, bestScore=-1;
+  _voices.forEach(v=>{ const vl=(v.lang||'').toLowerCase().replace('_','-'); let sc=0;
+    if(vl===langCode.toLowerCase()) sc+=6; else if(vl.slice(0,2)===base) sc+=3; else return;
+    const nm=v.name||''; if(good.test(nm)) sc+=4; if(/google/i.test(nm)) sc+=2; if(bad.test(nm)) sc-=8;
+    if(v.localService===false) sc+=1; if(v.default) sc+=0.5;
+    if(sc>bestScore){ bestScore=sc; best=v; } });
+  return best;
+}
+if('speechSynthesis' in window){ loadVoices(); try{ speechSynthesis.onvoiceschanged=loadVoices; }catch(e){} }
 function speak(txt,l){ if(!('speechSynthesis' in window)) return; try{ const u=new SpeechSynthesisUtterance(txt);
-  u.lang=(l==='FR')?'fr-FR':'en-GB'; u.rate=0.9; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
+  const code=(l==='FR')?'fr-FR':'en-GB'; u.lang=code; u.rate=0.9; u.pitch=1;
+  const key=(l==='FR')?'FR':'EN';
+  let v=chosenVoice(key);
+  if(!v){ if(_voicePick[key]) v=_voicePick[key]; else { v=pickVoice(code); if(v) _voicePick[key]=v; } }
+  if(v){ u.voice=v; u.lang=v.lang||code; }
+  speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
+function voiceList(lng){ if(!_voices.length) loadVoices(); const base=(lng==='FR')?'fr':'en'; return _voices.filter(v=>((v.lang||'').toLowerCase().slice(0,2))===base); }
+function chosenVoice(lng){ const id=localStorage.getItem('hg_voice_'+lng); if(!id) return null; if(!_voices.length) loadVoices(); return _voices.find(v=>(v.voiceURI===id||v.name===id))||null; }
+function setVoice(lng,id){ if(id) localStorage.setItem('hg_voice_'+lng,id); else localStorage.removeItem('hg_voice_'+lng); _voicePick[lng]=null; render(); }
+function testVoice(lng){ speak(lng==='FR'?'Bonjour ! \u00c9coute bien le mot.':'Hello! Listen carefully to the word.', lng); }
 function langKey(){ return lang==='FR'?'fr':'en'; }
 function curSentence(){ return activeSent[curWord]||''; }
 function speakSentence(){ const se=curSentence(); if(se) speak(se, lang); }
