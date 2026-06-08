@@ -304,6 +304,9 @@ input,textarea{font-family:inherit;}
 .pc-cname{font-family:var(--fd);font-weight:700;font-size:18px;color:var(--ink);margin-bottom:6px;}
 .ws-bar{display:flex;height:8px;border-radius:999px;overflow:hidden;background:#EEE4D6;margin-bottom:10px;}
 .ws-seg{display:block;height:100%;}.ws-seg.ws-known{background:#21BFA0;}.ws-seg.ws-practising{background:#FFC93C;}
+.mp-row{display:flex;align-items:center;gap:8px;margin:6px 0;}
+.mp-op{font-family:var(--fd);font-weight:700;width:20px;text-align:center;color:var(--ink);font-size:17px;}
+.mp-val{font-size:13px;color:var(--muted);min-width:36px;text-align:right;font-weight:700;}
 .ws-wrap{display:flex;flex-wrap:wrap;gap:6px;}
 .ws-chip{font-family:var(--fd);font-weight:700;font-size:13px;padding:5px 10px;border-radius:999px;background:#F0E4D4;color:#9A5B00;}
 .ws-chip small{font-weight:700;opacity:.7;font-size:11px;}
@@ -424,7 +427,7 @@ const T = {
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
     pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard",
     kbTipAuto:"Suit la langue (QWERTY en anglais, AZERTY en français)", kbTipAlpha:"Lettres dans l'ordre alphabétique", kbTipQwerty:"Disposition QWERTY", kbTipAzerty:"Disposition AZERTY", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
-    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", testCoins:"+1000 pièces (test)", coinsAdded:"Pièces ajoutées", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", chooseList:"Quelle liste ?", allWords:"Tous les mots", wordsShort:"mots", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", },
+    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", testCoins:"+1000 pièces (test)", coinsAdded:"Pièces ajoutées", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", chooseList:"Quelle liste ?", allWords:"Tous les mots", wordsShort:"mots", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name", colour:"Colour",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -454,7 +457,7 @@ const T = {
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
     pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order",
     kbTipAuto:"Follows the language (QWERTY in English, AZERTY in French)", kbTipAlpha:"Letters in alphabetical order", kbTipQwerty:"QWERTY layout", kbTipAzerty:"AZERTY layout", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
-    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", testCoins:"+1000 coins (test)", coinsAdded:"Coins added", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", chooseList:"Which list?", allWords:"All words", wordsShort:"words", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", }
+    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", testCoins:"+1000 coins (test)", coinsAdded:"Coins added", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", chooseList:"Which list?", allWords:"All words", wordsShort:"words", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
 };
 function t(k){ return T[lang][k]; }
 const APP_VER = "1.0";
@@ -481,10 +484,12 @@ function defaultLists(){
   ];
 }
 const GRADES = [
+  {id:'gs',  fr:'GS',  uk:'Reception', seed:[['FR','GS premiers mots'],['EN','Reception words'],['FR','La famille'],['EN','Family']]},
   {id:'cp',  fr:'CP',  uk:'Year 1', seed:[['FR','Mots outils 1'],['EN','Sight words 1'],['EN','Year 1 words']]},
   {id:'ce1', fr:'CE1', uk:'Year 2', seed:[['FR','CE1 mots fréquents'],['FR','Mots outils 2'],['EN','Year 2 words'],['EN','Sight words 2']]},
   {id:'ce2', fr:'CE2', uk:'Year 3', seed:[['FR','CE2 mots fréquents'],['EN','Year 2 words'],['FR','Le corps'],['EN','Body']]},
   {id:'cm1', fr:'CM1', uk:'Year 4', seed:[['FR','CM1 mots fréquents'],['EN','Year 3 words'],['FR','Le corps'],['EN','School']]},
+  {id:'cm2', fr:'CM2', uk:'Year 6', seed:[['FR','CM2 mots fréquents'],['EN','Year 6 words'],['FR','CM1 mots fréquents'],['EN','Year 3 words']]},
 ];
 function seedGradeLists(grade){
   const g = (typeof GRADES!=='undefined') ? GRADES.find(x=>x.id===grade) : null;
@@ -690,12 +695,14 @@ const TROPHIES = [
   {id:'lists',    b:1,  s:3,  g:5,   fr:'Listes apprises', en:'Lists learned',   ufr:'listes apprises',   uen:'lists learned'},
   {id:'perfect',  b:1,  s:5,  g:15,  fr:'Sans-faute',      en:'Perfect rounds',  ufr:'manches parfaites', uen:'perfect rounds'},
   {id:'explorer', b:3,  s:4,  g:5,   fr:'Explorateur',     en:'Explorer',        ufr:'modes essayés',     uen:'modes tried'},
+  {id:'maths',    b:2,  s:3,  g:4,   fr:'Explorateur des nombres', en:'Number explorer', ufr:'opérations essayées', uen:'operations tried'},
 ];
 function trophyDef(id){ return TROPHIES.find(x=>x.id===id); }
 function trophyValue(p,id){
   if(id==='correct') return p.stats.correct||0;
   if(id==='perfect') return p.stats.perfect||0;
   if(id==='explorer'){ const md=p.modesTried||{}; return ['copy','remember','gaps','scramble','listen'].filter(m=>md[m]).length; }
+  if(id==='maths'){ const mo=p.mathOps||{}; return ['+','-','x','/'].filter(o=>mo[o]).length; }
   if(id==='lists') return (p.lists||[]).filter(L=>L.words.length>0 && L.words.every(x=>wordStatus(p,x.w)==='known')).length;
   const seen={}; let k=0; (p.lists||[]).forEach(L=>L.words.forEach(x=>{ if(!seen[x.w]){ seen[x.w]=1; if(wordStatus(p,x.w)==='known') k++; } })); return k;
 }
@@ -730,6 +737,10 @@ function medalSVG(id, tier){
     cup = `<circle cx="0" cy="-2.5" r="8.2" fill="${c}"/>`
         + `<path d="M0 -9.5 L2.4 -2.5 L0 4.5 L-2.4 -2.5 Z" fill="${accent}"/>`
         + `<circle cx="0" cy="-2.5" r="1.4" fill="${c}"/>`;
+  } else if(id==='maths'){
+    cup = `<rect x="-6" y="-10" width="12" height="15" rx="2" fill="${c}"/>`
+        + `<rect x="-4.2" y="-8.2" width="8.4" height="3.4" rx="1" fill="${accent}"/>`
+        + `<g fill="${accent}"><circle cx="-3.5" cy="-1.8" r="1.05"/><circle cx="0" cy="-1.8" r="1.05"/><circle cx="3.5" cy="-1.8" r="1.05"/><circle cx="-3.5" cy="1.2" r="1.05"/><circle cx="0" cy="1.2" r="1.05"/><circle cx="3.5" cy="1.2" r="1.05"/><circle cx="-3.5" cy="4.2" r="1.05"/><circle cx="0" cy="4.2" r="1.05"/><circle cx="3.5" cy="4.2" r="1.05"/></g>`;
   }
   return cup + base;
 }
@@ -1100,15 +1111,22 @@ function viewProgress(){
       return `<div class="prog-card"><div class="pc-head"><b>${esc(l.name)}</b><span class="pc-sum">${pg.known} ${t('statusKnown')} &middot; ${pg.practising} ${t('statusPractising')} &middot; ${pg.neww} ${t('statusNew')}</span></div><span class="ws-bar">${seg('known')}${seg('practising')}</span><div class="ws-wrap">${chips}</div></div>`;
     }).join('');
   }).join('');
+  const mathsBlock=(p)=>{
+    const ops=['+','-','x','/'].filter(o=>(p.mathStats[o]||[]).length);
+    if(!ops.length) return '';
+    const rows=ops.map(o=>{ const h=p.mathStats[o]||[]; const c=h.filter(x=>x).length; const pct=h.length?Math.round(c/h.length*100):0;
+      return `<div class="mp-row"><span class="mp-op">${sym(o)}</span><span class="ws-bar" style="margin:0;flex:1"><span class="ws-seg ws-known" style="width:${pct}%"></span></span><span class="mp-val">${c}/${h.length}</span></div>`; }).join('');
+    return `<div class="prog-card"><div class="pc-head"><b>${t('progMaths')}</b></div>${rows}</div>`;
+  };
   const childBlock=(p)=>{
     ensureEconomy(p);
     let agg={known:0,practising:0,neww:0,total:0};
     ['FR','EN'].forEach(lng=>listsFor(p,lng).forEach(l=>{ const g=listProgress(p,l); agg.known+=g.known; agg.practising+=g.practising; agg.neww+=g.neww; agg.total+=g.total; }));
     const aw=agg.total?agg.known/agg.total*100:0, ap=agg.total?agg.practising/agg.total*100:0;
-    const lb=listsBlock(p);
+    const lb=listsBlock(p); const mb=mathsBlock(p);
     return `<div class="prog-child">
         <div class="pc-top"><div class="pc-av">${avatarSVG(p)}</div><div class="pc-cmid"><div class="pc-cname">${esc(p.name)}</div><div class="ws-bar"><span class="ws-seg ws-known" style="width:${aw}%"></span><span class="ws-seg ws-practising" style="width:${ap}%"></span></div><div class="pc-sum">${agg.known} ${t('statusKnown')} &middot; ${agg.practising} ${t('statusPractising')} &middot; ${agg.neww} ${t('statusNew')}</div></div></div>
-        ${lb||`<div class="lc-empty">${t('progressNone')}</div>`}
+        ${(lb+mb)||`<div class="lc-empty">${t('progressNone')}</div>`}
       </div>`;
   };
   const body=profiles.map(childBlock).join('');
@@ -1125,6 +1143,7 @@ const CURATED = {
   FR: [
     {cat:'words', name:'Mots outils 1', words:['le','la','les','un','une','et','est','dans','avec','pour']},
     {cat:'words', name:'Mots outils 2', words:['je','tu','il','elle','nous','vous','mais','ou','donc','alors']},
+    {cat:'prog', name:'GS premiers mots', words:['papa','maman','chat','chien','lune','v\u00e9lo','ami','jour','pain','main']},
     {cat:'prog', name:'CE1 mots fr\u00e9quents', words:['maison','enfant','jardin','matin','content','demain','jamais','encore','aussi','toujours']},
     {cat:'prog', name:'CE2 mots fr\u00e9quents', words:['beaucoup','souvent','pendant','plusieurs','tellement','autrefois','\u00e9galement','cependant','longtemps','parfois']},
     {cat:'theme', name:'La famille', words:['papa','maman','fr\u00e8re','s\u0153ur','b\u00e9b\u00e9','cousin','tante','oncle','fille','gar\u00e7on']},
@@ -1132,13 +1151,16 @@ const CURATED = {
     {cat:'theme', name:'Le corps', words:['t\u00eate','main','pied','bras','jambe','nez','bouche','oreille','yeux','cheveux']},
     {cat:'theme', name:'\u00c9cole', words:['cahier','crayon','livre','r\u00e8gle','gomme','stylo','table','classe','ma\u00eetre','\u00e9l\u00e8ve']},
     {cat:'prog', name:'CM1 mots fréquents', words:['lentement','vraiment','pourtant','presque','ensemble','difficile','important','exemple','soudain','enfin']},
+    {cat:'prog', name:'CM2 mots fr\u00e9quents', words:['imm\u00e9diatement','\u00e9videmment','suffisamment','apparemment','notamment','pr\u00e9c\u00e9dent','exceptionnel','responsable','exp\u00e9rience','vocabulaire']},
   ],
   EN: [
     {cat:'words', name:'Sight words 1', words:['the','and','a','to','in','is','it','you','that','was']},
     {cat:'words', name:'Sight words 2', words:['for','are','they','with','his','her','this','have','from','one']},
+    {cat:'prog', name:'Reception words', words:['cat','dog','sun','hat','pen','red','big','box','cup','bed']},
     {cat:'prog', name:'Year 1 words', words:['said','you','they','one','two','here','there','where','love','come']},
     {cat:'prog', name:'Year 2 words', words:['because','find','kind','mind','behind','child','wild','most','only','both']},
     {cat:'prog', name:'Year 3 words', words:['could','should','would','through','though','enough','thought','great','clothes','everybody']},
+    {cat:'prog', name:'Year 6 words', words:['necessary','separate','definitely','accommodate','embarrass','occurrence','rhythm','privilege','recommend','conscience']},
     {cat:'theme', name:'Family', words:['mum','dad','sister','brother','baby','granny','grandpa','aunt','uncle','cousin']},
     {cat:'theme', name:'Food', words:['bread','apple','milk','cheese','cake','fish','fruit','water','rice','egg']},
     {cat:'theme', name:'Body', words:['head','hand','foot','arm','leg','nose','mouth','ear','eye','hair']},
@@ -1308,7 +1330,7 @@ function pickProfile(id){ activeId=id; store.set('hg_active', id); navigate('hom
 /* ---------- shop / wardrobe ---------- */
 let shopMsg='';
 function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null}; if(p.equip.wall===undefined) p.equip.wall=null; if(p.equip.frame===undefined) p.equip.frame=null; if(p.equip.pet===undefined) p.equip.pet=null; if(p.equip.floor===undefined) p.equip.floor=null; if(!p.hidden) p.hidden=[];
-  if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; if(!p.wordStats) p.wordStats={}; if(!p.modesTried) p.modesTried={}; if(!p.trophies){ p.trophies={}; const _m=p.medals||[]; const _bp=(k,tr)=>{ if(rank(tr)>rank(p.trophies[k])) p.trophies[k]=tr; }; if(_m.indexOf('master10')>=0)_bp('words','bronze'); if(_m.indexOf('master25')>=0)_bp('words','silver'); if(_m.indexOf('master50')>=0)_bp('words','gold'); if(_m.indexOf('scholar25')>=0)_bp('correct','bronze'); if(_m.indexOf('scholar75')>=0)_bp('correct','silver'); if(_m.indexOf('scholar150')>=0)_bp('correct','gold'); if(_m.indexOf('listComplete')>=0)_bp('lists','bronze'); if(_m.indexOf('allLists')>=0)_bp('lists','gold'); if(_m.indexOf('firstPerfect')>=0)_bp('perfect','bronze'); if(_m.indexOf('allModes')>=0)_bp('explorer','gold'); } if(!p.sent) p.sent={fr:{},en:{}}; if(!p.sent.fr) p.sent.fr={}; if(!p.sent.en) p.sent.en={}; if(!p.lists){ p.lists=[]; const _mk=(arr,sm,lng,nm)=>{ if(arr&&arr.length) p.lists.push({id:uid(), name:nm, lang:lng, words:arr.map(w=>({w, s:(sm&&sm[w])||''}))}); }; _mk(p.fr, p.sent.fr, 'FR', 'Mes mots'); _mk(p.en, p.sent.en, 'EN', 'My words'); } }
+  if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; if(!p.wordStats) p.wordStats={}; if(!p.modesTried) p.modesTried={}; if(!p.mathOps) p.mathOps={}; if(!p.mathStats) p.mathStats={}; if(!p.trophies){ p.trophies={}; const _m=p.medals||[]; const _bp=(k,tr)=>{ if(rank(tr)>rank(p.trophies[k])) p.trophies[k]=tr; }; if(_m.indexOf('master10')>=0)_bp('words','bronze'); if(_m.indexOf('master25')>=0)_bp('words','silver'); if(_m.indexOf('master50')>=0)_bp('words','gold'); if(_m.indexOf('scholar25')>=0)_bp('correct','bronze'); if(_m.indexOf('scholar75')>=0)_bp('correct','silver'); if(_m.indexOf('scholar150')>=0)_bp('correct','gold'); if(_m.indexOf('listComplete')>=0)_bp('lists','bronze'); if(_m.indexOf('allLists')>=0)_bp('lists','gold'); if(_m.indexOf('firstPerfect')>=0)_bp('perfect','bronze'); if(_m.indexOf('allModes')>=0)_bp('explorer','gold'); } if(!p.sent) p.sent={fr:{},en:{}}; if(!p.sent.fr) p.sent.fr={}; if(!p.sent.en) p.sent.en={}; if(!p.lists){ p.lists=[]; const _mk=(arr,sm,lng,nm)=>{ if(arr&&arr.length) p.lists.push({id:uid(), name:nm, lang:lng, words:arr.map(w=>({w, s:(sm&&sm[w])||''}))}); }; _mk(p.fr, p.sent.fr, 'FR', 'Mes mots'); _mk(p.en, p.sent.en, 'EN', 'My words'); } }
 function openShop(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); shopMsg=''; pendingBuy=null; shopTab='hat'; navigate('shop'); }
 function openHouse(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); navigate('house'); }
 let shopTab='hat';
@@ -1415,7 +1437,7 @@ function viewHouse(){
   ['poster','rug','plant','lamp','books','fishbowl','ball','beanbag','cactus','clock','balloon'].forEach(id=>{ if(p.owned.includes(id) && !p.hidden.includes(id)) items+=place(id,houseShape(id)); });
   let companion=''; if(p.equip.pet) companion=`<g transform="translate(206,150) scale(1.35)"><g class="htap" id="h-petc-${p.equip.pet}" onclick="houseTap('petc','${p.equip.pet}')">${petShape(p.equip.pet)}</g></g>`;
   const character=`<g id="h-char-me" class="htap" onclick="houseTap('char','me')"><svg x="118" y="72" width="84" height="84" viewBox="0 0 100 100">${avatarInner(p)}</svg></g>`;
-  const perRow=5, stepX=26, startX=187, rowH=33, rowTopY=27;
+  const perRow=3, stepX=40, startX=196, rowH=33, rowTopY=27;
   const rowCount=Math.ceil(TROPHIES.length/perRow);
   let shelf=''; for(let r=0;r<rowCount;r++){ const sy=rowTopY+7+r*rowH; shelf+=`<rect x="172" y="${sy}" width="128" height="8" rx="3" fill="#caa06d"/><rect x="172" y="${sy+8}" width="128" height="3" fill="#00000018"/>`; }
   let medals=''; TROPHIES.forEach((m,i)=>{ const tier=p.trophies[m.id]||null; const rr=Math.floor(i/perRow), cc=i%perRow; const mx=startX+cc*stepX, my=rowTopY+rr*rowH;
@@ -1555,6 +1577,7 @@ function pickWeightedWords(p, list, n){
 }
 function recordWord(word, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p);
   const k=norm(word); const ws=p.wordStats[k]||{r:0,w:0}; if(ok) ws.r++; else ws.w++; ws.h=ws.h||[]; ws.h.push(ok?1:0); if(ws.h.length>5) ws.h=ws.h.slice(-5); p.wordStats[k]=ws; saveProfiles(); }
+function recordMath(op, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p); if(!p.mathStats[op]) p.mathStats[op]=[]; const h=p.mathStats[op]; h.push(ok?1:0); if(h.length>12) h.shift(); saveProfiles(); }
 
 function beginTurn(){
   if(lcwcTimer){ clearTimeout(lcwcTimer); lcwcTimer=null; }
@@ -1876,6 +1899,7 @@ function viewMathCfg(){
 }
 function startMath(){
   const p=activeProfile(); if(!p){ navigate('profiles'); return; } ensureEconomy(p);
+  p.mathOps[mathOp]=1;
   mathQs=Array.from({length:10},()=>genMath(mathOp,mathDiff));
   roundTotal=10; qi=0; roundScore=0; roundCoins=0; lastMode='math'; missedThisRound=[]; roundMistake=false; streak=0; beginMath();
 }
@@ -1926,20 +1950,20 @@ function mathSubmit(){
   if(!turnActive || inputText==='') return;
   const fb=document.getElementById('gw-fb');
   if(parseInt(inputText,10)===curM.ans){
-    turnActive=false; roundScore++; roundCoins++;
+    turnActive=false; roundScore++; roundCoins++; recordMath(curM.op, true);
     const p=activeProfile(); if(p){ ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
     react('cheer'); burst(); flyCoin(); bumpStreak();
     const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
     setTimeout(mathAdvance,1000);
   } else {
     misses++; roundMistake=true; react('wobble'); streak=0; clearCombo();
-    if(misses>=2){ turnActive=false; if(fb){ fb.textContent=curM.a+' '+sym(curM.op)+' '+curM.b+' = '+curM.ans; fb.className='gw-fb no'; } setTimeout(mathAdvance,1700); return; }
+    if(misses>=2){ turnActive=false; recordMath(curM.op, false); if(fb){ fb.textContent=curM.a+' '+sym(curM.op)+' '+curM.b+' = '+curM.ans; fb.className='gw-fb no'; } setTimeout(mathAdvance,1700); return; }
     if(fb){ fb.textContent=t('tryagain'); fb.className='gw-fb no'; }
     sfx('wrong'); vox(encourage(), lang);
     inputText=''; updateInputBox();
   }
 }
-function mathSkip(){ if(!turnActive) return; turnActive=false; roundMistake=true; streak=0; clearCombo();
+function mathSkip(){ if(!turnActive) return; turnActive=false; roundMistake=true; streak=0; clearCombo(); recordMath(curM.op, false);
   const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent=curM.a+' '+sym(curM.op)+' '+curM.b+' = '+curM.ans; fb.className='gw-fb no'; }
   setTimeout(mathAdvance,1600); }
 function speakMath(){
