@@ -264,6 +264,13 @@ input,textarea{font-family:inherit;}
 .ls-lang{font-family:var(--fd);font-weight:700;font-size:15px;color:var(--muted);}
 .ls-add{display:inline-flex;align-items:center;gap:4px;background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:13px;padding:7px 12px;border-radius:999px;}
 .ls-add svg{width:14px;height:14px;}
+.lib-cat{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--muted);margin:10px 2px 6px;}
+.lib-card{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:8px;box-shadow:0 3px 8px rgba(0,0,0,.05);}
+.lib-card .lc-main{flex:1;min-width:0;}
+.lib-add{display:inline-flex;align-items:center;gap:4px;border:none;background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:14px;padding:7px 13px;border-radius:999px;box-shadow:0 2px 6px rgba(33,191,160,.3);cursor:pointer;}
+.lib-add svg{width:16px;height:16px;}
+.lib-added{display:inline-flex;align-items:center;gap:4px;font-family:var(--fd);font-weight:700;font-size:13px;color:var(--accent-dk);padding:7px 8px;}
+.lib-added svg{width:16px;height:16px;}
 .list-card{width:100%;display:flex;align-items:center;justify-content:space-between;background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:12px 14px;margin-bottom:8px;text-align:left;}
 .list-card .lc-main{display:flex;flex-direction:column;gap:2px;}
 .list-card .lc-main b{font-family:var(--fd);font-weight:700;font-size:17px;color:var(--ink);}
@@ -410,7 +417,7 @@ const T = {
     eRound:"Ronds", eHappy:"Joyeux", eDot:"Points", eWink:"Clin d'œil",
     mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", glasses:"Lunettes", gNone:"Aucunes",
     shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
-    hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", progressTitle:"Progrès", statusKnown:"acquis", statusPractising:"à revoir", statusNew:"nouveau", progressNone:"Aucun mot pour le moment.", voicesTitle:"Voix", voicesBtn:"Voix", voicesIntro:"Choisis la voix qui lit les mots à voix haute. Les voix disponibles dépendent de l'appareil.", voiceAuto:"Automatique", voiceTest:"Tester", voicesNone:"Aucune voix disponible sur cet appareil.", voicesRefresh:"Rafraîchir", voicesHelp:"Les mots sont lus par les voix intégrées de l'appareil : la qualité varie d'un téléphone ou ordinateur à l'autre. Si une voix semble robotique, essaie une autre option ci-dessus puis touche Tester. Sur un ordinateur, Chrome propose souvent de meilleures voix, ou tu peux installer une voix « améliorée » dans les réglages du système.", progressAboutTitle:"Suivi des progrès", progressAboutBody:"Dans l'espace parent, l'écran Progrès montre, pour chaque liste, les mots acquis et ceux à revoir. Un mot est « acquis » après 3 bonnes réponses d'affilée.", own:"Acquis", house:"Ma maison", medals:"Médailles",
+    hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", progressTitle:"Progrès", statusKnown:"acquis", statusPractising:"à revoir", statusNew:"nouveau", progressNone:"Aucun mot pour le moment.", voicesTitle:"Voix", voicesBtn:"Voix", voicesIntro:"Choisis la voix qui lit les mots à voix haute. Les voix disponibles dépendent de l'appareil.", voiceAuto:"Automatique", voiceTest:"Tester", voicesNone:"Aucune voix disponible sur cet appareil.", voicesRefresh:"Rafraîchir", libraryTitle:"Listes prêtes", gradeLabel:"Classe", gradeHint:"On ajoutera des listes adaptées à ce niveau.", libraryBtn:"Listes prêtes", libraryIntro:"Ajoute des listes toutes prêtes. Tu pourras les modifier ensuite.", added:"Ajouté", addBtn:"Ajouter", voicesHelp:"Les mots sont lus par les voix intégrées de l'appareil : la qualité varie d'un téléphone ou ordinateur à l'autre. Si une voix semble robotique, essaie une autre option ci-dessus puis touche Tester. Sur un ordinateur, Chrome propose souvent de meilleures voix, ou tu peux installer une voix « améliorée » dans les réglages du système.", progressAboutTitle:"Suivi des progrès", progressAboutBody:"Dans l'espace parent, l'écran Progrès montre, pour chaque liste, les mots acquis et ceux à revoir. Un mot est « acquis » après 3 bonnes réponses d'affilée.", own:"Acquis", house:"Ma maison", medals:"Médailles",
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?",
@@ -440,7 +447,7 @@ const T = {
     eRound:"Round", eHappy:"Happy", eDot:"Dots", eWink:"Wink",
     mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", glasses:"Glasses", gNone:"None",
     shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
-    hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", progressTitle:"Progress", statusKnown:"known", statusPractising:"to revise", statusNew:"new", progressNone:"No words yet.", voicesTitle:"Voice", voicesBtn:"Voice", voicesIntro:"Choose the voice that reads words aloud. Available voices depend on your device.", voiceAuto:"Automatic", voiceTest:"Test", voicesNone:"No voices available on this device.", voicesRefresh:"Refresh", voicesHelp:"The words are read by your device's built-in voices, so the quality differs between phones and computers. If a voice sounds robotic, try another option above and tap Test. On a computer, Chrome usually has nicer voices, or you can install an Enhanced voice in your system settings.", progressAboutTitle:"Progress tracking", progressAboutBody:"In the parent area, the Progress screen shows, for each list, which words are known and which still need revising. A word counts as known after 3 correct answers in a row.", own:"Owned", house:"My house", medals:"Medals",
+    hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", progressTitle:"Progress", statusKnown:"known", statusPractising:"to revise", statusNew:"new", progressNone:"No words yet.", voicesTitle:"Voice", voicesBtn:"Voice", voicesIntro:"Choose the voice that reads words aloud. Available voices depend on your device.", voiceAuto:"Automatic", voiceTest:"Test", voicesNone:"No voices available on this device.", voicesRefresh:"Refresh", libraryTitle:"Ready-made lists", gradeLabel:"Class / Year", gradeHint:"We'll add lists suited to this level.", libraryBtn:"Ready-made lists", libraryIntro:"Add ready-made lists. You can edit them afterwards.", added:"Added", addBtn:"Add", voicesHelp:"The words are read by your device's built-in voices, so the quality differs between phones and computers. If a voice sounds robotic, try another option above and tap Test. On a computer, Chrome usually has nicer voices, or you can install an Enhanced voice in your system settings.", progressAboutTitle:"Progress tracking", progressAboutBody:"In the parent area, the Progress screen shows, for each list, which words are known and which still need revising. A word counts as known after 3 correct answers in a row.", own:"Owned", house:"My house", medals:"Medals",
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?",
@@ -472,6 +479,19 @@ function defaultLists(){
     L('Colours','EN',['red','blue','green','yellow','orange','purple','pink','black']),
     L('Animals','EN',['cat','dog','horse','rabbit','bird','fish','mouse','cow'])
   ];
+}
+const GRADES = [
+  {id:'cp',  fr:'CP',  uk:'Year 1', seed:[['FR','Mots outils 1'],['EN','Sight words 1'],['EN','Year 1 words']]},
+  {id:'ce1', fr:'CE1', uk:'Year 2', seed:[['FR','CE1 mots fréquents'],['FR','Mots outils 2'],['EN','Year 2 words'],['EN','Sight words 2']]},
+  {id:'ce2', fr:'CE2', uk:'Year 3', seed:[['FR','CE2 mots fréquents'],['EN','Year 2 words'],['FR','Le corps'],['EN','Body']]},
+  {id:'cm1', fr:'CM1', uk:'Year 4', seed:[['FR','CM1 mots fréquents'],['EN','Year 3 words'],['FR','Le corps'],['EN','School']]},
+];
+function seedGradeLists(grade){
+  const g = (typeof GRADES!=='undefined') ? GRADES.find(x=>x.id===grade) : null;
+  if(!g) return defaultLists();
+  const out=[];
+  g.seed.forEach(pair=>{ const lng=pair[0], name=pair[1]; const src=(CURATED[lng]||[]).find(c=>c.name===name); if(src) out.push({id:uid(), name:src.name, lang:lng, words:src.words.map(w=>({w, s:''}))}); });
+  return out.length?out:defaultLists();
 }
 
 function defaultCharacter(){ return {skin:"#FCD9B6",hair:"short",hairColor:"#6B4423",eyes:"round",mouth:"smile",glasses:"none"}; }
@@ -744,22 +764,31 @@ function avatarSVG(p, hatOverride, frameOverride){
   return `<svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block">${avatarInner(p,hatOverride,frameOverride)}</svg>`;
 }
 
-let profiles = JSON.parse(localStorage.getItem('hg_profiles') || '[]');
-let activeId = localStorage.getItem('hg_active') || null;
-let lang = localStorage.getItem('hg_lang') || 'EN';
-function saveProfiles(){ localStorage.setItem('hg_profiles', JSON.stringify(profiles)); }
-function setLang(l){ lang = l; localStorage.setItem('hg_lang', l); render(); }
+/* ---- storage layer: sync, in-memory cache, write-through to localStorage (safe fallback) ---- */
+/* Routing all saves/loads through `store` keeps one place to repoint at native storage + iCloud later. */
+var _ls = (function(){ try{ return window.localStorage; }catch(e){ return null; } })();
+var _mem = {};
+var store = {
+  get:function(k){ if(Object.prototype.hasOwnProperty.call(_mem,k)) return _mem[k]; var v=null; try{ v=_ls?_ls.getItem(k):null; }catch(e){ v=null; } _mem[k]=v; return v; },
+  set:function(k,v){ v=String(v); _mem[k]=v; try{ if(_ls) _ls.setItem(k,v); }catch(e){} },
+  remove:function(k){ delete _mem[k]; try{ if(_ls) _ls.removeItem(k); }catch(e){} }
+};
+let profiles = JSON.parse(store.get('hg_profiles') || '[]');
+let activeId = store.get('hg_active') || null;
+let lang = store.get('hg_lang') || 'EN';
+function saveProfiles(){ store.set('hg_profiles', JSON.stringify(profiles)); }
+function setLang(l){ lang = l; store.set('hg_lang', l); render(); }
 function toggleLang(){ setLang(lang === 'FR' ? 'EN' : 'FR'); }
 function activeProfile(){ return profiles.find(p => p.id === activeId) || null; }
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 /* ---------- one-time migration from the old game (same origin only) ---------- */
 function migrateOldGame(){
-  if(localStorage.getItem('hg_migrated')) return;
+  if(store.get('hg_migrated')) return;
   const KEYS=['admin_fr_words_marc','admin_fr_words','admin_en_words_marc','admin_en_words'];
-  const present = KEYS.some(k=>localStorage.getItem(k)!=null);
+  const present = KEYS.some(k=>store.get(k)!=null);
   if(!present) return; // nothing to import on this device; do not flag, may appear later
-  const rd=(k,def)=>{ try{ const v=JSON.parse(localStorage.getItem(k)); return (Array.isArray(v)&&v.length)? v.map(String): def; }catch(e){ return def; } };
+  const rd=(k,def)=>{ try{ const v=JSON.parse(store.get(k)); return (Array.isArray(v)&&v.length)? v.map(String): def; }catch(e){ return def; } };
   const MARC_FR=["expliquer","un texte","la boxe","un taxi","un prix","heureux","un examen","un exercice"];
   const CHARLES_FR=["des zèbres","beaucoup","un hippopotame","la brousse","les prédateurs","un éléphant","un éléphanteau","un lion","un lionceau","protéger","là-bas","il y a","là","déjà","sans","celui-là","celle-là","oui","non","pas","c'est","lui","moi","toi","nous","vous","cela","ceci","avec","alors","rien","car","devant","derrière","dedans","dehors","durant"];
   const EN_DEF=["house","school","children","london","banana","keyboard","window","teacher"];
@@ -768,7 +797,7 @@ function migrateOldGame(){
   const charles=mk('p_charles','Charles','#FF6F61', rd('admin_fr_words',CHARLES_FR), rd('admin_en_words',EN_DEF));
   const have=profiles.map(p=>(p.name||'').toLowerCase());
   [marc,charles].forEach(np=>{ if(profiles.length<4 && !have.includes(np.name.toLowerCase())) profiles.push(np); });
-  localStorage.setItem('hg_migrated','1');
+  store.set('hg_migrated','1');
   saveProfiles();
 }
 migrateOldGame();
@@ -776,7 +805,7 @@ migrateOldGame();
 /* ---------- router ---------- */
 let route = profiles.length ? 'home' : 'profiles';
 if (route === 'home' && !activeProfile()) route = 'profiles';
-if (!profiles.length && !localStorage.getItem('hg_welcomed')) route = 'welcome';
+if (!profiles.length && !store.get('hg_welcomed')) route = 'welcome';
 let editingId = null;
 function navigate(r){ route = r; render(); window.scrollTo(0,0); }
 
@@ -800,6 +829,7 @@ function render(){
   else if (route === 'about') v.innerHTML = viewAbout();
   else if (route === 'progress') v.innerHTML = viewProgress();
   else if (route === 'voices') v.innerHTML = viewVoices();
+  else if (route === 'library') v.innerHTML = viewLibrary();
   else if (route === 'welcome') v.innerHTML = viewWelcome();
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
@@ -833,7 +863,7 @@ function viewProfiles(){
 
 let welcomeStep=0;
 function welcomeNext(){ welcomeStep=1; render(); }
-function finishWelcome(){ localStorage.setItem('hg_welcomed','1'); navigate(profiles.length?'home':'profiles'); }
+function finishWelcome(){ store.set('hg_welcomed','1'); navigate(profiles.length?'home':'profiles'); }
 function replayIntro(){ welcomeStep=0; navigate('welcome'); }
 function viewWelcome(){
   const step=welcomeStep;
@@ -857,6 +887,7 @@ function viewEditor(){
       <div class="preview-av" id="prev-av">${avatarSVG(draft)}</div>
       <button class="btn-soft-line" onclick="navigate('creator')">${t('customize')}</button>
       <div class="field"><label>${t('name')}</label><input id="f-name" maxlength="14" value="${esc(draft.name)}" placeholder="..." oninput="draft.name=this.value"></div>
+      ${(draft && draft.id) ? '' : `<div class="cat"><label>${t('gradeLabel')}</label><div class="opt-row">${GRADES.map(g=>`<button class="opt ${draft.grade===g.id?'on':''}" onclick="setGrade('${g.id}')">${g.fr} &middot; ${g.uk}</button>`).join('')}</div><div class="opt-hint">${t('gradeHint')}</div></div>`}
       <div class="err" id="ed-err"></div>
       <div class="spacer"></div>
       <button class="btn-primary" onclick="saveEditor()">${t('save')}</button>
@@ -895,6 +926,7 @@ function setChar(field, val){
   else { draft.character = Object.assign(defaultCharacter(), draft.character||{}); draft.character[field]=val; }
   render();
 }
+function setGrade(id){ if(draft) draft.grade=id; render(); }
 
 function viewHome(){
   const p = activeProfile();
@@ -926,7 +958,7 @@ function viewVoices(){
   const p=activeProfile();
   const block=(lng,label)=>{
     const list=voiceList(lng);
-    const cur=localStorage.getItem('hg_voice_'+lng)||'';
+    const cur=store.get('hg_voice_'+lng)||'';
     const opts=[`<option value="" ${cur===''?'selected':''}>${t('voiceAuto')}</option>`]
       .concat(list.map(v=>{ const id=v.voiceURI||v.name; return `<option value="${esc(id)}" ${cur===id?'selected':''}>${esc(v.name)} (${esc(v.lang)})</option>`; })).join('');
     const inner = list.length
@@ -974,7 +1006,7 @@ function viewAbout(){
 let pinBuffer = '';
 let pinMode = 'enter';
 function openParent(){
-  pinBuffer=''; pinMode = localStorage.getItem('hg_pin') ? 'enter' : 'new';
+  pinBuffer=''; pinMode = store.get('hg_pin') ? 'enter' : 'new';
   navigate('parentpin');
 }
 function viewParentPin(){
@@ -1002,8 +1034,8 @@ function pinTap(d){
 }
 function pinDel(){ pinBuffer=pinBuffer.slice(0,-1); render(); }
 function pinSubmit(){
-  if(pinMode==='new'){ localStorage.setItem('hg_pin', pinBuffer); navigate('parent'); return; }
-  if(pinBuffer === localStorage.getItem('hg_pin')){ navigate('parent'); }
+  if(pinMode==='new'){ store.set('hg_pin', pinBuffer); navigate('parent'); return; }
+  if(pinBuffer === store.get('hg_pin')){ navigate('parent'); }
   else { pinBuffer=''; render(); const e=document.getElementById('pin-err'); if(e) e.textContent=t('pinWrong'); }
 }
 
@@ -1037,6 +1069,7 @@ function viewParent(){
       ${section('FR','Français')}
       ${section('EN','English')}
       <div class="spacer"></div>
+      <button class="link-btn" onclick="navigate('library')">${IC.plus}${t('libraryBtn')}</button>
       <button class="link-btn" onclick="navigate('voices')">${IC.sound}${t('voicesBtn')}</button>
       <button class="link-btn" onclick="navigate('backup')">${IC.save}${t('backupBtn')}</button>
       <button class="btn-ghost" onclick="openParent()">${t('changePin')}... </button>
@@ -1082,6 +1115,59 @@ function viewProgress(){
       <div class="scr-title">${t('progressTitle')}</div>
       <div class="ws-legend">${dot('known')}${t('statusKnown')} ${dot('practising')}${t('statusPractising')} ${dot('new')}${t('statusNew')}</div>
       ${body}
+      <div class="spacer"></div>
+    </div>`;
+}
+const CURATED = {
+  FR: [
+    {cat:'words', name:'Mots outils 1', words:['le','la','les','un','une','et','est','dans','avec','pour']},
+    {cat:'words', name:'Mots outils 2', words:['je','tu','il','elle','nous','vous','mais','ou','donc','alors']},
+    {cat:'prog', name:'CE1 mots fr\u00e9quents', words:['maison','enfant','jardin','matin','content','demain','jamais','encore','aussi','toujours']},
+    {cat:'prog', name:'CE2 mots fr\u00e9quents', words:['beaucoup','souvent','pendant','plusieurs','tellement','autrefois','\u00e9galement','cependant','longtemps','parfois']},
+    {cat:'theme', name:'La famille', words:['papa','maman','fr\u00e8re','s\u0153ur','b\u00e9b\u00e9','cousin','tante','oncle','fille','gar\u00e7on']},
+    {cat:'theme', name:'La nourriture', words:['pain','pomme','lait','fromage','g\u00e2teau','poisson','fruit','eau','riz','\u0153uf']},
+    {cat:'theme', name:'Le corps', words:['t\u00eate','main','pied','bras','jambe','nez','bouche','oreille','yeux','cheveux']},
+    {cat:'theme', name:'\u00c9cole', words:['cahier','crayon','livre','r\u00e8gle','gomme','stylo','table','classe','ma\u00eetre','\u00e9l\u00e8ve']},
+    {cat:'prog', name:'CM1 mots fréquents', words:['lentement','vraiment','pourtant','presque','ensemble','difficile','important','exemple','soudain','enfin']},
+  ],
+  EN: [
+    {cat:'words', name:'Sight words 1', words:['the','and','a','to','in','is','it','you','that','was']},
+    {cat:'words', name:'Sight words 2', words:['for','are','they','with','his','her','this','have','from','one']},
+    {cat:'prog', name:'Year 1 words', words:['said','you','they','one','two','here','there','where','love','come']},
+    {cat:'prog', name:'Year 2 words', words:['because','find','kind','mind','behind','child','wild','most','only','both']},
+    {cat:'prog', name:'Year 3 words', words:['could','should','would','through','though','enough','thought','great','clothes','everybody']},
+    {cat:'theme', name:'Family', words:['mum','dad','sister','brother','baby','granny','grandpa','aunt','uncle','cousin']},
+    {cat:'theme', name:'Food', words:['bread','apple','milk','cheese','cake','fish','fruit','water','rice','egg']},
+    {cat:'theme', name:'Body', words:['head','hand','foot','arm','leg','nose','mouth','ear','eye','hair']},
+    {cat:'theme', name:'School', words:['book','pencil','ruler','rubber','pen','desk','class','teacher','bag','chair']},
+  ]
+};
+const CURATED_CATS = { words:{FR:'Mots outils',EN:'Sight words'}, prog:{FR:'Programme',EN:'Curriculum'}, theme:{FR:'Th\u00e8mes',EN:'Themes'} };
+function addCurated(lng, i){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const src=CURATED[lng] && CURATED[lng][i]; if(!src) return; if(p.lists.some(l=>l.lang===lng && l.name===src.name)) return; p.lists.push({id:uid(), name:src.name, lang:lng, words:src.words.map(w=>({w, s:''}))}); saveProfiles(); render(); }
+function viewLibrary(){
+  const p=activeProfile(); if(p) ensureEconomy(p);
+  const langSec=(lng,label)=>{
+    const items=CURATED[lng]||[];
+    let html='';
+    ['words','prog','theme'].forEach(cat=>{
+      const group=items.map((c,i)=>({c,i})).filter(x=>x.c.cat===cat);
+      if(!group.length) return;
+      html+=`<div class="lib-cat">${esc(CURATED_CATS[cat][lng])}</div>`;
+      html+=group.map(({c,i})=>{
+        const added=p && p.lists.some(l=>l.lang===lng && l.name===c.name);
+        const btn = added ? `<span class="lib-added">${IC.check}${t('added')}</span>` : `<button class="lib-add" onclick="addCurated('${lng}',${i})">${IC.plus}${t('addBtn')}</button>`;
+        return `<div class="lib-card"><div class="lc-main"><b>${esc(c.name)}</b><span>${c.words.length} ${t('wordsShort')}</span></div>${btn}</div>`;
+      }).join('');
+    });
+    return `<div class="ls-sec"><div class="ls-head"><span class="ls-lang">${label}</span></div>${html}</div>`;
+  };
+  return `
+    <div class="screen active">
+      <div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>
+      <div class="scr-title">${t('libraryTitle')}</div>
+      <p class="hint" style="text-align:center;margin:0 8px 14px;">${t('libraryIntro')}</p>
+      ${langSec('FR','Fran\u00e7ais')}
+      ${langSec('EN','English')}
       <div class="spacer"></div>
     </div>`;
 }
@@ -1139,7 +1225,7 @@ function addPack(id){ const pk=PACKS[id]; if(!pk) return; const p=activeProfile(
   ta.value=wordsToText(cur.words, cur.sent); }
 
 function exportCode(){
-  try{ const data={v:1, profiles, pin:localStorage.getItem('hg_pin')||'', lang, kbd:localStorage.getItem('hg_kbd')||'auto', practice:localStorage.getItem('hg_practice')||'smart'};
+  try{ const data={v:1, profiles, pin:store.get('hg_pin')||'', lang, kbd:store.get('hg_kbd')||'auto', practice:store.get('hg_practice')||'smart'};
     return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }catch(e){ return ''; }
 }
 function viewBackup(){
@@ -1177,14 +1263,14 @@ function doRestore(){
 function cancelRestore(){ pendingRestore=null; render(); }
 function confirmRestore(){
   const data=pendingRestore; if(!data){ return; }
-  profiles=data.profiles; localStorage.setItem('hg_profiles', JSON.stringify(profiles));
-  if(data.pin!=null) localStorage.setItem('hg_pin', data.pin);
-  if(data.lang){ lang=data.lang; localStorage.setItem('hg_lang', lang); }
-  if(data.kbd) localStorage.setItem('hg_kbd', data.kbd);
-  if(data.practice) localStorage.setItem('hg_practice', data.practice);
+  profiles=data.profiles; store.set('hg_profiles', JSON.stringify(profiles));
+  if(data.pin!=null) store.set('hg_pin', data.pin);
+  if(data.lang){ lang=data.lang; store.set('hg_lang', lang); }
+  if(data.kbd) store.set('hg_kbd', data.kbd);
+  if(data.practice) store.set('hg_practice', data.practice);
   activeId = profiles[0]?profiles[0].id:null;
-  if(activeId) localStorage.setItem('hg_active', activeId); else localStorage.removeItem('hg_active');
-  localStorage.setItem('hg_migrated','1');
+  if(activeId) store.set('hg_active', activeId); else store.remove('hg_active');
+  store.set('hg_migrated','1');
   pendingRestore=null;
   navigate(profiles.length?'home':'profiles');
 }
@@ -1202,15 +1288,15 @@ function saveEditor(){
   const name=(draft.name||'').trim();
   if(!name){ const e=document.getElementById('ed-err'); if(e) e.textContent=t('needName'); return; }
   if(draft.id){ const p=profiles.find(x=>x.id===draft.id); p.name=name; p.color=draft.color; p.character=draft.character; }
-  else { profiles.push({ id:'p'+Date.now(), name, color:draft.color, character:draft.character, coins:0, fr:[], en:[], lists:defaultLists() }); }
+  else { profiles.push({ id:'p'+Date.now(), name, color:draft.color, character:draft.character, coins:0, fr:[], en:[], lists:seedGradeLists(draft.grade) }); }
   saveProfiles(); navigate('profiles');
 }
 function deleteProfile(){
   profiles = profiles.filter(x=>x.id!==draft.id);
-  if(activeId===draft.id){ activeId=null; localStorage.removeItem('hg_active'); }
+  if(activeId===draft.id){ activeId=null; store.remove('hg_active'); }
   saveProfiles(); navigate('profiles');
 }
-function pickProfile(id){ activeId=id; localStorage.setItem('hg_active', id); navigate('home'); }
+function pickProfile(id){ activeId=id; store.set('hg_active', id); navigate('home'); }
 
 /* ---------- shop / wardrobe ---------- */
 let shopMsg='';
@@ -1410,10 +1496,10 @@ function viewDictStyle(){
       ${cards}
       ${dictNote?`<div class="note">${dictNote}</div>`:''}
       <div class="cat" style="margin-top:8px"><label>${t('keyboard')}</label><div class="opt-row">
-        ${[['auto',t('kbAuto'),'kbTipAuto'],['alpha','ABC','kbTipAlpha'],['qwerty','QWERTY','kbTipQwerty'],['azerty','AZERTY','kbTipAzerty']].map(([v,lab,tip])=>`<button class="opt ${(localStorage.getItem('hg_kbd')||'auto')===v?'on':''}" title="${t(tip)}" onclick="setKbd('${v}')">${lab}</button>`).join('')}
+        ${[['auto',t('kbAuto'),'kbTipAuto'],['alpha','ABC','kbTipAlpha'],['qwerty','QWERTY','kbTipQwerty'],['azerty','AZERTY','kbTipAzerty']].map(([v,lab,tip])=>`<button class="opt ${(store.get('hg_kbd')||'auto')===v?'on':''}" title="${t(tip)}" onclick="setKbd('${v}')">${lab}</button>`).join('')}
       </div></div>
       <div class="cat"><label>${t('practiceMode')}</label><div class="opt-row">
-        ${[['smart',t('pmSmart'),'pmTipSmart'],['even',t('pmEven'),'pmTipRandom']].map(([v,lab,tip])=>`<button class="opt ${(localStorage.getItem('hg_practice')||'smart')===v?'on':''}" title="${t(tip)}" onclick="setPractice('${v}')">${lab}</button>`).join('')}
+        ${[['smart',t('pmSmart'),'pmTipSmart'],['even',t('pmEven'),'pmTipRandom']].map(([v,lab,tip])=>`<button class="opt ${(store.get('hg_practice')||'smart')===v?'on':''}" title="${t(tip)}" onclick="setPractice('${v}')">${lab}</button>`).join('')}
       </div><div class="opt-hint">${t('pmSmart')} : ${t('pmTipSmart')}. ${t('pmEven')} : ${t('pmTipRandom')}.</div></div>
       <div class="spacer"></div>
       <button class="btn-primary" onclick="startDict()">${t('start')}</button>
@@ -1431,12 +1517,12 @@ function startDict(){
   lists.forEach(L=>{ if(!sel.includes(L.id)) return; L.words.forEach(x=>{ if(!words.includes(x.w)) words.push(x.w); if(x.s) sentMap[x.w]=x.s; }); });
   if(!words.length){ dictNote=t('noWords'); render(); return; }
   activeSent=sentMap;
-  const pref=localStorage.getItem('hg_practice')||'smart';
+  const pref=store.get('hg_practice')||'smart';
   queue = (pref==='even') ? shuffle(words).slice(0,10) : pickWeightedWords(p, words, 10);
   roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict'; missedThisRound=[]; roundMistake=false; streak=0;
   beginTurn();
 }
-function setPractice(v){ localStorage.setItem('hg_practice', v); render(); }
+function setPractice(v){ store.set('hg_practice', v); render(); }
 function getSel(p, lng){ const all=listsFor(p,lng).map(l=>l.id); const arr=p.sel&&p.sel[lng]; if(!Array.isArray(arr)||!arr.length) return all.length?[all[all.length-1]]:[]; return arr.filter(id=>all.includes(id)); }
 function selectList(id){ const p=activeProfile(); if(!p) return; ensureEconomy(p); p.sel=p.sel||{}; p.sel[lang]=[id]; saveProfiles(); render(); }
 function selectAllLists(){ const p=activeProfile(); if(!p) return; ensureEconomy(p); p.sel=p.sel||{}; p.sel[lang]=listsFor(p,lang).map(l=>l.id); saveProfiles(); render(); }
@@ -1448,7 +1534,7 @@ function listPickerHTML(){ const p=activeProfile(); if(!p) return ''; ensureEcon
   const body = `<div class="chips chips-scroll">${items}</div>`;
   return `<div class="cat"><label>${t('listsToPlay')}</label>${head}${body}</div>`;
 }
-function wordWeight(p, w){ const ws=p.wordStats?p.wordStats[norm(w)]:null; if(!ws) return 3; let wt=1+ws.w*3; if(ws.r>=3 && ws.w===0) wt=0.4; return Math.max(0.2, wt); }
+function wordWeight(p, w){ const st=wordStatus(p,w); let wt = st==='practising' ? 3 : (st==='new' ? 1.8 : 0.4); const ws=p.wordStats?p.wordStats[norm(w)]:null; if(ws && ws.h && ws.h.length && ws.h[ws.h.length-1]===0) wt+=1.5; return Math.max(0.2, wt); }
 function pickWeightedWords(p, list, n){
   const pool=list.map(w=>({w, wt:wordWeight(p,w)})); const out=[];
   while(out.length<Math.min(n,list.length) && pool.length){
@@ -1492,8 +1578,8 @@ const KBD_ROWS={
   qwerty:["qwertyuiop","asdfghjkl","zxcvbnm"],
   azerty:["azertyuiop","qsdfghjklm","wxcvbn"]
 };
-function resolveKbd(){ const p=localStorage.getItem('hg_kbd')||'auto'; if(p==='auto') return lang==='FR'?'azerty':'qwerty'; return KBD_ROWS[p]?p:'alpha'; }
-function setKbd(v){ localStorage.setItem('hg_kbd', v); render(); }
+function resolveKbd(){ const p=store.get('hg_kbd')||'auto'; if(p==='auto') return lang==='FR'?'azerty':'qwerty'; return KBD_ROWS[p]?p:'alpha'; }
+function setKbd(v){ store.set('hg_kbd', v); render(); }
 function kbdHTML(){
   if(dictStyle==='scramble'){
     return `<div class="krow">
@@ -1614,8 +1700,8 @@ function speak(txt,l){ if(!('speechSynthesis' in window)) return; try{ const u=n
   if(v){ u.voice=v; u.lang=v.lang||code; }
   speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
 function voiceList(lng){ if(!_voices.length) loadVoices(); const base=(lng==='FR')?'fr':'en'; return _voices.filter(v=>((v.lang||'').toLowerCase().slice(0,2))===base); }
-function chosenVoice(lng){ const id=localStorage.getItem('hg_voice_'+lng); if(!id) return null; if(!_voices.length) loadVoices(); return _voices.find(v=>(v.voiceURI===id||v.name===id))||null; }
-function setVoice(lng,id){ if(id) localStorage.setItem('hg_voice_'+lng,id); else localStorage.removeItem('hg_voice_'+lng); _voicePick[lng]=null; render(); }
+function chosenVoice(lng){ const id=store.get('hg_voice_'+lng); if(!id) return null; if(!_voices.length) loadVoices(); return _voices.find(v=>(v.voiceURI===id||v.name===id))||null; }
+function setVoice(lng,id){ if(id) store.set('hg_voice_'+lng,id); else store.remove('hg_voice_'+lng); _voicePick[lng]=null; render(); }
 function testVoice(lng){ speak(lng==='FR'?'Bonjour ! \u00c9coute bien le mot.':'Hello! Listen carefully to the word.', lng); }
 function langKey(){ return lang==='FR'?'fr':'en'; }
 function curSentence(){ return activeSent[curWord]||''; }
@@ -1632,9 +1718,9 @@ const ENCOURAGE = {
   EN:['Almost!','Try again!','So close!','Give it another go!','Keep going!','Nearly there!','Have another try!','You can do it!']
 };
 function encourage(){ return pickNoRepeat(ENCOURAGE[lang]||ENCOURAGE.EN, 'enc'); }
-let _actx=null, _sfxMute=(localStorage.getItem('hg_sfx')==='0');
+let _actx=null, _sfxMute=(store.get('hg_sfx')==='0');
 function sfxOn(){ return !_sfxMute; }
-function toggleSfx(){ _sfxMute=!_sfxMute; localStorage.setItem('hg_sfx', _sfxMute?'0':'1'); const b=document.getElementById('sfx-btn'); if(b) b.innerHTML=sfxOn()?IC.sound:IC.mute; }
+function toggleSfx(){ _sfxMute=!_sfxMute; store.set('hg_sfx', _sfxMute?'0':'1'); const b=document.getElementById('sfx-btn'); if(b) b.innerHTML=sfxOn()?IC.sound:IC.mute; }
 function actx(){ if(!_actx){ try{ _actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ _actx=null; } } if(_actx && _actx.state==='suspended'){ try{_actx.resume();}catch(e){} } return _actx; }
 function tone(freq,start,dur,type,vol){ const c=actx(); if(!c) return; const o=c.createOscillator(), g=c.createGain(); o.type=type||'sine'; o.frequency.value=freq; const t0=c.currentTime+start; o.connect(g); g.connect(c.destination); g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(vol||0.12,t0+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur); o.start(t0); o.stop(t0+dur+0.03); }
 function sfx(kind){ if(!sfxOn()) return; if(!actx()) return;
