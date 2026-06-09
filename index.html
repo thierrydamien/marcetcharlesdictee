@@ -272,6 +272,12 @@ input,textarea{font-family:inherit;}
 .lib-chev{font-size:11px;color:var(--muted);margin-left:3px;}
 .lib-words{display:flex;flex-wrap:wrap;gap:4px;padding:7px 2px 2px;border-top:1px solid var(--line);margin-top:6px;}
 .lib-word{font-size:12px;background:var(--bg);padding:3px 8px;border-radius:999px;font-weight:600;color:var(--ink);}
+.intro-card{background:rgba(33,191,160,.08);border:1px solid rgba(33,191,160,.35);border-radius:14px;padding:12px 14px;margin-bottom:14px;}
+.intro-eyebrow{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-dk);}
+.intro-body{font-size:14px;color:var(--ink);margin:4px 0 10px;line-height:1.45;}
+.intro-row{display:flex;gap:6px;align-items:center;}
+.intro-go{border:none;background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer;}
+.intro-dismiss{border:none;background:transparent;color:var(--muted);font-family:var(--fd);font-weight:700;font-size:13px;padding:8px 10px;cursor:pointer;}
 .lib-card .lc-main{flex:1;min-width:0;}
 .lib-add{display:inline-flex;align-items:center;gap:4px;border:none;background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:14px;padding:7px 13px;border-radius:999px;box-shadow:0 2px 6px rgba(33,191,160,.3);cursor:pointer;}
 .lib-add svg{width:16px;height:16px;}
@@ -429,7 +435,7 @@ const T = {
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?", mixOp:"Mixte",
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
-    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
+    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", kbHint:"\u00ab Auto \u00bb s'adapte \u00e0 l'appareil. \u00ab ABC \u00bb est le plus simple pour les petits.", playSettings:"R\u00e9glages du jeu", introEyebrow:"Pour les parents", introBody:"Des listes de d\u00e9part sont pr\u00eates. Chaque semaine, modifie la liste pour coller aux mots de dict\u00e9e donn\u00e9s par l'\u00e9cole.", introGo:"Configurer les listes", introDismiss:"Compris", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
     yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name",
@@ -456,7 +462,7 @@ const T = {
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?", mixOp:"Mixed",
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
-    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
+    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", kbHint:"Auto matches your device. ABC is easiest for young children.", playSettings:"Game settings", introEyebrow:"For parents", introBody:"Starter lists are ready. Each week, edit the list to match the spelling words your school sends home.", introGo:"Set up lists", introDismiss:"Got it", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
     yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
 };
 function t(k){ return T[lang][k]; }
@@ -949,12 +955,13 @@ function viewHome(){
       <div class="topbar">
         <div class="who"><div class="av">${avatarSVG(p)}</div><b>${esc(p.name)}</b></div>
         <div class="topright">
-          <span class="coins">${IC.star}<span style="color:#FFB800;display:none"></span>${p.coins||0}</span>
+          <span class="coins">${IC.star}${p.coins||0}</span>
           <button class="langpill" onclick="toggleLang()">${lang==='FR'?'EN':'FR'}</button>
           <button class="iconbtn" onclick="navigate('profiles')" aria-label="${t('switchP')}">${IC.users}</button>
         </div>
       </div>
       <div class="hello">${t('hi')} ${esc(p.name)} !</div>
+      ${!store.get('hg_introSeen') ? `<div class="intro-card"><div class="intro-eyebrow">${t('introEyebrow')}</div><div class="intro-body">${t('introBody')}</div><div class="intro-row"><button class="intro-go" onclick="introSetup()">${t('introGo')}</button><button class="intro-dismiss" onclick="dismissIntro()">${t('introDismiss')}</button></div></div>` : ''}
       <button class="mode-btn mode-dict" onclick="openDict()"><div class="mic">${IC.book}</div><div><b>${t('dict')}</b><span>${t('dictSub')}</span></div></button>
       <button class="mode-btn mode-math" onclick="openMath()"><div class="mic">${IC.calc}</div><div><b>${t('maths')}</b><span>${t('mathsSub')}</span></div></button>
       <div class="row2">
@@ -1081,6 +1088,14 @@ function viewParent(){
       <p class="hint" style="text-align:center;margin:10px 0 14px;">${t('parentListsHelp')}</p>
       ${section('FR','Français')}
       ${section('EN','English')}
+      <div class="ls-sec"><div class="ls-head"><span class="ls-lang">${t('playSettings')}</span></div>
+        <div class="cat"><label>${t('keyboard')}</label><div class="opt-row">
+          ${[['auto',t('kbAuto')],['alpha','ABC'],['qwerty','QWERTY'],['azerty','AZERTY']].map(([v,lab])=>`<button class="opt ${(store.get('hg_kbd')||'auto')===v?'on':''}" onclick="setKbd('${v}')">${lab}</button>`).join('')}
+        </div><div class="opt-hint">${t('kbHint')}</div></div>
+        <div class="cat"><label>${t('practiceMode')}</label><div class="opt-row">
+          ${[['smart',t('pmSmart')],['even',t('pmEven')]].map(([v,lab])=>`<button class="opt ${(store.get('hg_practice')||'smart')===v?'on':''}" onclick="setPractice('${v}')">${lab}</button>`).join('')}
+        </div><div class="opt-hint">${t('pmSmart')} : ${t('pmTipSmart')}. ${t('pmEven')} : ${t('pmTipRandom')}.</div></div>
+      </div>
       <div class="spacer"></div>
       <button class="link-btn" onclick="navigate('library')">${IC.plus}${t('libraryBtn')}</button>
       <button class="link-btn" onclick="navigate('voices')">${IC.sound}${t('voicesBtn')}</button>
@@ -1320,7 +1335,7 @@ function saveEditor(){
   const name=(draft.name||'').trim();
   if(!name){ const e=document.getElementById('ed-err'); if(e) e.textContent=t('needName'); return; }
   if(draft.id){ const p=profiles.find(x=>x.id===draft.id); p.name=name; p.color=draft.color; p.character=draft.character; }
-  else { profiles.push({ id:'p'+Date.now(), name, color:draft.color, character:draft.character, coins:0, fr:[], en:[], lists:seedGradeLists(draft.grade) }); }
+  else { profiles.push({ id:'p'+Date.now(), name, color:draft.color, character:draft.character, coins:0, fr:[], en:[], lists:seedGradeLists(draft.grade) }); store.remove('hg_introSeen'); }
   saveProfiles(); navigate('profiles');
 }
 function deleteProfile(){
@@ -1513,6 +1528,8 @@ function styleMeta(s){ return ({
   listen:{t:t('stListen'),s:t('stListenSub')} })[s]; }
 
 function openDict(){ dictNote=''; navigate('dictstyle'); }
+function dismissIntro(){ store.set('hg_introSeen','1'); render(); }
+function introSetup(){ store.set('hg_introSeen','1'); openParent(); }
 function selStyle(s){ dictStyle=s; render(); }
 
 function viewDictStyle(){
@@ -1528,12 +1545,6 @@ function viewDictStyle(){
       ${listPickerHTML()}
       ${cards}
       ${dictNote?`<div class="note">${dictNote}</div>`:''}
-      <div class="cat" style="margin-top:8px"><label>${t('keyboard')}</label><div class="opt-row">
-        ${[['auto',t('kbAuto'),'kbTipAuto'],['alpha','ABC','kbTipAlpha'],['qwerty','QWERTY','kbTipQwerty'],['azerty','AZERTY','kbTipAzerty']].map(([v,lab,tip])=>`<button class="opt ${(store.get('hg_kbd')||'auto')===v?'on':''}" title="${t(tip)}" onclick="setKbd('${v}')">${lab}</button>`).join('')}
-      </div></div>
-      <div class="cat"><label>${t('practiceMode')}</label><div class="opt-row">
-        ${[['smart',t('pmSmart'),'pmTipSmart'],['even',t('pmEven'),'pmTipRandom']].map(([v,lab,tip])=>`<button class="opt ${(store.get('hg_practice')||'smart')===v?'on':''}" title="${t(tip)}" onclick="setPractice('${v}')">${lab}</button>`).join('')}
-      </div><div class="opt-hint">${t('pmSmart')} : ${t('pmTipSmart')}. ${t('pmEven')} : ${t('pmTipRandom')}.</div></div>
       <div class="spacer"></div>
       <button class="btn-primary" onclick="startDict()">${t('start')}</button>
     </div>`;
