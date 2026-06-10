@@ -135,6 +135,7 @@ input,textarea{font-family:inherit;}
 .soon-wrap p{color:var(--muted);font-weight:700;max-width:260px;}
 .soon-emoji{width:90px;height:90px;}
 
+.sc-coins{margin-left:auto;color:#FFC93C;font-size:13px;letter-spacing:1px;font-weight:900;white-space:nowrap;align-self:flex-start;}
 .style-card{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:2px solid transparent;border-radius:var(--r-md);padding:14px 16px;margin-bottom:10px;box-shadow:0 5px 12px rgba(0,0,0,.05);transition:transform .1s;}
 .style-card:active{transform:scale(.98);}
 .style-card.on{border-color:var(--primary);}
@@ -248,6 +249,14 @@ input,textarea{font-family:inherit;}
 .lf b.good{background:var(--accent);color:#fff;}
 .lf b.bad{background:#ffd9d2;color:#D85A30;}
 .lf b.miss{background:var(--line);color:var(--muted);}
+.lf b.extra{background:#fff3cd;color:#c0392b;text-decoration:line-through;}
+.spinner{width:38px;height:38px;border:4px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:hgspin .8s linear infinite;margin:26px auto 14px;}
+@keyframes hgspin{to{transform:rotate(360deg);}}
+.scan-busy{text-align:center;padding:18px;}
+.scan-warn{background:#fff3cd;border:1px solid #f0d97a;color:#7a5b00;border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:16px;font-weight:600;line-height:1.4;}
+.scan-pick{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:16px;padding:14px;border-radius:14px;cursor:pointer;}
+.scan-pick svg{width:22px;height:22px;}
+.scan-pick input{display:none;}
 .fb-msg{display:block;margin-bottom:2px;}
 .csent{margin-top:10px;background:var(--bg);border-radius:var(--r-md);padding:10px 12px;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;}
 .csent .csent-txt{font-weight:700;color:var(--ink);font-size:15px;}
@@ -405,7 +414,8 @@ const IC = {
   bulb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-4 10c1 1 1 2 1 3h6c0-1 0-2 1-3a6 6 0 00-4-10z"/></svg>',
   sound:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a3 3 0 010 6"/></svg>',
   mute:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 10l4 4M21 10l-4 4"/></svg>',
-  save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>'
+  save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A1.5 1.5 0 014.5 7H7l1.4-2h7.2L17 7h2.5A1.5 1.5 0 0121 8.5v9A1.5 1.5 0 0119.5 19h-15A1.5 1.5 0 013 17.5z"/><circle cx="12" cy="13" r="3.2"/></svg>'
 };
 
 /* ---------- i18n ---------- */
@@ -435,8 +445,8 @@ const T = {
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?", mixOp:"Mixte",
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
-    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", kbHint:"\u00ab Auto \u00bb s'adapte \u00e0 l'appareil. \u00ab ABC \u00bb est le plus simple pour les petits.", playSettings:"R\u00e9glages du jeu", introEyebrow:"Pour les parents", introBody:"Des listes de d\u00e9part sont pr\u00eates. Chaque semaine, modifie la liste pour coller aux mots de dict\u00e9e donn\u00e9s par l'\u00e9cole.", introGo:"Configurer les listes", introDismiss:"Compris", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.",
-    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
+    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", kbHint:"\u00ab Auto \u00bb s'adapte \u00e0 l'appareil. \u00ab ABC \u00bb est le plus simple pour les petits.", playSettings:"R\u00e9glages du jeu", introEyebrow:"Pour les parents", introBody:"Des listes de d\u00e9part sont pr\u00eates. Chaque semaine, modifie la liste pour coller aux mots de dict\u00e9e donn\u00e9s par l'\u00e9cole, ou prends-la en photo.", introGo:"Configurer les listes", introDismiss:"Compris", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.", scanBtn:"Scanner une liste", scanTitle:"Scanner une liste", scanIntro:"Prends en photo la liste de mots de l'\u00e9cole. On la transforme en liste modifiable.", scanOnline:"Cette fonction a besoin d'une connexion internet. Le reste de l'application fonctionne hors ligne.", scanPick:"Prendre une photo", scanLoading:"Pr\u00e9paration\u2026", scanReading:"Lecture du texte\u2026", scanReviewNote:"V\u00e9rifie et corrige les mots avant d'enregistrer. La reconnaissance n'est pas toujours parfaite.", scanError:"La lecture a \u00e9chou\u00e9. V\u00e9rifie ta connexion et r\u00e9essaie.", scanRetry:"R\u00e9essayer", scanEmpty:"Aucun mot d\u00e9tect\u00e9. Modifie le texte ou r\u00e9essaie.", scanInline:"Scanner une photo", scanAboutTitle:"Scanner une liste", scanAboutBody:"Dans l'espace parent, tu peux prendre en photo la liste de mots de l'\u00e9cole pour la transformer en liste. V\u00e9rifie les mots avant d'enregistrer. N\u00e9cessite internet.",
+    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant (tu peux même photographier la liste de l'école) et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", coinsShort:"\u00e9toiles", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -462,8 +472,8 @@ const T = {
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?", mixOp:"Mixed",
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
-    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", kbHint:"Auto matches your device. ABC is easiest for young children.", playSettings:"Game settings", introEyebrow:"For parents", introBody:"Starter lists are ready. Each week, edit the list to match the spelling words your school sends home.", introGo:"Set up lists", introDismiss:"Got it", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.",
-    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
+    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", kbHint:"Auto matches your device. ABC is easiest for young children.", playSettings:"Game settings", introEyebrow:"For parents", introBody:"Starter lists are ready. Each week, edit the list to match the spelling words your school sends home, or scan a photo of it.", introGo:"Set up lists", introDismiss:"Got it", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.", scanBtn:"Scan a list", scanTitle:"Scan a list", scanIntro:"Take a photo of the school's word list. We'll turn it into an editable list.", scanOnline:"This feature needs an internet connection. The rest of the app works offline.", scanPick:"Take a photo", scanLoading:"Getting ready\u2026", scanReading:"Reading text\u2026", scanReviewNote:"Check and fix the words before saving. Recognition is not always perfect.", scanError:"Reading failed. Check your connection and try again.", scanRetry:"Try again", scanEmpty:"No words detected. Edit the text or try again.", scanInline:"Scan a photo", scanAboutTitle:"Scan a list", scanAboutBody:"In the parent area, you can photograph the school's word list to turn it into a list. Check the words before saving. Needs internet.",
+    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists (you can even scan a photo of the school's list) and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", coinsShort:"stars", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
 };
 function t(k){ return T[lang][k]; }
 const APP_VER = "1.0";
@@ -849,6 +859,7 @@ function render(){
   else if (route === 'progress') v.innerHTML = viewProgress();
   else if (route === 'voices') v.innerHTML = viewVoices();
   else if (route === 'library') v.innerHTML = viewLibrary();
+  else if (route === 'scan') v.innerHTML = viewScan();
   else if (route === 'welcome') v.innerHTML = viewWelcome();
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
@@ -1014,6 +1025,7 @@ function viewAbout(){
         <div class="about-h">${t('progressAboutTitle')}</div>
         <p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('progressAboutBody')}</p>
       </div>
+      <div class="about-card"><div class="about-h">${t('scanAboutTitle')}</div><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('scanAboutBody')}</p></div>
       <button class="link-btn" onclick="replayIntro()">${IC.bulb}${t('replayIntro')}</button>
       <div class="about-card"><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('privacyLine')}</p></div>
       <div class="about-card"><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('feedbackLine')} <a href="mailto:thierrydamien@gmail.com" style="color:var(--primary);font-weight:800;text-decoration:none;">thierrydamien@gmail.com</a></p></div>
@@ -1098,6 +1110,7 @@ function viewParent(){
       </div>
       <div class="spacer"></div>
       <button class="link-btn" onclick="navigate('library')">${IC.plus}${t('libraryBtn')}</button>
+      <button class="link-btn" onclick="startScan()">${IC.cam}${t('scanBtn')}</button>
       <button class="link-btn" onclick="navigate('voices')">${IC.sound}${t('voicesBtn')}</button>
       <button class="link-btn" onclick="navigate('backup')">${IC.save}${t('backupBtn')}</button>
       ${confirmReset ? `<div class="confirm-box"><div class="cb-msg">${t('resetConfirm').replace('{name}', esc(p?p.name:''))}</div><div class="cb-row"><button class="btn-ghost" onclick="cancelReset()">${t('cancel')}</button><button class="btn-danger" onclick="doResetProgress()">${t('resetBtn')}</button></div></div>` : `<button class="link-btn" onclick="askReset()">${t('resetProgress')}</button>`}
@@ -1212,6 +1225,47 @@ function viewLibrary(){
       <div class="spacer"></div>
     </div>`;
 }
+function startScan(){ scanStage='idle'; scanText=''; scanMsg=''; scanTargetId=null; navigate('scan'); }
+function scanFromEditor(){ const p=activeProfile(); if(p){ const l=listById(p, editingListId); if(l){ const ta=document.getElementById('le-words'); if(ta) l.words=linesToWords(ta.value); saveProfiles(); } } scanTargetId=editingListId; scanStage='idle'; scanText=''; scanMsg=''; navigate('scan'); }
+function loadTesseract(){ return new Promise((res,rej)=>{ if(window.Tesseract) return res(window.Tesseract); const sc=document.createElement('script'); sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'; sc.onload=()=>res(window.Tesseract); sc.onerror=()=>rej(new Error('load')); document.head.appendChild(sc); }); }
+function onScanFile(input){ const f=input&&input.files&&input.files[0]; if(!f) return; runOcr(f); }
+function parseScanWords(text){ return (text||'').split(/[\n,]+/).map(l=>l.replace(/^[\s\d).:\u2022\u2023\u25E6\-*_]+/,'')).map(l=>l.replace(/[.,;:!?]+$/,'')).map(l=>l.trim()).filter(l=>l.length>0 && /[A-Za-z\u00C0-\u024F]/.test(l)); }
+async function runOcr(file){
+  scanStage='busy'; scanMsg=t('scanLoading'); render();
+  try{
+    const T=await loadTesseract();
+    const langs = lang==='FR' ? 'fra' : 'eng';
+    scanMsg=t('scanReading'); const e0=document.getElementById('scan-msg'); if(e0) e0.textContent=scanMsg;
+    const out=await T.recognize(file, langs, { logger:m=>{ if(m && m.status==='recognizing text'){ const el=document.getElementById('scan-msg'); if(el) el.textContent=t('scanReading')+' '+Math.round((m.progress||0)*100)+'%'; } } });
+    const text=(out && out.data && out.data.text)||'';
+    scanText=parseScanWords(text).join('\n');
+    scanStage='review'; render();
+  }catch(e){ scanStage='error'; scanMsg=t('scanError'); render(); }
+}
+function saveScannedList(){
+  const p=activeProfile(); if(!p) return; ensureEconomy(p);
+  const ta=document.getElementById('scan-words'); const ne=document.getElementById('scan-name');
+  const words=parseScanWords(ta?ta.value:scanText).map(w=>({w, s:''}));
+  if(!words.length){ scanMsg=t('scanEmpty'); scanStage='review'; render(); return; }
+  if(scanTargetId){ const l=listById(p, scanTargetId); if(l){ const have=new Set(l.words.map(x=>norm(x.w))); words.forEach(w=>{ if(!have.has(norm(w.w))){ l.words.push(w); have.add(norm(w.w)); } }); saveProfiles(); editingListId=scanTargetId; scanTargetId=null; scanStage='idle'; scanText=''; navigate('listedit'); return; } scanTargetId=null; }
+  const name=((ne&&ne.value)||'').trim() || (lang==='FR'?'Liste scann\u00e9e':'Scanned list');
+  p.lists.push({id:uid(), name, lang, words});
+  saveProfiles(); scanStage='idle'; scanText=''; navigate('parent');
+}
+function viewScan(){
+  const back=`<div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>`;
+  let body='';
+  if(scanStage==='busy'){
+    body=`<div class="scan-busy"><div class="spinner"></div><div id="scan-msg" class="hint">${esc(scanMsg)}</div></div>`;
+  } else if(scanStage==='error'){
+    body=`<p class="hint">${esc(scanMsg||t('scanError'))}</p><div class="spacer"></div><button class="btn-primary" onclick="startScan()">${t('scanRetry')}</button>`;
+  } else if(scanStage==='review'){
+    body=`<p class="hint">${t('scanReviewNote')}</p>${scanTargetId?'':`<div class="field"><label>${t('listName')}</label><input id="scan-name" type="text" maxlength="40" value="${esc(lang==='FR'?'Liste scann\u00e9e':'Scanned list')}"></div>`}<div class="field"><label>${t('words')}</label><textarea id="scan-words" rows="9">${esc(scanText)}</textarea></div><div class="spacer"></div><button class="btn-primary" onclick="saveScannedList()">${t('save')}</button>`;
+  } else {
+    body=`<p class="hint">${t('scanIntro')}</p><div class="scan-warn">${t('scanOnline')}</div><label class="scan-pick">${IC.cam}<span>${t('scanPick')}</span><input type="file" accept="image/*" capture="environment" onchange="onScanFile(this)"></label>`;
+  }
+  return `<div class="screen active">${back}<div class="scr-title">${t('scanTitle')}</div>${body}</div>`;
+}
 function createList(lng){ confirmDel=false; const p=activeProfile(); if(!p) return; ensureEconomy(p); const l={id:uid(), name:t('newListName'), lang:lng, words:[]}; p.lists.push(l); saveProfiles(); editingListId=l.id; navigate('listedit'); }
 function editList(id){ confirmDel=false; editingListId=id; navigate('listedit'); }
 function viewListEdit(){
@@ -1225,6 +1279,7 @@ function viewListEdit(){
       <div class="lang-badge">${l.lang==='FR'?'Français':'English'}</div>
       <div class="field"><label>${t('listName')}</label><input id="le-name" type="text" value="${esc(l.name)}" maxlength="40"></div>
       <div class="field"><label>${t('words')}</label><textarea id="le-words" rows="8">${esc(listToText(l))}</textarea></div>
+      <button class="btn-ghost" onclick="scanFromEditor()" style="margin-bottom:14px">${IC.cam} ${t('scanInline')}</button>
       <div class="cat" style="margin-top:2px"><label>${t('packsLabel')}</label><div class="opt-row"><button class="opt" onclick="addPack('days')">${t('packDays')}</button><button class="opt" onclick="addPack('months')">${t('packMonths')}</button><button class="opt" onclick="addPack('numbers')">${t('packNumbers')}</button></div></div>
       <p class="hint">${t('wordsHint')}</p>
       <div class="spacer"></div>
@@ -1243,6 +1298,7 @@ function saveListEdit(){ const p=activeProfile(); if(!p){ navigate('profiles'); 
   navigate('parent'); }
 let confirmDel=false;
 let confirmReset=false;
+let scanStage='idle', scanText='', scanMsg='', scanTargetId=null;
 let libExpanded=new Set();
 function toggleLib(lng,i){ const k=lng+i; libExpanded.has(k)?libExpanded.delete(k):libExpanded.add(k); render(); }
 function askReset(){ confirmReset=true; render(); }
@@ -1514,6 +1570,8 @@ function reactEl(kind,id){
 
 /* ---------- dictation gameplay ---------- */
 let dictStyle = 'copy';
+const STYLE_COINS={copy:1,scramble:2,gaps:2,remember:3,listen:3};
+function styleCoins(s){ return STYLE_COINS[s]||1; }
 let activeSent = {};
 let lastMode = 'dict';
 let missedThisRound = [];
@@ -1536,7 +1594,7 @@ function viewDictStyle(){
   const cards = ['copy','remember','gaps','scramble','listen'].map(s=>{
     const m=styleMeta(s);
     return `<button class="style-card ${s===dictStyle?'on':''}" onclick="selStyle('${s}')">
-      <div class="sic">${IC.book}</div><div><b>${m.t}</b><span>${m.s}</span></div></button>`;
+      <div class="sic">${IC.book}</div><div class="sc-txt"><b>${m.t}</b><span>${m.s}</span></div><div class="sc-coins" title="${styleCoins(s)} ${t('coinsShort')}">${'\u2605'.repeat(styleCoins(s))}</div></button>`;
   }).join('');
   return `
     <div class="screen active">
@@ -1591,7 +1649,7 @@ function pickWeightedWords(p, list, n){
 }
 function recordWord(word, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p);
   const k=norm(word); const ws=p.wordStats[k]||{r:0,w:0}; if(ok) ws.r++; else ws.w++; ws.h=ws.h||[]; ws.h.push(ok?1:0); if(ws.h.length>5) ws.h=ws.h.slice(-5); p.wordStats[k]=ws; saveProfiles(); }
-function awardCorrect(){ const p=activeProfile(); if(!p) return; ensureEconomy(p); p.coins=(p.coins||0)+1; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
+function awardCorrect(n){ n=n||1; const p=activeProfile(); if(!p) return; ensureEconomy(p); p.coins=(p.coins||0)+n; p.stats.correct=(p.stats.correct||0)+1; saveProfiles(); const c=document.getElementById('gw-coins'); if(c) c.textContent=p.coins; }
 function recordMath(op, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p); if(!p.mathStats[op]) p.mathStats[op]=[]; const h=p.mathStats[op]; h.push(ok?1:0); if(h.length>12) h.shift(); saveProfiles(); }
 
 function beginTurn(){
@@ -1784,20 +1842,36 @@ function maskInSentence(sentence, word){ if(!word) return sentence; try{ return 
 function sentenceHTML(){ const se=curSentence(); if(!se) return ''; return `<div class="csent"><button onclick="speakSentence()">${IC.bubble}${t('sentenceBtn')}</button><span class="csent-txt">${esc(maskInSentence(se, curWord))}</span></div>`; }
 function hint(){ if(!turnActive) return; const h=document.getElementById('gw-hint'); if(!h) return; const w=curWord||''; const arr=[...w]; const first=(arr[0]||'').toUpperCase();
   h.innerHTML = `<span class="hint-letter">${esc(first)}</span>` + arr.slice(1).map(ch=> ch===' ' ? '<span class="hint-gap"></span>' : '<span class="hint-dot">\u2022</span>').join(''); }
-function letterFeedbackHTML(typed, target){ const tt=[...norm(typed)], gg=[...norm(target)]; const n=Math.max(tt.length, gg.length); let cells='';
-  for(let i=0;i<n;i++){ const tc=tt[i], gc=gg[i];
-    if(tc===undefined){ cells+='<b class="miss">\u00b7</b>'; }
-    else if(tc===gc){ cells+=`<b class="good">${esc(tc===' '?'\u2423':tc)}</b>`; }
-    else { cells+=`<b class="bad">${esc(tc===' '?'\u2423':tc)}</b>`; } }
-  return `<div class="lf">${cells}</div>`; }
+function alignCells(typed, target){
+  const a=[...norm(typed)], b=[...norm(target)], m=a.length, n=b.length;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++) dp[i][0]=i;
+  for(let j=0;j<=n;j++) dp[0][j]=j;
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++){ const c=a[i-1]===b[j-1]?0:1; dp[i][j]=Math.min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+c); }
+  let i=m, j=n; const ops=[];
+  while(i>0||j>0){
+    if(i>0&&j>0&&dp[i][j]===dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1)){ ops.push({s:a[i-1]===b[j-1]?'ok':'sub', ch:b[j-1]}); i--; j--; }
+    else if(i>0&&dp[i][j]===dp[i-1][j]+1){ ops.push({s:'ins', ch:a[i-1]}); i--; }
+    else { ops.push({s:'del', ch:b[j-1]}); j--; }
+  }
+  return ops.reverse();
+}
+function letterFeedbackHTML(typed, target){
+  const cells=alignCells(typed, target).map(o=>{ const c = o.ch===' ' ? '\u2423' : esc(o.ch);
+    if(o.s==='ok') return `<b class="good">${c}</b>`;
+    if(o.s==='ins') return `<b class="extra">${c}</b>`;
+    return `<b class="bad">${c}</b>`;
+  }).join('');
+  return `<div class="lf">${cells}</div>`;
+}
 
 function submit(){
   if(!turnActive) return;
   const typed=inputText; const a=norm(typed); if(!a) return;
   const fb=document.getElementById('gw-fb');
   if(a===norm(curAns)){
-    turnActive=false; roundScore++; roundCoins++; recordWord(curWord, true);
-    awardCorrect();
+    turnActive=false; roundScore++; const _cc=styleCoins(dictStyle); roundCoins+=_cc; recordWord(curWord, true);
+    awardCorrect(_cc);
     react('cheer'); burst(); flyCoin(); bumpStreak();
     const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
     setTimeout(advance,1050);
@@ -1805,7 +1879,7 @@ function submit(){
     misses++; roundMistake=true; react('wobble'); streak=0; clearCombo();
     if(misses>=2){
       turnActive=false; recordWord(curWord, false); missedThisRound.push(curWord);
-      if(fb){ fb.textContent='\u2192 '+curAns; fb.className='gw-fb no'; }
+      if(fb){ fb.innerHTML='<span class="fb-msg">\u2192 '+esc(curAns)+'</span>'+letterFeedbackHTML(typed, curAns); fb.className='gw-fb no'; }
       vox(curAns, lang); setTimeout(advance,1700); return;
     }
     if(fb){ fb.innerHTML='<span class="fb-msg">'+t('tryagain')+'</span>'+letterFeedbackHTML(typed, curAns); fb.className='gw-fb no'; }
