@@ -1000,6 +1000,7 @@ function render(){
   if (route === 'game') paintGame();
   if (route === 'mathgame') paintMath();
   if (route === 'cngame') paintCnGame();
+  if (route === 'home' && typeof _voicePack!=='undefined' && !_voicePack.checked && !_voicePack.checking) refreshVoicePack();
   bindLive();
 }
 
@@ -1180,8 +1181,9 @@ function viewAbout(){
 
 /* ---------- parent pin ---------- */
 let pinBuffer = '';
+let parentDest=null;
 let pinMode = 'enter';
-function openParent(){ confirmReset=false;
+function openParent(dest){ confirmReset=false; parentDest=(typeof dest==='string')?dest:null;
   pinBuffer=''; pinMode = store.get('hg_pin') ? 'enter' : 'new';
   navigate('parentpin');
 }
@@ -1210,10 +1212,12 @@ function pinTap(d){
 }
 function pinDel(){ pinBuffer=pinBuffer.slice(0,-1); render(); }
 function pinSubmit(){
-  if(pinMode==='new'){ store.set('hg_pin', pinBuffer); navigate('parent'); return; }
-  if(pinBuffer === store.get('hg_pin')){ navigate('parent'); }
+  if(pinMode==='new'){ store.set('hg_pin', pinBuffer); enterParentDest(); return; }
+  if(pinBuffer === store.get('hg_pin')){ enterParentDest(); }
   else { pinBuffer=''; render(); const e=document.getElementById('pin-err'); if(e) e.textContent=t('pinWrong'); }
 }
+function enterParentDest(){ var d=parentDest; parentDest=null; if(d==='voices'){ navigate('voices'); voicePackDownload(); } else navigate('parent'); }
+function voicePackEnter(){ openParent('voices'); }
 
 /* ---------- parent area ---------- */
 let editingListId=null;
@@ -1782,7 +1786,7 @@ function openDict(){ dictNote=''; navigate('dictstyle'); }
 function dismissIntro(){ store.set('hg_introSeen','1'); render(); }
 function introSetup(){ store.set('hg_introSeen','1'); openParent(); }
 let nudgeHiddenSession=false;
-function listNudgeHTML(p){ if(!p || p.addedCustom || nudgeHiddenSession || !store.get('hg_introSeen')) return ''; return `<div class="nudge-card"><button class="nudge-x" onclick="hideNudge()" aria-label="${t('introDismiss')}">\u00d7</button><div class="nudge-body"><b>${t('nudgeTitle')}</b>${t('nudgeBody')}</div><button class="nudge-go" onclick="nudgeAddList()">${t('nudgeGo')}</button></div>`; }
+function listNudgeHTML(p){ if(!p || p.addedCustom || nudgeHiddenSession || voiceCardShould()) return ''; return `<div class="nudge-card"><button class="nudge-x" onclick="hideNudge()" aria-label="${t('introDismiss')}">\u00d7</button><div class="nudge-body"><b>${t('nudgeTitle')}</b>${t('nudgeBody')}</div><button class="nudge-go" onclick="nudgeAddList()">${t('nudgeGo')}</button></div>`; }
 function hideNudge(){ nudgeHiddenSession=true; render(); }
 function nudgeAddList(){ openParent(); }
 function selStyle(s){ dictStyle=s; render(); }
@@ -2072,11 +2076,15 @@ var _voicePack = { installed:{}, checked:false };
 function voicePackPaint(){ try{ var b=document.getElementById('vp-bar'); if(b) b.style.width=_piperDL.pct+'%'; var p=document.getElementById('vp-pct'); if(p) p.textContent=_piperDL.pct+'%'; }catch(e){} }
 function voicePackChanged(){ try{ if(typeof route!=='undefined' && (route==='home'||route==='voices')) render(); }catch(e){} }
 async function refreshVoicePack(){
+  if(_voicePack.checking) return; _voicePack.checking=true;
   try{ var m=await piperImport(); var lib=piperLib(m);
     var ids = (lib && lib.stored) ? (await lib.stored()) : [];
     function has(k){ return (ids && ids.indexOf(PIPER_VOICE[k])>=0) || _piper.status[k]==='ready'; }
-    _voicePack.installed={ EN:has('EN'), FR:has('FR'), ZH:has('ZH') }; _voicePack.checked=true; voicePackChanged();
+    _voicePack.installed={ EN:has('EN'), FR:has('FR'), ZH:has('ZH') }; _voicePack.checked=true;
+    if(_voicePack.installed.EN && _voicePack.installed.FR && _voicePack.installed.ZH){ try{ store.set('hg_voicesInstalled','1'); }catch(e){} }
+    voicePackChanged();
   }catch(e){ _voicePack.checked=true; }
+  _voicePack.checking=false;
 }
 async function piperDownloadAll(langs){
   if(_piperDL.active) return; langs=langs||['FR','EN','ZH'];
@@ -2091,17 +2099,20 @@ async function piperDownloadAll(langs){
     }
   }catch(e){ console.warn('[voices] pack import failed', e); }
   _piperDL.active=false; _piperDL.pct=100; _piperDL.lang=null;
-  try{ store.set('hg_introSeen','1'); }catch(e){}
+  try{ store.set('hg_introSeen','1'); store.set('hg_voicesInstalled','1'); }catch(e){}
   await refreshVoicePack(); voicePackChanged();
   try{ showVoiceReadyToast(); }catch(e){}
 }
 function voicePackDownload(){ if(_piperDL.active) return; piperDownloadAll(['FR','EN','ZH']); }
 function openVoices(){ navigate('voices'); refreshVoicePack(); }
+var _voiceCardDismissed=false;
+function voiceCardShould(){ return !store.get('hg_voicesInstalled') && !_voiceCardDismissed; }
+function dismissVoiceCard(){ _voiceCardDismissed=true; render(); }
 function introCardHTML(){
-  if(store.get('hg_introSeen')) return '';
+  if(!voiceCardShould()) return '';
   var inner = _piperDL.active
     ? `<div class="vp-prog"><div class="vp-track"><span id="vp-bar" class="vp-fill" style="width:${_piperDL.pct}%"></span></div><div class="vp-pct" id="vp-pct">${_piperDL.pct}%</div></div>`
-    : `<div class="intro-row"><button class="intro-go" onclick="voicePackDownload()">${t('vpDownload')}</button><button class="intro-dismiss" onclick="dismissIntro()">${t('vpLater')}</button></div>`;
+    : `<div class="intro-row"><button class="intro-go" onclick="voicePackEnter()">${t('vpDownload')}</button><button class="intro-dismiss" onclick="dismissVoiceCard()">${t('vpLater')}</button></div>`;
   return `<div class="intro-card"><div class="intro-eyebrow">${t('introEyebrow')}</div><div class="intro-body">${t('vpBody')}</div>${inner}</div>`;
 }
 function vpStatusHTML(){
