@@ -70,6 +70,14 @@ input,textarea{font-family:inherit;}
 .langpill{font-family:var(--fd);font-weight:700;font-size:14px;background:var(--card);padding:8px 12px;border-radius:999px;box-shadow:0 3px 8px rgba(0,0,0,.06);}
 
 .hello{font-family:var(--fd);font-weight:700;font-size:24px;margin:10px 2px 18px;}
+.home-hero{position:relative;height:70px;border-radius:18px;overflow:hidden;border:1px solid var(--line);margin:6px 0 14px;}
+.hh-bg{position:absolute;inset:0;}
+.hh-greet{position:absolute;left:14px;top:7px;font-family:var(--fd);font-weight:600;font-size:17px;color:var(--ink);}
+.hh-av{position:absolute;bottom:7px;width:50px;height:50px;}
+.hh-bob{animation:hhbob 3.4s ease-in-out infinite;transform-origin:center bottom;}
+.hh-bob2{animation:hhbob 3s ease-in-out infinite .6s;transform-origin:center bottom;}
+@keyframes hhbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@media (prefers-reduced-motion: reduce){.hh-bob,.hh-bob2{animation:none}}
 .mode-btn{display:flex;align-items:center;gap:16px;width:100%;text-align:left;padding:20px;border-radius:var(--r-lg);
   margin-bottom:16px;color:#fff;box-shadow:0 7px 0 var(--shadowc);transition:transform .1s,box-shadow .1s;}
 .mode-btn:active{transform:translateY(4px);box-shadow:0 3px 0 var(--shadowc);}
@@ -229,10 +237,43 @@ input,textarea{font-family:inherit;}
 @keyframes rglow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.5)}}
 .r-pop{animation:rpop .5s ease}.r-bounce{animation:rbounce .55s ease}.r-sway{animation:rsway .6s ease}.r-wiggle{animation:rwiggle .55s ease}.r-glow{animation:rglow .6s ease}
 @media (prefers-reduced-motion: reduce){ .r-pop,.r-bounce,.r-sway,.r-wiggle,.r-glow{animation:none!important;} }
+.hdrag{cursor:grab;}.hdrag:active{cursor:grabbing;}
+.hidle{transform-box:fill-box;transform-origin:center;}
+.hidle-balloon{transform-origin:center bottom;animation:hfloat 4.2s ease-in-out infinite;}
+.hidle-plant,.hidle-cactus{transform-origin:center bottom;animation:hsway 5s ease-in-out infinite;}
+.hidle-fishbowl{animation:hbob 3.6s ease-in-out infinite;}
+.hidle-ball{transform-origin:center bottom;animation:hbob 2.8s ease-in-out infinite;}
+.hidle-beanbag{transform-origin:center bottom;animation:hbreath 6s ease-in-out infinite;}
+.hidle-lamp{animation:hglow 4s ease-in-out infinite;}
+.hpet{transform-box:fill-box;transform-origin:center bottom;animation:hbob 3.2s ease-in-out infinite;}
+@keyframes hfloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-4px) rotate(2deg)}}
+@keyframes hsway{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}}
+@keyframes hbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+@keyframes hbreath{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@keyframes hglow{0%,100%{opacity:.92}50%{opacity:1}}
+@media (prefers-reduced-motion: reduce){ [class*='hidle'],.hpet{animation:none!important;} }
+.scene-tabs{display:flex;gap:6px;justify-content:center;margin:2px 0 8px;}
+.stab{font-family:var(--fd);font-weight:700;font-size:14px;padding:6px 16px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;}
+.stab.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.gflower{transform-box:fill-box;transform-origin:center bottom;animation:hsway 4.6s ease-in-out infinite;}
+.gtree{transform-box:fill-box;transform-origin:center bottom;animation:gtsway 6s ease-in-out infinite;}
+@keyframes gtsway{0%,100%{transform:rotate(-1.1deg)}50%{transform:rotate(1.1deg)}}
+@media (prefers-reduced-motion: reduce){ .gflower,.gtree{animation:none!important;} }
 .gift-box{display:flex;align-items:center;gap:10px;background:var(--chip);color:var(--chipink);border-radius:var(--r-md);padding:12px 16px;margin-top:8px;font-weight:700;font-size:14px;max-width:300px;}
 .gift-box svg{width:24px;height:24px;color:#E0A000;flex:0 0 auto;}
 .gift-box .gsub{font-weight:700;font-size:12px;opacity:.8;margin-top:2px;}
 .practise{background:var(--bg);border-radius:var(--r-md);padding:10px 14px;margin-top:8px;font-weight:700;font-size:14px;color:var(--ink);max-width:320px;}
+.rev-list{display:flex;flex-direction:column;gap:6px;margin-top:12px;width:100%;max-width:320px;text-align:left;}
+.rev-head{font-family:var(--fd);font-weight:700;color:var(--muted);font-size:12px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px;}
+.rev-row{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:var(--r-sm);padding:8px 12px;box-shadow:0 2px 6px rgba(51,48,74,.06);}
+.rev-mark{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex:0 0 auto;}
+.rev-mark.ok{background:var(--accent);color:#fff;}
+.rev-mark.miss{background:#ffd9d2;color:#D85A30;}
+.rev-word{font-family:var(--fd);font-weight:600;font-size:16px;color:var(--ink);}
+.tl-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.tl-chip{display:inline-flex;align-items:center;gap:4px;background:#ffd9d2;color:#D85A30;border-radius:10px;padding:5px 11px;font-family:var(--fd);font-weight:700;font-size:17px;}
+.tl-chip small{font-size:11px;opacity:.75;font-weight:700;}
+.pat-label{font-family:var(--fd);font-weight:600;font-size:12px;color:var(--ink);flex:0 0 96px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .practise b{color:var(--primary);display:block;font-family:var(--fd);font-size:13px;margin-bottom:2px;}
 .about-fam{width:128px;height:128px;border-radius:32px;background:var(--primary);margin:4px auto 16px;display:flex;align-items:center;justify-content:center;}
 .about-fam svg{width:108px;height:108px;}
@@ -284,6 +325,50 @@ input,textarea{font-family:inherit;}
 .intro-card{background:rgba(33,191,160,.08);border:1px solid rgba(33,191,160,.35);border-radius:14px;padding:12px 14px;margin-bottom:14px;}
 .intro-eyebrow{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-dk);}
 .intro-body{font-size:14px;color:var(--ink);margin:4px 0 10px;line-height:1.45;}
+.intro-note{font-size:12px;color:var(--muted);line-height:1.4;margin:0 0 10px;}
+.nudge-card{position:relative;background:#EAF9F4;border:1px solid #BfeCDF;border-radius:16px;padding:14px;margin-bottom:12px}
+.nudge-card .nudge-body{font-size:13.5px;color:#2c5a4f;line-height:1.45;padding-right:20px}
+.nudge-card .nudge-body b{display:block;font-family:var(--fd);font-weight:600;font-size:15px;color:#0f9b80;margin-bottom:3px}
+.nudge-go{margin-top:10px;background:var(--accent);color:#fff;border:0;font-family:var(--fd);font-weight:600;font-size:14px;padding:9px 14px;border-radius:12px}
+.nudge-x{position:absolute;top:6px;right:8px;border:0;background:transparent;color:#7fb5a8;font-size:18px;line-height:1;padding:4px;cursor:pointer}
+.mode-cn{background:#6F5BD6;--shadowc:#5344B0;}
+.mode-cn .mic{font-family:var(--fd);font-weight:700;font-size:24px;color:#fff;background:rgba(255,255,255,.22)}
+.cn-hello{font-family:var(--fd);font-weight:600;font-size:40px;text-align:center;color:#2c2942;margin:6px 0 14px}
+.cn-top{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 10px}
+.cn-quit{background:#fff;border:1px solid var(--line);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer}
+.cn-dots{display:flex;gap:5px;justify-content:center;margin:0 0 14px;flex-wrap:wrap}
+.cn-dots i{width:8px;height:8px;border-radius:50%;background:#e7d8c2}
+.cn-dots i.on{background:var(--accent)} .cn-dots i.cur{background:var(--accent2)}
+.cn-q{background:#fff;border-radius:22px;padding:22px 16px 18px;text-align:center;box-shadow:0 6px 18px rgba(60,40,20,.08);margin-bottom:14px}
+.cn-hz{font-family:var(--fd);font-weight:600;font-size:72px;line-height:1;color:#2c2942;margin:2px 0 6px}
+.cn-py{font-family:var(--fd);font-weight:600;font-size:22px;color:var(--accent)}
+.cn-spk{display:inline-flex;align-items:center;gap:6px;background:var(--chip);color:var(--chipink);border:0;font-family:var(--fd);font-weight:600;font-size:14px;padding:8px 15px;border-radius:999px;margin-top:12px;cursor:pointer}
+.cn-ask{font-family:var(--fd);font-weight:600;font-size:15px;color:var(--muted);text-align:center;margin:0 0 12px}
+.cn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cn-tile{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px 10px;font-family:var(--fd);font-weight:600;font-size:18px;color:var(--ink);box-shadow:0 3px 8px rgba(60,40,20,.05);cursor:pointer;min-height:60px}
+.cn-tile.zh{font-size:38px;padding:14px 10px}
+.cn-tile.correct{border-color:var(--accent);background:#e8fbf5;color:#0f9b80}
+.cn-tile.wrong{border-color:#f0a8a0;background:#fdeceb;color:#c0392b}
+.cn-listen{text-align:center;margin-bottom:14px}
+.cn-bigspk{width:84px;height:84px;border-radius:50%;background:var(--accent);margin:10px auto 12px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(33,191,160,.35);cursor:pointer}
+.cn-reveal{margin-top:12px;padding-top:12px;border-top:1px dashed #e2d4be}
+.cn-mean{font-family:var(--fd);font-weight:600;font-size:22px;margin-top:2px}
+.cn-rate{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.cn-rate .opt{padding:13px;min-height:0}
+.cn-knew{margin:0}
+.cw-row{display:flex;align-items:center;gap:8px;padding:8px 4px;border-top:1px solid #f3eadc}
+.cw-row:first-child{border-top:0}
+.cw-h{font-family:var(--fd);font-weight:600;font-size:22px;min-width:42px}
+.cw-p{color:var(--accent);font-family:var(--fd);font-weight:600;font-size:13px;min-width:62px}
+.cw-e{flex:1;font-size:13px;color:var(--ink)}
+.cw-del{border:0;background:transparent;color:#c89;font-size:18px;cursor:pointer;padding:4px 6px}
+.cw-add{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.cw-add input{padding:10px;border:1px solid var(--line);border-radius:10px;font-family:var(--fb);font-size:14px;width:100%;box-sizing:border-box}
+.cw-add #cw-e{grid-column:1 / -1}
+.cw-add .btn-primary{grid-column:1 / -1;margin:0}
+.voice-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(12px);max-width:300px;width:calc(100% - 48px);box-sizing:border-box;background:var(--accent);color:#fff;font-family:var(--fb);font-size:14px;font-weight:700;line-height:1.35;text-align:center;padding:12px 16px;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.20);z-index:9999;opacity:0;transition:opacity .28s ease, transform .28s ease;cursor:pointer;}
+.voice-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+@media (prefers-reduced-motion: reduce){ .voice-toast{transition:opacity .2s ease;transform:translateX(-50%);} .voice-toast.show{transform:translateX(-50%);} }
 .intro-row{display:flex;gap:6px;align-items:center;}
 .intro-go{border:none;background:var(--accent);color:#fff;font-family:var(--fd);font-weight:700;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer;}
 .intro-dismiss{border:none;background:transparent;color:var(--muted);font-family:var(--fd);font-weight:700;font-size:13px;padding:8px 10px;cursor:pointer;}
@@ -436,9 +521,9 @@ const T = {
     noWords:"Aucun mot. Ajoute des mots dans l'espace parent.",
     customize:"Personnaliser le personnage", myChar:"Mon personnage", background:"Fond", skin:"Peau",
     hairStyle:"Cheveux", hairColor:"Couleur des cheveux", eyes:"Yeux", mouth:"Bouche",
-    hairNone:"Aucun", hairShort:"Court", hairLong:"Long", hairCurly:"Bouclé", hairWavy:"Ondulé", hairBun:"Chignon",
-    eRound:"Ronds", eHappy:"Joyeux", eDot:"Points", eWink:"Clin d'œil",
-    mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", glasses:"Lunettes", gNone:"Aucunes",
+    hairNone:"Aucun", hairShort:"Court", hairLong:"Long", hairCurly:"Bouclé", hairWavy:"Ondulé", hairBun:"Chignon", hairStraight:"Raides", hairTousled:"Ébouriffés", hairCrop:"Dégradé", hairBuzz:"Très court", hairAfro:"Afro", hairPony:"Queue", hairPigtails:"Couettes", voiceEnhanced:"Voix améliorées", vReady:"prête", vLoading:"téléchargement…", vFailed:"voix de l'appareil", voiceReadyToast:"Voix prêtes, elles fonctionnent maintenant hors ligne.", nudgeTitle:"Ajoute tes propres mots", nudgeBody:"Mets la liste de dictée de l'école de cette semaine. Touche pour l'ajouter dans l'espace parent.", nudgeGo:"Ajouter des mots", cnMode:"Chinois", cnSub:"Vois-le, écoute-le, retiens-le", cnLevel:"Niveau", cnModeLabel:"Mode", cnMatch:"Associer", cnListen:"Écouter", cnRecall:"Réviser", cnPinyin:"Pinyin", cnShow:"Afficher", cnHide:"Cacher", cnCustom:"Mes mots", cnStartBtn:"Commencer", cnAskMean:"Que veut dire ce mot ?", cnAskHear:"Touche ce que tu entends", cnHear:"Écouter", cnRevealBtn:"Toucher pour voir", cnKnew:"Je savais", cnReview:"À revoir", cnEmpty:"Ajoute d'abord des mots dans l'espace parent.", cnWordsBtn:"Mots chinois", cnWordsTitle:"Mots chinois", cnNoWords:"Aucun mot pour le moment.", cnHanzi:"Caractère", cnPinyinF:"Pinyin", cnMeaning:"Sens", cnAddWord:"Ajouter le mot", cnLockLabel:"Verrou enfant", cnLockHint:"Empêche de changer le niveau et le mode sur l'écran de départ.", cnUnlocked:"Libre", cnLocked:"Verrouillé", voiceNote:"À la première utilisation, le jeu télécharge ses voix en arrière-plan pour un son clair et identique sur chaque appareil. Tu peux commencer tout de suite. En attendant, la voix de l'appareil prend le relais. Ensuite, tout fonctionne hors ligne.",
+    eRound:"Ronds", eHappy:"Joyeux", eDot:"Points", eWink:"Clin d'œil", eAlmond:"En amande",
+    mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", brows:"Sourcils", browNone:"Aucun", browSoft:"Doux", browFlat:"Droits", browRaised:"Relevés", glasses:"Lunettes", gNone:"Aucunes", glassShape:"Forme",
     shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
     hatsCat:"Chapeaux", houseCat:"Maison", frameCat:"Cadres", petCat:"Compagnons", floorCat:"Sol", noFrame:"Sans cadre", noPet:"Aucun", floorNone:"Défaut", decorate:"Décorer", done:"Terminé", decorateHint:"Touche un objet pour l'afficher ou le cacher", progressTitle:"Progrès", statusKnown:"acquis", statusPractising:"à revoir", statusNew:"nouveau", progressNone:"Aucun mot pour le moment.", voicesTitle:"Voix", voicesBtn:"Voix", voicesIntro:"Choisis la voix qui lit les mots à voix haute. Les voix disponibles dépendent de l'appareil.", voiceAuto:"Automatique", voiceTest:"Tester", voicesNone:"Aucune voix disponible sur cet appareil.", voicesRefresh:"Rafraîchir", libraryTitle:"Listes prêtes", gradeLabel:"Classe", gradeHint:"On ajoutera des listes adaptées à ce niveau.", libraryBtn:"Listes prêtes", libraryIntro:"Ajoute des listes toutes prêtes. Tu pourras les modifier ensuite.", added:"Ajouté", addBtn:"Ajouter", voicesHelp:"Les mots sont lus par les voix intégrées de l'appareil : la qualité varie d'un téléphone ou ordinateur à l'autre. Si une voix semble robotique, essaie une autre option ci-dessus puis touche Tester. Sur un ordinateur, Chrome propose souvent de meilleures voix, ou tu peux installer une voix « améliorée » dans les réglages du système.", progressAboutTitle:"Suivi des progrès", progressAboutBody:"Dans l'espace parent, l'écran Progrès montre, pour chaque liste, les mots acquis et ceux à revoir. Un mot est « acquis » après 3 bonnes réponses d'affilée.", own:"Acquis", house:"Ma maison", medals:"Médailles",
     perfectMsg:"Sans faute !", giftTitle:"Cadeau débloqué :", giftSub:"Ajouté à ta maison",
@@ -446,7 +531,7 @@ const T = {
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?", mixOp:"Mixte",
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
     pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", kbHint:"\u00ab Auto \u00bb s'adapte \u00e0 l'appareil. \u00ab ABC \u00bb est le plus simple pour les petits.", playSettings:"R\u00e9glages du jeu", introEyebrow:"Pour les parents", introBody:"Des listes de d\u00e9part sont pr\u00eates. Chaque semaine, modifie la liste pour coller aux mots de dict\u00e9e donn\u00e9s par l'\u00e9cole, ou prends-la en photo.", introGo:"Configurer les listes", introDismiss:"Compris", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.", scanBtn:"Scanner une liste", scanTitle:"Scanner une liste", scanIntro:"Prends en photo la liste de mots de l'\u00e9cole. On la transforme en liste modifiable.", scanOnline:"Cette fonction a besoin d'une connexion internet. Le reste de l'application fonctionne hors ligne.", scanPick:"Prendre une photo", scanLoading:"Pr\u00e9paration\u2026", scanReading:"Lecture du texte\u2026", scanReviewNote:"V\u00e9rifie et corrige les mots avant d'enregistrer. La reconnaissance n'est pas toujours parfaite.", scanError:"La lecture a \u00e9chou\u00e9. V\u00e9rifie ta connexion et r\u00e9essaie.", scanRetry:"R\u00e9essayer", scanEmpty:"Aucun mot d\u00e9tect\u00e9. Modifie le texte ou r\u00e9essaie.", scanInline:"Scanner une photo", scanAboutTitle:"Scanner une liste", scanAboutBody:"Dans l'espace parent, tu peux prendre en photo la liste de mots de l'\u00e9cole pour la transformer en liste. V\u00e9rifie les mots avant d'enregistrer. N\u00e9cessite internet.",
-    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant (tu peux même photographier la liste de l'école) et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", coinsShort:"\u00e9toiles", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
+    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", roundReview:"Tes mots", trickyTitle:"Lettres à surveiller", writeItPrompt:"Maintenant, écris-le", wellCopied:"Bien copié !", reEncodeGiveUp:"On y reviendra", patternsTitle:"Schémas à surveiller", patAccents:"Accents", patDouble:"Lettres doubles", patVowels:"Sons de voyelles", patTion:"Terminaisons -tion", arrangeHint:"Glisse les objets pour les déplacer. Touche un nom pour le cacher.", resetArrange:"Réinitialiser", sceneRoom:"Chambre", sceneGarden:"Jardin", gardenHint:"Tes mots poussent quand tu les apprends", gardenEmpty:"Choisis une liste pour planter tes mots", masteredLabel:"maîtrisés", masteredCaption:"Les mots en fleur se reposent ici", allBloomed:"Tout est en fleur !", gardenAboutTitle:"Le jardin", gardenAboutBody:"Dans la maison, passe au jardin pour voir chaque mot grandir, de la graine à la fleur, à mesure qu'il est maîtrisé, avec un arbre pour chaque opération.", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant (tu peux même photographier la liste de l'école) et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", coinsShort:"\u00e9toiles", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name",
     save:"Save", cancel:"Cancel", del:"Delete this player",
@@ -463,9 +548,9 @@ const T = {
     noWords:"No words yet. Add some in the parent area.",
     customize:"Customise character", myChar:"My character", background:"Background", skin:"Skin",
     hairStyle:"Hair", hairColor:"Hair colour", eyes:"Eyes", mouth:"Mouth",
-    hairNone:"None", hairShort:"Short", hairLong:"Long", hairCurly:"Curly", hairWavy:"Wavy", hairBun:"Bun",
-    eRound:"Round", eHappy:"Happy", eDot:"Dots", eWink:"Wink",
-    mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", glasses:"Glasses", gNone:"None",
+    hairNone:"None", hairShort:"Short", hairLong:"Long", hairCurly:"Curly", hairWavy:"Wavy", hairBun:"Bun", hairStraight:"Straight", hairTousled:"Tousled", hairCrop:"Crop", hairBuzz:"Buzz", hairAfro:"Afro", hairPony:"Ponytail", hairPigtails:"Pigtails", voiceEnhanced:"Enhanced voices", vReady:"ready", vLoading:"downloading…", vFailed:"device voice", voiceReadyToast:"Voices ready, they now work offline.", nudgeTitle:"Add your own words", nudgeBody:"Drop in this week's spelling list from school. Tap to add it in the parent area.", nudgeGo:"Add words", cnMode:"Chinese", cnSub:"See it, hear it, know it", cnLevel:"Level", cnModeLabel:"Mode", cnMatch:"Match", cnListen:"Listen", cnRecall:"Recall", cnPinyin:"Pinyin", cnShow:"Show", cnHide:"Hide", cnCustom:"My words", cnStartBtn:"Start", cnAskMean:"What does it mean?", cnAskHear:"Tap what you hear", cnHear:"Hear it", cnRevealBtn:"Tap to reveal", cnKnew:"Knew it", cnReview:"Review", cnEmpty:"Add words first in the parent area.", cnWordsBtn:"Chinese words", cnWordsTitle:"Chinese words", cnNoWords:"No words yet.", cnHanzi:"Character", cnPinyinF:"Pinyin", cnMeaning:"Meaning", cnAddWord:"Add word", cnLockLabel:"Child lock", cnLockHint:"Stops level and mode being changed on the start screen.", cnUnlocked:"Open", cnLocked:"Locked", voiceNote:"The first time you play, the game downloads its voices in the background so words sound clear and the same on every device. You can start right away. Until the voices are ready, your device's own voice fills in. After that, it works offline.",
+    eRound:"Round", eHappy:"Happy", eDot:"Dots", eWink:"Wink", eAlmond:"Almond",
+    mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", brows:"Eyebrows", browNone:"None", browSoft:"Soft", browFlat:"Flat", browRaised:"Raised", glasses:"Glasses", gNone:"None", glassShape:"Frame shape",
     shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
     hatsCat:"Hats", houseCat:"House", frameCat:"Frames", petCat:"Pets", floorCat:"Floor", noFrame:"No frame", noPet:"None", floorNone:"Default", decorate:"Decorate", done:"Done", decorateHint:"Tap an item to show or hide it", progressTitle:"Progress", statusKnown:"known", statusPractising:"to revise", statusNew:"new", progressNone:"No words yet.", voicesTitle:"Voice", voicesBtn:"Voice", voicesIntro:"Choose the voice that reads words aloud. Available voices depend on your device.", voiceAuto:"Automatic", voiceTest:"Test", voicesNone:"No voices available on this device.", voicesRefresh:"Refresh", libraryTitle:"Ready-made lists", gradeLabel:"Class / Year", gradeHint:"We'll add lists suited to this level.", libraryBtn:"Ready-made lists", libraryIntro:"Add ready-made lists. You can edit them afterwards.", added:"Added", addBtn:"Add", voicesHelp:"The words are read by your device's built-in voices, so the quality differs between phones and computers. If a voice sounds robotic, try another option above and tap Test. On a computer, Chrome usually has nicer voices, or you can install an Enhanced voice in your system settings.", progressAboutTitle:"Progress tracking", progressAboutBody:"In the parent area, the Progress screen shows, for each list, which words are known and which still need revising. A word counts as known after 3 correct answers in a row.", own:"Owned", house:"My house", medals:"Medals",
     perfectMsg:"Perfect!", giftTitle:"Gift unlocked:", giftSub:"Added to your house",
@@ -473,7 +558,7 @@ const T = {
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?", mixOp:"Mixed",
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
     pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", kbHint:"Auto matches your device. ABC is easiest for young children.", playSettings:"Game settings", introEyebrow:"For parents", introBody:"Starter lists are ready. Each week, edit the list to match the spelling words your school sends home, or scan a photo of it.", introGo:"Set up lists", introDismiss:"Got it", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.", scanBtn:"Scan a list", scanTitle:"Scan a list", scanIntro:"Take a photo of the school's word list. We'll turn it into an editable list.", scanOnline:"This feature needs an internet connection. The rest of the app works offline.", scanPick:"Take a photo", scanLoading:"Getting ready\u2026", scanReading:"Reading text\u2026", scanReviewNote:"Check and fix the words before saving. Recognition is not always perfect.", scanError:"Reading failed. Check your connection and try again.", scanRetry:"Try again", scanEmpty:"No words detected. Edit the text or try again.", scanInline:"Scan a photo", scanAboutTitle:"Scan a list", scanAboutBody:"In the parent area, you can photograph the school's word list to turn it into a list. Check the words before saving. Needs internet.",
-    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists (you can even scan a photo of the school's list) and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", coinsShort:"stars", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
+    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", roundReview:"Your words", trickyTitle:"Tricky letters", writeItPrompt:"Now write it", wellCopied:"Nicely copied!", reEncodeGiveUp:"We'll come back to it", patternsTitle:"Patterns to watch", patAccents:"Accents", patDouble:"Double letters", patVowels:"Vowel teams", patTion:"-tion endings", arrangeHint:"Drag items to move them. Tap a name to hide it.", resetArrange:"Reset", sceneRoom:"Room", sceneGarden:"Garden", gardenHint:"Your words grow as you learn them", gardenEmpty:"Pick a list to plant your words", masteredLabel:"mastered", masteredCaption:"Bloomed words rest here", allBloomed:"All bloomed for now!", gardenAboutTitle:"Garden", gardenAboutBody:"In the house, switch to the garden to watch each word grow from a seed into a flower as it's mastered, with a tree for each kind of sum.", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists (you can even scan a photo of the school's list) and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", coinsShort:"stars", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
 };
 function t(k){ return T[lang][k]; }
 const APP_VER = "1.0";
@@ -481,11 +566,13 @@ const APP_VER = "1.0";
 /* ---------- state ---------- */
 const AV_COLORS = ["#FF6F61","#21BFA0","#FFC93C","#5B8DEF","#A06BFF","#FF7AB6","#5FBF5F","#FF9F40"];
 const SKIN_TONES = ["#FFE0BD","#FCD9B6","#F1C27D","#E0AC69","#C68642","#8D5524"];
-const HAIR_COLORS = ["#2B2B2B","#6B4423","#C99A3B","#D35400","#A0522D","#7AC7FF"];
-const HAIR_STYLES = ["none","short","long","curly","wavy","bun"];
-const EYE_STYLES = ["round","happy","dot","wink"];
+const HAIR_COLORS = ["#2B2B2B","#3A2A1C","#6B4423","#9B6B43","#E0B968","#A0522D","#B7B3BE","#5BC8EF","#FF7AB6","#A06BFF","#21BFA0"];
+const HAIR_STYLES = ["none","short","tousled","crop","buzz","straight","wavy","curly","afro","long","ponytail","pigtails","bun"];
+var CN_HSK={"1":[{"h":"爱","p":"ài","en":"to love"},{"h":"八","p":"bā","en":"eight"},{"h":"爸爸","p":"bà ba","en":"father"},{"h":"杯子","p":"bēi zi","en":"cup"},{"h":"北京","p":"Běi jīng","en":"Beijing"},{"h":"本","p":"běn","en":"measure word"},{"h":"不","p":"bù","en":"no"},{"h":"不客气","p":"bù kè qi","en":"you're welcome"},{"h":"菜","p":"cài","en":"dish"},{"h":"茶","p":"chá","en":"tea"},{"h":"吃","p":"chī","en":"to eat"},{"h":"出租车","p":"chū zū chē","en":"taxi"},{"h":"打电话","p":"dǎ diàn huà","en":"to make a call"},{"h":"大","p":"dà","en":"big"},{"h":"的","p":"de","en":"of / 's"},{"h":"点","p":"diǎn","en":"point"},{"h":"电脑","p":"diàn nǎo","en":"computer"},{"h":"电视","p":"diàn shì","en":"television"},{"h":"电影","p":"diàn yǐng","en":"movie"},{"h":"东西","p":"dōng xī","en":"thing"},{"h":"都","p":"Dū","en":"surname Du"},{"h":"读","p":"dòu","en":"comma"},{"h":"对不起","p":"duì bu qǐ","en":"I'm sorry"},{"h":"多","p":"duō","en":"many"},{"h":"多少","p":"duō shǎo","en":"number"},{"h":"儿子","p":"ér zi","en":"son"},{"h":"二","p":"èr","en":"two"},{"h":"饭馆","p":"fàn guǎn","en":"restaurant"},{"h":"飞机","p":"fēi jī","en":"airplane"},{"h":"分钟","p":"fēn zhōng","en":"minute"},{"h":"高兴","p":"gāo xìng","en":"happy"},{"h":"个","p":"gě","en":"used in 自个儿"},{"h":"工作","p":"gōng zuò","en":"to work"},{"h":"狗","p":"gǒu","en":"dog"},{"h":"汉语","p":"Hàn yǔ","en":"Chinese language"},{"h":"好","p":"hǎo","en":"good"},{"h":"喝","p":"hē","en":"to drink"},{"h":"和","p":"hé","en":"old variant of 和"},{"h":"很","p":"hěn","en":""},{"h":"后面","p":"hòu mian","en":"the back"},{"h":"回","p":"huí","en":"to circle"},{"h":"会","p":"huì","en":"can"},{"h":"火车站","p":"huǒ chē zhàn","en":"train station"},{"h":"几","p":"jī","en":"small table"},{"h":"家","p":"jiā","en":"used in 家伙 and 家俱"},{"h":"叫","p":"jiào","en":"to shout"},{"h":"今天","p":"jīn tiān","en":"today"},{"h":"九","p":"jiǔ","en":"nine"},{"h":"开","p":"kāi","en":"to open"},{"h":"看","p":"kān","en":"to look after"},{"h":"看见","p":"kàn jiàn","en":"to see"},{"h":"块","p":"kuài","en":"lump"},{"h":"来","p":"lái","en":"to come"},{"h":"老师","p":"lǎo shī","en":"teacher"},{"h":"了","p":"le","en":""},{"h":"冷","p":"Lěng","en":"surname Leng"},{"h":"里","p":"lǐ","en":"variant of 里"},{"h":"零","p":"líng","en":"zero"},{"h":"六","p":"liù","en":"six"},{"h":"妈妈","p":"mā ma","en":"mama"},{"h":"吗","p":"má","en":"what?"},{"h":"买","p":"mǎi","en":"to buy"},{"h":"猫","p":"māo","en":"cat"},{"h":"没","p":"méi","en":"have not"},{"h":"没关系","p":"méi guān xi","en":"it doesn't matter"},{"h":"米饭","p":"mǐ fàn","en":"rice"},{"h":"名字","p":"míng zi","en":"name"},{"h":"明天","p":"míng tiān","en":"tomorrow"},{"h":"哪","p":"nǎ","en":"how"},{"h":"那","p":"Nā","en":"surname Na"},{"h":"呢","p":"ne","en":"question particle"},{"h":"能","p":"Néng","en":"surname Neng"},{"h":"你","p":"nǐ","en":"you"},{"h":"年","p":"Nián","en":"surname Nian"},{"h":"女儿","p":"nǚ ér","en":"daughter"},{"h":"朋友","p":"péng you","en":"friend"},{"h":"漂亮","p":"piào liang","en":"pretty"},{"h":"苹果","p":"píng guǒ","en":"apple"},{"h":"七","p":"qī","en":"seven"},{"h":"前面","p":"qián miàn","en":"ahead"},{"h":"钱","p":"Qián","en":"surname Qian"},{"h":"请","p":"qǐng","en":"to ask"},{"h":"去","p":"qù","en":"to go"},{"h":"热","p":"rè","en":"to warm up"},{"h":"人","p":"rén","en":"person"},{"h":"认识","p":"rèn shi","en":"to know"},{"h":"日","p":"Rì","en":"abbr. for 本"},{"h":"三","p":"Sān","en":"surname San"},{"h":"商店","p":"shāng diàn","en":"store"},{"h":"上","p":"shǎng","en":"used in 上声"},{"h":"上午","p":"shàng wǔ","en":"morning"},{"h":"少","p":"shǎo","en":"few"},{"h":"什么","p":"shén me","en":"what?"},{"h":"十","p":"shí","en":"ten"},{"h":"时候","p":"shí hou","en":"time"},{"h":"是","p":"shì","en":"to be"},{"h":"书","p":"Shū","en":"abbr. for 书经"},{"h":"谁","p":"shéi","en":"who"},{"h":"水","p":"Shuǐ","en":"surname Shui"},{"h":"水果","p":"shuǐ guǒ","en":"fruit"},{"h":"睡觉","p":"shuì jiào","en":"to go to bed"},{"h":"说话","p":"shuō huà","en":"to speak"},{"h":"四","p":"sì","en":"four"},{"h":"岁","p":"suì","en":"variant of 岁"},{"h":"他","p":"tā","en":"he"},{"h":"她","p":"tā","en":"she"},{"h":"太","p":"tài","en":"highest"},{"h":"天气","p":"tiān qì","en":"weather"},{"h":"听","p":"yǐn","en":"smile"},{"h":"同学","p":"tóng xué","en":"classmate"},{"h":"喂","p":"wéi","en":"hello"},{"h":"我","p":"wǒ","en":"I"},{"h":"我们","p":"wǒ men","en":"we"},{"h":"五","p":"wǔ","en":"five"},{"h":"喜欢","p":"xǐ huan","en":"to like"},{"h":"下","p":"xià","en":"down"},{"h":"下午","p":"xià wǔ","en":"afternoon"},{"h":"下雨","p":"xià yǔ","en":"to rain"},{"h":"先生","p":"xiān sheng","en":"teacher"},{"h":"现在","p":"xiàn zài","en":"now"},{"h":"想","p":"xiǎng","en":"to think"},{"h":"小","p":"xiǎo","en":"small"},{"h":"小姐","p":"xiǎo jie","en":"young lady"},{"h":"些","p":"xiē","en":"some"},{"h":"写","p":"xiě","en":"to write"},{"h":"谢谢","p":"xiè xie","en":"to thank"},{"h":"星期","p":"xīng qī","en":"week"},{"h":"学生","p":"xué sheng","en":"student"},{"h":"学习","p":"xué xí","en":"to learn"},{"h":"学校","p":"xué xiào","en":"school"},{"h":"一","p":"yī","en":"one"},{"h":"衣服","p":"yī fu","en":"clothes"},{"h":"医生","p":"yī shēng","en":"doctor"},{"h":"医院","p":"yī yuàn","en":"hospital"},{"h":"椅子","p":"yǐ zi","en":"chair"},{"h":"有","p":"yǒu","en":"to have"},{"h":"月","p":"yuè","en":"moon"},{"h":"再见","p":"zài jiàn","en":"goodbye"},{"h":"在","p":"zài","en":"to exist"},{"h":"怎么","p":"zěn me","en":"how?"},{"h":"怎么样","p":"zěn me yàng","en":"how?"},{"h":"这","p":"zhè","en":"this"},{"h":"中国","p":"Zhōng guó","en":"China"},{"h":"中午","p":"zhōng wǔ","en":"noon"},{"h":"住","p":"zhù","en":"to live"},{"h":"桌子","p":"zhuō zi","en":"table"},{"h":"字","p":"zì","en":"letter"},{"h":"昨天","p":"zuó tiān","en":"yesterday"},{"h":"坐","p":"Zuò","en":"surname Zuo"},{"h":"做","p":"zuò","en":"to make"}],"2":[{"h":"吧","p":"bā","en":"bar"},{"h":"白","p":"Bái","en":"surname Bai"},{"h":"百","p":"Bǎi","en":"surname Bai"},{"h":"帮助","p":"bāng zhù","en":"assistance"},{"h":"报纸","p":"bào zhǐ","en":"newspaper"},{"h":"比","p":"Bǐ","en":"Belgium"},{"h":"便宜","p":"biàn yí","en":"convenient"},{"h":"别","p":"Bié","en":"surname Bie"},{"h":"唱歌","p":"chàng gē","en":"to sing a song"},{"h":"出","p":"chū","en":"to go out"},{"h":"穿","p":"chuān","en":"to wear"},{"h":"船","p":"chuán","en":"variant of 船"},{"h":"次","p":"cì","en":"next in sequence"},{"h":"从","p":"cóng","en":"variant of 从"},{"h":"错","p":"Cuò","en":"surname Cuo"},{"h":"打篮球","p":"dǎ lán qiú","en":"to play basketball"},{"h":"大家","p":"dà jiā","en":"everyone"},{"h":"但是","p":"dàn shì","en":"but"},{"h":"到","p":"dào","en":"to reach"},{"h":"得","p":"dé","en":"to obtain"},{"h":"弟弟","p":"dì di","en":"younger brother"},{"h":"第一","p":"dì yī","en":"first"},{"h":"懂","p":"dǒng","en":"to understand"},{"h":"房间","p":"fáng jiān","en":"room"},{"h":"非常","p":"fēi cháng","en":"very"},{"h":"服务员","p":"fú wù yuán","en":"waiter"},{"h":"高","p":"Gāo","en":"surname Gao"},{"h":"告诉","p":"gào sù","en":"to press charges"},{"h":"哥哥","p":"gē ge","en":"older brother"},{"h":"给","p":"gěi","en":"to"},{"h":"公共汽车","p":"gōng gòng qì chē","en":"bus"},{"h":"公斤","p":"gōng jīn","en":"kilogram"},{"h":"公司","p":"gōng sī","en":"company"},{"h":"贵","p":"guì","en":"expensive"},{"h":"还","p":"Huán","en":"surname Huan"},{"h":"孩子","p":"hái zi","en":"child"},{"h":"好吃","p":"hǎo chī","en":"tasty"},{"h":"号","p":"háo","en":"roar"},{"h":"黑","p":"Hēi","en":"black"},{"h":"红","p":"Hóng","en":"surname Hong"},{"h":"欢迎","p":"huān yíng","en":"to welcome"},{"h":"回答","p":"huí dá","en":"to reply"},{"h":"机场","p":"jī chǎng","en":"airport"},{"h":"鸡蛋","p":"jī dàn","en":"egg"},{"h":"件","p":"jiàn","en":"item"},{"h":"教室","p":"jiào shì","en":"classroom"},{"h":"介绍","p":"jiè shào","en":"to introduce"},{"h":"姐姐","p":"jiě jie","en":"older sister"},{"h":"近","p":"jìn","en":"near"},{"h":"进","p":"jìn","en":"to go forward"},{"h":"就","p":"jiù","en":"in that case"},{"h":"觉得","p":"jué de","en":"to think that ..."},{"h":"咖啡","p":"kā fēi","en":"coffee"},{"h":"开始","p":"kāi shǐ","en":"to begin"},{"h":"考试","p":"kǎo shì","en":"to take an exam"},{"h":"可能","p":"kě néng","en":"might"},{"h":"可以","p":"kě yǐ","en":"can"},{"h":"课","p":"kè","en":"subject"},{"h":"快","p":"kuài","en":"rapid"},{"h":"快乐","p":"kuài lè","en":"happy"},{"h":"累","p":"lěi","en":"to accumulate"},{"h":"离","p":"chī","en":"mythical beast"},{"h":"两","p":"liǎng","en":"two"},{"h":"路","p":"Lù","en":"surname Lu"},{"h":"旅游","p":"lǚ yóu","en":"trip"},{"h":"卖","p":"mài","en":"to sell"},{"h":"慢","p":"màn","en":"slow"},{"h":"忙","p":"máng","en":"busy"},{"h":"每","p":"měi","en":"each"},{"h":"妹妹","p":"mèi mei","en":"younger sister"},{"h":"门","p":"Mén","en":"surname Men"},{"h":"男人","p":"nán rén","en":"a man"},{"h":"您","p":"nín","en":"you"},{"h":"牛奶","p":"niú nǎi","en":"cow's milk"},{"h":"女人","p":"nǚ rén","en":"woman"},{"h":"旁边","p":"páng biān","en":"side"},{"h":"跑步","p":"pǎo bù","en":"to run"},{"h":"票","p":"piào","en":"ticket"},{"h":"妻子","p":"qī zǐ","en":"wife and children"},{"h":"起床","p":"qǐ chuáng","en":"to get out of bed"},{"h":"千","p":"qiān","en":"thousand"},{"h":"晴","p":"qíng","en":"clear"},{"h":"去年","p":"qù nián","en":"last year"},{"h":"让","p":"ràng","en":"to yield"},{"h":"上班","p":"shàng bān","en":"to go to work"},{"h":"身体","p":"shēn tǐ","en":"the body"},{"h":"生病","p":"shēng bìng","en":"to fall ill"},{"h":"生日","p":"shēng rì","en":"birthday"},{"h":"时间","p":"shí jiān","en":"time"},{"h":"事情","p":"shì qing","en":"affair"},{"h":"手表","p":"shǒu biǎo","en":"wristwatch"},{"h":"手机","p":"shǒu jī","en":"cell phone"},{"h":"送","p":"sòng","en":"to send"},{"h":"所以","p":"suǒ yǐ","en":"therefore"},{"h":"它","p":"tā","en":"it"},{"h":"踢","p":"tī","en":"to kick"},{"h":"题","p":"Tí","en":"surname Ti"},{"h":"跳舞","p":"tiào wǔ","en":"to dance"},{"h":"外","p":"wài","en":"outside"},{"h":"完","p":"wán","en":"to finish"},{"h":"玩","p":"wán","en":"to play"},{"h":"晚上","p":"wǎn shang","en":"evening"},{"h":"为","p":"wéi","en":"as"},{"h":"问","p":"wèn","en":"to ask"},{"h":"问题","p":"wèn tí","en":"question"},{"h":"希望","p":"xī wàng","en":"to hope"},{"h":"洗","p":"xǐ","en":"to wash"},{"h":"西瓜","p":"xī guā","en":"watermelon"},{"h":"向","p":"Xiàng","en":"surname Xiang"},{"h":"小时","p":"xiǎo shí","en":"hour"},{"h":"笑","p":"xiào","en":"old variant of 笑"},{"h":"新","p":"Xīn","en":"new"},{"h":"姓","p":"xìng","en":"family name"},{"h":"休息","p":"xiū xi","en":"rest"},{"h":"雪","p":"Xuě","en":"surname Xue"},{"h":"颜色","p":"yán sè","en":"color"},{"h":"眼睛","p":"yǎn jing","en":"eye"},{"h":"羊肉","p":"yáng ròu","en":"mutton"},{"h":"药","p":"yào","en":"leaf of the iris"},{"h":"要","p":"yāo","en":"to demand"},{"h":"也","p":"Yě","en":"surname Ye"},{"h":"一起","p":"yī qǐ","en":"in the same place"},{"h":"已经","p":"yǐ jīng","en":"already"},{"h":"意思","p":"yì si","en":"idea"},{"h":"因为","p":"yīn wèi","en":"because"},{"h":"阴","p":"Yīn","en":"surname Yin"},{"h":"游泳","p":"yóu yǒng","en":"swimming"},{"h":"右边","p":"yòu bian","en":"right side"},{"h":"鱼","p":"Yú","en":"surname Yu"},{"h":"元","p":"Yuán","en":"surname Yuan"},{"h":"远","p":"yuǎn","en":"far"},{"h":"运动","p":"yùn dòng","en":"to move"},{"h":"再","p":"zài","en":"again"},{"h":"早上","p":"zǎo shang","en":"early morning"},{"h":"张","p":"Zhāng","en":"surname Zhang"},{"h":"长","p":"cháng","en":"length"},{"h":"丈夫","p":"zhàng fu","en":"husband"},{"h":"找","p":"zhǎo","en":"to try to find"},{"h":"着","p":"zhāo","en":"move"},{"h":"真","p":"zhēn","en":"really"},{"h":"正在","p":"zhèng zài","en":"just at"},{"h":"知道","p":"zhī dào","en":"to know"},{"h":"准备","p":"zhǔn bèi","en":"preparation"},{"h":"自行车","p":"zì xíng chē","en":"bicycle"},{"h":"走","p":"zǒu","en":"to walk"},{"h":"最","p":"zuì","en":"variant of 最"},{"h":"左边","p":"zuǒ bian","en":"left"}]};
+const EYE_STYLES = ["round","almond","happy","dot","wink"];
 const MOUTH_STYLES = ["smile","grin","neutral","wow"];
-const GLASS_COLORS = ["#FFC93C","#5B8DEF","#2B2B2B","#FF6F61","#21BFA0","#FF7AB6"];
+const BROW_STYLES = ["none","soft","flat","raised"];
+const GLASS_COLORS = ["#2B2B2B","#7A4B2B","#C9A24B","#8FB3CF","#5B8DEF","#FFC93C","#FF6F61","#21BFA0","#FF7AB6"];
 const DEFAULT_FR = ["chat","maison","école","manger","ami","jouer","livre","eau"];
 const DEFAULT_EN = ["cat","house","school","eat","friend","play","book","water"];
 function defaultLists(){
@@ -515,7 +602,7 @@ function seedGradeLists(grade){
   return out.length?out:defaultLists();
 }
 
-function defaultCharacter(){ return {skin:"#FCD9B6",hair:"short",hairColor:"#6B4423",eyes:"round",mouth:"smile",glasses:"none"}; }
+function defaultCharacter(){ return {skin:"#FCD9B6",hair:"short",hairColor:"#6B4423",eyes:"round",mouth:"smile",glasses:"none",glassShape:"round",brows:"soft"}; }
 
 function hairBack(c){
   const h=c.hairColor;
@@ -524,8 +611,15 @@ function hairBack(c){
     case 'long': return `<path d="M18 56 Q18 22 50 22 Q82 22 82 56 L82 86 L68 86 L68 54 Q68 40 50 40 Q32 40 32 54 L32 86 L18 86 Z" fill="${h}"/>`;
     case 'curly': return `<circle cx="32" cy="34" r="13" fill="${h}"/><circle cx="50" cy="28" r="14" fill="${h}"/><circle cx="68" cy="34" r="13" fill="${h}"/><circle cx="24" cy="50" r="11" fill="${h}"/><circle cx="76" cy="50" r="11" fill="${h}"/>`;
     case 'spiky':
-    case 'wavy': return `<path d="M16 60 Q14 21 50 21 Q86 21 84 60 Q78 53 72 60 Q66 53 60 60 Q54 52 50 58 Q46 52 40 60 Q34 53 28 60 Q22 53 16 60 Z" fill="${h}"/>`;
+    case 'wavy': return `<path d="M16 60 Q13 22 50 22 Q87 22 84 60 Q79 54 73 61 Q67 54 61 61 Q55 54 50 60 Q45 54 39 61 Q33 54 27 61 Q21 54 16 60 Z" fill="${h}"/>`;
     case 'bun': return `<circle cx="50" cy="46" r="31" fill="${h}"/><circle cx="50" cy="21" r="9" fill="${h}"/>`;
+    case 'straight': return `<path d="M16 58 Q16 20 50 20 Q84 20 84 58 L84 70 Q84 78 78 78 Q74 78 74 60 Q74 40 50 40 Q26 40 26 60 Q26 78 22 78 Q16 78 16 70 Z" fill="${h}"/>`;
+    case 'tousled': return `<path d="M21 56 Q18 32 27 25 Q30 31 33 26 Q36 20 40 27 Q44 20 47 27 Q50 19 54 27 Q57 20 61 27 Q65 20 68 26 Q73 31 79 56 Q70 47 50 46 Q30 47 21 56 Z" fill="${h}"/>`;
+    case 'crop': return `<path d="M22 54 Q19 25 35 21 Q48 18 63 21 Q80 25 78 54 Q70 45 50 44 Q30 45 22 54 Z" fill="${h}"/>`;
+    case 'buzz': return `<path d="M25 50 Q25 25 50 25 Q75 25 75 50 Q70 41 50 40 Q30 41 25 50 Z" fill="${h}"/>`;
+    case 'afro': return `<path d="M50 15 Q71 14 79 28 Q93 33 88 50 Q92 64 79 70 Q77 81 63 78 Q56 83 50 79 Q44 83 37 78 Q23 81 21 70 Q8 64 12 50 Q7 33 21 28 Q29 14 50 15 Z" fill="${h}"/>`;
+    case 'ponytail': return `<path d="M22 54 Q20 24 50 22 Q80 24 78 54 Q70 45 50 44 Q30 45 22 54 Z" fill="${h}"/><path d="M73 32 Q93 30 91 48 Q90 62 78 58 Q74 46 73 32 Z" fill="${h}"/>`;
+    case 'pigtails': return `<path d="M24 52 Q22 24 50 22 Q78 24 76 52 Q70 44 50 43 Q30 44 24 52 Z" fill="${h}"/><circle cx="16" cy="57" r="9" fill="${h}"/><circle cx="84" cy="57" r="9" fill="${h}"/><path d="M23 50 Q15 51 16 57" stroke="${h}" stroke-width="4" fill="none"/><path d="M77 50 Q85 51 84 57" stroke="${h}" stroke-width="4" fill="none"/>`;
     default: return '';
   }
 }
@@ -535,11 +629,18 @@ function hairUnderHat(c){
   return `<path d="M20 72 Q18 34 50 34 Q82 34 80 72 L80 80 Q50 88 20 80 Z" fill="${h}"/>`;
 }
 const COVERING_HATS = ['cap','beanie','wizard','chef','pirate','cowboy','party'];
+function browsSVG(c){
+  const b=c.brows||'none'; if(b==='none') return '';
+  const h=c.hairColor||'#33304a';
+  const L={soft:'<path d="M34 47.5 Q40 44.5 46 47"/><path d="M54 47 Q60 44.5 66 47.5"/>',flat:'<path d="M34 46.5 L46 46.5"/><path d="M54 46.5 L66 46.5"/>',raised:'<path d="M34 48 Q40 43 46 46"/><path d="M54 46 Q60 43 66 48"/>'};
+  return `<g stroke="${h}" stroke-width="2.6" fill="none" stroke-linecap="round">${L[b]||L.soft}</g>`;
+}
 function eyesSVG(c){
   const ink='#33304a';
   switch(c.eyes){
     case 'happy': return `<path d="M34 55 Q40 49 46 55" stroke="${ink}" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M54 55 Q60 49 66 55" stroke="${ink}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
     case 'dot': return `<circle cx="40" cy="54" r="3" fill="${ink}"/><circle cx="60" cy="54" r="3" fill="${ink}"/>`;
+    case 'almond': return `<path d="M32 54 Q40 49 48 54 Q40 57.5 32 54 Z" fill="${ink}"/><path d="M52 54 Q60 49 68 54 Q60 57.5 52 54 Z" fill="${ink}"/><circle cx="41" cy="53" r="1.2" fill="#fff"/><circle cx="61" cy="53" r="1.2" fill="#fff"/>`;
     case 'wink': return `<circle cx="40" cy="54" r="4.5" fill="${ink}"/><circle cx="41.6" cy="52.4" r="1.4" fill="#fff"/><path d="M55 54 Q60 50 65 54" stroke="${ink}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
     default: return `<circle cx="40" cy="54" r="4.5" fill="${ink}"/><circle cx="60" cy="54" r="4.5" fill="${ink}"/><circle cx="41.6" cy="52.4" r="1.5" fill="#fff"/><circle cx="61.6" cy="52.4" r="1.5" fill="#fff"/>`;
   }
@@ -555,11 +656,12 @@ function mouthSVG(c){
 }
 function glassesSVG(c){
   if(!c.glasses || c.glasses==='none') return '';
-  const g=c.glasses;
-  return `<g stroke="${g}" stroke-width="2.6" fill="none" stroke-linecap="round">
-    <circle cx="40" cy="54" r="9" fill="${g}" fill-opacity="0.14"/>
-    <circle cx="60" cy="54" r="9" fill="${g}" fill-opacity="0.14"/>
-    <path d="M49 54 H51"/><path d="M31 52 L24 50"/><path d="M69 52 L76 50"/></g>`;
+  const g=c.glasses, shape=c.glassShape||'round';
+  let lens;
+  if(shape==='rect') lens=`<rect x="31" y="48" width="17" height="13" rx="3" fill="${g}" fill-opacity="0.14"/><rect x="52" y="48" width="17" height="13" rx="3" fill="${g}" fill-opacity="0.14"/><path d="M48 54 H52"/><path d="M31 51 L24 49"/><path d="M69 51 L76 49"/>`;
+  else if(shape==='oval') lens=`<ellipse cx="40" cy="54" rx="10" ry="7" fill="${g}" fill-opacity="0.14"/><ellipse cx="60" cy="54" rx="10" ry="7" fill="${g}" fill-opacity="0.14"/><path d="M30 52 L24 50"/><path d="M70 52 L76 50"/>`;
+  else lens=`<circle cx="40" cy="54" r="9" fill="${g}" fill-opacity="0.14"/><circle cx="60" cy="54" r="9" fill="${g}" fill-opacity="0.14"/><path d="M49 54 H51"/><path d="M31 52 L24 50"/><path d="M69 52 L76 50"/>`;
+  return `<g stroke="${g}" stroke-width="2.6" fill="none" stroke-linecap="round">${lens}</g>`;
 }
 
 const SHOP_ITEMS = [
@@ -787,10 +889,32 @@ function avatarInner(p, hatOverride, frameOverride){
   const hat = (hatOverride!==undefined) ? hatOverride : (p.equip ? p.equip.hat : null);
   const hairUnder = hat && COVERING_HATS.indexOf(hat)>=0;
   const frame = (frameOverride!==undefined) ? frameOverride : (p.equip ? p.equip.frame : null);
-  return `<circle cx="50" cy="50" r="48" fill="${col}"/>${hairUnder?hairUnderHat(c):hairBack(c)}<circle cx="50" cy="56" r="28" fill="${c.skin}"/>${eyesSVG(c)}${glassesSVG(c)}${mouthSVG(c)}${hat?'<g stroke="#2b2540" stroke-opacity="0.2" stroke-width="1.4" stroke-linejoin="round">'+hatSVG(hat)+'</g>':''}${frame?frameSVG(frame):''}`;
+  return `<circle cx="50" cy="50" r="48" fill="${col}"/>${hairUnder?hairUnderHat(c):hairBack(c)}<circle cx="50" cy="56" r="28" fill="${c.skin}"/>${eyesSVG(c)}${browsSVG(c)}${glassesSVG(c)}${mouthSVG(c)}${hat?'<g stroke="#2b2540" stroke-opacity="0.2" stroke-width="1.4" stroke-linejoin="round">'+hatSVG(hat)+'</g>':''}${frame?frameSVG(frame):''}`;
 }
 function avatarSVG(p, hatOverride, frameOverride){
   return `<svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block">${avatarInner(p,hatOverride,frameOverride)}</svg>`;
+}
+
+function homeHero(p){
+  const col = p.color || '#FF6F61';
+  const hasPet = !!(p.equip && p.equip.pet);
+  const avRight = hasPet ? 60 : 34;
+  const haloCx = 340 - avRight - 25;
+  const pet = hasPet ? `<div class="hh-bob2" style="position:absolute;right:18px;bottom:6px;width:34px;height:34px;"><svg viewBox="-20 -22 40 44" width="100%" height="100%">${petShape(p.equip.pet)}</svg></div>` : '';
+  return `
+      <div class="home-hero" style="background:${col}1f;">
+        <svg class="hh-bg" viewBox="0 0 340 70" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <circle cx="${haloCx}" cy="40" r="36" fill="${col}" opacity="0.10"/>
+          <circle cx="${haloCx}" cy="40" r="26" fill="${col}" opacity="0.12"/>
+          <circle cx="96" cy="34" r="2.4" fill="#FF6F61" opacity="0.6"/>
+          <circle cx="185" cy="48" r="2.4" fill="#21BFA0" opacity="0.6"/>
+          <path transform="translate(140,18) scale(0.85)" d="M0 -5 l1.3 3.2 3.5 .2 -2.7 2.3 .9 3.4 -3 -1.9 -3 1.9 .9 -3.4 -2.7 -2.3 3.5 -.2z" fill="#FFC93C" opacity="0.8"/>
+          <path transform="translate(302,22) scale(0.75)" d="M0 -5 l1.3 3.2 3.5 .2 -2.7 2.3 .9 3.4 -3 -1.9 -3 1.9 .9 -3.4 -2.7 -2.3 3.5 -.2z" fill="#FF7AB6" opacity="0.75"/>
+        </svg>
+        <div class="hh-greet">${t('hi')} ${esc(p.name)} !</div>
+        <div class="hh-bob hh-av" style="right:${avRight}px;">${avatarSVG(p)}</div>
+        ${pet}
+      </div>`;
 }
 
 /* ---- storage layer: sync, in-memory cache, write-through to localStorage (safe fallback) ---- */
@@ -855,6 +979,9 @@ function render(){
   else if (route === 'house') v.innerHTML = viewHouse();
   else if (route === 'mathcfg') v.innerHTML = viewMathCfg();
   else if (route === 'mathgame') v.innerHTML = viewMathGame();
+  else if (route === 'cnstart') v.innerHTML = viewCnStart();
+  else if (route === 'cngame') v.innerHTML = viewCnGame();
+  else if (route === 'cnparent') v.innerHTML = viewCnParent();
   else if (route === 'about') v.innerHTML = viewAbout();
   else if (route === 'progress') v.innerHTML = viewProgress();
   else if (route === 'voices') v.innerHTML = viewVoices();
@@ -864,6 +991,7 @@ function render(){
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
   if (route === 'mathgame') paintMath();
+  if (route === 'cngame') paintCnGame();
   bindLive();
 }
 
@@ -929,9 +1057,10 @@ function viewCreator(){
   const c = Object.assign(defaultCharacter(), draft.character||{});
   const swRow = (arr, field, cur) => arr.map(v=>`<button class="opt opt-sw ${v===cur?'on':''}" style="background:${v}" onclick="setChar('${field}','${v}')"></button>`).join('');
   const chipRow = (arr, field, cur, labels) => arr.map(v=>`<button class="opt ${v===cur?'on':''}" onclick="setChar('${field}','${v}')">${labels[v]}</button>`).join('');
-  const hairL={none:t('hairNone'),short:t('hairShort'),long:t('hairLong'),curly:t('hairCurly'),wavy:t('hairWavy'),bun:t('hairBun')};
-  const eyeL={round:t('eRound'),happy:t('eHappy'),dot:t('eDot'),wink:t('eWink')};
+  const hairL={none:t('hairNone'),short:t('hairShort'),tousled:t('hairTousled'),crop:t('hairCrop'),buzz:t('hairBuzz'),straight:t('hairStraight'),wavy:t('hairWavy'),curly:t('hairCurly'),afro:t('hairAfro'),long:t('hairLong'),ponytail:t('hairPony'),pigtails:t('hairPigtails'),bun:t('hairBun')};
+  const eyeL={round:t('eRound'),almond:t('eAlmond'),happy:t('eHappy'),dot:t('eDot'),wink:t('eWink')};
   const mouthL={smile:t('mSmile'),grin:t('mGrin'),neutral:t('mNeutral'),wow:t('mWow')};
+  const browL={none:t('browNone'),soft:t('browSoft'),flat:t('browFlat'),raised:t('browRaised')};
   return `
     <div class="screen active">
       <div class="backbar"><button class="backbtn" onclick="navigate('editor')">${IC.back}${t('back')}</button></div>
@@ -942,10 +1071,14 @@ function viewCreator(){
       <div class="cat"><label>${t('hairStyle')}</label><div class="opt-row">${chipRow(HAIR_STYLES,'hair',c.hair,hairL)}</div></div>
       <div class="cat"><label>${t('hairColor')}</label><div class="opt-row">${swRow(HAIR_COLORS,'hairColor',c.hairColor)}</div></div>
       <div class="cat"><label>${t('eyes')}</label><div class="opt-row">${chipRow(EYE_STYLES,'eyes',c.eyes,eyeL)}</div></div>
+      <div class="cat"><label>${t('brows')}</label><div class="opt-row">${chipRow(BROW_STYLES,'brows',c.brows,browL)}</div></div>
       <div class="cat"><label>${t('mouth')}</label><div class="opt-row">${chipRow(MOUTH_STYLES,'mouth',c.mouth,mouthL)}</div></div>
       <div class="cat"><label>${t('glasses')}</label><div class="opt-row">
         <button class="opt ${(!c.glasses||c.glasses==='none')?'on':''}" onclick="setChar('glasses','none')">${t('gNone')}</button>
         ${GLASS_COLORS.map(v=>`<button class="opt ${c.glasses===v?'on':''}" onclick="setChar('glasses','${v}')"><svg viewBox="0 0 44 22" width="36" height="18" style="display:block"><circle cx="13" cy="11" r="8" fill="none" stroke="${v}" stroke-width="2.6"/><circle cx="31" cy="11" r="8" fill="none" stroke="${v}" stroke-width="2.6"/><path d="M21 11h2" stroke="${v}" stroke-width="2.6"/></svg></button>`).join('')}
+      </div></div>
+      <div class="cat"><label>${t('glassShape')}</label><div class="opt-row">
+        ${[['round','<circle cx="13" cy="11" r="8"/><circle cx="31" cy="11" r="8"/><path d="M21 11h2"/>'],['rect','<rect x="5" y="4" width="16" height="14" rx="3"/><rect x="23" y="4" width="16" height="14" rx="3"/><path d="M21 11h2"/>'],['oval','<ellipse cx="13" cy="11" rx="9" ry="6"/><ellipse cx="31" cy="11" rx="9" ry="6"/>']].map(sh=>{const gc=(c.glasses&&c.glasses!=='none')?c.glasses:'#33304a'; return `<button class="opt ${(c.glassShape||'round')===sh[0]?'on':''}" onclick="setChar('glassShape','${sh[0]}')"><svg viewBox="0 0 44 22" width="36" height="18" style="display:block" fill="none" stroke="${gc}" stroke-width="2.6" stroke-linecap="round">${sh[1]}</svg></button>`;}).join('')}
       </div></div>
       <div class="spacer"></div>
       <button class="btn-primary" onclick="navigate('editor')">${t('save')}</button>
@@ -964,17 +1097,18 @@ function viewHome(){
   return `
     <div class="screen active">
       <div class="topbar">
-        <div class="who"><div class="av">${avatarSVG(p)}</div><b>${esc(p.name)}</b></div>
+        <span class="coins">${IC.star}${p.coins||0}</span>
         <div class="topright">
-          <span class="coins">${IC.star}${p.coins||0}</span>
           <button class="langpill" onclick="toggleLang()">${lang==='FR'?'EN':'FR'}</button>
           <button class="iconbtn" onclick="navigate('profiles')" aria-label="${t('switchP')}">${IC.users}</button>
         </div>
       </div>
-      <div class="hello">${t('hi')} ${esc(p.name)} !</div>
-      ${!store.get('hg_introSeen') ? `<div class="intro-card"><div class="intro-eyebrow">${t('introEyebrow')}</div><div class="intro-body">${t('introBody')}</div><div class="intro-row"><button class="intro-go" onclick="introSetup()">${t('introGo')}</button><button class="intro-dismiss" onclick="dismissIntro()">${t('introDismiss')}</button></div></div>` : ''}
+      ${homeHero(p)}
+      ${!store.get('hg_introSeen') ? `<div class="intro-card"><div class="intro-eyebrow">${t('introEyebrow')}</div><div class="intro-body">${t('introBody')}</div><div class="intro-note">${t('voiceNote')}</div><div class="intro-row"><button class="intro-go" onclick="introSetup()">${t('introGo')}</button><button class="intro-dismiss" onclick="dismissIntro()">${t('introDismiss')}</button></div></div>` : ''}
+      ${listNudgeHTML(p)}
       <button class="mode-btn mode-dict" onclick="openDict()"><div class="mic">${IC.book}</div><div><b>${t('dict')}</b><span>${t('dictSub')}</span></div></button>
       <button class="mode-btn mode-math" onclick="openMath()"><div class="mic">${IC.calc}</div><div><b>${t('maths')}</b><span>${t('mathsSub')}</span></div></button>
+      <button class="mode-btn mode-cn" onclick="openChinese()"><div class="mic">中文</div><div><b>${t('cnMode')}</b><span>${t('cnSub')}</span></div></button>
       <div class="row2">
         <button class="soft-btn" onclick="openShop()">${IC.bag}${t('shopTitle')}</button>
         <button class="soft-btn" onclick="openHouse()">${IC.trophy}${t('house')}</button>
@@ -1003,6 +1137,7 @@ function viewVoices(){
       <div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>
       <div class="scr-title">${t('voicesTitle')}</div>
       <p class="hint" style="text-align:center;margin:0 8px 16px;">${t('voicesIntro')}</p>
+      <div class="vbox"><div class="vlang">${t('voiceEnhanced')}</div><div class="hint">EN: ${voiceStatusLabel('EN')} &middot; FR: ${voiceStatusLabel('FR')}</div></div>
       ${block('FR','Fran\u00e7ais')}
       ${block('EN','English')}
       <div class="vnote">${t('voicesHelp')}</div>
@@ -1026,6 +1161,7 @@ function viewAbout(){
         <p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('progressAboutBody')}</p>
       </div>
       <div class="about-card"><div class="about-h">${t('scanAboutTitle')}</div><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('scanAboutBody')}</p></div>
+      <div class="about-card"><div class="about-h">${t('gardenAboutTitle')}</div><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('gardenAboutBody')}</p></div>
       <button class="link-btn" onclick="replayIntro()">${IC.bulb}${t('replayIntro')}</button>
       <div class="about-card"><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('privacyLine')}</p></div>
       <div class="about-card"><p style="font-weight:700;color:var(--ink);line-height:1.45;">${t('feedbackLine')} <a href="mailto:thierrydamien@gmail.com" style="color:var(--primary);font-weight:800;text-decoration:none;">thierrydamien@gmail.com</a></p></div>
@@ -1112,6 +1248,7 @@ function viewParent(){
       <button class="link-btn" onclick="navigate('library')">${IC.plus}${t('libraryBtn')}</button>
       <button class="link-btn" onclick="startScan()">${IC.cam}${t('scanBtn')}</button>
       <button class="link-btn" onclick="navigate('voices')">${IC.sound}${t('voicesBtn')}</button>
+      <button class="link-btn" onclick="navigate('cnparent')">中 ${t('cnWordsBtn')}</button>
       <button class="link-btn" onclick="navigate('backup')">${IC.save}${t('backupBtn')}</button>
       ${confirmReset ? `<div class="confirm-box"><div class="cb-msg">${t('resetConfirm').replace('{name}', esc(p?p.name:''))}</div><div class="cb-row"><button class="btn-ghost" onclick="cancelReset()">${t('cancel')}</button><button class="btn-danger" onclick="doResetProgress()">${t('resetBtn')}</button></div></div>` : `<button class="link-btn" onclick="askReset()">${t('resetProgress')}</button>`}
       <button class="btn-ghost" onclick="openParent()">${t('changePin')}... </button>
@@ -1146,15 +1283,17 @@ function viewProgress(){
       return `<div class="mp-row"><span class="mp-op">${sym(o)}</span><span class="ws-bar" style="margin:0;flex:1"><span class="ws-seg ws-known" style="width:${pct}%"></span></span><span class="mp-val">${c}/${h.length}</span></div>`; }).join('');
     return `<div class="prog-card"><div class="pc-head"><b>${t('progMaths')}</b></div>${rows}</div>`;
   };
+  const trickyBlock=(p)=>{ return ['FR','EN'].map(lng=>{ const tl=trickyLetters(p,lng); if(!tl.length) return ''; const mm=(p.letterErr&&p.letterErr[lng])||{}; const chips=tl.map(c=>`<span class="tl-chip">${esc(c)}<small>${mm[c]}</small></span>`).join(''); return `<div class="prog-card"><div class="pc-head"><b>${t('trickyTitle')} (${lng})</b></div><div class="tl-wrap">${chips}</div></div>`; }).join(''); };
+  const patternBlock=(p)=>{ return ['FR','EN'].map(lng=>{ const m=(p.patternStats&&p.patternStats[lng])||{}; const rows=Object.keys(m).filter(k=>((m[k].r||0)+(m[k].w||0))>=2).map(k=>{ const r=m[k].r||0,w=m[k].w||0,tot=r+w; return {k,r,tot,pct:Math.round(r/tot*100)}; }).sort((a,b)=>a.pct-b.pct).slice(0,5); if(!rows.length) return ''; const html=rows.map(o=>`<div class="mp-row"><span class="pat-label">${t(o.k)}</span><span class="ws-bar" style="margin:0;flex:1"><span class="ws-seg ws-known" style="width:${o.pct}%"></span></span><span class="mp-val">${o.r}/${o.tot}</span></div>`).join(''); return `<div class="prog-card"><div class="pc-head"><b>${t('patternsTitle')} (${lng})</b></div>${html}</div>`; }).join(''); };
   const childBlock=(p)=>{
     ensureEconomy(p);
     let agg={known:0,practising:0,neww:0,total:0};
     ['FR','EN'].forEach(lng=>listsFor(p,lng).forEach(l=>{ const g=listProgress(p,l); agg.known+=g.known; agg.practising+=g.practising; agg.neww+=g.neww; agg.total+=g.total; }));
     const aw=agg.total?agg.known/agg.total*100:0, ap=agg.total?agg.practising/agg.total*100:0;
-    const lb=listsBlock(p); const mb=mathsBlock(p);
+    const lb=listsBlock(p); const mb=mathsBlock(p); const tb=trickyBlock(p); const pb=patternBlock(p);
     return `<div class="prog-child">
         <div class="pc-top"><div class="pc-av">${avatarSVG(p)}</div><div class="pc-cmid"><div class="pc-cname">${esc(p.name)}</div><div class="ws-bar"><span class="ws-seg ws-known" style="width:${aw}%"></span><span class="ws-seg ws-practising" style="width:${ap}%"></span></div><div class="pc-sum">${agg.known} ${t('statusKnown')} &middot; ${agg.practising} ${t('statusPractising')} &middot; ${agg.neww} ${t('statusNew')}</div></div></div>
-        ${(lb+mb)||`<div class="lc-empty">${t('progressNone')}</div>`}
+        ${(lb+mb+tb+pb)||`<div class="lc-empty">${t('progressNone')}</div>`}
       </div>`;
   };
   const body=profiles.map(childBlock).join('');
@@ -1266,7 +1405,7 @@ function viewScan(){
   }
   return `<div class="screen active">${back}<div class="scr-title">${t('scanTitle')}</div>${body}</div>`;
 }
-function createList(lng){ confirmDel=false; const p=activeProfile(); if(!p) return; ensureEconomy(p); const l={id:uid(), name:t('newListName'), lang:lng, words:[]}; p.lists.push(l); saveProfiles(); editingListId=l.id; navigate('listedit'); }
+function createList(lng){ confirmDel=false; const p=activeProfile(); if(!p) return; ensureEconomy(p); const l={id:uid(), name:t('newListName'), lang:lng, words:[]}; p.lists.push(l); p.addedCustom=true; saveProfiles(); editingListId=l.id; navigate('listedit'); }
 function editList(id){ confirmDel=false; editingListId=id; navigate('listedit'); }
 function viewListEdit(){
   const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
@@ -1403,12 +1542,14 @@ function pickProfile(id){ activeId=id; store.set('hg_active', id); navigate('hom
 
 /* ---------- shop / wardrobe ---------- */
 let shopMsg='';
-function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null}; if(p.equip.wall===undefined) p.equip.wall=null; if(p.equip.frame===undefined) p.equip.frame=null; if(p.equip.pet===undefined) p.equip.pet=null; if(p.equip.floor===undefined) p.equip.floor=null; if(!p.hidden) p.hidden=[];
-  if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; if(!p.wordStats) p.wordStats={}; if(!p.modesTried) p.modesTried={}; if(!p.mathOps) p.mathOps={}; if(!p.mathStats) p.mathStats={}; if(!p.trophies){ p.trophies={}; const _m=p.medals||[]; const _bp=(k,tr)=>{ if(rank(tr)>rank(p.trophies[k])) p.trophies[k]=tr; }; if(_m.indexOf('master10')>=0)_bp('words','bronze'); if(_m.indexOf('master25')>=0)_bp('words','silver'); if(_m.indexOf('master50')>=0)_bp('words','gold'); if(_m.indexOf('scholar25')>=0)_bp('correct','bronze'); if(_m.indexOf('scholar75')>=0)_bp('correct','silver'); if(_m.indexOf('scholar150')>=0)_bp('correct','gold'); if(_m.indexOf('listComplete')>=0)_bp('lists','bronze'); if(_m.indexOf('allLists')>=0)_bp('lists','gold'); if(_m.indexOf('firstPerfect')>=0)_bp('perfect','bronze'); if(_m.indexOf('allModes')>=0)_bp('explorer','gold'); } if(!p.sent) p.sent={fr:{},en:{}}; if(!p.sent.fr) p.sent.fr={}; if(!p.sent.en) p.sent.en={}; if(!p.lists){ p.lists=[]; const _mk=(arr,sm,lng,nm)=>{ if(arr&&arr.length) p.lists.push({id:uid(), name:nm, lang:lng, words:arr.map(w=>({w, s:(sm&&sm[w])||''}))}); }; _mk(p.fr, p.sent.fr, 'FR', 'Mes mots'); _mk(p.en, p.sent.en, 'EN', 'My words'); } }
+function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null}; if(p.equip.wall===undefined) p.equip.wall=null; if(p.equip.frame===undefined) p.equip.frame=null; if(p.equip.pet===undefined) p.equip.pet=null; if(p.equip.floor===undefined) p.equip.floor=null; if(!p.hidden) p.hidden=[]; if(!p.layout) p.layout={};
+  if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; if(!p.wordStats) p.wordStats={}; if(!p.modesTried) p.modesTried={}; if(!p.mathOps) p.mathOps={}; if(!p.mathStats) p.mathStats={}; if(!p.letterErr) p.letterErr={FR:{},EN:{}}; if(!p.letterErr.FR) p.letterErr.FR={}; if(!p.letterErr.EN) p.letterErr.EN={}; if(!p.patternStats) p.patternStats={FR:{},EN:{}}; if(!p.patternStats.FR) p.patternStats.FR={}; if(!p.patternStats.EN) p.patternStats.EN={}; if(!p.trophies){ p.trophies={}; const _m=p.medals||[]; const _bp=(k,tr)=>{ if(rank(tr)>rank(p.trophies[k])) p.trophies[k]=tr; }; if(_m.indexOf('master10')>=0)_bp('words','bronze'); if(_m.indexOf('master25')>=0)_bp('words','silver'); if(_m.indexOf('master50')>=0)_bp('words','gold'); if(_m.indexOf('scholar25')>=0)_bp('correct','bronze'); if(_m.indexOf('scholar75')>=0)_bp('correct','silver'); if(_m.indexOf('scholar150')>=0)_bp('correct','gold'); if(_m.indexOf('listComplete')>=0)_bp('lists','bronze'); if(_m.indexOf('allLists')>=0)_bp('lists','gold'); if(_m.indexOf('firstPerfect')>=0)_bp('perfect','bronze'); if(_m.indexOf('allModes')>=0)_bp('explorer','gold'); } if(!p.sent) p.sent={fr:{},en:{}}; if(!p.sent.fr) p.sent.fr={}; if(!p.sent.en) p.sent.en={}; if(!p.lists){ p.lists=[]; const _mk=(arr,sm,lng,nm)=>{ if(arr&&arr.length) p.lists.push({id:uid(), name:nm, lang:lng, words:arr.map(w=>({w, s:(sm&&sm[w])||''}))}); }; _mk(p.fr, p.sent.fr, 'FR', 'Mes mots'); _mk(p.en, p.sent.en, 'EN', 'My words'); } }
 function openShop(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); shopMsg=''; pendingBuy=null; shopTab='hat'; navigate('shop'); }
 function openHouse(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); navigate('house'); }
 let shopTab='hat';
 let decorateOpen=false;
+let houseScene='room';
+function setHouseScene(scn){ houseScene=scn; decorateOpen=false; render(); }
 function setShopTab(t){ shopTab=t; shopMsg=''; pendingBuy=null; render(); }
 function toggleDecorate(){ decorateOpen=!decorateOpen; render(); }
 function toggleHouseItem(id){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const i=p.hidden.indexOf(id); if(i>=0) p.hidden.splice(i,1); else p.hidden.push(id); saveProfiles(); render(); }
@@ -1506,10 +1647,10 @@ function viewHouse(){
   const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
   ensureEconomy(p);
   const W=320,H=210;
-  const place=(id,inner)=>{ const q=HOUSE_PLACE[id]; return `<g transform="translate(${q.x},${q.y}) scale(${q.s})"><g id="h-item-${id}" class="htap" onclick="houseTap('item','${id}')">${inner}</g></g>`; };
+  const place=(id,inner)=>{ const q=HOUSE_PLACE[id]; const lay=(p.layout&&p.layout[id])||q; const h = decorateOpen ? `onpointerdown="hDragStart(event,'${id}')"` : `onclick="houseTap('item','${id}')"`; return `<g id="h-pos-${id}" transform="translate(${lay.x},${lay.y}) scale(${q.s})"><g id="h-item-${id}" class="htap${decorateOpen?' hdrag':''}" ${h}><g class="hidle hidle-${id}">${inner}</g></g></g>`; };
   let items='';
   ['poster','rug','plant','lamp','books','fishbowl','ball','beanbag','cactus','clock','balloon'].forEach(id=>{ if(p.owned.includes(id) && !p.hidden.includes(id)) items+=place(id,houseShape(id)); });
-  let companion=''; if(p.equip.pet) companion=`<g transform="translate(206,150) scale(1.35)"><g class="htap" id="h-petc-${p.equip.pet}" onclick="houseTap('petc','${p.equip.pet}')">${petShape(p.equip.pet)}</g></g>`;
+  let companion=''; if(p.equip.pet) companion=`<g transform="translate(206,150) scale(1.35)"><g class="htap" id="h-petc-${p.equip.pet}" onclick="houseTap('petc','${p.equip.pet}')"><g class="hpet">${petShape(p.equip.pet)}</g></g></g>`;
   const character=`<g id="h-char-me" class="htap" onclick="houseTap('char','me')"><svg x="118" y="72" width="84" height="84" viewBox="0 0 100 100">${avatarInner(p)}</svg></g>`;
   const perRow=3, stepX=40, startX=196, rowH=33, rowTopY=27;
   const rowCount=Math.ceil(TROPHIES.length/perRow);
@@ -1517,15 +1658,16 @@ function viewHouse(){
   let medals=''; TROPHIES.forEach((m,i)=>{ const tier=p.trophies[m.id]||null; const rr=Math.floor(i/perRow), cc=i%perRow; const mx=startX+cc*stepX, my=rowTopY+rr*rowH;
     medals+=`<g transform="translate(${mx},${my})"><g id="h-medal-${m.id}" class="htap" onclick="houseTap('medal','${m.id}')">${medalSVG(m.id,tier)}</g></g>`; });
   const wp = WALLPAPERS.find(w=>w.id===p.equip.wall); const wallC = wp?wp.wall:'#FBE7C9'; const floorC = wp?wp.floor:'#E9C79A';
-  const scene=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">
+  const scene=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block${decorateOpen?';touch-action:none':''}">
     <rect x="0" y="0" width="${W}" height="135" fill="${wallC}"/>
     ${(p.equip.floor&&isFloor(p.equip.floor))?floorPattern(p.equip.floor,0,135,W,H-135):`<rect x="0" y="135" width="${W}" height="${H-135}" fill="${floorC}"/>`}
     <rect x="0" y="132" width="${W}" height="5" fill="#0000000f"/>
     ${shelf}${medals}${items}${character}${companion}
   </svg>`;
   const ownedHouse = HOUSE_ITEMS.filter(it=>p.owned.includes(it.id));
-  const decorateBtn = ownedHouse.length ? `<button class="link-btn" onclick="toggleDecorate()">${IC.pencil}${decorateOpen?t('done'):t('decorate')}</button>` : '';
-  const decoratePanel = (decorateOpen && ownedHouse.length) ? `<div class="cat" style="margin-top:4px;"><label>${t('decorateHint')}</label><div class="chips chips-scroll">${ownedHouse.map(it=>`<button class="chip ${!p.hidden.includes(it.id)?'on':''}" onclick="toggleHouseItem('${it.id}')">${esc(itemName(it))}</button>`).join('')}</div></div>` : '';
+  const decorateBtn = (houseScene==='room' && ownedHouse.length) ? `<button class="link-btn" onclick="toggleDecorate()">${IC.pencil}${decorateOpen?t('done'):t('decorate')}</button>` : '';
+  const decoratePanel = (houseScene==='room' && decorateOpen && ownedHouse.length) ? `<div class="cat" style="margin-top:4px;"><label>${t('arrangeHint')}</label><div class="chips chips-scroll">${ownedHouse.map(it=>`<button class="chip ${!p.hidden.includes(it.id)?'on':''}" onclick="toggleHouseItem('${it.id}')">${esc(itemName(it))}</button>`).join('')}<button class="chip" onclick="resetLayout()">${t('resetArrange')}</button></div></div>` : '';
+  const sceneSVG = (houseScene==='garden') ? gardenScene(p) : scene;
   const earnedCount=Object.keys(p.trophies||{}).filter(k=>p.trophies[k]).length;
   return `
     <div class="screen active">
@@ -1534,10 +1676,11 @@ function viewHouse(){
         <span class="coins">${IC.star}<span>${p.coins||0}</span></span>
       </div>
       <div class="scr-title">${t('house')}</div>
-      <div class="house-scene">${scene}</div>
+      <div class="scene-tabs"><button class="stab ${houseScene==='room'?'on':''}" onclick="setHouseScene('room')">${t('sceneRoom')}</button><button class="stab ${houseScene==='garden'?'on':''}" onclick="setHouseScene('garden')">${t('sceneGarden')}</button></div>
+      <div class="house-scene">${sceneSVG}</div>
       <div class="house-panel">
-        <div class="hp-title" id="hi-title">${t('houseTapHint')}</div>
-        <div class="hp-body" id="hi-body">${t('medals')}: ${earnedCount}/${TROPHIES.length}</div>
+        <div class="hp-title" id="hi-title">${houseScene==='garden'?t('sceneGarden'):t('houseTapHint')}</div>
+        <div class="hp-body" id="hi-body">${houseScene==='garden'?t('gardenHint'):(t('medals')+': '+earnedCount+'/'+TROPHIES.length)}</div>
       </div>
       ${decoratePanel}
       <div class="spacer"></div>
@@ -1567,6 +1710,47 @@ function reactEl(kind,id){
   ['r-pop','r-bounce','r-sway','r-wiggle','r-glow'].forEach(c=>el.classList.remove(c));
   el.getBoundingClientRect(); el.classList.add(cls);
 }
+let hDrag=null;
+function svgPoint(svg, cx, cy){ const m=svg.getScreenCTM(); if(!m) return {x:cx,y:cy}; const pt=svg.createSVGPoint(); pt.x=cx; pt.y=cy; const r=pt.matrixTransform(m.inverse()); return {x:r.x,y:r.y}; }
+function hDragStart(e, id){ if(!decorateOpen) return; if(e.preventDefault) e.preventDefault(); const pos=document.getElementById('h-pos-'+id); const svg=pos&&pos.ownerSVGElement; if(!pos||!svg) return; const q=HOUSE_PLACE[id]; const p=activeProfile(); if(!p) return; ensureEconomy(p); const cur=(p.layout&&p.layout[id])||{x:q.x,y:q.y}; const st=svgPoint(svg,e.clientX,e.clientY); hDrag={id,pos,svg,s:q.s,ox:st.x-cur.x,oy:st.y-cur.y,x:cur.x,y:cur.y}; window.addEventListener('pointermove',hDragMove); window.addEventListener('pointerup',hDragEnd); window.addEventListener('pointercancel',hDragEnd); }
+function hDragMove(e){ if(!hDrag) return; if(e.preventDefault) e.preventDefault(); const pt=svgPoint(hDrag.svg,e.clientX,e.clientY); let x=pt.x-hDrag.ox, y=pt.y-hDrag.oy; x=Math.max(8,Math.min(312,x)); y=Math.max(18,Math.min(202,y)); hDrag.x=x; hDrag.y=y; hDrag.pos.setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+hDrag.s+')'); }
+function hDragEnd(){ if(!hDrag) return; const p=activeProfile(); if(p){ ensureEconomy(p); p.layout[hDrag.id]={x:Math.round(hDrag.x),y:Math.round(hDrag.y)}; saveProfiles(); } window.removeEventListener('pointermove',hDragMove); window.removeEventListener('pointerup',hDragEnd); window.removeEventListener('pointercancel',hDragEnd); hDrag=null; }
+function resetLayout(){ const p=activeProfile(); if(!p) return; ensureEconomy(p); p.layout={}; saveProfiles(); render(); }
+function growthStage(p, w){ const st=wordStatus(p,w); if(st==='known') return 3; if(st==='new') return 0; const ws=(p.wordStats&&p.wordStats[norm(w)])||{}; return ((ws.r||0)>=2)?2:1; }
+function treeStage(p, op){ const h=(p.mathStats&&p.mathStats[op])||[]; const tot=h.length; if(!tot) return 0; const c=h.filter(x=>x).length; if(tot<3) return 1; const pct=c/tot; return pct>=0.8?3:(pct>=0.55?2:1); }
+function plantInner(stage, idx){ const soil='<ellipse cx="0" cy="0" rx="13" ry="5" fill="#C99A63"/>';
+  if(stage<=0) return soil+'<path d="M0,-1 Q0,-9 0,-13" stroke="#5FA877" stroke-width="2.6" fill="none" stroke-linecap="round"/><ellipse cx="-5" cy="-11" rx="5" ry="3" fill="#7FBF92" transform="rotate(-32 -5 -11)"/><ellipse cx="5" cy="-12" rx="5" ry="3" fill="#7FBF92" transform="rotate(32 5 -12)"/>';
+  if(stage===1) return soil+'<path d="M0,-1 Q-2,-16 0,-30" stroke="#5FA877" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="-9" cy="-18" rx="8" ry="4" fill="#7FBF92" transform="rotate(-30 -9 -18)"/><ellipse cx="9" cy="-20" rx="8" ry="4" fill="#7FBF92" transform="rotate(30 9 -20)"/>';
+  if(stage===2) return soil+'<path d="M0,-1 Q-2,-24 0,-44" stroke="#5FA877" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="-9" cy="-22" rx="8" ry="4" fill="#7FBF92" transform="rotate(-30 -9 -22)"/><ellipse cx="9" cy="-26" rx="8" ry="4" fill="#7FBF92" transform="rotate(30 9 -26)"/><ellipse cx="0" cy="-50" rx="7" ry="11" fill="#F0997B"/>';
+  const pc=['#FF6F61','#21BFA0','#ED93B1','#FFC93C']; const petal=pc[idx%4]; const center=(petal==='#FFC93C')?'#FF6F61':'#FFC93C';
+  return soil+'<path d="M0,-1 Q-2,-26 0,-48" stroke="#5FA877" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="-10" cy="-24" rx="8" ry="4" fill="#7FBF92" transform="rotate(-30 -10 -24)"/><ellipse cx="10" cy="-28" rx="8" ry="4" fill="#7FBF92" transform="rotate(30 10 -28)"/><g transform="translate(0,-56)"><ellipse cx="0" cy="-9" rx="6" ry="9" fill="'+petal+'"/><ellipse cx="0" cy="-9" rx="6" ry="9" fill="'+petal+'" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="6" ry="9" fill="'+petal+'" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="6" ry="9" fill="'+petal+'" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="6" ry="9" fill="'+petal+'" transform="rotate(288)"/><circle r="6" fill="'+center+'"/></g>'; }
+function treeInner(stage, sym){ const sign='<rect x="-15" y="10" width="30" height="20" rx="5" fill="#ffffff" stroke="#E3B98A"/><text x="0" y="25" text-anchor="middle" font-family="Nunito,ui-rounded,system-ui,sans-serif" font-size="15" fill="#33304a">'+sym+'</text>';
+  if(stage<=0) return '<ellipse cx="0" cy="0" rx="16" ry="5" fill="#C99A63"/><rect x="-3.5" y="-28" width="7" height="28" rx="3" fill="#B5814F"/><circle cx="0" cy="-38" r="13" fill="#7FBF92"/>'+sign;
+  if(stage===1) return '<ellipse cx="0" cy="0" rx="20" ry="6" fill="#C99A63"/><rect x="-6" y="-44" width="12" height="44" rx="5" fill="#B5814F"/><circle cx="0" cy="-56" r="22" fill="#6FB890"/><circle cx="-13" cy="-50" r="13" fill="#7FBF92"/>'+sign;
+  if(stage===2) return '<ellipse cx="0" cy="0" rx="26" ry="7" fill="#C99A63"/><rect x="-7" y="-60" width="14" height="60" rx="5" fill="#B5814F"/><circle cx="0" cy="-76" r="29" fill="#6FB890"/><circle cx="-18" cy="-66" r="18" fill="#57A87C"/><circle cx="18" cy="-68" r="16" fill="#7FBF92"/>'+sign;
+  return '<ellipse cx="0" cy="0" rx="32" ry="8" fill="#C99A63"/><rect x="-9" y="-78" width="18" height="78" rx="6" fill="#B5814F"/><circle cx="0" cy="-98" r="38" fill="#6FB890"/><circle cx="-26" cy="-84" r="24" fill="#57A87C"/><circle cx="26" cy="-86" r="22" fill="#7FBF92"/><circle cx="-8" cy="-104" r="5" fill="#FF6F61"/><circle cx="14" cy="-92" r="5" fill="#FF6F61"/>'+sign; }
+function gardenScene(p){ const ids=getSel(p, lang); let words=[]; ids.forEach(id=>{ const L=listById(p,id); if(L) L.words.forEach(o=>{ if(words.indexOf(o.w)<0) words.push(o.w); }); });
+  const all=words.map(w=>({w:w, s:growthStage(p,w)}));
+  const mastered=all.filter(o=>o.s>=3); const growing=all.filter(o=>o.s<3).slice(0,16);
+  const W=320, perRow=4, colStep=80, startX=40, rowStep=78, ps=0.7;
+  const hasBanner=mastered.length>0; const firstBase = hasBanner?190:116;
+  const nRows = growing.length?Math.ceil(growing.length/perRow):0;
+  let flowers='', chips='';
+  growing.forEach((o,i)=>{ const r=Math.floor(i/perRow), c=i%perRow; const cx=startX+c*colStep, by=firstBase+r*rowStep;
+    flowers+='<g transform="translate('+cx+','+by+') scale('+ps+')"><g class="gflower" style="animation-delay:'+((i%5)*0.4).toFixed(1)+'s">'+plantInner(o.s,i)+'</g></g>';
+    chips+='<rect x="'+(cx-31)+'" y="'+(by+8)+'" width="62" height="18" rx="9" fill="#FFE7C2"/><text x="'+cx+'" y="'+(by+21)+'" text-anchor="middle" font-family="Nunito,ui-rounded,system-ui,sans-serif" font-size="11" fill="#9A5B00">'+esc(o.w)+'</text>'; });
+  let banner='';
+  if(hasBanner){ const show=Math.min(mastered.length,6); let mini='';
+    for(let k=0;k<show;k++){ const mx=78+k*16; mini+='<g transform="translate('+mx+',97) scale(0.42)"><ellipse cx="0" cy="-9" rx="6" ry="9" fill="#FF6F61"/><ellipse cx="0" cy="-9" rx="6" ry="9" fill="#FF6F61" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="6" ry="9" fill="#FF6F61" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="6" ry="9" fill="#FF6F61" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="6" ry="9" fill="#FF6F61" transform="rotate(288)"/><circle r="6" fill="#FFC93C"/></g>'; }
+    banner='<rect x="56" y="80" width="208" height="34" rx="13" fill="#ffffff" stroke="#F0E4D4"/>'+mini+'<text x="'+(78+show*16+6)+'" y="101" font-family="Nunito,ui-rounded,system-ui,sans-serif" font-size="13" fill="#33304a">'+mastered.length+' '+t('masteredLabel')+'</text><text x="160" y="130" text-anchor="middle" font-family="Nunito,ui-rounded,system-ui,sans-serif" font-size="11" fill="#9b96a8">'+t('masteredCaption')+'</text>'; }
+  let note='';
+  if(words.length===0) note='<text x="160" y="120" text-anchor="middle" font-family="Nunito,ui-rounded,system-ui,sans-serif" font-size="13" fill="#9b96a8">'+t('gardenEmpty')+'</text>';
+  else if(growing.length===0) note='<text x="160" y="'+(firstBase-8)+'" text-anchor="middle" font-family="Nunito,ui-rounded,system-ui,sans-serif" font-size="14" fill="#178a73">'+t('allBloomed')+'</text>';
+  const flowersBottom = growing.length ? (firstBase+(nRows-1)*rowStep+26) : (firstBase+6);
+  const divY = flowersBottom + 12, groundY = divY + 96, H = groundY + 40;
+  const ops=[['+','+'],['-','−'],['x','×'],['/','÷']]; const tcx=[44,124,204,282]; let trees='';
+  ops.forEach((o,i)=>{ const stg=treeStage(p,o[0]); trees+='<g transform="translate('+tcx[i]+','+groundY+') scale(0.74)"><g class="gtree" style="animation-delay:'+(i*0.5)+'s">'+treeInner(stg,o[1])+'</g></g>'; });
+  return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block"><rect x="0" y="0" width="'+W+'" height="70" fill="#FFF6EC"/><rect x="0" y="60" width="'+W+'" height="'+(H-60)+'" fill="#BCE3C7"/><circle cx="288" cy="34" r="20" fill="#FFE08A"/><circle cx="288" cy="34" r="14" fill="#FFC93C"/>'+banner+note+flowers+chips+'<line x1="16" y1="'+divY+'" x2="304" y2="'+divY+'" stroke="#A6D6B6" stroke-width="2" stroke-dasharray="3 6"/>'+trees+'</svg>'; }
 
 /* ---------- dictation gameplay ---------- */
 let dictStyle = 'copy';
@@ -1578,6 +1762,7 @@ let missedThisRound = [];
 let dictNote = '';
 let queue=[], qi=0, roundTotal=0, roundScore=0, roundCoins=0;
 let curWord='', curAns='', inputText='', turnActive=false, lcwcTimer=null, misses=0, roundMistake=false, streak=0;
+let reEncoding=false;
 let scrTiles=[], scrUsed=[];
 
 function styleMeta(s){ return ({
@@ -1588,6 +1773,10 @@ function styleMeta(s){ return ({
 function openDict(){ dictNote=''; navigate('dictstyle'); }
 function dismissIntro(){ store.set('hg_introSeen','1'); render(); }
 function introSetup(){ store.set('hg_introSeen','1'); openParent(); }
+let nudgeHiddenSession=false;
+function listNudgeHTML(p){ if(!p || p.addedCustom || nudgeHiddenSession) return ''; return `<div class="nudge-card"><button class="nudge-x" onclick="hideNudge()" aria-label="${t('introDismiss')}">\u00d7</button><div class="nudge-body"><b>${t('nudgeTitle')}</b>${t('nudgeBody')}</div><button class="nudge-go" onclick="nudgeAddList()">${t('nudgeGo')}</button></div>`; }
+function hideNudge(){ nudgeHiddenSession=true; render(); }
+function nudgeAddList(){ openParent(); }
 function selStyle(s){ dictStyle=s; render(); }
 
 function viewDictStyle(){
@@ -1654,7 +1843,7 @@ function recordMath(op, ok){ const p=activeProfile(); if(!p) return; ensureEcono
 
 function beginTurn(){
   if(lcwcTimer){ clearTimeout(lcwcTimer); lcwcTimer=null; }
-  curWord=queue[qi]; curAns=curWord; inputText=''; turnActive=true; misses=0;
+  curWord=queue[qi]; curAns=curWord; inputText=''; turnActive=true; misses=0; reEncoding=false;
   if(dictStyle==='scramble'){ scrTiles=shuffle([...curWord]); scrUsed=scrTiles.map(()=>false); }
   if(route!=='game') navigate('game'); else paintGame();
   if(sfxOn()) speakCur();
@@ -1664,11 +1853,32 @@ function beginTurn(){
   }
 }
 function advance(){ if(lcwcTimer){clearTimeout(lcwcTimer);lcwcTimer=null;} qi++; if(qi>=roundTotal) finishRound(); else beginTurn(); }
+function startReEncode(){ if(lcwcTimer){clearTimeout(lcwcTimer);lcwcTimer=null;} reEncoding=true; inputText=''; misses=0; turnActive=true; paintGame(); }
+function recordLetterErrors(typed, target){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const m=p.letterErr[lang]; if(!m) return; alignCells(typed, target).forEach(o=>{ if(o.s==='sub'||o.s==='del'){ const c=(o.ch||'').toLowerCase(); if(/[a-z\u00e0-\u00ff]/.test(c)){ m[c]=(m[c]||0)+1; } } }); saveProfiles(); }
+function trickyLetters(p, lng){ const m=(p.letterErr&&p.letterErr[lng])||{}; return Object.keys(m).filter(k=>m[k]>0).sort((a,b)=>m[b]-m[a]).slice(0,5); }
+function targetStatus(typed, target){ const st=[]; let j=0; alignCells(typed, target).forEach(o=>{ if(o.s==='ins') return; st[j]=(o.s==='ok')?'ok':'bad'; j++; }); return st; }
+function patternInstances(lng, t){ const out={}; const cons='bcdfghjklmnpqrstvwxz'; const push=(k,pos)=>{ (out[k]=out[k]||[]).push(pos); };
+  for(let i=0;i+1<t.length;i++){ if(t[i]===t[i+1] && cons.indexOf(t[i])>=0){ push('patDouble',[i,i+1]); i++; } }
+  if(lng==='FR'){ const acc='éèêëàâäùûüïîôöÿç'; for(let i=0;i<t.length;i++){ if(acc.indexOf(t[i])>=0) push('patAccents',[i]); } }
+  const combos = (lng==='FR'?['eau','ai','ei','au','eu','ou','oi']:['ai','ea','ee','oa','oo','ou','ie','ei']);
+  for(let i=0;i<t.length;){ let m=null; for(const c of combos){ if(t.substr(i,c.length)===c){ m=c; break; } } if(m){ const pos=[]; for(let k=0;k<m.length;k++) pos.push(i+k); push('patVowels',pos); i+=m.length; } else i++; }
+  let idx=t.indexOf('tion'); if(idx<0) idx=t.indexOf('sion'); if(idx>=0) push('patTion',[idx,idx+1,idx+2,idx+3]);
+  return out; }
+function recordPatterns(typed, target, ok){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const m=p.patternStats[lang]; if(!m) return; const t=[...norm(target)]; let status; if(ok){ status=t.map(()=>'ok'); } else { status=targetStatus(typed, target); const bad=status.filter(x=>x==='bad').length; if(t.length && bad/t.length>0.6) return; } const insts=patternInstances(lang, norm(target)); for(const key in insts){ insts[key].forEach(pos=>{ const missed=pos.some(i=>status[i]==='bad'); if(!m[key]) m[key]={r:0,w:0}; if(missed) m[key].w++; else m[key].r++; }); } saveProfiles(); }
 
-function maskWord(w){ return [...w].map((c,i)=> c===' '?' ':((i===0||i%2===0)?c.toUpperCase():'_')).join(' '); }
+function maskWord(w){
+  const p=activeProfile(); const st=p?wordStatus(p,w):'practising';
+  const ratio = st==='known'?0.75 : (st==='new'?0.34 : 0.5);
+  const chars=[...w]; let firstShown=-1; for(let i=0;i<chars.length;i++){ if(chars[i]!==' '){ firstShown=i; break; } }
+  const hideable=[]; for(let i=0;i<chars.length;i++){ if(chars[i]!==' ' && i!==firstShown) hideable.push(i); }
+  const H=hideable.length; const hideCount=H?Math.max(1,Math.round(H*ratio)):0;
+  const hide=new Set(); for(let j=0;j<H;j++){ if(Math.floor((j+1)*hideCount/H)>Math.floor(j*hideCount/H)) hide.add(hideable[j]); }
+  return chars.map((c,i)=> c===' '?' ':(hide.has(i)?'_':c.toUpperCase())).join(' ');
+}
 function tilesHTML(){ return scrTiles.map((c,i)=>`<button class="tile ${c===' '?'space':''} ${scrUsed[i]?'used':''}" onclick="sTap(${i})">${c===' '?'␣':esc(c.toUpperCase())}</button>`).join(''); }
 
 function cardBody(){
+  if(reEncoding) return `<div class="cprompt">${t('writeItPrompt')}</div><div class="cword">${esc(curWord)}</div><button class="spk" onclick="speakCur()">${IC.spk}</button>`;
   if(dictStyle==='listen') return `<div class="cprompt">${t('listenPrompt')}</div><button class="spk big" onclick="speakCur()">${IC.spk}</button>`;
   if(dictStyle==='gaps') return `<div class="cprompt">${t('gapsPrompt')}</div><div class="cmask">${maskWord(curWord)}</div><button class="spk" onclick="speakCur()">${IC.spk}</button>`;
   if(dictStyle==='scramble') return `<div class="cprompt">${t('scramblePrompt')}</div><div class="tiles">${tilesHTML()}</div>`;
@@ -1686,7 +1896,7 @@ const KBD_ROWS={
 function resolveKbd(){ const p=store.get('hg_kbd')||'auto'; if(p==='auto') return lang==='FR'?'azerty':'qwerty'; return KBD_ROWS[p]?p:'alpha'; }
 function setKbd(v){ store.set('hg_kbd', v); render(); }
 function kbdHTML(){
-  if(dictStyle==='scramble'){
+  if(dictStyle==='scramble' && !reEncoding){
     return `<div class="krow">
       <button class="key ctrl wide" onclick="speakCur()">${IC.spk}</button>
       <button class="key ctrl wide" onclick="scrReset()">&#8634;</button>
@@ -1797,9 +2007,62 @@ function pickVoice(langCode){
   return best;
 }
 if('speechSynthesis' in window){ loadVoices(); try{ speechSynthesis.onvoiceschanged=loadVoices; }catch(e){} }
-function speak(txt,l){ if(!('speechSynthesis' in window)) return; try{ const u=new SpeechSynthesisUtterance(txt);
-  const code=(l==='FR')?'fr-FR':'en-GB'; u.lang=code; u.rate=0.9; u.pitch=1;
-  const key=(l==='FR')?'FR':'EN';
+try{ setTimeout(function(){ try{ piperEnsure(lang==='FR'?'FR':'EN'); }catch(e){} }, 1200); }catch(e){}
+/* ---- Enhanced voices: in-browser neural TTS (Piper), device voice as fallback ---- */
+var _piper = { lib:null, sessions:{}, status:{EN:'idle',FR:'idle',ZH:'idle'}, loading:{} };
+var PIPER_VOICE = { EN:'en_GB-alan-medium', FR:'fr_FR-siwis-medium', ZH:'zh_CN-huayan-medium' };
+function voiceReady(key){ return _piper.status[key]==='ready'; }
+function voiceStatusLabel(key){ var st=_piper.status[key]; return st==='ready'?t('vReady'):(st==='failed'?t('vFailed'):t('vLoading')); }
+function voiceStatusChanged(){ try{ if(typeof route!=='undefined' && route==='voices') render(); }catch(e){} }
+function hideVoiceToast(el){ try{ if(el._timer) clearTimeout(el._timer); el.classList.remove('show'); setTimeout(function(){ if(el&&el.parentNode) el.parentNode.removeChild(el); },300); }catch(e){} }
+function showVoiceReadyToast(){
+  try{
+    if(store.get('hg_voiceReadyShown')) return;
+    store.set('hg_voiceReadyShown','1');
+    var el=document.createElement('div'); el.className='voice-toast'; el.setAttribute('role','status');
+    el.textContent=t('voiceReadyToast');
+    el.onclick=function(){ hideVoiceToast(el); };
+    document.body.appendChild(el);
+    try{ requestAnimationFrame(function(){ el.classList.add('show'); }); }catch(e){ el.classList.add('show'); }
+    el._timer=setTimeout(function(){ hideVoiceToast(el); },4200);
+  }catch(e){}
+}
+async function piperImport(){
+  if(_piper.lib) return _piper.lib;
+  var srcs=['https://esm.sh/@realtimex/piper-tts-web','https://esm.run/@realtimex/piper-tts-web','https://cdn.jsdelivr.net/npm/@realtimex/piper-tts-web/+esm'];
+  for(var i=0;i<srcs.length;i++){ try{ var m=await import(srcs[i]); if(m && (m.TtsSession||(m.default&&m.default.TtsSession))){ _piper.lib=m; return m; } }catch(e){} }
+  throw new Error('piper import failed');
+}
+async function piperSession(key){
+  if(_piper.sessions[key]) return _piper.sessions[key];
+  var m=await piperImport(); var TS=m.TtsSession||(m.default&&m.default.TtsSession);
+  var sess=await TS.create({ voiceId: PIPER_VOICE[key] });
+  _piper.sessions[key]=sess; return sess;
+}
+async function piperSynth(txt,key){
+  var sess=await piperSession(key);
+  var blob=await sess.predict(txt);
+  var ctx=actx();
+  if(!ctx){ try{ var a=new Audio(URL.createObjectURL(blob)); a.play(); }catch(e){} return; }
+  var ab=await blob.arrayBuffer();
+  await new Promise(function(res,rej){ ctx.decodeAudioData(ab, function(audio){ try{ var src=ctx.createBufferSource(); src.buffer=audio; src.connect(ctx.destination); src.start(); res(); }catch(e){ rej(e); } }, rej); });
+}
+async function piperEnsure(key){
+  if(_piper.status[key]==='ready' || _piper.loading[key]) return;
+  _piper.loading[key]=true; if(_piper.status[key]==='idle') _piper.status[key]='loading'; voiceStatusChanged();
+  try{ await piperSession(key); _piper.status[key]='ready'; try{ showVoiceReadyToast(); }catch(e){} }
+  catch(e){ console.warn('[voices] enhanced voice unavailable for '+key+', using device voice', e); _piper.status[key]='failed'; }
+  _piper.loading[key]=false; voiceStatusChanged();
+}
+function speak(txt,l){
+  var key=(l==='FR')?'FR':(l==='ZH'?'ZH':'EN');
+  if(_piper.status[key]==='idle') piperEnsure(key);
+  if(_piper.status[key]==='ready'){ piperSynth(txt,key).catch(function(e){ console.warn('[voices] enhanced synth failed, device fallback', e); speakDevice(txt,l); }); return; }
+  speakDevice(txt,l);
+}
+function speakDevice(txt,l){ if(!('speechSynthesis' in window)) return; try{ const u=new SpeechSynthesisUtterance(txt);
+  const code=(l==='FR')?'fr-FR':(l==='ZH'?'zh-CN':'en-GB'); u.lang=code; u.rate=(l==='ZH'?0.85:0.9); u.pitch=1;
+  const key=(l==='FR')?'FR':(l==='ZH'?'ZH':'EN');
   let v=chosenVoice(key);
   if(!v){ if(_voicePick[key]) v=_voicePick[key]; else { v=pickVoice(code); if(v) _voicePick[key]=v; } }
   if(v){ u.voice=v; u.lang=v.lang||code; }
@@ -1869,8 +2132,9 @@ function submit(){
   if(!turnActive) return;
   const typed=inputText; const a=norm(typed); if(!a) return;
   const fb=document.getElementById('gw-fb');
+  if(reEncoding){ if(a===norm(curAns)){ reEncoding=false; turnActive=false; if(fb){ fb.textContent=t('wellCopied'); fb.className='gw-fb ok'; } sfx('correct'); setTimeout(advance,800); } else { misses++; if(misses>=2){ reEncoding=false; turnActive=false; if(fb){ fb.innerHTML='<span class="fb-msg">'+t('reEncodeGiveUp')+' \u2192 '+esc(curAns)+'</span>'; fb.className='gw-fb no'; } vox(curAns, lang); setTimeout(advance,1600); } else { if(fb){ fb.innerHTML=letterFeedbackHTML(typed, curAns); fb.className='gw-fb no'; } sfx('wrong'); inputText=''; updateInputBox(); } } return; }
   if(a===norm(curAns)){
-    turnActive=false; roundScore++; const _cc=styleCoins(dictStyle); roundCoins+=_cc; recordWord(curWord, true);
+    turnActive=false; roundScore++; const _cc=styleCoins(dictStyle); roundCoins+=_cc; recordWord(curWord, true); recordPatterns(typed, curAns, true);
     awardCorrect(_cc);
     react('cheer'); burst(); flyCoin(); bumpStreak();
     const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
@@ -1880,7 +2144,7 @@ function submit(){
     if(misses>=2){
       turnActive=false; recordWord(curWord, false); missedThisRound.push(curWord);
       if(fb){ fb.innerHTML='<span class="fb-msg">\u2192 '+esc(curAns)+'</span>'+letterFeedbackHTML(typed, curAns); fb.className='gw-fb no'; }
-      vox(curAns, lang); setTimeout(advance,1700); return;
+      recordLetterErrors(typed, curAns); recordPatterns(typed, curAns, false); vox(curAns, lang); setTimeout(startReEncode,1700); return;
     }
     if(fb){ fb.innerHTML='<span class="fb-msg">'+t('tryagain')+'</span>'+letterFeedbackHTML(typed, curAns); fb.className='gw-fb no'; }
     sfx('wrong'); vox(encourage(), lang);
@@ -1889,11 +2153,13 @@ function submit(){
   }
 }
 function skip(){
-  if(!turnActive) return; turnActive=false; roundMistake=true; streak=0; clearCombo(); recordWord(curWord, false); missedThisRound.push(curWord);
+  if(!turnActive) return;
+  if(reEncoding){ reEncoding=false; turnActive=false; advance(); return; }
+  turnActive=false; roundMistake=true; streak=0; clearCombo(); recordWord(curWord, false); missedThisRound.push(curWord);
   const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent='\u2192 '+curAns; fb.className='gw-fb no'; }
   vox(curAns, lang); setTimeout(advance,1600);
 }
-function quitGame(){ if(lcwcTimer){clearTimeout(lcwcTimer);lcwcTimer=null;} turnActive=false; navigate('home'); }
+function quitGame(){ if(lcwcTimer){clearTimeout(lcwcTimer);lcwcTimer=null;} reEncoding=false; turnActive=false; navigate('home'); }
 let perfectRound=false, giftsAwarded=[], medalsAwarded=[];
 function finishRound(){
   const p=activeProfile(); if(p){ ensureEconomy(p);
@@ -1933,7 +2199,7 @@ function viewResults(){
         <div class="coins" style="font-size:18px;">${IC.star}+${roundCoins} ${t('coinsEarned')}</div>
         ${giftsAwarded.length?`<div class="gift-box">${IC.trophy}<div><b>${t('giftTitle')}</b> ${giftNames}<div class="gsub">${t('giftSub')}</div></div></div>`:''}
         ${medalsAwarded.length?`<div class="gift-box">${IC.trophy}<div><b>${t('newTrophy')}</b> ${medalsAwarded.map(u=>{const _t=trophyDef(u.id);return esc(tierLabel(u.tier)+' '+(_t?(lang==='FR'?_t.fr:_t.en):''))}).join(', ')}<div class="gsub">${t('newTrophySub')}</div></div></div>`:''}
-        ${(lastMode==='dict' && missedThisRound.length)?`<div class="practise"><b>${t('practise')}</b> ${missedThisRound.map(esc).join(', ')}</div>`:''}
+        ${(lastMode==='dict' && queue.length)?`<div class="rev-list"><div class="rev-head">${t('roundReview')}</div>${queue.map(w=>{ const miss=missedThisRound.some(m=>norm(m)===norm(w)); return `<div class="rev-row"><span class="rev-mark ${miss?'miss':'ok'}">${miss?'\u00d7':'\u2713'}</span><span class="rev-word">${esc(w)}</span></div>`; }).join('')}</div>`:''}
       </div>
       ${(lastMode==='dict' && missedThisRound.length)?`<button class="btn-primary" onclick="practiseMissed()">${t('practiseBtn')}</button>`:''}
       <button class="${(lastMode==='dict' && missedThisRound.length)?'btn-ghost':'btn-primary'}" onclick="playAgain()">${t('again')}</button>
@@ -1971,6 +2237,129 @@ function genMath(op,diff){
   return {a,b,op,ans};
 }
 function openMath(){ const p=activeProfile(); if(!p){navigate('profiles');return;} navigate('mathcfg'); }
+/* ---------- Chinese mode ---------- */
+function ensureCN(p){ if(!p.cn) p.cn={}; const c=p.cn;
+  if(c.level===undefined)c.level='1'; if(!c.mode)c.mode='match'; if(c.pinyin===undefined)c.pinyin=true;
+  if(!c.choices)c.choices=4; if(c.lock===undefined)c.lock=false; if(!c.custom)c.custom=[];
+  if(!c.known)c.known={}; if(!c.seen)c.seen={}; return c; }
+function cnPool(c){ if(c.level==='custom') return c.custom||[]; return (CN_HSK[c.level]||CN_HSK['1']); }
+function openChinese(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureCN(p); navigate('cnstart'); }
+function cnSet(field,val){ const p=activeProfile(); if(!p) return; const c=ensureCN(p);
+  if(c.lock && (field==='level'||field==='mode')) return; c[field]=val; saveProfiles(); render(); }
+function viewCnStart(){
+  const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
+  const c=ensureCN(p); const locked=c.lock;
+  const opt=(field,val,label)=>{ const on=c[field]===val; if(locked&&(field==='level'||field==='mode')) return `<button class="opt ${on?'on':''}" disabled style="opacity:${on?1:.45}">${label}</button>`; return `<button class="opt ${on?'on':''}" onclick="cnSet('${field}','${val}')">${label}</button>`; };
+  const hasCustom=(c.custom&&c.custom.length);
+  return `
+    <div class="screen active">
+      <div class="backbar"><button class="backbtn" onclick="navigate('home')">${IC.back}${t('back')}</button></div>
+      <div class="scr-title">${t('cnMode')}</div>
+      <div class="cn-hello">\u4e2d\u6587</div>
+      <div class="cat"><label>${t('cnLevel')}</label><div class="opt-row">${opt('level','1','HSK 1')}${opt('level','2','HSK 2')}${hasCustom?opt('level','custom',t('cnCustom')):''}</div></div>
+      <div class="cat"><label>${t('cnModeLabel')}</label><div class="opt-row">${opt('mode','match',t('cnMatch'))}${opt('mode','listen',t('cnListen'))}${opt('mode','recall',t('cnRecall'))}</div></div>
+      <div class="cat"><label>${t('cnPinyin')}</label><div class="opt-row"><button class="opt ${c.pinyin?'on':''}" onclick="cnSet('pinyin',true)">${t('cnShow')}</button><button class="opt ${!c.pinyin?'on':''}" onclick="cnSet('pinyin',false)">${t('cnHide')}</button></div></div>
+      <div class="spacer"></div>
+      <button class="btn-primary" onclick="startCn()">${t('cnStartBtn')}</button>
+    </div>`;
+}
+function startCn(){
+  const p=activeProfile(); if(!p){navigate('profiles');return;}
+  const c=ensureCN(p); const pool=cnPool(c);
+  if(!pool||!pool.length){ alert(t('cnEmpty')); return; }
+  cnMode=c.mode; cnChoices=Math.max(2,Math.min(c.choices||4,pool.length));
+  cnQueue=shuffle(pool).slice(0,Math.min(10,pool.length));
+  cnIdx=0; cnScore=0; cnTotal=cnQueue.length; cnCoins=0; cnMistake=false; lastMode='cn'; missedThisRound=[];
+  cnBuildTurn(); navigate('cngame');
+}
+let cnQueue=[],cnIdx=0,cnCur=null,cnMode='match',cnChoices=4,cnScore=0,cnTotal=0,cnCoins=0,cnMistake=false,cnTurnActive=false,cnRevealed=false,cnOpts=[],cnCorrect=0,cnPicked=-1;
+const SPK_SVG='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" style="vertical-align:-3px"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 9.5a3 3 0 010 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const SPK_BIG='<svg viewBox="0 0 24 24" width="40" height="40" fill="none"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="#fff"/><path d="M16 8.5a4 4 0 010 7M18.5 6a7 7 0 010 12" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
+function cnBuildTurn(){
+  cnCur=cnQueue[cnIdx]; cnRevealed=false; cnPicked=-1; cnTurnActive=true;
+  if(cnMode==='match'||cnMode==='listen'){
+    const c=ensureCN(activeProfile()); const pool=cnPool(c);
+    const keyf=(cnMode==='listen')?(x=>x.h):(x=>x.en);
+    const others=shuffle(pool.filter(x=>keyf(x)!==keyf(cnCur)));
+    const picks=[cnCur];
+    for(let i=0;i<others.length && picks.length<cnChoices;i++){ if(!picks.some(z=>keyf(z)===keyf(others[i]))) picks.push(others[i]); }
+    cnOpts=shuffle(picks); cnCorrect=cnOpts.indexOf(cnCur);
+  } else { cnOpts=[]; cnCorrect=0; }
+}
+function cnSpeak(){ if(cnCur){ try{ speak(cnCur.h,'ZH'); }catch(e){} } }
+function cnAutoSpeak(){ if(cnMode==='listen') cnSpeak(); }
+function cnRenderStage(){ const st=document.getElementById('cn-stage'); if(st) st.innerHTML=cnStageHTML(); }
+function viewCnGame(){ const p=activeProfile();
+  return `
+    <div class="screen active">
+      <div class="cn-top">
+        <button class="cn-quit" onclick="navigate('home')" aria-label="${t('back')}">${IC.back}</button>
+        <span class="coins" id="cn-coins">${IC.star}${(p&&p.coins)||0}</span>
+      </div>
+      <div class="cn-stage" id="cn-stage"></div>
+    </div>`;
+}
+function paintCnGame(){ cnRenderStage(); cnAutoSpeak(); }
+function cnStageHTML(){
+  if(!cnCur) return '';
+  const c=ensureCN(activeProfile());
+  const dots=cnQueue.map((q,i)=>`<i class="${i<cnIdx?'on':(i===cnIdx?'cur':'')}"></i>`).join('');
+  const spk=`<button class="cn-spk" onclick="cnSpeak()">${SPK_SVG} ${t('cnHear')}</button>`;
+  let body='';
+  if(cnMode==='listen'){
+    body=`<div class="cn-listen"><div class="cn-bigspk" onclick="cnSpeak()">${SPK_BIG}</div><div class="cn-ask">${t('cnAskHear')}</div></div>`
+      +`<div class="cn-grid">`+cnOpts.map((o,i)=>{ let cls='cn-tile zh'; if(!cnTurnActive){ if(i===cnCorrect)cls+=' correct'; else if(i===cnPicked)cls+=' wrong'; } return `<button class="${cls}" onclick="cnAnswer(${i})">${o.h}</button>`; }).join('')+`</div>`;
+  } else if(cnMode==='match'){
+    body=`<div class="cn-q"><div class="cn-hz">${cnCur.h}</div>${c.pinyin?`<div class="cn-py">${cnCur.p}</div>`:''}${spk}</div>`
+      +`<div class="cn-ask">${t('cnAskMean')}</div>`
+      +`<div class="cn-grid">`+cnOpts.map((o,i)=>{ let cls='cn-tile'; if(!cnTurnActive){ if(i===cnCorrect)cls+=' correct'; else if(i===cnPicked)cls+=' wrong'; } return `<button class="${cls}" onclick="cnAnswer(${i})">${esc(o.en)}</button>`; }).join('')+`</div>`;
+  } else {
+    body=`<div class="cn-q"><div class="cn-hz">${cnCur.h}</div>${spk}`
+      +(cnRevealed?`<div class="cn-reveal"><div class="cn-py">${cnCur.p}</div><div class="cn-mean">${esc(cnCur.en)}</div></div>`:'')
+      +`</div>`
+      +(cnRevealed?`<div class="cn-rate"><button class="opt" onclick="cnRate(false)">${t('cnReview')}</button><button class="btn-primary cn-knew" onclick="cnRate(true)">${t('cnKnew')}</button></div>`
+                  :`<button class="btn-primary" onclick="cnReveal()">${t('cnRevealBtn')}</button>`);
+  }
+  return `<div class="cn-dots">${dots}</div>${body}`;
+}
+function cnAward(){ const p=activeProfile(); cnScore++; cnCoins+=2; awardCorrect(2); if(cnCur){ const c=ensureCN(p); c.known[cnCur.h]=true; } try{sfx('correct');}catch(e){} const cc=document.getElementById('cn-coins'); if(cc&&p) cc.textContent=(p.coins||0); }
+function cnAnswer(i){ if(!cnTurnActive) return; cnTurnActive=false; cnPicked=i;
+  const p=activeProfile(); const c=ensureCN(p); if(cnCur) c.seen[cnCur.h]=true;
+  if(i===cnCorrect){ cnAward(); } else { cnMistake=true; try{sfx('wrong');}catch(e){} }
+  saveProfiles(); cnRenderStage(); setTimeout(cnAdvance, (i===cnCorrect)?900:1400);
+}
+function cnReveal(){ cnRevealed=true; cnRenderStage(); }
+function cnRate(knew){ if(!cnTurnActive) return; cnTurnActive=false; const p=activeProfile(); const c=ensureCN(p); if(cnCur) c.seen[cnCur.h]=true;
+  if(knew){ cnAward(); } saveProfiles(); setTimeout(cnAdvance, 450); }
+function cnAdvance(){ cnIdx++; if(cnIdx>=cnQueue.length){ finishCn(); return; } cnBuildTurn(); cnRenderStage(); cnAutoSpeak(); }
+function finishCn(){ roundScore=cnScore; roundTotal=cnTotal; roundCoins=cnCoins; roundMistake=cnMistake; lastMode='cn'; missedThisRound=[]; finishRound(); }
+function viewCnParent(){
+  const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
+  const c=ensureCN(p);
+  const rows=(c.custom&&c.custom.length)?c.custom.map((w,i)=>`<div class="cw-row"><span class="cw-h">${esc(w.h)}</span><span class="cw-p">${esc(w.p||'')}</span><span class="cw-e">${esc(w.en||'')}</span><button class="cw-del" onclick="cnDelWord(${i})" aria-label="${t('deleteList')}">\u00d7</button></div>`).join(''):`<div class="lc-empty">${t('cnNoWords')}</div>`;
+  return `
+    <div class="screen active">
+      <div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>
+      <div class="scr-title">${t('cnWordsTitle')}</div>
+      <div class="cat"><label>${t('cnLockLabel')}</label><div class="opt-row"><button class="opt ${!c.lock?'on':''}" onclick="cnSetLock(false)">${t('cnUnlocked')}</button><button class="opt ${c.lock?'on':''}" onclick="cnSetLock(true)">${t('cnLocked')}</button></div><div class="opt-hint">${t('cnLockHint')}</div></div>
+      <div class="ls-sec"><div class="ls-head"><span class="ls-lang">${t('cnCustom')}</span></div>
+        <div class="cw-list">${rows}</div>
+        <div class="cw-add">
+          <input id="cw-h" maxlength="6" placeholder="${t('cnHanzi')}">
+          <input id="cw-p" maxlength="24" placeholder="${t('cnPinyinF')}">
+          <input id="cw-e" maxlength="32" placeholder="${t('cnMeaning')}">
+          <button class="btn-primary" onclick="cnAddWord()">${t('cnAddWord')}</button>
+        </div>
+      </div>
+      <div class="spacer"></div>
+    </div>`;
+}
+function cnSetLock(v){ const p=activeProfile(); if(!p) return; ensureCN(p).lock=!!v; saveProfiles(); render(); }
+function cnDelWord(i){ const p=activeProfile(); if(!p) return; const c=ensureCN(p); c.custom.splice(i,1); if(!c.custom.length && c.level==='custom') c.level='1'; saveProfiles(); render(); }
+function cnAddWord(){ const p=activeProfile(); if(!p) return; const c=ensureCN(p);
+  const he=document.getElementById('cw-h'), pe=document.getElementById('cw-p'), ee=document.getElementById('cw-e');
+  const h=(he&&he.value||'').trim(), pp=(pe&&pe.value||'').trim(), en=(ee&&ee.value||'').trim();
+  if(!h||!en) return; c.custom.push({h:h,p:pp,en:en}); saveProfiles(); render(); }
 function selMathOp(o){ mathOp=o; render(); }
 function selMathDiff(d){ mathDiff=d; render(); }
 function viewMathCfg(){
@@ -2066,7 +2455,7 @@ function speakMath(){
   const eq=lang==='FR'?'égale':'equals';
   speak(`${curM.a} ${w[curM.op]} ${curM.b} ${eq}`, lang);
 }
-function playAgain(){ if(lastMode==='math') startMath(); else startDict(); }
+function playAgain(){ if(lastMode==='math') startMath(); else if(lastMode==='cn') startCn(); else startDict(); }
 function practiseMissed(){ const words=[...new Set(missedThisRound)]; if(!words.length) return; queue=words.slice(0,10); roundTotal=queue.length; qi=0; roundScore=0; roundCoins=0; lastMode='dict'; missedThisRound=[]; roundMistake=false; streak=0; beginTurn(); }
 
 function bindLive(){ /* reserved for listeners added post-render */ }
