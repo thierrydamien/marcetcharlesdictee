@@ -1149,6 +1149,7 @@ function viewVoices(){
       <div class="vbox"><div class="vlang">${t('voiceEnhanced')}</div>${vpStatusHTML()}</div>
       ${block('FR','Fran\u00e7ais')}
       ${block('EN','English')}
+      ${block('ZH','\u4e2d\u6587')}
       <div class="vnote">${t('voicesHelp')}</div>
       <button class="link-btn" onclick="loadVoices(); render();">${IC.spk}${t('voicesRefresh')}</button>
       <div class="spacer"></div>
@@ -2138,7 +2139,7 @@ function vpStatusHTML(){
 
 function speak(txt,l){
   var key=(l==='FR')?'FR':(l==='ZH'?'ZH':'EN');
-  if(_piper.status[key]==='idle') piperEnsure(key);
+  if(_piper.status[key]==='idle' && store.get('hg_voicesInstalled')) piperEnsure(key);
   if(_piper.status[key]==='ready'){ piperSynth(txt,key).catch(function(e){ console.warn('[voices] enhanced synth failed, device fallback', e); speakDevice(txt,l); }); return; }
   speakDevice(txt,l);
 }
