@@ -2043,9 +2043,11 @@ async function piperSynth(txt,key){
   var sess=await piperSession(key);
   var blob=await sess.predict(txt);
   var ctx=actx();
-  if(!ctx){ try{ var a=new Audio(URL.createObjectURL(blob)); a.play(); }catch(e){} return; }
+  if(ctx && ctx.state==='suspended'){ try{ await ctx.resume(); }catch(e){} }
+  function playBlob(){ try{ var a=new Audio(URL.createObjectURL(blob)); a.play(); }catch(e){} }
+  if(!ctx || ctx.state!=='running'){ playBlob(); return; }
   var ab=await blob.arrayBuffer();
-  await new Promise(function(res,rej){ ctx.decodeAudioData(ab, function(audio){ try{ var src=ctx.createBufferSource(); src.buffer=audio; src.connect(ctx.destination); src.start(); res(); }catch(e){ rej(e); } }, rej); });
+  await new Promise(function(res){ ctx.decodeAudioData(ab, function(audio){ try{ var src=ctx.createBufferSource(); src.buffer=audio; src.connect(ctx.destination); src.start(); }catch(e){ playBlob(); } res(); }, function(){ playBlob(); res(); }); });
 }
 async function piperEnsure(key){
   if(_piper.status[key]==='ready' || _piper.loading[key]) return;
@@ -2060,13 +2062,23 @@ function speak(txt,l){
   if(_piper.status[key]==='ready'){ piperSynth(txt,key).catch(function(e){ console.warn('[voices] enhanced synth failed, device fallback', e); speakDevice(txt,l); }); return; }
   speakDevice(txt,l);
 }
-function speakDevice(txt,l){ if(!('speechSynthesis' in window)) return; try{ const u=new SpeechSynthesisUtterance(txt);
+let _ssKeep=null,_ssTimer=null;
+function speakDevice(txt,l){ if(!('speechSynthesis' in window)) return; try{ const ss=window.speechSynthesis;
+  const u=new SpeechSynthesisUtterance(txt);
   const code=(l==='FR')?'fr-FR':(l==='ZH'?'zh-CN':'en-GB'); u.lang=code; u.rate=(l==='ZH'?0.85:0.9); u.pitch=1;
   const key=(l==='FR')?'FR':(l==='ZH'?'ZH':'EN');
   let v=chosenVoice(key);
   if(!v){ if(_voicePick[key]) v=_voicePick[key]; else { v=pickVoice(code); if(v) _voicePick[key]=v; } }
   if(v){ u.voice=v; u.lang=v.lang||code; }
-  speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
+  u.onend=u.onerror=function(){ if(_ssKeep){ clearInterval(_ssKeep); _ssKeep=null; } };
+  try{ ss.resume(); }catch(e){}
+  try{ ss.cancel(); }catch(e){}
+  if(_ssTimer) clearTimeout(_ssTimer);
+  _ssTimer=setTimeout(function(){ try{ ss.speak(u);
+    if(_ssKeep) clearInterval(_ssKeep);
+    _ssKeep=setInterval(function(){ try{ if(ss.speaking) ss.resume(); else { clearInterval(_ssKeep); _ssKeep=null; } }catch(e){ try{clearInterval(_ssKeep);}catch(_){} _ssKeep=null; } }, 4000);
+  }catch(e){} }, 60);
+}catch(e){} }
 function voiceList(lng){ if(!_voices.length) loadVoices(); const base=(lng==='FR')?'fr':'en'; return _voices.filter(v=>((v.lang||'').toLowerCase().slice(0,2))===base); }
 function chosenVoice(lng){ const id=store.get('hg_voice_'+lng); if(!id) return null; if(!_voices.length) loadVoices(); return _voices.find(v=>(v.voiceURI===id||v.name===id))||null; }
 function setVoice(lng,id){ if(id) store.set('hg_voice_'+lng,id); else store.remove('hg_voice_'+lng); _voicePick[lng]=null; render(); }
