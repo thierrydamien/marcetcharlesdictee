@@ -253,6 +253,12 @@ input,textarea{font-family:inherit;}
 @keyframes hglow{0%,100%{opacity:.92}50%{opacity:1}}
 @media (prefers-reduced-motion: reduce){ [class*='hidle'],.hpet{animation:none!important;} }
 .scene-tabs{display:flex;gap:6px;justify-content:center;margin:2px 0 8px;}
+.vpreview{display:flex;justify-content:center;margin:6px 0}
+.vcolors{display:flex;gap:10px;justify-content:center;margin:6px 0 10px;flex-wrap:wrap}
+.vcolor{width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line);cursor:pointer;padding:0}
+.vcolor.on{box-shadow:0 0 0 3px var(--accent)}
+.shop-card .vsp{width:100%;aspect-ratio:92/56;display:flex;align-items:center;justify-content:center}
+.shop-card.vcard .vsp svg{width:100%;height:auto}
 .stab{font-family:var(--fd);font-weight:700;font-size:14px;padding:6px 16px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;}
 .stab.on{background:var(--accent);color:#fff;border-color:var(--accent);}
 .gflower{transform-box:fill-box;transform-origin:center bottom;animation:hsway 4.6s ease-in-out infinite;}
@@ -531,7 +537,7 @@ const T = {
     save:"Enregistrer", cancel:"Annuler", del:"Supprimer ce joueur",
     hi:"Salut", dict:"Dictée", dictSub:"Écoute et écris", maths:"Maths", mathsSub:"Additions et plus", parent:"Espace parent", switchP:"Changer de joueur", back:"Retour",
     pinNew:"Crée un code parent", pinNewSub:"Choisis 4 chiffres", pinEnter:"Code parent", pinSub:"Entre ton code à 4 chiffres",
-    pinWrong:"Code incorrect", words:"Listes de mots", wordsHint:"Un mot par ligne. Pour un exemple : chat = Le chat dort.",
+    pinWrong:"Code incorrect", pinForgot:"Code oublié ? Contacte", words:"Listes de mots", wordsHint:"Un mot par ligne. Pour un exemple : chat = Le chat dort.",
     changePin:"Changer le code", full:"4 joueurs maximum", needName:"Donne un prénom",
     chooseStyle:"Choisis ton style", stCopy:"Copier", stCopySub:"Recopie le mot", stRemember:"Mémoire", stRememberSub:"Regarde puis écris",
     stGaps:"Lettres manquantes", stGapsSub:"Complète le mot", stScramble:"Mélange", stScrambleSub:"Remets dans l'ordre",
@@ -552,13 +558,13 @@ const T = {
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?", mixOp:"Mixte",
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
     pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", kbHint:"\u00ab Auto \u00bb s'adapte \u00e0 l'appareil. \u00ab ABC \u00bb est le plus simple pour les petits.", playSettings:"R\u00e9glages du jeu", introEyebrow:"Pour les parents", introBody:"Des listes de d\u00e9part sont pr\u00eates. Chaque semaine, modifie la liste pour coller aux mots de dict\u00e9e donn\u00e9s par l'\u00e9cole, ou prends-la en photo.", introGo:"Configurer les listes", introDismiss:"Compris", backupBtn:"Sauvegarde / transfert", bkUrlLabel:"URL Google Script", bkUrlHint:"Colle l'URL de ton script Apps Script", bkCloudNow:"Sauvegarder maintenant", bkCloudLast:"Dernière sauvegarde :", bkCloudNever:"Jamais sauvegardé", bkCloudDone:"Sauvegardé !", bkCloudFail:"Échec — vérifie l'URL", bkCloudRestore:"Restaurer depuis Google Sheets", bkCloudRestoreConfirm:"Remplacer toutes les données locales par la sauvegarde en ligne ?", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.", scanBtn:"Scanner une liste", scanTitle:"Scanner une liste", scanIntro:"Prends en photo la liste de mots de l'\u00e9cole. On la transforme en liste modifiable.", scanOnline:"Cette fonction a besoin d'une connexion internet. Le reste de l'application fonctionne hors ligne.", scanPick:"Prendre une photo", scanLoading:"Pr\u00e9paration\u2026", scanReading:"Lecture du texte\u2026", scanReviewNote:"V\u00e9rifie et corrige les mots avant d'enregistrer. La reconnaissance n'est pas toujours parfaite.", scanError:"La lecture a \u00e9chou\u00e9. V\u00e9rifie ta connexion et r\u00e9essaie.", scanRetry:"R\u00e9essayer", scanEmpty:"Aucun mot d\u00e9tect\u00e9. Modifie le texte ou r\u00e9essaie.", scanInline:"Scanner une photo", scanAboutTitle:"Scanner une liste", scanAboutBody:"Dans l'espace parent, tu peux prendre en photo la liste de mots de l'\u00e9cole pour la transformer en liste. V\u00e9rifie les mots avant d'enregistrer. N\u00e9cessite internet.",
-    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", roundReview:"Tes mots", trickyTitle:"Lettres à surveiller", writeItPrompt:"Maintenant, écris-le", wellCopied:"Bien copié !", reEncodeGiveUp:"On y reviendra", patternsTitle:"Schémas à surveiller", patAccents:"Accents", patDouble:"Lettres doubles", patVowels:"Sons de voyelles", patTion:"Terminaisons -tion", arrangeHint:"Glisse les objets pour les déplacer. Touche un nom pour le cacher.", resetArrange:"Réinitialiser", sceneRoom:"Chambre", sceneGarden:"Jardin", gardenHint:"Tes mots poussent quand tu les apprends", gardenEmpty:"Choisis une liste pour planter tes mots", masteredLabel:"maîtrisés", masteredCaption:"Les mots en fleur se reposent ici", allBloomed:"Tout est en fleur !", gardenAboutTitle:"Le jardin", gardenAboutBody:"Dans la maison, passe au jardin pour voir chaque mot grandir, de la graine à la fleur, à mesure qu'il est maîtrisé, avec un arbre pour chaque opération.", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant (tu peux même photographier la liste de l'école) et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", coinsShort:"\u00e9toiles", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
+    yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", roundReview:"Tes mots", trickyTitle:"Lettres à surveiller", writeItPrompt:"Maintenant, écris-le", wellCopied:"Bien copié !", reEncodeGiveUp:"On y reviendra", patternsTitle:"Schémas à surveiller", patAccents:"Accents", patDouble:"Lettres doubles", patVowels:"Sons de voyelles", patTion:"Terminaisons -tion", arrangeHint:"Glisse les objets pour les déplacer. Touche un nom pour le cacher.", resetArrange:"Réinitialiser", sceneRoom:"Chambre", sceneGarden:"Jardin", sceneGarage:"Garage", garageEmpty:"Achète des véhicules à la boutique pour remplir ton garage", garageShopHint:"Boutique", vehicleCat:"Véhicules", chooseColor:"Choisis une couleur", parkFull:"Garage plein ! Touche un véhicule garé pour le remplacer.", parked:"Garé", park:"Garer", garageAboutBody:"Achète des véhicules à la boutique, puis gare jusqu'à trois d'entre eux dans ton garage.", gardenHint:"Tes mots poussent quand tu les apprends", gardenEmpty:"Choisis une liste pour planter tes mots", masteredLabel:"maîtrisés", masteredCaption:"Les mots en fleur se reposent ici", allBloomed:"Tout est en fleur !", gardenAboutTitle:"Le jardin", gardenAboutBody:"Dans la maison, passe au jardin pour voir chaque mot grandir, de la graine à la fleur, à mesure qu'il est maîtrisé, avec un arbre pour chaque opération.", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant (tu peux même photographier la liste de l'école) et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", coinsShort:"\u00e9toiles", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name",
     save:"Save", cancel:"Cancel", del:"Delete this player",
     hi:"Hi", dict:"Spelling", dictSub:"Listen and write", maths:"Maths", mathsSub:"Sums and more", parent:"Parent area", switchP:"Switch player", back:"Back",
     pinNew:"Create a parent code", pinNewSub:"Choose 4 digits", pinEnter:"Parent code", pinSub:"Enter your 4-digit code",
-    pinWrong:"Wrong code", words:"Word lists", wordsHint:"One word per line. For an example: cat = The cat sleeps.",
+    pinWrong:"Wrong code", pinForgot:"Forgotten your code? Contact", words:"Word lists", wordsHint:"One word per line. For an example: cat = The cat sleeps.",
     changePin:"Change code", full:"4 players max", needName:"Please add a name",
     chooseStyle:"Choose your style", stCopy:"Copy", stCopySub:"Copy the word", stRemember:"Remember", stRememberSub:"Look then write",
     stGaps:"Missing letters", stGapsSub:"Fill in the word", stScramble:"Scramble", stScrambleSub:"Put it back in order",
@@ -579,7 +585,7 @@ const T = {
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?", mixOp:"Mixed",
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
     pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", kbHint:"Auto matches your device. ABC is easiest for young children.", playSettings:"Game settings", introEyebrow:"For parents", introBody:"Starter lists are ready. Each week, edit the list to match the spelling words your school sends home, or scan a photo of it.", introGo:"Set up lists", introDismiss:"Got it", backupBtn:"Backup / transfer", bkUrlLabel:"Google Script URL", bkUrlHint:"Paste your Apps Script web app URL", bkCloudNow:"Back up now", bkCloudLast:"Last backup:", bkCloudNever:"Never backed up", bkCloudDone:"Backed up!", bkCloudFail:"Failed — check the URL", bkCloudRestore:"Restore from Google Sheets", bkCloudRestoreConfirm:"Replace all local data with the cloud backup?", backup:"Backup", backupSub:"Copy this code to restore your game on another device.", scanBtn:"Scan a list", scanTitle:"Scan a list", scanIntro:"Take a photo of the school's word list. We'll turn it into an editable list.", scanOnline:"This feature needs an internet connection. The rest of the app works offline.", scanPick:"Take a photo", scanLoading:"Getting ready\u2026", scanReading:"Reading text\u2026", scanReviewNote:"Check and fix the words before saving. Recognition is not always perfect.", scanError:"Reading failed. Check your connection and try again.", scanRetry:"Try again", scanEmpty:"No words detected. Edit the text or try again.", scanInline:"Scan a photo", scanAboutTitle:"Scan a list", scanAboutBody:"In the parent area, you can photograph the school's word list to turn it into a list. Check the words before saving. Needs internet.",
-    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", roundReview:"Your words", trickyTitle:"Tricky letters", writeItPrompt:"Now write it", wellCopied:"Nicely copied!", reEncodeGiveUp:"We'll come back to it", patternsTitle:"Patterns to watch", patAccents:"Accents", patDouble:"Double letters", patVowels:"Vowel teams", patTion:"-tion endings", arrangeHint:"Drag items to move them. Tap a name to hide it.", resetArrange:"Reset", sceneRoom:"Room", sceneGarden:"Garden", gardenHint:"Your words grow as you learn them", gardenEmpty:"Pick a list to plant your words", masteredLabel:"mastered", masteredCaption:"Bloomed words rest here", allBloomed:"All bloomed for now!", gardenAboutTitle:"Garden", gardenAboutBody:"In the house, switch to the garden to watch each word grow from a seed into a flower as it's mastered, with a tree for each kind of sum.", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists (you can even scan a photo of the school's list) and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", coinsShort:"stars", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
+    yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", roundReview:"Your words", trickyTitle:"Tricky letters", writeItPrompt:"Now write it", wellCopied:"Nicely copied!", reEncodeGiveUp:"We'll come back to it", patternsTitle:"Patterns to watch", patAccents:"Accents", patDouble:"Double letters", patVowels:"Vowel teams", patTion:"-tion endings", arrangeHint:"Drag items to move them. Tap a name to hide it.", resetArrange:"Reset", sceneRoom:"Room", sceneGarden:"Garden", sceneGarage:"Garage", garageEmpty:"Buy vehicles in the shop to fill your garage", garageShopHint:"Shop", vehicleCat:"Vehicles", chooseColor:"Choose a colour", parkFull:"Garage full! Tap a parked vehicle to swap it.", parked:"Parked", park:"Park", garageAboutBody:"Buy vehicles in the shop, then park up to three of them in your garage.", gardenHint:"Your words grow as you learn them", gardenEmpty:"Pick a list to plant your words", masteredLabel:"mastered", masteredCaption:"Bloomed words rest here", allBloomed:"All bloomed for now!", gardenAboutTitle:"Garden", gardenAboutBody:"In the house, switch to the garden to watch each word grow from a seed into a flower as it's mastered, with a tree for each kind of sum.", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists (you can even scan a photo of the school's list) and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", coinsShort:"stars", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
 };
 function t(k){ return T[lang][k]; }
 const APP_VER = "1.0";
@@ -752,6 +758,106 @@ const PETS = [
   {id:'pet_fish',   price:22, fr:'Poisson', en:'Fish'},
 ];
 function isPet(id){ return PETS.some(i=>i.id===id); }
+
+/* ---- Vehicles (garage) ---- */
+var VEHICLES = [
+  {id:'racer',  price:150, fr:'Voiture de course', en:'Racing car',   colors:['#FF4C46','#1A4ACC','#21BFA0','#FFC93C','#33304a']},
+  {id:'tesla',  price:250, fr:'Tesla Model 3',      en:'Tesla Model 3', colors:['#EEEEEE','#CC2020','#1A2E5A','#33304a','#9aa7b8']},
+  {id:'police', price:300, fr:'Voiture de police',  en:'Police car',   colors:['#2B3A55','#1a1a1a','#3a5878']},
+  {id:'truck',  price:400, fr:'Monster truck',      en:'Monster truck',colors:['#7A3FB0','#21BFA0','#FF6F61','#FFC93C']},
+  {id:'tank',   price:600, fr:'Char d\'assaut',     en:'Army tank',    colors:['#5A6E46','#6b6450','#3a5878']},
+  {id:'rocket', price:900, fr:'Fusée',              en:'Rocket ship',  colors:['#E84040','#21BFA0','#5B8DEF','#FFC93C']},
+];
+function isVehicle(id){ return VEHICLES.some(v=>v.id===id); }
+function vehicleDef(id){ return VEHICLES.find(v=>v.id===id); }
+function ownsVehicle(p,id){ return !!(p.vehicles && p.vehicles[id]); }
+function darken(hex,amt){ try{ var h=hex.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2]; var r=Math.max(0,parseInt(h.slice(0,2),16)-amt), g=Math.max(0,parseInt(h.slice(2,4),16)-amt), b=Math.max(0,parseInt(h.slice(4,6),16)-amt); return '#'+[r,g,b].map(function(x){return ('0'+x.toString(16)).slice(-2)}).join(''); }catch(e){ return hex; } }
+function lighten(hex,amt){ try{ var h=hex.replace('#',''); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2]; var r=Math.min(255,parseInt(h.slice(0,2),16)+amt), g=Math.min(255,parseInt(h.slice(2,4),16)+amt), b=Math.min(255,parseInt(h.slice(4,6),16)+amt); return '#'+[r,g,b].map(function(x){return ('0'+x.toString(16)).slice(-2)}).join(''); }catch(e){ return hex; } }
+/* Each vehicle drawn in a 0..92 x 0..56 box, baseline ~52 */
+function vehicleShape(id, color){
+  var c=color||(vehicleDef(id)&&vehicleDef(id).colors[0])||'#888';
+  var d=darken(c,40), l=lighten(c,30);
+  var wheels='<circle cx="20" cy="48" r="9" fill="#1a1a1a"/><circle cx="20" cy="48" r="6" fill="#333"/><circle cx="20" cy="48" r="2.5" fill="#666"/><circle cx="72" cy="48" r="9" fill="#1a1a1a"/><circle cx="72" cy="48" r="6" fill="#333"/><circle cx="72" cy="48" r="2.5" fill="#666"/>';
+  if(id==='racer'){
+    return '<ellipse cx="46" cy="52" rx="38" ry="4" fill="rgba(0,0,0,.15)"/>'
+      +'<rect x="4" y="28" width="84" height="18" rx="5" fill="'+c+'"/>'
+      +'<path d="M26 28 Q32 12 52 11 Q68 11 72 28Z" fill="'+l+'"/>'
+      +'<path d="M30 28 Q35 15 52 14 Q65 14 68 28Z" fill="#C8E8FF" opacity=".9"/>'
+      +'<rect x="4" y="31" width="84" height="4" fill="#fff" opacity=".18"/>'
+      +'<rect x="0" y="42" width="16" height="4" rx="2" fill="'+d+'"/>'
+      +'<rect x="80" y="18" width="3" height="12" rx="1.5" fill="'+d+'"/><rect x="74" y="16" width="16" height="4" rx="2" fill="'+d+'"/>'
+      +'<circle cx="44" cy="34" r="8" fill="#fff" opacity=".25"/><text x="44" y="39" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="13" font-weight="700" fill="#fff">1</text>'
+      +'<rect x="4" y="30" width="8" height="3" rx="1.5" fill="#FFE87A"/><rect x="80" y="30" width="8" height="3" rx="1.5" fill="#FF8888"/>'
+      +'<circle cx="18" cy="46" r="10" fill="#1a1a1a"/><circle cx="18" cy="46" r="7" fill="#333"/><circle cx="18" cy="46" r="3" fill="#666"/>'
+      +'<circle cx="72" cy="46" r="10" fill="#1a1a1a"/><circle cx="72" cy="46" r="7" fill="#333"/><circle cx="72" cy="46" r="3" fill="#666"/>';
+  }
+  if(id==='tesla'){
+    return '<ellipse cx="46" cy="52" rx="38" ry="4" fill="rgba(0,0,0,.15)"/>'
+      +'<rect x="6" y="28" width="80" height="18" rx="6" fill="'+c+'"/>'
+      +'<path d="M18 28 Q22 10 40 8 Q58 6 70 12 Q78 16 78 28Z" fill="'+l+'"/>'
+      +'<path d="M22 28 Q25 13 40 10 Q58 8 68 14 Q74 18 74 28Z" fill="#B8D8F4" opacity=".85"/>'
+      +'<path d="M6 34 Q4 38 4 42 Q4 46 6 46 L10 46 L10 28 L6 28Z" fill="'+c+'"/>'
+      +'<rect x="6" y="29" width="12" height="2.5" rx="1.2" fill="#CCE8FF"/>'
+      +'<path d="M82 28 L82 46 L86 46 Q88 46 88 42 Q88 38 86 34 Q86 28 82 28Z" fill="'+d+'"/>'
+      +'<rect x="78" y="29" width="10" height="3" rx="1.5" fill="#FF7070"/>'
+      +'<rect x="70" y="27" width="12" height="2.5" rx="1.2" fill="'+d+'"/>'
+      +'<rect x="6" y="38" width="80" height="2" rx="1" fill="'+d+'" opacity=".5"/>'
+      +'<line x1="42" y1="28" x2="40" y2="46" stroke="'+d+'" stroke-width="1" opacity=".5"/><line x1="64" y1="28" x2="64" y2="46" stroke="'+d+'" stroke-width="1" opacity=".5"/>'
+      +'<rect x="44" y="32" width="12" height="2.5" rx="1.2" fill="'+d+'" opacity=".6"/><rect x="65" y="32" width="10" height="2.5" rx="1.2" fill="'+d+'" opacity=".6"/>'
+      +'<rect x="21" y="29" width="10" height="2.5" rx="1.2" fill="'+l+'"/><rect x="25" y="29" width="2.5" height="7" rx="1.2" fill="'+l+'"/>'
+      +'<rect x="10" y="43" width="16" height="2.5" rx="1.2" fill="'+d+'"/>'
+      +'<circle cx="20" cy="46" r="9" fill="#1a1a1a"/><circle cx="20" cy="46" r="6.5" fill="#2e2e2e"/><circle cx="20" cy="46" r="4.5" fill="#444"/><rect x="15.5" y="45" width="9" height="2" rx="1" fill="#666"/><rect x="19" y="41.5" width="2" height="9" rx="1" fill="#666"/><circle cx="20" cy="46" r="1.5" fill="#888"/>'
+      +'<circle cx="70" cy="46" r="9" fill="#1a1a1a"/><circle cx="70" cy="46" r="6.5" fill="#2e2e2e"/><circle cx="70" cy="46" r="4.5" fill="#444"/><rect x="65.5" y="45" width="9" height="2" rx="1" fill="#666"/><rect x="69" y="41.5" width="2" height="9" rx="1" fill="#666"/><circle cx="70" cy="46" r="1.5" fill="#888"/>';
+  }
+  if(id==='police'){
+    return '<ellipse cx="46" cy="52" rx="38" ry="4" fill="rgba(0,0,0,.15)"/>'
+      +'<rect x="6" y="28" width="80" height="18" rx="6" fill="'+c+'"/>'
+      +'<path d="M20 28 Q24 12 44 11 Q64 10 72 28Z" fill="'+l+'"/>'
+      +'<path d="M25 28 Q29 15 44 14 Q60 14 67 28Z" fill="#C8E8FF" opacity=".9"/>'
+      +'<rect x="6" y="34" width="80" height="9" fill="#fff"/>'
+      +'<rect x="6" y="28" width="80" height="18" rx="6" fill="none" stroke="'+d+'" stroke-width="1" opacity=".4"/>'
+      +'<text x="46" y="41" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="7" font-weight="700" fill="'+c+'">POLICE</text>'
+      +'<rect x="38" y="6" width="16" height="6" rx="2" fill="#1a1a1a"/><rect x="39" y="6.5" width="6" height="5" rx="1.5" fill="#FF4C46"/><rect x="46" y="6.5" width="6" height="5" rx="1.5" fill="#5B8DEF"/>'
+      +'<rect x="6" y="30" width="9" height="3" rx="1.5" fill="#FFE87A"/><rect x="77" y="30" width="9" height="3" rx="1.5" fill="#FF8888"/>'
+      +wheels;
+  }
+  if(id==='truck'){
+    return '<ellipse cx="46" cy="54" rx="42" ry="4" fill="rgba(0,0,0,.18)"/>'
+      +'<rect x="14" y="20" width="64" height="18" rx="6" fill="'+c+'"/>'
+      +'<path d="M28 20 Q32 10 48 10 Q62 10 64 20Z" fill="'+l+'"/>'
+      +'<path d="M32 20 Q35 13 48 13 Q59 13 61 20Z" fill="#C8E8FF" opacity=".9"/>'
+      +'<rect x="10" y="34" width="72" height="8" rx="3" fill="'+d+'"/>'
+      +'<rect x="14" y="30" width="6" height="4" fill="#FFE87A"/><rect x="72" y="30" width="6" height="4" fill="#FF8888"/>'
+      +'<circle cx="24" cy="46" r="14" fill="#1a1a1a"/><circle cx="24" cy="46" r="10" fill="#333"/><circle cx="24" cy="46" r="4" fill="#666"/>'
+      +'<circle cx="68" cy="46" r="14" fill="#1a1a1a"/><circle cx="68" cy="46" r="10" fill="#333"/><circle cx="68" cy="46" r="4" fill="#666"/>'
+      +'<rect x="20" y="38" width="52" height="3" fill="'+l+'" opacity=".5"/>';
+  }
+  if(id==='tank'){
+    var links=''; for(var i=0;i<8;i++){ links+='<rect x="'+(6+i*10)+'" y="39" width="7" height="10" rx="2" fill="'+d+'"/>'; }
+    return '<ellipse cx="46" cy="54" rx="40" ry="4" fill="rgba(0,0,0,.2)"/>'
+      +'<rect x="2" y="36" width="88" height="16" rx="8" fill="'+d+'"/>'
+      +'<rect x="4" y="38" width="84" height="12" rx="6" fill="'+c+'"/>'+links
+      +'<rect x="6" y="22" width="80" height="16" rx="4" fill="'+c+'"/>'
+      +'<path d="M6 22 Q10 14 20 14 L6 14Z" fill="'+l+'"/>'
+      +'<rect x="20" y="10" width="50" height="14" rx="7" fill="'+l+'"/>'
+      +'<circle cx="40" cy="16" r="5" fill="'+c+'" stroke="'+d+'" stroke-width="1.5"/>'
+      +'<rect x="62" y="14" width="32" height="5" rx="2.5" fill="'+d+'"/><rect x="90" y="13" width="4" height="7" rx="2" fill="'+d+'"/>'
+      +'<text x="54" y="34" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#fff" opacity=".5">&#9733;</text>'
+      +'<ellipse cx="30" cy="16" rx="6" ry="4" fill="'+d+'" opacity=".4"/>';
+  }
+  if(id==='rocket'){
+    return '<ellipse cx="46" cy="53" rx="16" ry="3" fill="rgba(255,200,0,.2)"/>'
+      +'<rect x="38" y="18" width="16" height="30" rx="8" fill="'+c+'"/>'
+      +'<path d="M38 18 Q46 2 54 18Z" fill="'+d+'"/>'
+      +'<rect x="38" y="24" width="16" height="4" fill="#fff" opacity=".3"/>'
+      +'<circle cx="46" cy="20" r="4" fill="#B8E0FF" opacity=".9"/><circle cx="46" cy="20" r="2.5" fill="#D8F0FF" opacity=".7"/>'
+      +'<path d="M38 42 L26 52 L38 50Z" fill="'+d+'"/><path d="M54 42 L66 52 L54 50Z" fill="'+d+'"/>'
+      +'<path d="M40 48 Q46 46 52 48 L54 52 Q46 50 38 52Z" fill="#888"/>'
+      +'<path d="M40 52 Q43 60 46 56 Q49 60 52 52" fill="#FFC93C" opacity=".9"/><path d="M42 52 Q44 58 46 55 Q48 58 50 52" fill="#FF6F61" opacity=".8"/>';
+  }
+  return '';
+}
+
 function equipPet(id){ const p=activeProfile(); ensureEconomy(p); if(!p.owned.includes(id)) return; p.equip.pet=(p.equip.pet===id?null:id); saveProfiles(); render(); }
 function unequipPet(){ const p=activeProfile(); ensureEconomy(p); p.equip.pet=null; saveProfiles(); render(); }
 function petShape(id){
@@ -1217,6 +1323,7 @@ function viewParentPin(){
       <p class="center" style="color:var(--muted);font-weight:700;">${pinMode==='new'?t('pinNewSub'):t('pinSub')}</p>
       <div class="pinrow">${dots}</div>
       <div class="err" id="pin-err"></div>
+      <div class="center" style="margin:8px 0;font-size:13px;color:var(--muted);font-weight:700">${t('pinForgot')} <a href="mailto:thierrydamien@gmail.com" style="color:var(--slate);text-decoration:none">thierrydamien@gmail.com</a></div>
       <div class="pad">${keys}</div>
       <div class="spacer"></div>
     </div>`;
@@ -1498,7 +1605,8 @@ function exportCode(){
   try{ const data={v:1, profiles, pin:store.get('hg_pin')||'', lang, kbd:store.get('hg_kbd')||'auto', practice:store.get('hg_practice')||'smart'};
     return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }catch(e){ return ''; }
 }
-var _BK_DEFAULT='https://script.google.com/macros/s/AKfycbyysnvDVijWd7KAjZ-iEAZSndFa1Bkk1Y2ija6Na4eokxk4KaLkPw_5skaQ8ZVkF3uC/exec';
+var _BK_DEFAULT=['aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BSw==','ZnljYnl5c252RFZpaldkN0tBalotaUVBWlNuZEZhMUJrazFZMg==','aWphNk5hNGVva3hrNEthTGtQd181c2thUThaVmtGM3VDL2V4ZWM='].map(function(x){return atob(x)}).join('');
+var _BK_TOKEN=['bnM=','Y3Ju'].map(function(x){return atob(x)}).join('');
 function bkUrl(){ return (store.get('hg_backupUrl')||_BK_DEFAULT).trim(); }
 function bkSetUrl(v){ store.set('hg_backupUrl',v.trim()); }
 function bkLastTs(){ return store.get('hg_lastBackup')||''; }
@@ -1514,14 +1622,14 @@ function bkAutoIfDue(){
 function bkSilent(){
   const url=bkUrl(); if(!url) return;
   try{
-    var _p=bkPayload(); fetch(url+'?action=save&d='+encodeURIComponent(_p)).then(()=>store.set('hg_lastBackup',String(Date.now()))).catch(()=>{});
+    var _p=bkPayload(); fetch(url+'?action=save&t='+encodeURIComponent(_BK_TOKEN)+'&d='+encodeURIComponent(_p)).then(()=>store.set('hg_lastBackup',String(Date.now()))).catch(()=>{});
   }catch(e){}
 }
 function bkNow(){
   const url=bkUrl(); const msg=document.getElementById('bk-cloud-msg');
   if(!url){ if(msg) msg.textContent=t('bkCloudFail'); return; }
   if(msg) msg.textContent='…';
-  var _p2=bkPayload(); fetch(url+'?action=save&d='+encodeURIComponent(_p2))
+  var _p2=bkPayload(); fetch(url+'?action=save&t='+encodeURIComponent(_BK_TOKEN)+'&d='+encodeURIComponent(_p2))
     .then(r=>r.json())
     .then(j=>{ if(j&&j.ok){ store.set('hg_lastBackup',String(Date.now())); if(msg) msg.textContent=t('bkCloudDone'); render(); } else throw new Error(); })
     .catch(()=>{ if(msg) msg.textContent=t('bkCloudFail'); });
@@ -1531,7 +1639,7 @@ function bkCloudRestoreFetch(){
   const url=bkUrl(); const msg=document.getElementById('bk-cloud-msg');
   if(!url){ if(msg) msg.textContent=t('bkCloudFail'); return; }
   if(msg) msg.textContent='…';
-  fetch(url+'?action=get')
+  fetch(url+'?action=get&t='+encodeURIComponent(_BK_TOKEN))
     .then(r=>r.json())
     .then(data=>{ if(!data||!Array.isArray(data.profiles)) throw new Error(); bkPendingCloud=data; render(); })
     .catch(()=>{ if(msg) msg.textContent=t('bkCloudFail'); });
@@ -1555,41 +1663,18 @@ function viewBackup(){
     <div class="screen active">
       <div class="backbar"><button class="backbtn" onclick="navigate('parent')">${IC.back}${t('back')}</button></div>
       <div class="scr-title">${t('backup')}</div>
-      <p class="hint">${t('backupSub')}</p>
-      <div class="field"><label>${t('yourCode')}</label><textarea id="bk-code" readonly onclick="this.select()">${exportCode()}</textarea></div>
-      <button class="btn-primary" onclick="copyCode()">${t('copy')}</button>
-      <div id="bk-msg" class="center" style="color:var(--accent-dk);font-weight:700;min-height:18px;margin-top:8px;"></div>
-      <div style="height:20px"></div>
+      <div style="height:8px"></div>
       <div class="ls-sec"><div class="ls-head"><span class="ls-lang">Google Sheets</span></div>
 
         <div class="bk-status">${t('bkCloudLast')} <b>${bkLastTs()?new Date(parseInt(bkLastTs(),10)).toLocaleString():t('bkCloudNever')}</b></div>
         <div id="bk-cloud-msg" style="min-height:16px;font-weight:700;font-size:13px;color:var(--accent);margin:4px 0 8px;text-align:center"></div>
         ${bkPendingCloud?`<div class="confirm-box"><div class="cb-msg">${t('bkCloudRestoreConfirm')}<br><small>${(bkPendingCloud.profiles||[]).map(p=>esc(p.name)).join(', ')} &mdash; ${esc(bkPendingCloud.ts||'')}</small></div><div class="cb-row"><button class="btn-ghost" onclick="bkCancelCloud()">${t('cancel')}</button><button class="btn-danger" onclick="bkConfirmCloud()">${t('restoreBtn')}</button></div></div>`:`<div class="bk-btns"><button class="btn-primary" onclick="bkNow()">${t('bkCloudNow')}</button><button class="btn-ghost" onclick="bkCloudRestoreFetch()">${t('bkCloudRestore')}</button></div>`}
       </div>
-      <div style="height:14px"></div>
-      <div class="field"><label>${t('restore')}</label><textarea id="bk-in" placeholder="${t('pasteHere')}"></textarea></div>
-      ${pendingRestore ? `
-      <div class="confirm-box"><div class="cb-msg">${t('restoreConfirm')}</div><div class="cb-row"><button class="btn-ghost" onclick="cancelRestore()">${t('cancel')}</button><button class="btn-danger" onclick="confirmRestore()">${t('restoreBtn')}</button></div></div>` : `
-      <button class="btn-ghost" onclick="doRestore()">${t('restoreBtn')}</button>`}
-      <div id="bk-err" class="err"></div>
+
       <div class="spacer"></div>
     </div>`;
 }
-function copyCode(){
-  const el=document.getElementById('bk-code'); if(!el) return; el.select();
-  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(el.value).catch(()=>{}); }
-  else { try{ document.execCommand('copy'); }catch(e){} }
-  const m=document.getElementById('bk-msg'); if(m) m.textContent=t('copied');
-}
 let pendingRestore=null;
-function doRestore(){
-  const el=document.getElementById('bk-in'), err=document.getElementById('bk-err'); if(err) err.textContent='';
-  const raw=((el&&el.value)||'').trim(); if(!raw) return;
-  let data; try{ data=JSON.parse(decodeURIComponent(escape(atob(raw)))); }catch(e){ if(err) err.textContent=t('badCode'); return; }
-  if(!data || !Array.isArray(data.profiles)){ if(err) err.textContent=t('badCode'); return; }
-  pendingRestore=data; render();
-}
-function cancelRestore(){ pendingRestore=null; render(); }
 function confirmRestore(){
   const data=pendingRestore; if(!data){ return; }
   profiles=data.profiles; store.set('hg_profiles', JSON.stringify(profiles));
@@ -1629,7 +1714,7 @@ function pickProfile(id){ activeId=id; store.set('hg_active', id); navigate('hom
 
 /* ---------- shop / wardrobe ---------- */
 let shopMsg='';
-function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null}; if(p.equip.wall===undefined) p.equip.wall=null; if(p.equip.frame===undefined) p.equip.frame=null; if(p.equip.pet===undefined) p.equip.pet=null; if(p.equip.floor===undefined) p.equip.floor=null; if(!p.hidden) p.hidden=[]; if(!p.layout) p.layout={};
+function ensureEconomy(p){ if(!p.owned) p.owned=[]; if(!p.equip) p.equip={hat:null}; if(p.equip.wall===undefined) p.equip.wall=null; if(p.equip.frame===undefined) p.equip.frame=null; if(p.equip.pet===undefined) p.equip.pet=null; if(p.equip.floor===undefined) p.equip.floor=null; if(!p.hidden) p.hidden=[]; if(!p.layout) p.layout={}; if(!p.vehicles) p.vehicles={}; if(!p.garageBays) p.garageBays=[];
   if(!p.stats) p.stats={correct:0,perfect:0}; if(!p.medals) p.medals=[]; if(!p.wordStats) p.wordStats={}; if(!p.modesTried) p.modesTried={}; if(!p.mathOps) p.mathOps={}; if(!p.mathStats) p.mathStats={}; if(!p.letterErr) p.letterErr={FR:{},EN:{}}; if(!p.letterErr.FR) p.letterErr.FR={}; if(!p.letterErr.EN) p.letterErr.EN={}; if(!p.patternStats) p.patternStats={FR:{},EN:{}}; if(!p.patternStats.FR) p.patternStats.FR={}; if(!p.patternStats.EN) p.patternStats.EN={}; if(!p.trophies){ p.trophies={}; const _m=p.medals||[]; const _bp=(k,tr)=>{ if(rank(tr)>rank(p.trophies[k])) p.trophies[k]=tr; }; if(_m.indexOf('master10')>=0)_bp('words','bronze'); if(_m.indexOf('master25')>=0)_bp('words','silver'); if(_m.indexOf('master50')>=0)_bp('words','gold'); if(_m.indexOf('scholar25')>=0)_bp('correct','bronze'); if(_m.indexOf('scholar75')>=0)_bp('correct','silver'); if(_m.indexOf('scholar150')>=0)_bp('correct','gold'); if(_m.indexOf('listComplete')>=0)_bp('lists','bronze'); if(_m.indexOf('allLists')>=0)_bp('lists','gold'); if(_m.indexOf('firstPerfect')>=0)_bp('perfect','bronze'); if(_m.indexOf('allModes')>=0)_bp('explorer','gold'); } if(!p.sent) p.sent={fr:{},en:{}}; if(!p.sent.fr) p.sent.fr={}; if(!p.sent.en) p.sent.en={}; if(!p.lists){ p.lists=[]; const _mk=(arr,sm,lng,nm)=>{ if(arr&&arr.length) p.lists.push({id:uid(), name:nm, lang:lng, words:arr.map(w=>({w, s:(sm&&sm[w])||''}))}); }; _mk(p.fr, p.sent.fr, 'FR', 'Mes mots'); _mk(p.en, p.sent.en, 'EN', 'My words'); } }
 function openShop(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); shopMsg=''; pendingBuy=null; shopTab='hat'; navigate('shop'); }
 function openHouse(){ const p=activeProfile(); if(!p){navigate('profiles');return;} ensureEconomy(p); navigate('house'); }
@@ -1637,7 +1722,7 @@ let shopTab='hat';
 let decorateOpen=false;
 let houseScene='room';
 function setHouseScene(scn){ houseScene=scn; decorateOpen=false; render(); }
-function setShopTab(t){ shopTab=t; shopMsg=''; pendingBuy=null; render(); }
+function setShopTab(t){ shopTab=t; shopMsg=''; pendingBuy=null; pendingVehicle=null; render(); }
 function toggleDecorate(){ decorateOpen=!decorateOpen; render(); }
 function toggleHouseItem(id){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const i=p.hidden.indexOf(id); if(i>=0) p.hidden.splice(i,1); else p.hidden.push(id); saveProfiles(); render(); }
 
@@ -1694,6 +1779,19 @@ function viewShop(){
       const tag = !owned ? `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>` : `<div class="tag ${worn?'on':''}">${worn?t('wearing'):t('wear')}</div>`;
       return `<button class="shop-card ${worn?'equipped':''}" onclick="${owned?`equipFloor('${it.id}')`:`askBuy('${it.id}')`}"><div class="sp">${fsv(it.id)}</div><div class="nm">${esc(itemName(it))}</div>${tag}</button>`; }).join('');
     body = `<div class="shop-grid">${noneCard}${cards}</div>`;
+  } else if(shopTab==='vehicle'){
+    const cards = VEHICLES.map(it=>{
+      const owned=ownsVehicle(p,it.id);
+      const col = owned ? p.vehicles[it.id] : it.colors[0];
+      const parked = (p.garageBays||[]).includes(it.id);
+      const tag = owned
+        ? `<div class="tag ${parked?'on':''}">${parked?t('parked'):t('park')}</div>`
+        : `<div class="tag price ${(p.coins||0)<it.price?'locked':''}">${IC.star}${it.price}</div>`;
+      return `<button class="shop-card vcard ${parked?'equipped':''}" onclick="${owned?`garagePark('${it.id}')`:`askBuyVehicle('${it.id}')`}">
+        <div class="sp vsp"><svg viewBox="0 0 92 56" width="100%" height="100%">${vehicleShape(it.id,col)}</svg></div>
+        <div class="nm">${esc(itemName(it))}</div>${tag}</button>`;
+    }).join('');
+    body = `<div class="shop-grid">${cards}</div>`;
   }
   return `
     <div class="screen active">
@@ -1706,12 +1804,14 @@ function viewShop(){
         <button class="tab ${shopTab==='hat'?'on':''}" onclick="setShopTab('hat')">${t('hatsCat')}</button>
         <button class="tab ${shopTab==='frame'?'on':''}" onclick="setShopTab('frame')">${t('frameCat')}</button>
         <button class="tab ${shopTab==='pet'?'on':''}" onclick="setShopTab('pet')">${t('petCat')}</button>
+        <button class="tab ${shopTab==='vehicle'?'on':''}" onclick="setShopTab('vehicle')">${t('vehicleCat')}</button>
         <button class="tab ${shopTab==='house'?'on':''}" onclick="setShopTab('house')">${t('houseCat')}</button>
         <button class="tab ${shopTab==='floor'?'on':''}" onclick="setShopTab('floor')">${t('floorCat')}</button>
         <button class="tab ${shopTab==='wall'?'on':''}" onclick="setShopTab('wall')">${t('wallCat')}</button>
       </div>
       ${shopMsg?`<div class="note">${shopMsg}</div>`:''}
       ${pendingBuy ? (()=>{ const it=shopItem(pendingBuy); if(!it) return ''; return `<div class="confirm-box"><div class="cb-msg">${t('buyConfirm')}<br><span class="buyline">${esc(itemName(it))} &middot; ${IC.star}${it.price}</span></div><div class="cb-row"><button class="btn-ghost" onclick="cancelBuy()">${t('cancel')}</button><button class="btn-buy" onclick="confirmBuy()">${t('buyBtn')}</button></div></div>`; })() : ''}
+      ${pendingVehicle ? (()=>{ const v=vehicleDef(pendingVehicle); if(!v) return ''; const sw=v.colors.map((col,ci)=>`<button class="vcolor ${vehColorIdx===ci?'on':''}" onclick="setVehColor(${ci})" style="background:${col}"></button>`).join(''); return `<div class="confirm-box"><div class="cb-msg">${esc(itemName(v))} &middot; ${IC.star}${v.price}<br><span style="font-size:13px;color:var(--muted)">${t('chooseColor')}</span></div><div class="vpreview"><svg viewBox="0 0 92 56" width="140" height="85">${vehicleShape(v.id, v.colors[vehColorIdx])}</svg></div><div class="vcolors">${sw}</div><div class="cb-row"><button class="btn-ghost" onclick="cancelVehicle()">${t('cancel')}</button><button class="btn-buy ${(p.coins||0)<v.price?'locked':''}" onclick="confirmVehicle()">${t('buyBtn')}</button></div></div>`; })() : ''}
       ${body}
       <div class="spacer"></div>
     </div>`;
@@ -1726,6 +1826,16 @@ let pendingBuy=null;
 function askBuy(id){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const it=shopItem(id); if(!it||p.owned.includes(id)) return; if((p.coins||0)<it.price){ shopMsg=t('notEnough'); pendingBuy=null; render(); return; } shopMsg=''; pendingBuy=id; render(); }
 function cancelBuy(){ pendingBuy=null; render(); }
 function confirmBuy(){ const id=pendingBuy; pendingBuy=null; if(id) buyItem(id); }
+let pendingVehicle=null, vehColorIdx=0;
+function askBuyVehicle(id){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const v=vehicleDef(id); if(!v||ownsVehicle(p,id)) return; if((p.coins||0)<v.price){ shopMsg=t('notEnough'); pendingVehicle=null; render(); return; } shopMsg=''; pendingBuy=null; pendingVehicle=id; vehColorIdx=0; render(); }
+function setVehColor(i){ vehColorIdx=i; render(); }
+function cancelVehicle(){ pendingVehicle=null; render(); }
+function confirmVehicle(){ const p=activeProfile(); if(!p) return; ensureEconomy(p); const v=vehicleDef(pendingVehicle); if(!v){ pendingVehicle=null; return; } if((p.coins||0)<v.price){ shopMsg=t('notEnough'); render(); return; } p.coins-=v.price; p.vehicles[v.id]=v.colors[vehColorIdx]; if((p.garageBays||[]).length<3 && p.garageBays.indexOf(v.id)<0) p.garageBays.push(v.id); pendingVehicle=null; shopMsg=''; saveProfiles(); render(); }
+function garagePark(id){ const p=activeProfile(); if(!p) return; ensureEconomy(p); if(!ownsVehicle(p,id)) return; const bays=p.garageBays||(p.garageBays=[]); const at=bays.indexOf(id);
+  if(at>=0){ bays.splice(at,1); } // tap parked -> remove from garage
+  else if(bays.length<3){ bays.push(id); }
+  else { bays.shift(); bays.push(id); } // full -> replace oldest
+  saveProfiles(); render(); }
 function equipHat(id){ const p=activeProfile(); ensureEconomy(p); if(!p.owned.includes(id)) return;
   p.equip.hat=(p.equip.hat===id?null:id); saveProfiles(); render(); }
 function unequipHat(){ const p=activeProfile(); ensureEconomy(p); p.equip.hat=null; saveProfiles(); render(); }
@@ -1754,7 +1864,7 @@ function viewHouse(){
   const ownedHouse = HOUSE_ITEMS.filter(it=>p.owned.includes(it.id));
   const decorateBtn = (houseScene==='room' && ownedHouse.length) ? `<button class="link-btn" onclick="toggleDecorate()">${IC.pencil}${decorateOpen?t('done'):t('decorate')}</button>` : '';
   const decoratePanel = (houseScene==='room' && decorateOpen && ownedHouse.length) ? `<div class="cat" style="margin-top:4px;"><label>${t('arrangeHint')}</label><div class="chips chips-scroll">${ownedHouse.map(it=>`<button class="chip ${!p.hidden.includes(it.id)?'on':''}" onclick="toggleHouseItem('${it.id}')">${esc(itemName(it))}</button>`).join('')}<button class="chip" onclick="resetLayout()">${t('resetArrange')}</button></div></div>` : '';
-  const sceneSVG = (houseScene==='garden') ? gardenScene(p) : scene;
+  const sceneSVG = (houseScene==='garden') ? gardenScene(p) : (houseScene==='garage') ? garageScene(p) : scene;
   const earnedCount=Object.keys(p.trophies||{}).filter(k=>p.trophies[k]).length;
   return `
     <div class="screen active">
@@ -1763,11 +1873,11 @@ function viewHouse(){
         <span class="coins">${IC.star}<span>${p.coins||0}</span></span>
       </div>
       <div class="scr-title">${t('house')}</div>
-      <div class="scene-tabs"><button class="stab ${houseScene==='room'?'on':''}" onclick="setHouseScene('room')">${t('sceneRoom')}</button><button class="stab ${houseScene==='garden'?'on':''}" onclick="setHouseScene('garden')">${t('sceneGarden')}</button></div>
+      <div class="scene-tabs"><button class="stab ${houseScene==='room'?'on':''}" onclick="setHouseScene('room')">${t('sceneRoom')}</button><button class="stab ${houseScene==='garden'?'on':''}" onclick="setHouseScene('garden')">${t('sceneGarden')}</button><button class="stab ${houseScene==='garage'?'on':''}" onclick="setHouseScene('garage')">${t('sceneGarage')}</button></div>
       <div class="house-scene">${sceneSVG}</div>
       <div class="house-panel">
-        <div class="hp-title" id="hi-title">${houseScene==='garden'?t('sceneGarden'):t('houseTapHint')}</div>
-        <div class="hp-body" id="hi-body">${houseScene==='garden'?t('gardenHint'):(t('medals')+': '+earnedCount+'/'+TROPHIES.length)}</div>
+        <div class="hp-title" id="hi-title">${houseScene==='garden'?t('sceneGarden'):houseScene==='garage'?t('sceneGarage'):t('houseTapHint')}</div>
+        <div class="hp-body" id="hi-body">${houseScene==='garden'?t('gardenHint'):houseScene==='garage'?((p.garageBays&&p.garageBays.length)?t('garageAboutBody'):t('garageEmpty')):(t('medals')+': '+earnedCount+'/'+TROPHIES.length)}</div>
       </div>
       ${decoratePanel}
       <div class="spacer"></div>
@@ -1791,6 +1901,7 @@ function houseTap(kind,id){
   if(tEl) tEl.textContent=title; if(bEl) bEl.innerHTML=body;
   reactEl(kind,id);
 }
+function garageTapVehicle(id){ var p=activeProfile(); if(!p) return; ensureEconomy(p); var v=vehicleDef(id); var tEl=document.getElementById('hi-title'), bEl=document.getElementById('hi-body'); if(tEl) tEl.textContent=v?itemName(v):''; if(bEl) bEl.textContent=t('parked'); }
 function reactEl(kind,id){
   const el=document.getElementById('h-'+kind+'-'+id); if(!el) return;
   const cls = kind==='char' ? 'r-bounce' : kind==='petc' ? 'r-wiggle' : kind==='medal' ? 'r-pop' : ({plant:'r-sway',lamp:'r-glow',pet:'r-wiggle'}[id]||'r-pop');
@@ -1821,6 +1932,44 @@ function bambooInner(stage,idx){ const soil='<ellipse cx="0" cy="0" rx="12" ry="
   if(stage<=1) return soil+'<rect x="-3" y="-28" width="6" height="28" rx="3" fill="'+culm+'"/><rect x="-3" y="-16" width="6" height="2" fill="'+culmD+'"/><ellipse cx="9" cy="-24" rx="7" ry="3" fill="'+leaf+'" transform="rotate(25 9 -24)"/>';
   if(stage===2) return soil+'<rect x="-3.5" y="-46" width="7" height="46" rx="3.5" fill="'+culm+'"/><rect x="-3.5" y="-32" width="7" height="2" fill="'+culmD+'"/><rect x="-3.5" y="-18" width="7" height="2" fill="'+culmD+'"/><ellipse cx="11" cy="-42" rx="9" ry="3.5" fill="'+leaf+'" transform="rotate(25 11 -42)"/><ellipse cx="-11" cy="-34" rx="9" ry="3.5" fill="'+leaf+'" transform="rotate(-25 -11 -34)"/>';
   return soil+'<rect x="-5" y="-62" width="7" height="62" rx="3.5" fill="'+culm+'"/><rect x="2.5" y="-50" width="6" height="50" rx="3" fill="'+culmD+'"/><rect x="-5" y="-46" width="7" height="2" fill="'+culmD+'"/><rect x="-5" y="-28" width="7" height="2" fill="'+culmD+'"/><ellipse cx="14" cy="-58" rx="10" ry="4" fill="'+leaf+'" transform="rotate(25 14 -58)"/><ellipse cx="-12" cy="-48" rx="10" ry="4" fill="'+leaf+'" transform="rotate(-25 -12 -48)"/><ellipse cx="14" cy="-38" rx="9" ry="3.5" fill="'+leaf+'" transform="rotate(25 14 -38)"/>'; }
+function garageScene(p){
+  ensureEconomy(p);
+  var W=320,H=210;
+  var bays=(p.garageBays||[]).slice(0,3);
+  // bay x positions for 3 bays
+  var bayX=[8,113,218], bayW=102;
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">';
+  // background wall + floor
+  svg+='<rect width="'+W+'" height="150" fill="#E3E9F0"/>';
+  svg+='<rect width="'+W+'" height="128" fill="#D4DCE8"/>';
+  svg+='<rect y="150" width="'+W+'" height="60" fill="#C8BFB0"/>';
+  // floor lines
+  svg+='<line x1="0" y1="172" x2="'+W+'" y2="172" stroke="#B8AFA0" stroke-width="1.5"/><line x1="0" y1="192" x2="'+W+'" y2="192" stroke="#B8AFA0" stroke-width="1.5"/>';
+  // bay dividers
+  svg+='<rect x="105" y="0" width="6" height="210" fill="#A0968A"/><rect x="213" y="0" width="6" height="210" fill="#A0968A"/>';
+  for(var i=0;i<3;i++){
+    var x=bayX[i], cx=x+bayW/2;
+    // overhead light
+    svg+='<rect x="'+(cx-18)+'" y="4" width="36" height="7" rx="3.5" fill="#FFC93C"/>';
+    var vid=bays[i];
+    if(vid && ownsVehicle(p,vid)){
+      // open-door track
+      svg+='<rect x="'+(x+4)+'" y="12" width="'+(bayW-8)+'" height="10" rx="3" fill="#A8B4C0"/>';
+      // vehicle parked: vehicleShape is 0..92 wide, scale to ~96, baseline 52 -> place near floor
+      var vs=vehicleShape(vid, p.vehicles[vid]);
+      svg+='<g transform="translate('+(cx-46)+',96)" class="htap" onclick="garageTapVehicle(\''+vid+'\')"><g class="hpet">'+vs+'</g></g>';
+    } else {
+      // closed door (empty bay)
+      svg+='<rect x="'+(x+6)+'" y="26" width="'+(bayW-12)+'" height="120" rx="4" fill="#BFC8D4" stroke="#A8B4C0" stroke-width="2"/>';
+      for(var d=0;d<5;d++){ svg+='<rect x="'+(x+10)+'" y="'+(30+d*22)+'" width="'+(bayW-20)+'" height="18" rx="2" fill="#D0D8E4" stroke="#A8B4C0" stroke-width="1"/>'; }
+      // dashed prompt
+      svg+='<rect x="'+(x+14)+'" y="62" width="'+(bayW-28)+'" height="50" rx="8" fill="none" stroke="#FF6F61" stroke-width="2" stroke-dasharray="5 4"/>';
+      svg+='<text x="'+cx+'" y="91" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="13" font-weight="600" fill="#FF6F61">'+esc(t('garageShopHint'))+'</text>';
+    }
+  }
+  svg+='</svg>';
+  return svg;
+}
 function gardenScene(p){ const ids=getSel(p, lang); let words=[]; ids.forEach(id=>{ const L=listById(p,id); if(L) L.words.forEach(o=>{ if(words.indexOf(o.w)<0) words.push(o.w); }); });
   const all=words.map(w=>({w:w, s:growthStage(p,w)}));
   const mastered=all.filter(o=>o.s>=3); const growing=all.filter(o=>o.s<3).slice(0,16);
