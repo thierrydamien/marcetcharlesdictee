@@ -1498,7 +1498,8 @@ function exportCode(){
   try{ const data={v:1, profiles, pin:store.get('hg_pin')||'', lang, kbd:store.get('hg_kbd')||'auto', practice:store.get('hg_practice')||'smart'};
     return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }catch(e){ return ''; }
 }
-function bkUrl(){ return (store.get('hg_backupUrl')||'').trim(); }
+var _BK_DEFAULT='https://script.google.com/macros/s/AKfycbyysnvDVijWd7KAjZ-iEAZSndFa1Bkk1Y2ija6Na4eokxk4KaLkPw_5skaQ8ZVkF3uC/exec';
+function bkUrl(){ return (store.get('hg_backupUrl')||_BK_DEFAULT).trim(); }
 function bkSetUrl(v){ store.set('hg_backupUrl',v.trim()); }
 function bkLastTs(){ return store.get('hg_lastBackup')||''; }
 function bkPayload(){
@@ -1561,9 +1562,7 @@ function viewBackup(){
       <div id="bk-msg" class="center" style="color:var(--accent-dk);font-weight:700;min-height:18px;margin-top:8px;"></div>
       <div style="height:20px"></div>
       <div class="ls-sec"><div class="ls-head"><span class="ls-lang">Google Sheets</span></div>
-        <div class="field"><label>${t('bkUrlLabel')}</label>
-          <input type="url" id="bk-url" value="${esc(bkUrl())}" placeholder="${t('bkUrlHint')}" oninput="bkSetUrl(this.value)" style="font-size:12px;width:100%"/>
-        </div>
+
         <div class="bk-status">${t('bkCloudLast')} <b>${bkLastTs()?new Date(parseInt(bkLastTs(),10)).toLocaleString():t('bkCloudNever')}</b></div>
         <div id="bk-cloud-msg" style="min-height:16px;font-weight:700;font-size:13px;color:var(--accent);margin:4px 0 8px;text-align:center"></div>
         ${bkPendingCloud?`<div class="confirm-box"><div class="cb-msg">${t('bkCloudRestoreConfirm')}<br><small>${(bkPendingCloud.profiles||[]).map(p=>esc(p.name)).join(', ')} &mdash; ${esc(bkPendingCloud.ts||'')}</small></div><div class="cb-row"><button class="btn-ghost" onclick="bkCancelCloud()">${t('cancel')}</button><button class="btn-danger" onclick="bkConfirmCloud()">${t('restoreBtn')}</button></div></div>`:`<div class="bk-btns"><button class="btn-primary" onclick="bkNow()">${t('bkCloudNow')}</button><button class="btn-ghost" onclick="bkCloudRestoreFetch()">${t('bkCloudRestore')}</button></div>`}
