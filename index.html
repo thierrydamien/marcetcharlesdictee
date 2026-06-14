@@ -2107,7 +2107,7 @@ function pickVoice(langCode){
   return best;
 }
 if('speechSynthesis' in window){ loadVoices(); try{ speechSynthesis.onvoiceschanged=loadVoices; }catch(e){} }
-try{ setTimeout(function(){ try{ piperEnsure(lang==='FR'?'FR':'EN'); }catch(e){} }, 1200); }catch(e){}
+try{ setTimeout(function(){ if(store.get('hg_voicesInstalled')){ try{ piperEnsure(lang==='FR'?'FR':'EN'); }catch(e){} } }, 1200); }catch(e){}
 /* ---- Enhanced voices: in-browser neural TTS (Piper), device voice as fallback ---- */
 var _piper = { lib:null, sessions:{}, status:{EN:'idle',FR:'idle',ZH:'idle'}, loading:{} };
 var PIPER_VOICE = { EN:'en_GB-alan-medium', FR:'fr_FR-siwis-medium', ZH:'zh_CN-huayan-medium' };
