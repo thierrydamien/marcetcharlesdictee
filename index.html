@@ -1284,8 +1284,8 @@ function viewProfiles(){
     </div>`;
 }
 
-let welcomeStep=0;
-function welcomeNext(){ if(welcomeStep<3){ welcomeStep++; render(); } else { finishWelcome(); } }
+let welcomeStep=0, wlcReady=true;
+function welcomeNext(){ if(!wlcReady) return; if(welcomeStep<3){ welcomeStep++; wlcReady=false; render(); setTimeout(function(){ wlcReady=true; var b=document.getElementById('wlc-btn'); if(b){ b.disabled=false; b.style.opacity='1'; } },2200); } else { finishWelcome(); } }
 function welcomeBack(){ if(welcomeStep>0){ welcomeStep--; render(); } }
 function finishWelcome(){ store.set('hg_welcomed','1'); navigate(profiles.length?'home':'profiles'); }
 function replayIntro(){ welcomeStep=0; navigate('welcome'); }
@@ -1357,7 +1357,7 @@ function viewWelcome(){
     + '<div class="screen active">'
     + '<div class="wlc-top">'+backBtn+'<button class="langpill" onclick="toggleLang()">'+(lang==='FR'?'EN \u00b7 English':'FR \u00b7 Fran\u00e7ais')+'</button></div>'
     + '<div class="wlc-wrap">'+body+'<div class="wdots">'+dots+'</div></div>'
-    + '<button class="btn-primary" onclick="welcomeNext()">'+(step===3?t('wlcStart'):t('wlcNext'))+'</button>'
+    + '<button id="wlc-btn" class="btn-primary" onclick="welcomeNext()" '+(wlcReady?'':'disabled style="opacity:.45"')+'>'+(step===3?t('wlcStart'):t('wlcNext'))+'</button>'
     + '</div>';
 }
 function viewEditor(){
