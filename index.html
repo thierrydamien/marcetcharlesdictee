@@ -353,6 +353,9 @@ input,textarea{font-family:inherit;}
 .cn-s-row .cn-spk{margin-top:0}
 .cn-s-toggle{background:#fff;border:1.5px solid #cdd9e6;color:#4a6d94;font-family:var(--fd);font-weight:600;font-size:13px;padding:6px 13px;border-radius:10px;cursor:pointer}
 .cn-s-hint{font-size:12px;color:#9aa7b8;font-weight:600}
+.bk-status{font-size:13px;color:var(--muted);font-weight:700;margin:4px 0 6px}
+.bk-btns{display:flex;gap:10px;flex-wrap:wrap}
+.bk-btns button{flex:1;min-width:120px}
 .cn-ask{font-family:var(--fd);font-weight:600;font-size:15px;color:var(--muted);text-align:center;margin:0 0 12px}
 .cn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cn-tile{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px 10px;font-family:var(--fd);font-weight:600;font-size:18px;color:var(--ink);box-shadow:0 3px 8px rgba(60,40,20,.05);cursor:pointer;min-height:60px}
@@ -548,7 +551,7 @@ const T = {
     houseTapHint:"Touche un objet ou une médaille", thatsYou:"C'est toi !", locked:"À débloquer",
     chooseMath:"Choisis ton calcul", opLabel:"Opération", lvlLabel:"Niveau", diffEasy:"Facile", diffMed:"Moyen", diffHard:"Difficile", mathPrompt:"Combien ça fait ?", mixOp:"Mixte",
     keyboard:"Clavier", kbAuto:"Auto", practiceMode:"Choix des mots", pmSmart:"Malin", pmEven:"Au hasard",
-    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", kbHint:"\u00ab Auto \u00bb s'adapte \u00e0 l'appareil. \u00ab ABC \u00bb est le plus simple pour les petits.", playSettings:"R\u00e9glages du jeu", introEyebrow:"Pour les parents", introBody:"Des listes de d\u00e9part sont pr\u00eates. Chaque semaine, modifie la liste pour coller aux mots de dict\u00e9e donn\u00e9s par l'\u00e9cole, ou prends-la en photo.", introGo:"Configurer les listes", introDismiss:"Compris", backupBtn:"Sauvegarde / transfert", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.", scanBtn:"Scanner une liste", scanTitle:"Scanner une liste", scanIntro:"Prends en photo la liste de mots de l'\u00e9cole. On la transforme en liste modifiable.", scanOnline:"Cette fonction a besoin d'une connexion internet. Le reste de l'application fonctionne hors ligne.", scanPick:"Prendre une photo", scanLoading:"Pr\u00e9paration\u2026", scanReading:"Lecture du texte\u2026", scanReviewNote:"V\u00e9rifie et corrige les mots avant d'enregistrer. La reconnaissance n'est pas toujours parfaite.", scanError:"La lecture a \u00e9chou\u00e9. V\u00e9rifie ta connexion et r\u00e9essaie.", scanRetry:"R\u00e9essayer", scanEmpty:"Aucun mot d\u00e9tect\u00e9. Modifie le texte ou r\u00e9essaie.", scanInline:"Scanner une photo", scanAboutTitle:"Scanner une liste", scanAboutBody:"Dans l'espace parent, tu peux prendre en photo la liste de mots de l'\u00e9cole pour la transformer en liste. V\u00e9rifie les mots avant d'enregistrer. N\u00e9cessite internet.",
+    pmTipSmart:"Insiste sur les mots difficiles et nouveaux", pmTipRandom:"Tous les mots, au hasard", kbHint:"\u00ab Auto \u00bb s'adapte \u00e0 l'appareil. \u00ab ABC \u00bb est le plus simple pour les petits.", playSettings:"R\u00e9glages du jeu", introEyebrow:"Pour les parents", introBody:"Des listes de d\u00e9part sont pr\u00eates. Chaque semaine, modifie la liste pour coller aux mots de dict\u00e9e donn\u00e9s par l'\u00e9cole, ou prends-la en photo.", introGo:"Configurer les listes", introDismiss:"Compris", backupBtn:"Sauvegarde / transfert", bkUrlLabel:"URL Google Script", bkUrlHint:"Colle l'URL de ton script Apps Script", bkCloudNow:"Sauvegarder maintenant", bkCloudLast:"Dernière sauvegarde :", bkCloudNever:"Jamais sauvegardé", bkCloudDone:"Sauvegardé !", bkCloudFail:"Échec — vérifie l'URL", bkCloudRestore:"Restaurer depuis Google Sheets", bkCloudRestoreConfirm:"Remplacer toutes les données locales par la sauvegarde en ligne ?", backup:"Sauvegarde", backupSub:"Copie ce code pour retrouver ta partie sur un autre appareil.", scanBtn:"Scanner une liste", scanTitle:"Scanner une liste", scanIntro:"Prends en photo la liste de mots de l'\u00e9cole. On la transforme en liste modifiable.", scanOnline:"Cette fonction a besoin d'une connexion internet. Le reste de l'application fonctionne hors ligne.", scanPick:"Prendre une photo", scanLoading:"Pr\u00e9paration\u2026", scanReading:"Lecture du texte\u2026", scanReviewNote:"V\u00e9rifie et corrige les mots avant d'enregistrer. La reconnaissance n'est pas toujours parfaite.", scanError:"La lecture a \u00e9chou\u00e9. V\u00e9rifie ta connexion et r\u00e9essaie.", scanRetry:"R\u00e9essayer", scanEmpty:"Aucun mot d\u00e9tect\u00e9. Modifie le texte ou r\u00e9essaie.", scanInline:"Scanner une photo", scanAboutTitle:"Scanner une liste", scanAboutBody:"Dans l'espace parent, tu peux prendre en photo la liste de mots de l'\u00e9cole pour la transformer en liste. V\u00e9rifie les mots avant d'enregistrer. N\u00e9cessite internet.",
     yourCode:"Ton code", copy:"Copier le code", copied:"Copié !", restore:"Restaurer depuis un code", pasteHere:"Colle ton code ici", restoreBtn:"Restaurer", badCode:"Code invalide", restoreConfirm:"Remplacer la partie actuelle par ce code ?", practise:"À revoir :", roundReview:"Tes mots", trickyTitle:"Lettres à surveiller", writeItPrompt:"Maintenant, écris-le", wellCopied:"Bien copié !", reEncodeGiveUp:"On y reviendra", patternsTitle:"Schémas à surveiller", patAccents:"Accents", patDouble:"Lettres doubles", patVowels:"Sons de voyelles", patTion:"Terminaisons -tion", arrangeHint:"Glisse les objets pour les déplacer. Touche un nom pour le cacher.", resetArrange:"Réinitialiser", sceneRoom:"Chambre", sceneGarden:"Jardin", gardenHint:"Tes mots poussent quand tu les apprends", gardenEmpty:"Choisis une liste pour planter tes mots", masteredLabel:"maîtrisés", masteredCaption:"Les mots en fleur se reposent ici", allBloomed:"Tout est en fleur !", gardenAboutTitle:"Le jardin", gardenAboutBody:"Dans la maison, passe au jardin pour voir chaque mot grandir, de la graine à la fleur, à mesure qu'il est maîtrisé, avec un arbre pour chaque opération.", about:"À propos", aboutTitle:"À propos", madeBy:"Créé par Damien Thierry pour ses fils Marc et Charles.", version:"Version", privacyLine:"Tout reste sur cet appareil. Rien n'est collecté ni envoyé.", howToTitle:"Comment jouer", how1:"Crée un joueur pour chaque enfant.", how2:"Choisis Dictée ou Maths, puis joue une manche.", how3:"Gagne des pièces et des médailles, puis décore ta maison.", how4:"Les parents gèrent les listes de mots dans l'espace parent (code à 4 chiffres).", packsLabel:"Listes prêtes", packDays:"Jours", packMonths:"Mois", packNumbers:"Nombres", sentenceBtn:"Phrase", practiseBtn:"Réviser ces mots", wallCat:"Mur", wallNone:"Défaut", wlcTitle1:"Bienvenue !", wlcBody1:"Un petit jeu pour s'entraîner en dictée et en maths. Crée un joueur pour chaque enfant, avec son prénom et son avatar.", wlcTitle2:"Espace parent", wlcBody2:"Derrière un code à 4 chiffres, tu choisis les listes de mots de chaque enfant (tu peux même photographier la liste de l'école) et tu sauvegardes la partie. Tout reste sur cet appareil.", wlcNext:"Suivant", wlcStart:"Commencer", addList:"Ajouter une liste", listName:"Nom de la liste", newListName:"Nouvelle liste", emptyLists:"Aucune liste pour le moment.", deleteList:"Supprimer la liste", confirmDelete:"Supprimer cette liste ?", allWords:"Tous les mots", wordsShort:"mots", coinsShort:"\u00e9toiles", listEditTitle:"Modifier la liste", listsToPlay:"Listes à réviser", feedbackLine:"Une idée ou un souci ? Écris à", replayIntro:"Revoir l'intro", buyConfirm:"Acheter cet article ?", buyBtn:"Acheter", streakBonus:"Série ! +2", parentListsHelp:"Ton enfant choisit une de ces listes (ou « Tous les mots ») avant chaque dictée.", resetProgress:"Réinitialiser les progrès", resetConfirm:"Effacer tous les progrès de {name} ? Les listes et récompenses sont conservées.", resetBtn:"Réinitialiser", newTrophy:"Nouveau trophée !", newTrophySub:"Tu peux le voir dans ta maison.", tierBronze:"Bronze", tierSilver:"Argent", tierGold:"Or", notYet:"Pas encore", progMaths:"Calcul", },
   EN:{ title:"The Homework Game", who:"Who's playing?", add:"Add", first:"Create your first player",
     newP:"New player", editP:"Edit player", name:"Name",
@@ -575,7 +578,7 @@ const T = {
     houseTapHint:"Tap an item or a medal", thatsYou:"That's you!", locked:"Locked",
     chooseMath:"Choose your maths", opLabel:"Operation", lvlLabel:"Level", diffEasy:"Easy", diffMed:"Medium", diffHard:"Hard", mathPrompt:"What does it make?", mixOp:"Mixed",
     keyboard:"Keyboard", kbAuto:"Auto", practiceMode:"Word choice", pmSmart:"Smart", pmEven:"Random",
-    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", kbHint:"Auto matches your device. ABC is easiest for young children.", playSettings:"Game settings", introEyebrow:"For parents", introBody:"Starter lists are ready. Each week, edit the list to match the spelling words your school sends home, or scan a photo of it.", introGo:"Set up lists", introDismiss:"Got it", backupBtn:"Backup / transfer", backup:"Backup", backupSub:"Copy this code to restore your game on another device.", scanBtn:"Scan a list", scanTitle:"Scan a list", scanIntro:"Take a photo of the school's word list. We'll turn it into an editable list.", scanOnline:"This feature needs an internet connection. The rest of the app works offline.", scanPick:"Take a photo", scanLoading:"Getting ready\u2026", scanReading:"Reading text\u2026", scanReviewNote:"Check and fix the words before saving. Recognition is not always perfect.", scanError:"Reading failed. Check your connection and try again.", scanRetry:"Try again", scanEmpty:"No words detected. Edit the text or try again.", scanInline:"Scan a photo", scanAboutTitle:"Scan a list", scanAboutBody:"In the parent area, you can photograph the school's word list to turn it into a list. Check the words before saving. Needs internet.",
+    pmTipSmart:"Focuses on tricky and new words", pmTipRandom:"All words, in random order", kbHint:"Auto matches your device. ABC is easiest for young children.", playSettings:"Game settings", introEyebrow:"For parents", introBody:"Starter lists are ready. Each week, edit the list to match the spelling words your school sends home, or scan a photo of it.", introGo:"Set up lists", introDismiss:"Got it", backupBtn:"Backup / transfer", bkUrlLabel:"Google Script URL", bkUrlHint:"Paste your Apps Script web app URL", bkCloudNow:"Back up now", bkCloudLast:"Last backup:", bkCloudNever:"Never backed up", bkCloudDone:"Backed up!", bkCloudFail:"Failed — check the URL", bkCloudRestore:"Restore from Google Sheets", bkCloudRestoreConfirm:"Replace all local data with the cloud backup?", backup:"Backup", backupSub:"Copy this code to restore your game on another device.", scanBtn:"Scan a list", scanTitle:"Scan a list", scanIntro:"Take a photo of the school's word list. We'll turn it into an editable list.", scanOnline:"This feature needs an internet connection. The rest of the app works offline.", scanPick:"Take a photo", scanLoading:"Getting ready\u2026", scanReading:"Reading text\u2026", scanReviewNote:"Check and fix the words before saving. Recognition is not always perfect.", scanError:"Reading failed. Check your connection and try again.", scanRetry:"Try again", scanEmpty:"No words detected. Edit the text or try again.", scanInline:"Scan a photo", scanAboutTitle:"Scan a list", scanAboutBody:"In the parent area, you can photograph the school's word list to turn it into a list. Check the words before saving. Needs internet.",
     yourCode:"Your code", copy:"Copy code", copied:"Copied!", restore:"Restore from a code", pasteHere:"Paste your code here", restoreBtn:"Restore", badCode:"Invalid code", restoreConfirm:"Replace the current game with this code?", practise:"Practise these:", roundReview:"Your words", trickyTitle:"Tricky letters", writeItPrompt:"Now write it", wellCopied:"Nicely copied!", reEncodeGiveUp:"We'll come back to it", patternsTitle:"Patterns to watch", patAccents:"Accents", patDouble:"Double letters", patVowels:"Vowel teams", patTion:"-tion endings", arrangeHint:"Drag items to move them. Tap a name to hide it.", resetArrange:"Reset", sceneRoom:"Room", sceneGarden:"Garden", gardenHint:"Your words grow as you learn them", gardenEmpty:"Pick a list to plant your words", masteredLabel:"mastered", masteredCaption:"Bloomed words rest here", allBloomed:"All bloomed for now!", gardenAboutTitle:"Garden", gardenAboutBody:"In the house, switch to the garden to watch each word grow from a seed into a flower as it's mastered, with a tree for each kind of sum.", about:"About", aboutTitle:"About", madeBy:"Made by Damien Thierry for his sons Marc and Charles.", version:"Version", privacyLine:"Everything stays on this device. Nothing is collected or sent.", howToTitle:"How to play", how1:"Create a player for each child.", how2:"Pick Spelling or Maths, then play a round.", how3:"Earn coins and medals, then decorate your house.", how4:"Parents manage the word lists in the parent area (4-digit code).", packsLabel:"Ready-made lists", packDays:"Days", packMonths:"Months", packNumbers:"Numbers", sentenceBtn:"Sentence", practiseBtn:"Practise these words", wallCat:"Wall", wallNone:"Default", wlcTitle1:"Welcome!", wlcBody1:"A little game to practise spelling and maths. Create a player for each child, with their name and avatar.", wlcTitle2:"Parent area", wlcBody2:"Behind a 4-digit code, you choose each child's word lists (you can even scan a photo of the school's list) and back up the game. Everything stays on this device.", wlcNext:"Next", wlcStart:"Start", addList:"Add a list", listName:"List name", newListName:"New list", emptyLists:"No lists yet.", deleteList:"Delete list", confirmDelete:"Delete this list?", allWords:"All words", wordsShort:"words", coinsShort:"stars", listEditTitle:"Edit list", listsToPlay:"Lists to practise", feedbackLine:"Got feedback or an idea? Email", replayIntro:"Replay intro", buyConfirm:"Buy this item?", buyBtn:"Buy", streakBonus:"Streak! +2", parentListsHelp:"Your child picks one of these lists (or \u201cAll words\u201d) before each spelling game.", resetProgress:"Reset progress", resetConfirm:"Clear all progress for {name}? Lists and rewards are kept.", resetBtn:"Reset", newTrophy:"New trophy!", newTrophySub:"You can see it in your house.", tierBronze:"Bronze", tierSilver:"Silver", tierGold:"Gold", notYet:"Not yet", progMaths:"Maths", }
 };
 function t(k){ return T[lang][k]; }
@@ -1012,6 +1015,7 @@ function render(){
   if (route === 'mathgame') paintMath();
   if (route === 'cngame') paintCnGame();
   if (route === 'home' && typeof _voicePack!=='undefined' && !_voicePack.checked && !_voicePack.checking) refreshVoicePack();
+  if (route === 'home' && typeof bkAutoIfDue === 'function') bkAutoIfDue();
   bindLive();
 }
 
@@ -1494,6 +1498,58 @@ function exportCode(){
   try{ const data={v:1, profiles, pin:store.get('hg_pin')||'', lang, kbd:store.get('hg_kbd')||'auto', practice:store.get('hg_practice')||'smart'};
     return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }catch(e){ return ''; }
 }
+function bkUrl(){ return (store.get('hg_backupUrl')||'').trim(); }
+function bkSetUrl(v){ store.set('hg_backupUrl',v.trim()); }
+function bkLastTs(){ return store.get('hg_lastBackup')||''; }
+function bkPayload(){
+  return JSON.stringify({profiles:profiles, activeId:activeId, ts:new Date().toISOString(),
+    lang:lang, pin:store.get('hg_pin'), kbd:store.get('hg_kbd')||'auto', practice:store.get('hg_practice')||'smart'});
+}
+function bkAutoIfDue(){
+  if(!bkUrl()) return;
+  const last=bkLastTs(); if(last && Date.now()-parseInt(last,10)<86400000) return;
+  bkSilent();
+}
+function bkSilent(){
+  const url=bkUrl(); if(!url) return;
+  try{
+    fetch(url,{method:'POST',headers:{'Content-Type':'text/plain'},body:bkPayload()})
+      .then(r=>{ if(r.ok) store.set('hg_lastBackup',String(Date.now())); })
+      .catch(()=>{});
+  }catch(e){}
+}
+function bkNow(){
+  const url=bkUrl(); const msg=document.getElementById('bk-cloud-msg');
+  if(!url){ if(msg) msg.textContent=t('bkCloudFail'); return; }
+  if(msg) msg.textContent='…';
+  fetch(url,{method:'POST',headers:{'Content-Type':'text/plain'},body:bkPayload()})
+    .then(r=>{ if(r.ok){ store.set('hg_lastBackup',String(Date.now())); if(msg) msg.textContent=t('bkCloudDone'); } else throw new Error(); })
+    .catch(()=>{ if(msg) msg.textContent=t('bkCloudFail'); });
+}
+let bkPendingCloud=false;
+function bkCloudRestoreFetch(){
+  const url=bkUrl(); const msg=document.getElementById('bk-cloud-msg');
+  if(!url){ if(msg) msg.textContent=t('bkCloudFail'); return; }
+  if(msg) msg.textContent='…';
+  fetch(url)
+    .then(r=>r.json())
+    .then(data=>{ if(!data||!Array.isArray(data.profiles)) throw new Error(); bkPendingCloud=data; render(); })
+    .catch(()=>{ if(msg) msg.textContent=t('bkCloudFail'); });
+}
+function bkConfirmCloud(){
+  const data=bkPendingCloud; if(!data) return;
+  profiles=data.profiles; store.set('hg_profiles',JSON.stringify(profiles));
+  if(data.pin!=null) store.set('hg_pin',data.pin);
+  if(data.lang){ lang=data.lang; store.set('hg_lang',lang); }
+  if(data.kbd) store.set('hg_kbd',data.kbd);
+  if(data.practice) store.set('hg_practice',data.practice);
+  activeId=profiles[0]?profiles[0].id:null;
+  if(activeId) store.set('hg_active',activeId); else store.remove('hg_active');
+  store.set('hg_migrated','1');
+  bkPendingCloud=false;
+  navigate('home');
+}
+function bkCancelCloud(){ bkPendingCloud=false; render(); }
 function viewBackup(){
   return `
     <div class="screen active">
@@ -1503,6 +1559,15 @@ function viewBackup(){
       <div class="field"><label>${t('yourCode')}</label><textarea id="bk-code" readonly onclick="this.select()">${exportCode()}</textarea></div>
       <button class="btn-primary" onclick="copyCode()">${t('copy')}</button>
       <div id="bk-msg" class="center" style="color:var(--accent-dk);font-weight:700;min-height:18px;margin-top:8px;"></div>
+      <div style="height:20px"></div>
+      <div class="ls-sec"><div class="ls-head"><span class="ls-lang">Google Sheets</span></div>
+        <div class="field"><label>${t('bkUrlLabel')}</label>
+          <input type="url" id="bk-url" value="${esc(bkUrl())}" placeholder="${t('bkUrlHint')}" oninput="bkSetUrl(this.value)" style="font-size:12px;width:100%"/>
+        </div>
+        <div class="bk-status">${t('bkCloudLast')} <b>${bkLastTs()?new Date(parseInt(bkLastTs(),10)).toLocaleString():t('bkCloudNever')}</b></div>
+        <div id="bk-cloud-msg" style="min-height:16px;font-weight:700;font-size:13px;color:var(--accent);margin:4px 0 8px;text-align:center"></div>
+        ${bkPendingCloud?`<div class="confirm-box"><div class="cb-msg">${t('bkCloudRestoreConfirm')}<br><small>${(bkPendingCloud.profiles||[]).map(p=>esc(p.name)).join(', ')} &mdash; ${esc(bkPendingCloud.ts||'')}</small></div><div class="cb-row"><button class="btn-ghost" onclick="bkCancelCloud()">${t('cancel')}</button><button class="btn-danger" onclick="bkConfirmCloud()">${t('restoreBtn')}</button></div></div>`:`<div class="bk-btns"><button class="btn-primary" onclick="bkNow()">${t('bkCloudNow')}</button><button class="btn-ghost" onclick="bkCloudRestoreFetch()">${t('bkCloudRestore')}</button></div>`}
+      </div>
       <div style="height:14px"></div>
       <div class="field"><label>${t('restore')}</label><textarea id="bk-in" placeholder="${t('pasteHere')}"></textarea></div>
       ${pendingRestore ? `
@@ -2572,13 +2637,14 @@ function paintMath(){
   const kbd=document.getElementById('gw-kbd'); if(kbd) kbd.innerHTML=mathKbdHTML();
   updateInputBox();
   const fb=document.getElementById('gw-fb'); if(fb){ fb.textContent=''; fb.className='gw-fb'; }
+  try{ speakMath(); }catch(e){}
 }
 function mathSubmit(){
   if(!turnActive || inputText==='') return;
   const fb=document.getElementById('gw-fb');
   if(parseInt(inputText,10)===curM.ans){
     turnActive=false; roundScore++; roundCoins++; recordMath(curM.op, true);
-    awardCorrect();
+    awardCorrect(mathDiff==='hard'?3:mathDiff==='med'?2:1);
     react('cheer'); burst(); flyCoin(); bumpStreak();
     const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
     setTimeout(mathAdvance,1000);
