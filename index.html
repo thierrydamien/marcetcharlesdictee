@@ -1514,17 +1514,16 @@ function bkAutoIfDue(){
 function bkSilent(){
   const url=bkUrl(); if(!url) return;
   try{
-    fetch(url,{method:'POST',mode:'no-cors',body:bkPayload()})
-      .then(()=>store.set('hg_lastBackup',String(Date.now())))
-      .catch(()=>{});
+    var _p=bkPayload(); fetch(url+'?action=save&d='+encodeURIComponent(_p)).then(()=>store.set('hg_lastBackup',String(Date.now()))).catch(()=>{});
   }catch(e){}
 }
 function bkNow(){
   const url=bkUrl(); const msg=document.getElementById('bk-cloud-msg');
   if(!url){ if(msg) msg.textContent=t('bkCloudFail'); return; }
   if(msg) msg.textContent='…';
-  fetch(url,{method:'POST',mode:'no-cors',body:bkPayload()})
-    .then(()=>{ store.set('hg_lastBackup',String(Date.now())); if(msg) msg.textContent=t('bkCloudDone'); render(); })
+  var _p2=bkPayload(); fetch(url+'?action=save&d='+encodeURIComponent(_p2))
+    .then(r=>r.json())
+    .then(j=>{ if(j&&j.ok){ store.set('hg_lastBackup',String(Date.now())); if(msg) msg.textContent=t('bkCloudDone'); render(); } else throw new Error(); })
     .catch(()=>{ if(msg) msg.textContent=t('bkCloudFail'); });
 }
 let bkPendingCloud=false;
@@ -1532,7 +1531,7 @@ function bkCloudRestoreFetch(){
   const url=bkUrl(); const msg=document.getElementById('bk-cloud-msg');
   if(!url){ if(msg) msg.textContent=t('bkCloudFail'); return; }
   if(msg) msg.textContent='…';
-  fetch(url)
+  fetch(url+'?action=get')
     .then(r=>r.json())
     .then(data=>{ if(!data||!Array.isArray(data.profiles)) throw new Error(); bkPendingCloud=data; render(); })
     .catch(()=>{ if(msg) msg.textContent=t('bkCloudFail'); });
