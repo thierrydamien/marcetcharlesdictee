@@ -3292,7 +3292,7 @@ let rdEarned=0;
 function rdFinish(){
   if(rdFlashTimer){ clearTimeout(rdFlashTimer); rdFlashTimer=null; }
   const p=activeProfile();
-  if((rdSub==='words'||rdSub==='speed') && p){ const e=rdStars(); awardCorrect(e); rdEarned=e; }
+  if((rdSub==='words'||rdSub==='speed') && p){ const e=rdStars()*rdTotal; awardCorrect(e); rdEarned=e; }
   else { rdEarned=rdScore*rdStars(); }
   navigate('readingdone');
 }
@@ -3895,7 +3895,7 @@ function mathSubmit(){
   const fb=document.getElementById('gw-fb');
   if(parseInt(inputText,10)===curM.ans){
     turnActive=false; roundScore++; roundCoins++; recordMath(curM.op, true);
-    awardCorrect(mathDiff==='hard'?3:mathDiff==='med'?2:1);
+    awardCorrect(mathDiff==='hard'?5:mathDiff==='med'?2:1);
     react('cheer'); burst(); flyCoin(); bumpStreak();
     const pr=praise(); if(fb){ fb.textContent=pr; fb.className='gw-fb ok'; } vox(pr, lang); sfx('correct');
     setTimeout(mathAdvance,1000);
