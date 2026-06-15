@@ -338,6 +338,26 @@ input,textarea{font-family:inherit;}
 .nudge-go{margin-top:10px;background:var(--accent);color:#fff;border:0;font-family:var(--fd);font-weight:600;font-size:14px;padding:9px 14px;border-radius:12px}
 .nudge-x{position:absolute;top:6px;right:8px;border:0;background:transparent;color:#7fb5a8;font-size:18px;line-height:1;padding:4px;cursor:pointer}
 .mode-cn{background:#5B7FA6;--shadowc:#4a6a8e;}
+.mode-lang{background:var(--primary);--shadowc:var(--primary-dk);}
+.mode-read{background:#E89A4A;--shadowc:#c87f34;}
+.sub-c{text-align:center;color:var(--muted);font-size:14px;margin:0 0 16px;}
+.flag-btn{width:100%;border:2px solid var(--line);background:#fff;border-radius:18px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:12px;cursor:pointer;font-family:var(--fb);}
+.flag-btn .flag-ic{flex:0 0 auto;line-height:0;}
+.flag-btn .flag-ic svg{border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.06);}
+.flag-tx{text-align:left;flex:1;}
+.flag-tx b{font-family:var(--fd);font-size:18px;color:var(--ink);display:block;line-height:1.15;}
+.flag-tx span{font-size:12px;color:var(--muted);}
+.flag-arr{color:var(--muted);font-size:22px;}
+.flag-btn.last{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,111,97,.12);}
+.lastpill{font-size:10px;background:var(--primary);color:#fff;padding:3px 9px;border-radius:999px;font-weight:700;}
+.title-flag{display:inline-block;vertical-align:middle;line-height:0;}
+.title-flag svg{border-radius:50%;}
+.lang-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--line);}
+.lang-toggle-row .lt-lab{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--ink);}
+.lt-switch{width:46px;height:27px;border-radius:999px;border:none;background:#d8d2c6;position:relative;cursor:pointer;transition:background .15s;}
+.lt-switch.on{background:var(--accent);}
+.lt-switch::after{content:"";position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;transition:left .15s;}
+.lt-switch.on::after{left:22px;}
 .mode-cn .mic{font-family:var(--fd);font-weight:700;font-size:24px;color:#fff;background:rgba(255,255,255,.22)}
 .cn-hello{font-family:var(--fd);font-weight:600;font-size:40px;text-align:center;color:#2c3d50;margin:6px 0 14px}
 .cn-top{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 10px}
@@ -551,7 +571,7 @@ const T = {
     noWords:"Aucun mot. Ajoute des mots dans l'espace parent.",
     customize:"Personnaliser le personnage", myChar:"Mon personnage", background:"Fond", skin:"Peau",
     hairStyle:"Cheveux", hairColor:"Couleur des cheveux", eyes:"Yeux", mouth:"Bouche",
-    hairNone:"Aucun", hairShort:"Court", hairLong:"Long", hairCurly:"Bouclé", hairWavy:"Ondulé", hairBun:"Chignon", hairStraight:"Raides", hairTousled:"Ébouriffés", hairCrop:"Dégradé", hairBuzz:"Très court", hairAfro:"Afro", hairPony:"Queue", hairPigtails:"Couettes", voiceEnhanced:"Voix améliorées", vReady:"prête", vLoading:"téléchargement…", vFailed:"voix de l'appareil", voiceReadyToast:"Voix prêtes, elles fonctionnent maintenant hors ligne.", vpBody:"Télécharge les voix une fois : les mots seront clairs, identiques sur chaque appareil, et fonctionneront hors ligne. De préférence en wifi.", vpDownload:"Télécharger les voix", vpLater:"Plus tard", vpDownloadAll:"Télécharger le pack de voix", vpInstalled:"Installée", vpNot:"Non installée", vpDownloading:"Téléchargement…", vpHint:"Environ 10 à 50 Mo par langue. Les voix restent sur l'appareil et fonctionnent hors ligne ensuite.", nudgeTitle:"Ajoute tes propres mots", nudgeBody:"Mets la liste de dictée de l'école de cette semaine. Touche pour l'ajouter dans l'espace parent.", nudgeGo:"Ajouter des mots", cnMode:"Chinois", cnSub:"Vois-le, écoute-le, retiens-le", cnLevel:"Niveau", cnModeLabel:"Mode", cnMatch:"Associer", cnListen:"Écouter", cnRecall:"Réviser", cnPinyin:"Pinyin", cnShow:"Afficher", cnHide:"Cacher", cnCustom:"Mes mots", cnStartBtn:"Commencer", cnAskMean:"Que veut dire ce mot ?", cnAskHear:"Touche ce que tu entends", cnHear:"Écouter", cnRevealBtn:"Toucher pour voir", cnKnew:"Je savais", cnReview:"À revoir", cnEmpty:"Ajoute d'abord des mots dans l'espace parent.", cnWordsBtn:"Mots chinois", cnWordsTitle:"Mots chinois", cnNoWords:"Aucun mot pour le moment.", cnHanzi:"Caractère", cnPinyinF:"Pinyin", cnMeaning:"Sens", cnAddWord:"Ajouter le mot", cnLockLabel:"Verrou enfant", cnLockHint:"Empêche de changer le niveau et le mode sur l'écran de départ.", cnUnlocked:"Libre", cnLocked:"Verrouillé", cnExample:"Exemple", cnSentShow:"Voir la traduction", cnSentAfter:"Traduction apr\u00e8s ta r\u00e9ponse", cnFade:"Lire", cnTestMean:"Tester le sens", cnOn:"Oui", cnOff:"Non", cnReadPrompt:"Lis le caract\u00e8re", voiceNote:"À la première utilisation, le jeu télécharge ses voix en arrière-plan pour un son clair et identique sur chaque appareil. Tu peux commencer tout de suite. En attendant, la voix de l'appareil prend le relais. Ensuite, tout fonctionne hors ligne.",
+    hairNone:"Aucun", hairShort:"Court", hairLong:"Long", hairCurly:"Bouclé", hairWavy:"Ondulé", hairBun:"Chignon", hairStraight:"Raides", hairTousled:"Ébouriffés", hairCrop:"Dégradé", hairBuzz:"Très court", hairAfro:"Afro", hairPony:"Queue", hairPigtails:"Couettes", voiceEnhanced:"Voix améliorées", vReady:"prête", vLoading:"téléchargement…", vFailed:"voix de l'appareil", voiceReadyToast:"Voix prêtes, elles fonctionnent maintenant hors ligne.", vpBody:"Télécharge les voix une fois : les mots seront clairs, identiques sur chaque appareil, et fonctionneront hors ligne. De préférence en wifi.", vpDownload:"Télécharger les voix", vpLater:"Plus tard", vpDownloadAll:"Télécharger le pack de voix", vpInstalled:"Installée", vpNot:"Non installée", vpDownloading:"Téléchargement…", vpHint:"Environ 10 à 50 Mo par langue. Les voix restent sur l'appareil et fonctionnent hors ligne ensuite.", nudgeTitle:"Ajoute tes propres mots", nudgeBody:"Mets la liste de dictée de l'école de cette semaine. Touche pour l'ajouter dans l'espace parent.", nudgeGo:"Ajouter des mots", cnMode:"Chinois", cnSub:"Vois-le, écoute-le, retiens-le", langHub:"Langues", langHubSub:"Français · English · 中文", langPick:"Choisis une langue", chooseGame:"Choisis un jeu", reading:"Lecture", readingSub:"Mots, phrases, rapide", spellingMode:"Orthographe", langFr:"Français", langEn:"English", langZh:"中文", langToggleTitle:"Langues actives", langToggleHint:"Choisis les langues visibles dans le menu. Au moins une doit rester active.", cnMatch:"Associer", cnListen:"Écouter", cnRecall:"Mémoire", cnFade:"Lecture rapide", lastPlayed:"Dernier jeu", cnLevel:"Niveau", cnModeLabel:"Mode", cnMatch:"Associer", cnListen:"Écouter", cnRecall:"Réviser", cnPinyin:"Pinyin", cnShow:"Afficher", cnHide:"Cacher", cnCustom:"Mes mots", cnStartBtn:"Commencer", cnAskMean:"Que veut dire ce mot ?", cnAskHear:"Touche ce que tu entends", cnHear:"Écouter", cnRevealBtn:"Toucher pour voir", cnKnew:"Je savais", cnReview:"À revoir", cnEmpty:"Ajoute d'abord des mots dans l'espace parent.", cnWordsBtn:"Mots chinois", cnWordsTitle:"Mots chinois", cnNoWords:"Aucun mot pour le moment.", cnHanzi:"Caractère", cnPinyinF:"Pinyin", cnMeaning:"Sens", cnAddWord:"Ajouter le mot", cnLockLabel:"Verrou enfant", cnLockHint:"Empêche de changer le niveau et le mode sur l'écran de départ.", cnUnlocked:"Libre", cnLocked:"Verrouillé", cnExample:"Exemple", cnSentShow:"Voir la traduction", cnSentAfter:"Traduction apr\u00e8s ta r\u00e9ponse", cnFade:"Lire", cnTestMean:"Tester le sens", cnOn:"Oui", cnOff:"Non", cnReadPrompt:"Lis le caract\u00e8re", voiceNote:"À la première utilisation, le jeu télécharge ses voix en arrière-plan pour un son clair et identique sur chaque appareil. Tu peux commencer tout de suite. En attendant, la voix de l'appareil prend le relais. Ensuite, tout fonctionne hors ligne.",
     eRound:"Ronds", eHappy:"Joyeux", eDot:"Points", eWink:"Clin d'œil", eAlmond:"En amande",
     mSmile:"Sourire", mGrin:"Rire", mNeutral:"Neutre", mWow:"Oh !", brows:"Sourcils", browNone:"Aucun", browSoft:"Doux", browFlat:"Droits", browRaised:"Relevés", glasses:"Lunettes", gNone:"Aucunes", glassShape:"Forme",
     shopTitle:"Boutique", wear:"Mettre", wearing:"Porté", noHat:"Sans chapeau", notEnough:"Pas assez de pièces",
@@ -578,7 +598,7 @@ const T = {
     noWords:"No words yet. Add some in the parent area.",
     customize:"Customise character", myChar:"My character", background:"Background", skin:"Skin",
     hairStyle:"Hair", hairColor:"Hair colour", eyes:"Eyes", mouth:"Mouth",
-    hairNone:"None", hairShort:"Short", hairLong:"Long", hairCurly:"Curly", hairWavy:"Wavy", hairBun:"Bun", hairStraight:"Straight", hairTousled:"Tousled", hairCrop:"Crop", hairBuzz:"Buzz", hairAfro:"Afro", hairPony:"Ponytail", hairPigtails:"Pigtails", voiceEnhanced:"Enhanced voices", vReady:"ready", vLoading:"downloading…", vFailed:"device voice", voiceReadyToast:"Voices ready, they now work offline.", vpBody:"Download the voices once so words sound clear, the same on every device, and work offline. Best on wifi.", vpDownload:"Download voices", vpLater:"Later", vpDownloadAll:"Download voice pack", vpInstalled:"Installed", vpNot:"Not installed", vpDownloading:"Downloading…", vpHint:"About 10 to 50 MB per language. They stay on the device and work offline after.", nudgeTitle:"Add your own words", nudgeBody:"Drop in this week's spelling list from school. Tap to add it in the parent area.", nudgeGo:"Add words", cnMode:"Chinese", cnSub:"See it, hear it, know it", cnLevel:"Level", cnModeLabel:"Mode", cnMatch:"Match", cnListen:"Listen", cnRecall:"Recall", cnPinyin:"Pinyin", cnShow:"Show", cnHide:"Hide", cnCustom:"My words", cnStartBtn:"Start", cnAskMean:"What does it mean?", cnAskHear:"Tap what you hear", cnHear:"Hear it", cnRevealBtn:"Tap to reveal", cnKnew:"Knew it", cnReview:"Review", cnEmpty:"Add words first in the parent area.", cnWordsBtn:"Chinese words", cnWordsTitle:"Chinese words", cnNoWords:"No words yet.", cnHanzi:"Character", cnPinyinF:"Pinyin", cnMeaning:"Meaning", cnAddWord:"Add word", cnLockLabel:"Child lock", cnLockHint:"Stops level and mode being changed on the start screen.", cnUnlocked:"Open", cnLocked:"Locked", cnExample:"Example", cnSentShow:"Show translation", cnSentAfter:"Translation after you answer", cnFade:"Read", cnTestMean:"Test meaning", cnOn:"On", cnOff:"Off", cnReadPrompt:"Read the character", voiceNote:"The first time you play, the game downloads its voices in the background so words sound clear and the same on every device. You can start right away. Until the voices are ready, your device's own voice fills in. After that, it works offline.",
+    hairNone:"None", hairShort:"Short", hairLong:"Long", hairCurly:"Curly", hairWavy:"Wavy", hairBun:"Bun", hairStraight:"Straight", hairTousled:"Tousled", hairCrop:"Crop", hairBuzz:"Buzz", hairAfro:"Afro", hairPony:"Ponytail", hairPigtails:"Pigtails", voiceEnhanced:"Enhanced voices", vReady:"ready", vLoading:"downloading…", vFailed:"device voice", voiceReadyToast:"Voices ready, they now work offline.", vpBody:"Download the voices once so words sound clear, the same on every device, and work offline. Best on wifi.", vpDownload:"Download voices", vpLater:"Later", vpDownloadAll:"Download voice pack", vpInstalled:"Installed", vpNot:"Not installed", vpDownloading:"Downloading…", vpHint:"About 10 to 50 MB per language. They stay on the device and work offline after.", nudgeTitle:"Add your own words", nudgeBody:"Drop in this week's spelling list from school. Tap to add it in the parent area.", nudgeGo:"Add words", cnMode:"Chinese", cnSub:"See it, hear it, know it", langHub:"Languages", langHubSub:"French · English · 中文", langPick:"Choose a language", chooseGame:"Choose a game", reading:"Reading", readingSub:"Words, sentences, speed", spellingMode:"Spelling", langFr:"Français", langEn:"English", langZh:"中文", langToggleTitle:"Active languages", langToggleHint:"Choose which languages appear in the menu. At least one must stay on.", cnMatch:"Match", cnListen:"Listen", cnRecall:"Recall", cnFade:"Speed read", lastPlayed:"Last played", cnLevel:"Level", cnModeLabel:"Mode", cnMatch:"Match", cnListen:"Listen", cnRecall:"Recall", cnPinyin:"Pinyin", cnShow:"Show", cnHide:"Hide", cnCustom:"My words", cnStartBtn:"Start", cnAskMean:"What does it mean?", cnAskHear:"Tap what you hear", cnHear:"Hear it", cnRevealBtn:"Tap to reveal", cnKnew:"Knew it", cnReview:"Review", cnEmpty:"Add words first in the parent area.", cnWordsBtn:"Chinese words", cnWordsTitle:"Chinese words", cnNoWords:"No words yet.", cnHanzi:"Character", cnPinyinF:"Pinyin", cnMeaning:"Meaning", cnAddWord:"Add word", cnLockLabel:"Child lock", cnLockHint:"Stops level and mode being changed on the start screen.", cnUnlocked:"Open", cnLocked:"Locked", cnExample:"Example", cnSentShow:"Show translation", cnSentAfter:"Translation after you answer", cnFade:"Read", cnTestMean:"Test meaning", cnOn:"On", cnOff:"Off", cnReadPrompt:"Read the character", voiceNote:"The first time you play, the game downloads its voices in the background so words sound clear and the same on every device. You can start right away. Until the voices are ready, your device's own voice fills in. After that, it works offline.",
     eRound:"Round", eHappy:"Happy", eDot:"Dots", eWink:"Wink", eAlmond:"Almond",
     mSmile:"Smile", mGrin:"Grin", mNeutral:"Neutral", mWow:"Wow", brows:"Eyebrows", browNone:"None", browSoft:"Soft", browFlat:"Flat", browRaised:"Raised", glasses:"Glasses", gNone:"None", glassShape:"Frame shape",
     shopTitle:"Shop", wear:"Wear", wearing:"On", noHat:"No hat", notEnough:"Not enough coins",
@@ -1250,6 +1270,9 @@ function render(){
   else if (route === 'voices') v.innerHTML = viewVoices();
   else if (route === 'library') v.innerHTML = viewLibrary();
   else if (route === 'scan') v.innerHTML = viewScan();
+  else if (route === 'languages') v.innerHTML = viewLanguages();
+  else if (route === 'langmodes') v.innerHTML = viewLangModes();
+  else if (route === 'reading') v.innerHTML = viewReading();
   else if (route === 'welcome') v.innerHTML = viewWelcome();
   else v.innerHTML = viewProfiles();
   if (route === 'game') paintGame();
@@ -1430,9 +1453,8 @@ function viewHome(){
       ${homeHero(p)}
       ${introCardHTML()}
       ${listNudgeHTML(p)}
-      <button class="mode-btn mode-dict" onclick="openDict()"><div class="mic">${IC.book}</div><div><b>${t('dict')}</b><span>${t('dictSub')}</span></div></button>
+      <button class="mode-btn mode-lang" onclick="openLanguages()"><div class="mic">${IC.book}</div><div><b>${t('langHub')}</b><span>${langHomeSub()}</span></div></button>
       <button class="mode-btn mode-math" onclick="openMath()"><div class="mic">${IC.calc}</div><div><b>${t('maths')}</b><span>${t('mathsSub')}</span></div></button>
-      <button class="mode-btn mode-cn" onclick="openChinese()"><div class="mic">中文</div><div><b>${t('cnMode')}</b><span>${t('cnSub')}</span></div></button>
       <div class="row2">
         <button class="soft-btn" onclick="openShop()">${IC.bag}${t('shopTitle')}</button>
         <button class="soft-btn" onclick="openHouse()">${IC.trophy}${t('house')}</button>
@@ -1538,6 +1560,7 @@ function voicePackEnter(){ openParent('voices'); }
 
 /* ---------- parent area ---------- */
 let editingListId=null;
+let langSel=null, readingLang='FR';
 function viewParent(){
   const p = activeProfile(); if(p) ensureEconomy(p);
   const section=(lng,label)=>{
@@ -1572,6 +1595,10 @@ function viewParent(){
         <div class="cat"><label>${t('practiceMode')}</label><div class="opt-row">
           ${[['smart',t('pmSmart')],['even',t('pmEven')]].map(([v,lab])=>`<button class="opt ${(store.get('hg_practice')||'smart')===v?'on':''}" onclick="setPractice('${v}')">${lab}</button>`).join('')}
         </div><div class="opt-hint">${t('pmSmart')} : ${t('pmTipSmart')}. ${t('pmEven')} : ${t('pmTipRandom')}.</div></div>
+        <div class="cat"><label>${t('langToggleTitle')}</label>
+          ${['FR','EN','ZH'].map(c=>`<div class="lang-toggle-row"><span class="lt-lab">${flagCircle(c,24)} ${esc(langLabel(c))}</span><button class="lt-switch ${langEnabled(c)?'on':''}" onclick="setLangEnabled('${c}', ${langEnabled(c)?'false':'true'})" aria-label="${esc(langLabel(c))}"></button></div>`).join('')}
+          <div class="opt-hint">${t('langToggleHint')}</div>
+        </div>
       </div>
       <div class="spacer"></div>
       <button class="link-btn" onclick="navigate('library')">${IC.plus}${t('libraryBtn')}</button>
@@ -1697,18 +1724,82 @@ function startScan(){ scanStage='idle'; scanText=''; scanMsg=''; scanTargetId=nu
 function scanFromEditor(){ const p=activeProfile(); if(p){ const l=listById(p, editingListId); if(l){ const ta=document.getElementById('le-words'); if(ta) l.words=linesToWords(ta.value); saveProfiles(); } } scanTargetId=editingListId; scanStage='idle'; scanText=''; scanMsg=''; navigate('scan'); }
 function loadTesseract(){ return new Promise((res,rej)=>{ if(window.Tesseract) return res(window.Tesseract); const sc=document.createElement('script'); sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'; sc.onload=()=>res(window.Tesseract); sc.onerror=()=>rej(new Error('load')); document.head.appendChild(sc); }); }
 function onScanFile(input){ const f=input&&input.files&&input.files[0]; if(!f) return; runOcr(f); }
-function parseScanWords(text){ return (text||'').split(/[\n,]+/).map(l=>l.replace(/^[\s\d).:\u2022\u2023\u25E6\-*_]+/,'')).map(l=>l.replace(/[.,;:!?]+$/,'')).map(l=>l.trim()).filter(l=>l.length>0 && /[A-Za-z\u00C0-\u024F]/.test(l)); }
+function parseScanWords(text){
+  return (text||'').split(/[\n,]+/)
+    .map(l=>l.replace(/^[\s\d).:\u2022\u2023\u25E6\-*_]+/,''))     // strip leading bullets/numbers
+    .map(l=>l.replace(/[.,;:!?]+$/,''))                            // strip trailing punctuation
+    .map(l=>l.replace(/[^A-Za-z\u00C0-\u024F0-9 '\-]+/g,''))       // strip any non-letter junk symbols (hallucinations)
+    .map(l=>l.replace(/\s{2,}/g,' ').trim())
+    .filter(l=>l.length>0 && /[A-Za-z\u00C0-\u024F]/.test(l)       // must contain a real letter
+                && l.length<=30                                    // drop absurdly long garbage runs
+                && (l.replace(/[^A-Za-z\u00C0-\u024F]/g,'').length / l.length) > 0.5); // mostly letters
+}
+/* Preprocess a phone photo for OCR: downscale, grayscale, contrast threshold.
+   Returns a canvas (or the original file on any failure). */
+function preprocessForOcr(file){
+  return new Promise(function(resolve){
+    try{
+      var url=URL.createObjectURL(file);
+      var img=new Image();
+      img.onload=function(){
+        try{
+          var MAXW=1600; // Tesseract struggles on huge phone photos; cap width
+          var scale=img.width>MAXW ? MAXW/img.width : 1;
+          var w=Math.round(img.width*scale), h=Math.round(img.height*scale);
+          var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+          var ctx=cv.getContext('2d');
+          ctx.drawImage(img,0,0,w,h);
+          var imgd=ctx.getImageData(0,0,w,h), d=imgd.data;
+          // grayscale + compute mean for adaptive threshold
+          var sum=0;
+          for(var i=0;i<d.length;i+=4){ var g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2]; d[i]=d[i+1]=d[i+2]=g; sum+=g; }
+          var mean=sum/(d.length/4);
+          // contrast stretch around mean, then soft threshold to push text black / paper white
+          var thresh=mean*0.82; // slightly below mean so ink stays dark
+          for(var j=0;j<d.length;j+=4){
+            var v=d[j];
+            // stretch
+            v=(v-mean)*1.6+mean;
+            // soft threshold
+            v = v<thresh ? Math.max(0, v*0.4) : Math.min(255, 180+(v-thresh)*0.6);
+            d[j]=d[j+1]=d[j+2]=v;
+          }
+          ctx.putImageData(imgd,0,0);
+          URL.revokeObjectURL(url);
+          resolve(cv);
+        }catch(e){ URL.revokeObjectURL(url); resolve(file); }
+      };
+      img.onerror=function(){ URL.revokeObjectURL(url); resolve(file); };
+      img.src=url;
+    }catch(e){ resolve(file); }
+  });
+}
 async function runOcr(file){
   scanStage='busy'; scanMsg=t('scanLoading'); render();
+  let worker=null;
   try{
     const T=await loadTesseract();
     const langs = lang==='FR' ? 'fra' : 'eng';
     scanMsg=t('scanReading'); const e0=document.getElementById('scan-msg'); if(e0) e0.textContent=scanMsg;
-    const out=await T.recognize(file, langs, { logger:m=>{ if(m && m.status==='recognizing text'){ const el=document.getElementById('scan-msg'); if(el) el.textContent=t('scanReading')+' '+Math.round((m.progress||0)*100)+'%'; } } });
-    const text=(out && out.data && out.data.text)||'';
+    const src=await preprocessForOcr(file);
+    // character whitelist: letters (incl. French accents), digits, basic separators. Stops symbol hallucination.
+    const wl = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\u00C0\u00C2\u00C4\u00C6\u00C7\u00C8\u00C9\u00CA\u00CB\u00CE\u00CF\u00D4\u0152\u00D9\u00DB\u00DC\u0178\u00E0\u00E2\u00E4\u00E6\u00E7\u00E8\u00E9\u00EA\u00EB\u00EE\u00EF\u00F4\u0153\u00F9\u00FB\u00FC\u00FF0123456789 -'";
+    let text='';
+    if(T.createWorker){
+      // Worker API: this is the path where setParameters reliably applies.
+      worker = await T.createWorker(langs, 1, { logger:m=>{ if(m && m.status==='recognizing text'){ const el=document.getElementById('scan-msg'); if(el) el.textContent=t('scanReading')+' '+Math.round((m.progress||0)*100)+'%'; } } });
+      await worker.setParameters({ tessedit_char_whitelist: wl, tessedit_pageseg_mode: '6', preserve_interword_spaces: '1' });
+      const out=await worker.recognize(src);
+      text=(out && out.data && out.data.text)||'';
+    } else {
+      // Fallback to the convenience API.
+      const out=await T.recognize(src, langs, { logger:m=>{ if(m && m.status==='recognizing text'){ const el=document.getElementById('scan-msg'); if(el) el.textContent=t('scanReading')+' '+Math.round((m.progress||0)*100)+'%'; } } });
+      text=(out && out.data && out.data.text)||'';
+    }
     scanText=parseScanWords(text).join('\n');
     scanStage='review'; render();
   }catch(e){ scanStage='error'; scanMsg=t('scanError'); render(); }
+  finally{ if(worker && worker.terminate){ try{ await worker.terminate(); }catch(e){} } }
 }
 function saveScannedList(){
   const p=activeProfile(); if(!p) return; ensureEconomy(p);
@@ -2229,7 +2320,7 @@ function viewDictStyle(){
   }).join('');
   return `
     <div class="screen active">
-      <div class="backbar"><button class="backbtn" onclick="navigate('home')">${IC.back}${t('back')}</button></div>
+      <div class="backbar"><button class="backbtn" onclick="modeBack()">${IC.back}${t('back')}</button></div>
       <div class="scr-title">${t('chooseStyle')}</div>
       ${listPickerHTML()}
       ${cards}
@@ -2745,6 +2836,106 @@ function genMath(op,diff){
   else { const q=ri(lo,hi), d=ri(lo,hi); a=q*d; b=d; ans=q; }
   return {a,b,op,ans};
 }
+/* ---- Languages hub ---- */
+function langEnabled(code){ var v=store.get('hg_lang_'+code); return v===null || v==='1'; } // default on
+function setLangEnabled(code,on){
+  // prevent turning off the last enabled language
+  if(!on){ var others=['FR','EN','ZH'].filter(function(c){return c!==code;}); if(!others.some(langEnabled)) return; }
+  store.set('hg_lang_'+code, on?'1':'0'); render();
+}
+function enabledLangs(){ return ['FR','EN','ZH'].filter(langEnabled); }
+function flagCircle(code,size){
+  var s=size||30;
+  if(code==='FR') return '<svg viewBox="0 0 30 30" width="'+s+'" height="'+s+'"><clipPath id="cf"><circle cx="15" cy="15" r="15"/></clipPath><g clip-path="url(#cf)"><rect width="10" height="30" fill="#0055A4"/><rect x="10" width="10" height="30" fill="#fff"/><rect x="20" width="10" height="30" fill="#EF4135"/></g></svg>';
+  if(code==='EN') return '<svg viewBox="0 0 30 30" width="'+s+'" height="'+s+'"><clipPath id="ce"><circle cx="15" cy="15" r="15"/></clipPath><g clip-path="url(#ce)"><rect width="30" height="30" fill="#012169"/><path d="M0 0 L30 30 M30 0 L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0 L30 30 M30 0 L0 30" stroke="#C8102E" stroke-width="3"/><rect x="12" width="6" height="30" fill="#fff"/><rect y="12" width="30" height="6" fill="#fff"/><rect x="13" width="4" height="30" fill="#C8102E"/><rect y="13" width="30" height="4" fill="#C8102E"/></g></svg>';
+  return '<svg viewBox="0 0 30 30" width="'+s+'" height="'+s+'"><clipPath id="cz"><circle cx="15" cy="15" r="15"/></clipPath><g clip-path="url(#cz)"><rect width="30" height="30" fill="#DE2910"/><text x="7" y="13" font-size="9" fill="#FFDE00">\u2605</text></g></svg>';
+}
+function langLabel(code){ return code==='FR'?t('langFr'):code==='EN'?t('langEn'):t('langZh'); }
+function langHomeSub(){ return enabledLangs().map(langLabel).join(' \u00b7 '); }
+function langModesSub(code){ return code==='ZH' ? (t('cnMatch')+' \u00b7 '+t('reading')) : (t('spellingMode')+' \u00b7 '+t('reading')); }
+function openLanguages(){
+  const p=activeProfile(); if(!p){navigate('profiles');return;}
+  const en=enabledLangs();
+  if(en.length===1){ pickLanguage(en[0]); return; }            // single language: skip picker
+  const last=p.lastLang;
+  navigate('languages');
+}
+function pickLanguage(code){
+  const p=activeProfile(); if(!p){navigate('profiles');return;}
+  if(!langEnabled(code)) code=enabledLangs()[0];
+  p.lastLang=code; saveProfiles();
+  langSel=code; navigate('langmodes');
+}
+function startLangMode(mode){
+  // route the chosen mode into the existing flows
+  if(langSel==='ZH'){
+    if(mode==='reading'){ openReading('ZH'); return; }
+    const p=activeProfile(); const c=ensureCN(p);
+    if(!c.lock){ c.mode=mode; saveProfiles(); }   // pre-select the tapped mode (unless parent locked it)
+    navigate('cnstart'); return;
+  }
+  // FR / EN
+  if(mode==='reading'){ openReading(langSel); return; }
+  if(mode==='spelling'){ lang=langSel; store.set('hg_lang_ui', lang); dictNote=''; navigate('dictstyle'); return; }
+}
+function openReading(code){ /* Reading mode ships next; placeholder keeps the hub safe */ readingLang=code; navigate('reading'); }
+function viewLanguages(){
+  const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
+  const en=enabledLangs();
+  const cards=en.map(function(code){
+    const isLast = p.lastLang===code;
+    return '<button class="flag-btn '+(isLast?'last':'')+'" onclick="pickLanguage(\''+code+'\')">'
+      +'<span class="flag-ic">'+flagCircle(code,38)+'</span>'
+      +'<span class="flag-tx"><b>'+esc(langLabel(code))+'</b><span>'+esc(langModesSub(code))+'</span></span>'
+      +(isLast?'<span class="lastpill">'+esc(t('lastPlayed'))+'</span>':'<span class="flag-arr">\u203a</span>')
+      +'</button>';
+  }).join('');
+  return ''
+    + '<div class="screen active">'
+    + '<div class="backbar"><button class="backbtn" onclick="navigate(\'home\')">'+IC.back+t('back')+'</button></div>'
+    + '<div class="scr-title">'+t('langHub')+'</div>'
+    + '<p class="sub-c">'+t('langPick')+'</p>'
+    + cards
+    + '<div class="spacer"></div></div>';
+}
+function viewLangModes(){
+  const p=activeProfile(); if(!p){ route='profiles'; return viewProfiles(); }
+  const code=langSel||p.lastLang||enabledLangs()[0]||'FR';
+  let tiles='';
+  if(code==='ZH'){
+    ensureCN(p);
+    tiles =''
+      + '<button class="mode-btn mode-cn" onclick="startLangMode(\'match\')"><div class="mic">\ud83c\udccf</div><div><b>'+t('cnMatch')+'</b><span>'+t('cnSub')+'</span></div></button>'
+      + '<button class="mode-btn mode-cn" onclick="startLangMode(\'listen\')"><div class="mic">'+IC.sound+'</div><div><b>'+t('cnListen')+'</b><span>'+t('cnSub')+'</span></div></button>'
+      + '<button class="mode-btn mode-cn" onclick="startLangMode(\'recall\')"><div class="mic">\ud83e\udde0</div><div><b>'+t('cnRecall')+'</b><span>'+t('cnSub')+'</span></div></button>'
+      + '<button class="mode-btn mode-cn" onclick="startLangMode(\'fade\')"><div class="mic">\ud83c\udf2b\ufe0f</div><div><b>'+t('cnFade')+'</b><span>'+t('cnSub')+'</span></div></button>'
+      + '<button class="mode-btn mode-read" onclick="startLangMode(\'reading\')"><div class="mic">'+IC.book+'</div><div><b>'+t('reading')+'</b><span>'+t('readingSub')+'</span></div></button>';
+  } else {
+    tiles =''
+      + '<button class="mode-btn mode-dict" onclick="startLangMode(\'spelling\')"><div class="mic">'+IC.book+'</div><div><b>'+t('spellingMode')+'</b><span>'+t('dictSub')+'</span></div></button>'
+      + '<button class="mode-btn mode-read" onclick="startLangMode(\'reading\')"><div class="mic">\ud83d\udcd6</div><div><b>'+t('reading')+'</b><span>'+t('readingSub')+'</span></div></button>';
+  }
+  return ''
+    + '<div class="screen active">'
+    + '<div class="backbar"><button class="backbtn" onclick="langModesBack()">'+IC.back+t('back')+'</button></div>'
+    + '<div class="scr-title"><span class="title-flag">'+flagCircle(code,26)+'</span> '+esc(langLabel(code))+'</div>'
+    + '<p class="sub-c">'+t('chooseGame')+'</p>'
+    + tiles
+    + '<div class="spacer"></div></div>';
+}
+function langModesBack(){ const en=enabledLangs(); if(en.length===1){ navigate('home'); } else { navigate('languages'); } }
+function modeBack(){ if(langSel){ navigate('langmodes'); } else { navigate('home'); } }
+function viewReading(){
+  const code=readingLang||'FR';
+  return ''
+    + '<div class="screen active">'
+    + '<div class="backbar"><button class="backbtn" onclick="navigate(\'langmodes\')">'+IC.back+t('back')+'</button></div>'
+    + '<div class="scr-title"><span class="title-flag">'+flagCircle(code,26)+'</span> '+t('reading')+'</div>'
+    + '<p class="sub-c">'+t('readingSub')+'</p>'
+    + '<div class="spacer"></div>'
+    + '<p class="hint" style="text-align:center">\u2728</p>'
+    + '<div class="spacer"></div></div>';
+}
 function openMath(){ const p=activeProfile(); if(!p){navigate('profiles');return;} navigate('mathcfg'); }
 /* ---------- Chinese mode ---------- */
 function ensureCN(p){ if(!p.cn) p.cn={}; const c=p.cn;
@@ -2765,7 +2956,7 @@ function viewCnStart(){
   const extraRow=(c.mode==='fade')?tmRow:pinRow;
   return `
     <div class="screen active">
-      <div class="backbar"><button class="backbtn" onclick="navigate('home')">${IC.back}${t('back')}</button></div>
+      <div class="backbar"><button class="backbtn" onclick="modeBack()">${IC.back}${t('back')}</button></div>
       <div class="scr-title">${t('cnMode')}</div>
       <div class="cn-hello">\u4e2d\u6587</div>
       <div class="cat"><label>${t('cnLevel')}</label><div class="opt-row">${opt('level','1','HSK 1')}${opt('level','2','HSK 2')}${opt('level','3','HSK 3')}${hasCustom?opt('level','custom',t('cnCustom')):''}</div></div>
