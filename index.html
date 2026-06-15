@@ -3448,7 +3448,7 @@ function rdStart(sub){
   if(sub==='sentences' && code==='ZH'){
     // Chinese sentences: characters + interface-language comprehension question
     const lvl = (rdDiff==='easy')?'easy':'med';
-    const raw=(CN_READ[lvl]||[]).slice(); shuffle(raw);
+    const raw=shuffle((CN_READ[lvl]||[]).slice());
     rdQueue=raw.slice(0,Math.min(8,raw.length)).map(function(o){
       return { zh:o.zh, py:o.py, s:o.zh,
                q:(lang==='FR'?o.q_fr:o.q_en),
@@ -3457,11 +3457,11 @@ function rdStart(sub){
     });
   } else if(sub==='sentences' || (sub==='speed' && code!=='ZH')){
     // FR/EN sentences, and FR/EN speed, use the graded sentence bank
-    const bank=(READ_SENT[code]&&READ_SENT[code][rdDiff])?READ_SENT[code][rdDiff].slice():[];
-    shuffle(bank); rdQueue=bank.slice(0,Math.min(8,bank.length));
+    const bank=shuffle((READ_SENT[code]&&READ_SENT[code][rdDiff])?READ_SENT[code][rdDiff].slice():[]);
+    rdQueue=bank.slice(0,Math.min(8,bank.length));
   } else {
     // words mode (all langs) and speed mode for ZH use the word pool
-    let pool=rdWordPool(code); pool=pool.slice(); shuffle(pool);
+    let pool=shuffle(rdWordPool(code).slice());
     const n = rdDiff==='easy'?8:(rdDiff==='med'?10:12);
     rdQueue=pool.slice(0,Math.min(n,pool.length));
   }
@@ -3598,14 +3598,14 @@ function openGeo(){ const p=activeProfile(); if(!p){navigate('profiles');return;
 function geoSetDiff(d){ geoDiff=d; render(); }
 function geoStart(sub){
   geoSub=sub; geoIdx=0; geoScore=0; geoPicked=-1; geoAnswered=false; geoEarned=0;
-  let pool=geoPool(geoDiff).slice(); shuffle(pool);
-  const n = geoDiff==='easy'?8:(geoDiff==='med'?10:12);
+  let pool=shuffle(geoPool(geoDiff).slice());
+  const n = geoDiff==='easy'?12:(geoDiff==='med'?20:30);
   geoQueue=pool.slice(0,Math.min(n,pool.length));
   geoTotal=geoQueue.length;
-  // precompute options per question
-  const all=geoPool('hard');
+  // distractors come from the same difficulty pool so wrong answers are plausible
+  const distractorPool=geoPool(geoDiff);
   geoQueue.forEach(function(c){
-    let opts=[c]; let others=all.filter(function(x){return x.id!==c.id;}); shuffle(others);
+    let opts=[c]; let others=shuffle(distractorPool.filter(function(x){return x.id!==c.id;}));
     opts=opts.concat(others.slice(0,3));
     shuffle(opts);
     c._opts=opts; c._ci=opts.indexOf(c);
@@ -3690,8 +3690,8 @@ function geoMapPool(diff){
 }
 function geoStartMap(){
   geoSub='map'; geoIdx=0; geoScore=0; geoEarned=0; geoTotal=0;
-  var pool=geoMapPool(geoDiff).slice(); shuffle(pool);
-  var n = geoDiff==='easy'?6:(geoDiff==='med'?8:10);
+  var pool=shuffle(geoMapPool(geoDiff).slice());
+  var n = geoDiff==='easy'?8:(geoDiff==='med'?12:20);
   geoQueue=pool.slice(0,Math.min(n,pool.length));
   geoTotal=geoQueue.length;
   gmNewQuestion();
