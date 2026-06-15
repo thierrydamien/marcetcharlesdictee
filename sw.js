@@ -1,5 +1,5 @@
 /* Le jeu des devoirs - service worker */
-const CACHE = 'hg-pwa-v126';
+const CACHE = 'hg-pwa-v128';
 const SHELL = ['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./icon.svg','./apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
