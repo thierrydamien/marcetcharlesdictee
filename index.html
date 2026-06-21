@@ -165,7 +165,7 @@ input,textarea{font-family:inherit;}
 .tile{min-width:42px;height:48px;padding:0 8px;border-radius:12px;background:var(--bg);box-shadow:0 3px 0 rgba(0,0,0,.08);font-family:var(--fd);font-weight:700;font-size:22px;color:var(--ink);}
 .tile:active{transform:translateY(2px);}
 .tile.space{min-width:54px;color:var(--accent-dk);border:2px dashed var(--line);box-shadow:none;}
-.tile.used{opacity:.22;pointer-events:none;}
+.tile.used{opacity:0;pointer-events:none;width:0;padding:0;margin:0;border:0;overflow:hidden;}
 .gw-input{background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);min-height:54px;margin:14px 0 6px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:700;font-size:26px;color:var(--ink);letter-spacing:2px;padding:0 10px;word-break:break-word;}
 .gw-input:empty::before{content:'·';color:var(--line);}
 .gw-fb{text-align:center;font-family:var(--fd);font-weight:700;font-size:17px;min-height:24px;margin-bottom:4px;}
@@ -2489,11 +2489,6 @@ function exportCode(){
   try{ const data={v:1, profiles, pin:store.get('hg_pin')||'', lang, kbd:store.get('hg_kbd')||'auto', practice:store.get('hg_practice')||'smart'};
     return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }catch(e){ return ''; }
 }
-var _BK_DEFAULT=['aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BSw==','ZnljYno3TEo1Q3g1eWJqWld5dEQycVR5TW5yZGtFM2RrOTVWdw==','YzdtNEtodUI1RmZpV3hJQzJLZm10TE95MGNJZDU3dGRGL2V4ZWM='].map(function(x){return atob(x)}).join('');
-var _BK_TOKEN=['bnM=','Y3Ju'].map(function(x){return atob(x)}).join('');
-function bkUrl(){ return _BK_DEFAULT; }
-function bkSetUrl(v){ store.set('hg_backupUrl',v.trim()); }
-function bkLastTs(){ return store.get('hg_lastBackup')||''; }
 function bkPayload(){
   return JSON.stringify({profiles:profiles, activeId:activeId, ts:new Date().toISOString(),
     lang:lang, pin:store.get('hg_pin'), kbd:store.get('hg_kbd')||'auto', practice:store.get('hg_practice')||'smart'});
@@ -2537,50 +2532,6 @@ var Sync = (function(){
   }
   return { getCode:getCode, setCode:setCode, lastTs:lastTs, push:push, pull:pull, maybePush:maybePush };
 })();
-function bkAutoIfDue(){
-  if(!bkUrl()) return;
-  const last=bkLastTs(); if(last && Date.now()-parseInt(last,10)<86400000) return;
-  bkSilent();
-}
-function bkSilent(){
-  const url=bkUrl(); if(!url) return;
-  try{
-    var _p=bkPayload(); fetch(url+'?action=save&t='+encodeURIComponent(_BK_TOKEN)+'&d='+encodeURIComponent(_p)).then(()=>store.set('hg_lastBackup',String(Date.now()))).catch(()=>{});
-  }catch(e){}
-}
-function bkNow(){
-  const url=bkUrl(); const msg=document.getElementById('bk-cloud-msg');
-  if(!url){ if(msg) msg.textContent=t('bkCloudFail'); return; }
-  if(msg) msg.textContent='…';
-  var _p2=bkPayload(); fetch(url+'?action=save&t='+encodeURIComponent(_BK_TOKEN)+'&d='+encodeURIComponent(_p2))
-    .then(r=>r.json())
-    .then(j=>{ if(j&&j.ok){ store.set('hg_lastBackup',String(Date.now())); if(msg) msg.textContent=t('bkCloudDone'); render(); } else throw new Error(); })
-    .catch(()=>{ if(msg) msg.textContent=t('bkCloudFail'); });
-}
-let bkPendingCloud=false;
-function bkCloudRestoreFetch(){
-  const url=bkUrl(); const msg=document.getElementById('bk-cloud-msg');
-  if(!url){ if(msg) msg.textContent=t('bkCloudFail'); return; }
-  if(msg) msg.textContent='…';
-  fetch(url+'?action=get&t='+encodeURIComponent(_BK_TOKEN))
-    .then(r=>r.json())
-    .then(data=>{ if(!data||!Array.isArray(data.profiles)) throw new Error(); bkPendingCloud=data; render(); })
-    .catch(()=>{ if(msg) msg.textContent=t('bkCloudFail'); });
-}
-function bkConfirmCloud(){
-  const data=bkPendingCloud; if(!data) return;
-  profiles=data.profiles; store.set('hg_profiles',JSON.stringify(profiles));
-  if(data.pin!=null) store.set('hg_pin',data.pin);
-  if(data.lang){ lang=data.lang; store.set('hg_lang',lang); }
-  if(data.kbd) store.set('hg_kbd',data.kbd);
-  if(data.practice) store.set('hg_practice',data.practice);
-  activeId=profiles[0]?profiles[0].id:null;
-  if(activeId) store.set('hg_active',activeId); else store.remove('hg_active');
-  store.set('hg_migrated','1');
-  bkPendingCloud=false;
-  navigate('home');
-}
-function bkCancelCloud(){ bkPendingCloud=false; render(); }
 let syncPending=null;
 function syncSaveNow(){
   const msg=document.getElementById('sync-msg'); if(msg) msg.textContent='…';
@@ -3200,7 +3151,8 @@ function updateInputBox(){ const i=document.getElementById('gw-input'); if(i) i.
 
 function kTap(ch){ if(!turnActive) return; inputText+=ch; updateInputBox(); }
 function kBack(){ if(!turnActive) return; inputText=inputText.slice(0,-1); updateInputBox(); }
-function sTap(i){ if(!turnActive||scrUsed[i]) return; scrUsed[i]=true; inputText+=scrTiles[i];
+let _sTapLock=false;
+function sTap(i){ if(!turnActive||scrUsed[i]||_sTapLock) return; _sTapLock=true; setTimeout(function(){_sTapLock=false;},120); scrUsed[i]=true; inputText+=scrTiles[i];
   const c=document.getElementById('gw-card'); if(c) c.innerHTML=cardHTML(); updateInputBox(); }
 function scrReset(){ if(!turnActive) return; inputText=''; scrUsed=scrTiles.map(()=>false);
   const c=document.getElementById('gw-card'); if(c) c.innerHTML=cardHTML(); updateInputBox(); }
